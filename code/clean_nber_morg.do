@@ -1,19 +1,22 @@
-** clean nber extracts of cps morg
-
+** In this do file we clean nber extracts of cps morg adpating codes generously
+** provided to us by Professor Nicole Fortin and Neil Lloyd
 
 ** rename variables to be consistent with SAS file conversions
-** from Thomas Lemieux by adapting code from Neil Lloyd
+** from Professor Thomas Lemieux
+
+** nber data comes with value labels from 
+** http://data.nber.org/morg/sources/labels/
 
 rename hhid houseid
 	lab var houseid "house identifier"
 	
 rename intmonth month
 
-lab var state "1960 census code for state" //Lloyd uses gestfips
+lab var state "1960 census code for state" //Lloyd uses gestfips - dne<1989
 
 lab var sex "sex: male = 1, female = 2"
 
-replace race = 3 if inrange(race, 3, 26) //suppress oth races for comparability
+replace race = 3 if race > 2 //suppress oth races for comparability
 	lab var race "race: white = 1, Black = 2, other = 3"
 	
 gen hispanic =.
@@ -45,6 +48,9 @@ lab var class94
 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994 ;
 #delimit cr
 
+** recall that FLL2021 run ditribution regressions for 79-88, 88-00, 00-17
+** need 3 digit ind codes
+
 
 
 ** we use gradeat for year < 1992 and Lloyd's method for >=1992
@@ -68,7 +74,7 @@ gen educ =.
 	replace educ = 18  if grade92 == 46 & year >= 1992
 	lab var educ "completed education"
 
-** deflate to 1979 dollars
+** deflate to 1979 dollars using CPIAUCSL
 gen cpi =.
     replace cpi = 100.0   if year == 1979
     replace cpi = 113.502 if year == 1980
