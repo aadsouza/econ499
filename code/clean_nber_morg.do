@@ -118,8 +118,9 @@ gen cpi =.
     replace cpi = 345.949 if year == 2018
     replace cpi = 352.217 if year == 2019
 	
-
+gen exper = age - educ - 6
+	
 ** Lloyd uses peafever, we use peafwhen - vet status
-** FIXME missing from FLL exper marr 
+** FIXME missing from FLL marr 
 ** FIXME missing from Lloyd famtype dualjob uftpt hours1 partt
 
