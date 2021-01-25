@@ -30,9 +30,9 @@ rename pfamrel famrel //>=1994 ref/spouse, <1994 husband/wife
 rename prcitshp citizen //>=1994
 
 gen esrall =.
-	replace esrall = 1 if esr == 1 | lfsr* == 1
-	replace esrall = 2 if esr == 2 | lfsr* == 2
-	replace esrall = 9 if inrange(esr, 3, 7) | inrange(lfsr*, 3, 7)
+	replace esrall = 1 if esr == 1 | lfsr89 == 1 | lfsr94 == 1
+	replace esrall = 2 if esr == 2 | lfsr89 == 2 | lfsr94 == 2
+	replace esrall = 9 if esr >  2 | lfsr89 >  2 | lfsr94 >  2
 	lab var esrall "employment stat recode: working in 1 or 2, else 9"
 	
 rename hourslw hourst
@@ -48,10 +48,52 @@ lab var class94
 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994 ;
 #delimit cr
 
-** recall that FLL2021 run ditribution regressions for 79-88, 88-00, 00-17
-** need 3 digit ind codes
+********************************************************
+** FIXME 3 digit ind codes and occ codes
+********************************************************
 
+rename eligible elig
+	replace elig = 0 if elig == 2
+	lab var elig "(non self emp) elig for pay = 1, else = 0"
 
+rename paidhre hourly
+	replace hourly = . if hourly <  1
+	replace hourly = 0 if hourly == 2
+	lab var hourly "hourly worker = 1"
+
+rename uhourse uhours2
+	lab var uhours2 "hours usually at work (edited)"
+
+rename unionmme umember //>=1983
+	replace umember = 0 if umember==2
+	lab var umember "union member = 1, else = 0 (edited)"
+
+rename unioncov ut //>=1983
+	gen ucov =.
+	replace ucov = 1 if umember == 1
+	replace ucov = 1 if umember == 0 & ut == 1
+	replace ucov = 0 if ucov    ==.
+	lab var ucov "union member or covered = 1, else = 0 (edited)"
+
+rename schenr enroll //>=1984
+	replace enroll = 0 if enroll == 2
+	lab var enroll "enrolled in school last week (age=16-24)"
+
+rename earnwt ogrwt
+	lab var ogrwt "earnings weight"
+
+rename weight finwt
+	lab var finwt "final weight"
+
+rename I25c al_wage	//in [1979, 1993], > Aug 1995
+	lab var al_wage "allocated hourly wage"
+	
+rename I25d al_earn //in [1979, 1993], > Aug 1995
+	lab var al_earn "allocated weekly earnings"	
+
+********************************************************
+** FIXME continue here with earnings prernwa
+********************************************************
 
 ** we use gradeat for year < 1992 and Lloyd's method for >=1992
 gen educ =.
@@ -122,5 +164,5 @@ gen exper = age - educ - 6
 	
 ** Lloyd uses peafever, we use peafwhen - vet status
 ** FIXME missing from FLL marr 
-** FIXME missing from Lloyd famtype dualjob uftpt hours1 partt
+** FIXME missing from Lloyd famtype dualjob uftpt hours1 partt pxernh10
 
