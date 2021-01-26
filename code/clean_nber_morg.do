@@ -16,6 +16,8 @@ lab var state "1960 census code for state" //Lloyd uses gestfips - dne<1989
 
 lab var sex "sex: male = 1, female = 2"
 
+gen female = sex == 2
+
 replace race = 3 if race > 2 //suppress oth races for comparability
 	lab var race "race: white = 1, Black = 2, other = 3"
 	
@@ -48,9 +50,9 @@ lab var class94
 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994 ;
 #delimit cr
 
-********************************************************
+********************************************************************************
 ** FIXME 3 digit ind codes and occ codes
-********************************************************
+********************************************************************************
 
 rename eligible elig
 	replace elig = 0 if elig == 2
@@ -60,9 +62,6 @@ rename paidhre hourly
 	replace hourly = . if hourly <  1
 	replace hourly = 0 if hourly == 2
 	lab var hourly "hourly worker = 1"
-
-rename uhourse uhours2
-	lab var uhours2 "hours usually at work (edited)"
 
 rename unionmme umember //>=1983
 	replace umember = 0 if umember==2
@@ -91,9 +90,14 @@ rename I25c al_wage	//in [1979, 1993], > Aug 1995
 rename I25d al_earn //in [1979, 1993], > Aug 1995
 	lab var al_earn "allocated weekly earnings"	
 
-********************************************************
-** FIXME continue here with wage stuff
-********************************************************
+** note that earnwke includes hourly workers as earnhre*uhourse
+** review cpsx documentation for top-coding
+gen wage =.
+	replace wage = earnwke/uhourse if earnwke > 0 & uhourse > 0
+	lab var wage "hourly wage = earnwke/uhourse (>0)"
+
+gen nowage = elig == 1 & wage ==.
+	lab var nowage "elig sin wage = 1, else = 0"
 
 ** we use gradeat for year < 1992 and Lloyd's method for >=1992
 gen educ =.
@@ -115,6 +119,16 @@ gen educ =.
 	replace educ = 18  if grade92 == 45 & year >= 1992
 	replace educ = 18  if grade92 == 46 & year >= 1992
 	lab var educ "completed education"
+
+gen alloc1 = al_wage > 0 | al_earn > 0 | I25a > 0
+	lab var alloc1 "allocated hourly wage, weekly earnings, or usual hrs"
+
+gen allocw1 = al_wage > 0
+	lab var allocw1 "allocated hourly wage"
+
+** wage > 0 & al_earn > 0 means that we flag hourly wages w weekly earnings flag
+gen allocw3 = (earnhre > 0 & al_wage > 0) | (wage > 0 & al_earn > 0)
+	lab var allocw3 "allocated wage used in wage var"
 
 ** deflate to 1979 dollars using CPIAUCSL
 gen cpi =.
@@ -159,10 +173,47 @@ gen cpi =.
     replace cpi = 337.71  if year == 2017
     replace cpi = 345.949 if year == 2018
     replace cpi = 352.217 if year == 2019
+
+gen rwage = wage*100/cpi
+	lab var rwage "real hourly wage in 1979 dollars"
+	
+gen twage = wage
+	replace twage = . if rwage<2 | rwage>100
+	lab var twage "trimmed nom wage 2-100 in 1979 dollars"
+
+gen logw = ln(twage)
+	lab var twage "log trimmed nom wage 2-100 in 1979 dollars"
+
+keep if inrange(minsamp, 4, 8) & inrange(age, 16, 65)
 	
 gen exper = age - educ - 6
-	
+
+tab month year
+
+tab female elig 
+
+tab elig nowage
+
+********************************************************************************
+** FIXME finish renames from "Lemieux's gender specific files"
+**       review dfl1996, lemieux2006, fll2021
+********************************************************************************
+
+********************************************************************************
+** Notable insconsistencies with Lloyd
+** -----------------------------------	
 ** Lloyd uses peafever, we use peafwhen - vet status
+** uhourse coded as . for "hours vary (-4)", Lloyd uses method by Anne Polivka
+** since no dualjobs, cannot recover missing "hours vary" uhourse 
+** we use gradeat for year < 1992 and Lloyd's method for >=1992
+** we deflate cpi to 1979 dollars
+** review in-line and by-line comments for more...
+** Lloyd: gen allocw3 = (earnhre > 0 & al_wage > 0) | (wage > 0 & al_earn > 0)
+**  for us, means that we flag hourly wages w weekly earnings flag too
+** Inconsistency w DFL1996: twage 2-100, not 1-100
+********************************************************************************
+
 ** FIXME missing from FLL marr 
-** FIXME missing from Lloyd famtype dualjob uftpt hours1 partt pxernh10
+** FIXME missing from Lloyd famtype dualjob uftpt hours1 partt^ pxernh10 allocw2
+** ^partt candiidate: ftpt79 ftpt89 ftpt94
 
