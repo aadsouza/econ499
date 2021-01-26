@@ -91,7 +91,9 @@ rename I25c al_wage	//in [1979, 1993], > Aug 1995
 rename I25d al_earn //in [1979, 1993], > Aug 1995
 	lab var al_earn "allocated weekly earnings"	
 
-rename 
+********************************************************
+** FIXME continue here with wage stuff
+********************************************************
 
 ** we use gradeat for year < 1992 and Lloyd's method for >=1992
 gen educ =.
