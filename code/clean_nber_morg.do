@@ -22,8 +22,8 @@ replace race = 3 if race > 2 //suppress oth races for comparability
 gen hispanic =.
 	replace hispanic = 1 if inrange(ethnic, 1, 7) & year <  2003
 	replace hispanic = 1 if inrange(ethnic, 1, 5) & year >= 2003
-	replace hispanic = 0 if ethnic == 8 & year <  2003
-	replace hispanic = 0 if ethnic ==.  & year >= 2003
+	replace hispanic = 0 if ethnic == 8           & year <  2003
+	replace hispanic = 0 if ethnic ==.            & year >= 2003
 
 rename pfamrel famrel //>=1994 ref/spouse, <1994 husband/wife
 
@@ -91,9 +91,7 @@ rename I25c al_wage	//in [1979, 1993], > Aug 1995
 rename I25d al_earn //in [1979, 1993], > Aug 1995
 	lab var al_earn "allocated weekly earnings"	
 
-********************************************************
-** FIXME continue here with earnings prernwa
-********************************************************
+rename 
 
 ** we use gradeat for year < 1992 and Lloyd's method for >=1992
 gen educ =.
