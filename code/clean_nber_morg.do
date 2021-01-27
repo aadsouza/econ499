@@ -195,8 +195,8 @@ tab female elig
 tab elig nowage
 
 ********************************************************************************
-** FIXME finish renames from "Lemieux's gender specific files"
-**       review dfl1996, lemieux2006, fll2021
+** FIXME finish renames from "Lemieux's gender specific files" and top-coding
+**       review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
 ********************************************************************************
 
 ********************************************************************************
@@ -213,7 +213,8 @@ tab elig nowage
 ** Inconsistency w DFL1996: twage 2-100, not 1-100
 ********************************************************************************
 
-** FIXME missing from FLL marr 
-** FIXME missing from Lloyd famtype dualjob uftpt hours1 partt^ pxernh10 allocw2
-** ^partt candiidate: ftpt79 ftpt89 ftpt94
+** FIXME missing from FLL marr^ partt^^ lwage lwage1
+** FIXME missing from Lloyd famtype dualjob uftpt hours1 pxernh10 allocw2
+** ^marr candidate: marital
+** ^^partt candiidate: ftpt79 ftpt89 ftpt94
 
