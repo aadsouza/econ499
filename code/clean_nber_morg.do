@@ -10,7 +10,8 @@
 rename hhid houseid
 	lab var houseid "house identifier"
 	
-rename intmonth month
+rename intmonth cmonth
+	lab var cmonth "month in sample"
 
 lab var state "1960 census code for state" //Lloyd uses gestfips - dne<1989
 
@@ -51,7 +52,7 @@ lab var class94
 #delimit cr
 
 ********************************************************************************
-** FIXME 3 digit ind codes and occ codes
+** FIXME ind codes and occ codes
 ********************************************************************************
 
 rename eligible elig
@@ -92,6 +93,7 @@ rename I25d al_earn //in [1979, 1993], > Aug 1995
 
 ** note that earnwke includes hourly workers as earnhre*uhourse
 ** review cpsx documentation for top-coding
+** includes overime, tips, and commissions
 gen wage =.
 	replace wage = earnwke/uhourse if earnwke > 0 & uhourse > 0
 	lab var wage "hourly wage = earnwke/uhourse (>0)"
@@ -117,7 +119,7 @@ gen educ =.
 	replace educ = 16  if grade92 == 43 & year >= 1992
 	replace educ = 18  if grade92 == 44 & year >= 1992
 	replace educ = 18  if grade92 == 45 & year >= 1992
-	replace educ = 18  if grade92 == 46 & year >= 1992
+    replace educ = 18  if grade92 == 46 & year >= 1992
 	lab var educ "completed education"
 
 gen alloc1 = al_wage > 0 | al_earn > 0 | I25a > 0
@@ -178,8 +180,8 @@ gen rwage = wage*100/cpi
 	lab var rwage "real hourly wage in 1979 dollars"
 	
 gen twage = wage
-	replace twage = . if rwage<2 | rwage>100
-	lab var twage "trimmed nom wage 2-100 in 1979 dollars"
+	replace twage = . if rwage<1 | rwage>100
+	lab var twage "trimmed nom wage 1-100 in 1979 dollars"
 
 gen logw = ln(twage)
 	lab var twage "log trimmed nom wage 2-100 in 1979 dollars"
@@ -188,15 +190,31 @@ keep if inrange(minsamp, 4, 8) & inrange(age, 16, 65)
 	
 gen exper = age - educ - 6
 
-tab month year
+tab cmonth year
 
 tab female elig 
 
 tab elig nowage
 
+rename minsamp month
+	lab var minsamp "calendar month"
+
+rename umem
+	lab var umem "union member = 1, else = 0 (edited)"
+
+rename ucov covered
+	lab var covered "computed union coverage"
+
+rename ogrwt eweight
+	lab var eweight "weight for earnings supp"
+  
+gen marr =.
+	replace marr = 1 if marital <  4
+	replace marr = 0 if marital >= 4
+	lab var marr "married = 1; widow, div, sep, solo = 0"
+
 ********************************************************************************
-** FIXME finish renames from "Lemieux's gender specific files" and top-coding
-**       review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
+** FIXME review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
 ********************************************************************************
 
 ********************************************************************************
@@ -211,6 +229,7 @@ tab elig nowage
 ** Lloyd: gen allocw3 = (earnhre > 0 & al_wage > 0) | (wage > 0 & al_earn > 0)
 **  for us, means that we flag hourly wages w weekly earnings flag too
 ** Inconsistency w DFL1996: twage 2-100, not 1-100
+** do not rename hourly and prernhly as nber diff defined paidhr earnhr exist
 ********************************************************************************
 
 ** FIXME missing from FLL marr^ partt^^ lwage lwage1
