@@ -233,3 +233,4 @@ gen marr =.
 ** ^marr candidate: marital
 ** ^^partt candiidate: ftpt79 ftpt89 ftpt94
 
+** note contrary to cpsx doc, classer1 dne
