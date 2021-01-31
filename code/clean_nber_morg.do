@@ -41,15 +41,11 @@ gen esrall =.
 rename hourslw hourst
 	lab var hourst "actual hours last week at all jobs"
 
-#delimit ;
-lab var class 
-"private = 1, fed = 2, state = 3, loc = 4, self = 5, 6, w/o pay = 7" //<=1993 ;
-lab var classer1
-"edit: private = 1, fed = 2, state = 3, loc = 4, self = 5, 6, w/o pay = 7" 
-//>=1989 <= 1993 ;
-lab var class94 
-"fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994 ;
-#delimit cr
+rename class classx
+
+lab var classx "private = 1, fed = 2, state = 3, loc = 4, self = 5, 6, w/o pay = 7" //<=1993
+lab var class94 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994
+
 
 ********************************************************************************
 ** FIXME ind codes and occ codes
@@ -197,9 +193,9 @@ tab female elig
 tab elig nowage
 
 rename minsamp month
-	lab var minsamp "calendar month"
+	lab var month "calendar month"
 
-rename umem
+rename umember umem
 	lab var umem "union member = 1, else = 0 (edited)"
 
 rename ucov covered
