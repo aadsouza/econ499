@@ -21,3 +21,5 @@ forvalues i = 10(1)19{
 do "$dofile/clean_nber_morg.do"
 
 save "$dataout/cleaned_nber_morg.dta", replace
+
+clear
