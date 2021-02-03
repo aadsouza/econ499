@@ -1,4 +1,4 @@
-** In this do file we clean nber extracts of cps morg adpating codes generously
+** In this do file we clean nber extracts of cps morg adapting codes generously
 ** provided to us by Professor Nicole Fortin and Neil Lloyd
 
 ** rename variables to be consistent with SAS file conversions
@@ -6,6 +6,8 @@
 
 ** nber data comes with value labels from 
 ** http://data.nber.org/morg/sources/labels/
+
+** NOTE: STATA TREATS MISSING VALUES AS GREATER THAN ANY NON MISSING VALUES!!!!!
 
 rename hhid houseid
 	lab var houseid "house identifier"
@@ -15,12 +17,12 @@ rename intmonth cmonth
 
 lab var state "1960 census code for state" //Lloyd uses gestfips - dne<1989
 
-lab var sex "sex: male = 1, female = 2"
+lab var sex "male = 1, female = 2"
 
-gen female = sex == 2
+gen female = (sex == 2) if sex <.
 
-replace race = 3 if race > 2 //suppress oth races for comparability
-	lab var race "race: white = 1, Black = 2, other = 3"
+replace race = 3 if race > 2 & race <. //suppress oth races for comparability
+	lab var race "white = 1, Black = 2, other = 3"
 	
 gen hispanic =.
 	replace hispanic = 1 if inrange(ethnic, 1, 7) & year <  2003
@@ -35,7 +37,7 @@ rename prcitshp citizen //>=1994
 gen esrall =.
 	replace esrall = 1 if esr == 1 | lfsr89 == 1 | lfsr94 == 1
 	replace esrall = 2 if esr == 2 | lfsr89 == 2 | lfsr94 == 2
-	replace esrall = 9 if esr >  2 | lfsr89 >  2 | lfsr94 >  2
+	replace esrall = 9 if (esr > 2 & esr <.) | (lfsr89 > 2 & lfsr <.) | (lfsr94 > 2 & lfsr <.)
 	lab var esrall "employment stat recode: working in 1 or 2, else 9"
 	
 rename hourslw hourst
@@ -48,7 +50,121 @@ lab var class94 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay 
 
 
 ********************************************************************************
-** FIXME ind codes and occ codes
+** ind codes and occ codes
+
+gen ind3nber =.
+	replace ind3nber = ind70 if inrange(year, 1979, 1982) //70 census class
+	replace ind3nber = ind80 if inrange(year, 1983, 1991) //80 census class
+	replace ind3nber = ind80 if inrange(year, 1992, 2002) //90 census class
+	replace ind3nber = ind02 if year >= 2003              //02 census class
+	lab var ind3nber "ind3 equiv using nber ind as base - prevailing curr yr"
+
+** see dind_nind_crosswalk
+gen nind =.
+	replace nind = 	1	 if dind == 	1	 & year < 2000
+	replace nind = 	1	 if dind == 	2	 & year < 2000
+	replace nind = 	2	 if dind == 	3	 & year < 2000
+	replace nind = 	3	 if dind == 	4	 & year < 2000
+	replace nind = 	4	 if dind == 	5	 & year < 2000
+	replace nind = 	4	 if dind == 	6	 & year < 2000
+	replace nind = 	4	 if dind == 	7	 & year < 2000
+	replace nind = 	4	 if dind == 	8	 & year < 2000
+	replace nind = 	4	 if dind == 	9	 & year < 2000
+	replace nind = 	4	 if dind == 	10	 & year < 2000
+	replace nind = 	4	 if dind == 	11	 & year < 2000
+	replace nind = 	4	 if dind == 	12	 & year < 2000
+	replace nind = 	4	 if dind == 	13	 & year < 2000
+	replace nind = 	4	 if dind == 	14	 & year < 2000
+	replace nind = 	4	 if dind == 	15	 & year < 2000
+	replace nind = 	4	 if dind == 	16	 & year < 2000
+	replace nind = 	4	 if dind == 	17	 & year < 2000
+	replace nind = 	4	 if dind == 	18	 & year < 2000
+	replace nind = 	5	 if dind == 	19	 & year < 2000
+	replace nind = 	5	 if dind == 	20	 & year < 2000
+	replace nind = 	5	 if dind == 	21	 & year < 2000
+	replace nind = 	5	 if dind == 	22	 & year < 2000
+	replace nind = 	5	 if dind == 	23	 & year < 2000
+	replace nind = 	5	 if dind == 	24	 & year < 2000
+	replace nind = 	5	 if dind == 	25	 & year < 2000
+	replace nind = 	5	 if dind == 	26	 & year < 2000
+	replace nind = 	5	 if dind == 	27	 & year < 2000
+	replace nind = 	5	 if dind == 	28	 & year < 2000
+	replace nind = 	6	 if dind == 	29	 & year < 2000
+	replace nind = 	7	 if dind == 	30	 & year < 2000
+	replace nind = 	7	 if dind == 	31	 & year < 2000
+	replace nind = 	8	 if dind == 	32	 & year < 2000
+	replace nind = 	9	 if dind == 	33	 & year < 2000
+	replace nind = 	10	 if dind == 	34	 & year < 2000
+	replace nind = 	10	 if dind == 	35	 & year < 2000
+	replace nind = 	11	 if dind == 	36	 & year < 2000
+	replace nind = 	12	 if dind == 	37	 & year < 2000
+	replace nind = 	12	 if dind == 	38	 & year < 2000
+	replace nind = 	11	 if dind == 	39	 & year < 2000
+	replace nind = 	13	 if dind == 	40	 & year < 2000
+	replace nind = 	15	 if dind == 	41	 & year < 2000
+	replace nind = 	14	 if dind == 	42	 & year < 2000
+	replace nind = 	17	 if dind == 	43	 & year < 2000
+	replace nind = 	16	 if dind == 	44	 & year < 2000
+	replace nind = 	12	 if dind == 	45	 & year < 2000
+	replace nind = 	1	 if dind == 	46	 & year < 2000
+	replace nind = 	.	 if dind == 	51	 & year < 2000
+	replace nind = 	19	 if dind == 	52	 & year < 2000
+	replace nind = 	1	 if dind02 == 	1	 & year >= 2000
+	replace nind = 	1	 if dind02 == 	2	 & year >= 2000
+	replace nind = 	2	 if dind02 == 	3	 & year >= 2000
+	replace nind = 	3	 if dind02 == 	4	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	5	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	6	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	7	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	8	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	9	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	10	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	11	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	12	 & year >= 2000
+	replace nind = 	4	 if dind02 == 	13	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	14	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	15	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	16	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	17	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	18	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	19	 & year >= 2000
+	replace nind = 	5	 if dind02 == 	20	 & year >= 2000
+	replace nind = 	6	 if dind02 == 	23	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	24	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	25	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	26	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	27	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	28	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	29	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	30	 & year >= 2000
+	replace nind = 	7	 if dind02 == 	31	 & year >= 2000
+	replace nind = 	8	 if dind02 == 	21	 & year >= 2000
+	replace nind = 	9	 if dind02 == 	22	 & year >= 2000
+	replace nind = 	9	 if dind02 == 	45	 & year >= 2000
+	replace nind = 	9	 if dind02 == 	46	 & year >= 2000
+	replace nind = 	10	 if dind02 == 	32	 & year >= 2000
+	replace nind = 	10	 if dind02 == 	33	 & year >= 2000
+	replace nind = 	10	 if dind02 == 	34	 & year >= 2000
+	replace nind = 	11	 if dind02 == 	48	 & year >= 2000
+	replace nind = 	11	 if dind02 == 	50	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	35	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	36	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	37	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	38	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	39	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	47	 & year >= 2000
+	replace nind = 	12	 if dind02 == 	49	 & year >= 2000
+	replace nind = 	13	 if dind02 == 	44	 & year >= 2000
+	replace nind = 	14	 if dind02 == 	42	 & year >= 2000
+	replace nind = 	15	 if dind02 == 	41	 & year >= 2000
+	replace nind = 	16	 if dind02 == 	43	 & year >= 2000
+	replace nind = 	17	 if dind02 == 	40	 & year >= 2000
+	replace nind = 	19	 if dind02 == 	51	 & year >= 2000
+	replace nind = 	.	 if dind02 == 	52	 & year >= 2000
+	replace nind = 	.	 if dind02 == 	6790	 & year >= 2000
+	lab var nind "uniform one-digit industry"
+
+** FIXME gen nocc and other covariates
 ********************************************************************************
 
 rename eligible elig
@@ -91,7 +207,7 @@ rename I25d al_earn //in [1979, 1993], > Aug 1995
 ** review cpsx documentation for top-coding
 ** includes overime, tips, and commissions
 gen wage =.
-	replace wage = earnwke/uhourse if earnwke > 0 & uhourse > 0
+	replace wage = earnwke/uhourse if (earnwke > 0 & earnwke <.) & (uhourse > 0 & uearnwke <.)
 	lab var wage "hourly wage = earnwke/uhourse (>0)"
 
 gen nowage = elig == 1 & wage ==.
@@ -118,14 +234,14 @@ gen educ =.
     replace educ = 18  if grade92 == 46 & year >= 1992
 	lab var educ "completed education"
 
-gen alloc1 = al_wage > 0 | al_earn > 0 | I25a > 0
+gen alloc1 = (al_wage > 0 & al_wage <.) | (al_earn > 0 & al_earn <.) | (I25a > 0 & I25a <.)
 	lab var alloc1 "allocated hourly wage, weekly earnings, or usual hrs"
 
-gen allocw1 = al_wage > 0
+gen allocw1 = (al_wage > 0 & al_wage <.)
 	lab var allocw1 "allocated hourly wage"
 
 ** wage > 0 & al_earn > 0 means that we flag hourly wages w weekly earnings flag
-gen allocw3 = (earnhre > 0 & al_wage > 0) | (wage > 0 & al_earn > 0)
+gen allocw3 = (earnhre > 0 & al_wage > 0 & earnhre <. & al_wage <.) | (wage > 0 & al_earn > 0 & wage <. & al_earn <.)
 	lab var allocw3 "allocated wage used in wage var"
 
 ** deflate to 1979 dollars using CPIAUCSL
@@ -180,7 +296,7 @@ gen twage = wage
 	lab var twage "trimmed nom wage 1-100 in 1979 dollars"
 
 gen logw = ln(twage)
-	lab var twage "log trimmed nom wage 2-100 in 1979 dollars"
+	lab var logw "log trimmed nom wage 1-100 in 1979 dollars"
 
 keep if inrange(minsamp, 4, 8) & inrange(age, 16, 65)
 	
@@ -206,9 +322,21 @@ rename ogrwt eweight
   
 gen marr =.
 	replace marr = 1 if marital <  4
-	replace marr = 0 if marital >= 4
+	replace marr = 0 if marital >= 4 & marital <.
 	lab var marr "married = 1; widow, div, sep, solo = 0"
+	
+rename logw lwage 
 
+gen rtwage = twage*100/cpi
+
+gen lwage1 = ln(rtwage)
+	lab var lwage1 "log trimmed real wage 1-100 in 1979 dollars"
+	
+gen topcode =.
+	replace topcode = 1 if earnwke == 999  & inrange(year, 1979, 1988)
+	replace topcode = 1 if earnwke == 1923 & inrange(year, 1989, 1993)
+	replace topcode = 1 if earnwke == 1923 & inrange(year, 1994, 1998)
+	replace topcode = 0 if topcode ==. 	   & elig == 1
 ********************************************************************************
 ** FIXME review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
 ********************************************************************************

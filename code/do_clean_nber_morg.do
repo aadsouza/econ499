@@ -20,6 +20,38 @@ forvalues i = 10(1)19{
 
 do "$dofile/clean_nber_morg.do"
 
+** forvalues i = 79(1)99{
+** 	use "$datain/morg`i'.dta"
+** 	do "$dofile/clean_nber_morg.do"
+** 	save "$dataout/clean_morg`i'.dta", replace
+** }
+
+** forvalues i = 0(1)9{
+** 	use "$datain/morg0`i'.dta"
+** 	do "$dofile/clean_nber_morg.do"
+** 	save "$dataout/clean_morg0`i'.dta", replace
+** }
+
+** forvalues i = 10(1)19{
+** 	use "$datain/morg`i'.dta"
+** 	do "$dofile/clean_nber_morg.do"
+** 	save "$dataout/clean_morg`i'.dta", replace
+** }
+
+** clear *
+
+** forvalues i = 79(1)99{
+** 	qui append using "$dataout/clean_morg`i'.dta"
+** 	}
+	
+** forvalues i = 0(1)9{
+** 	qui append using "$dataout/clean_morg0`i'.dta"
+** 	}
+
+** forvalues i = 10(1)19{
+**	qui append using "$dataout/clean_morg`i'.dta"
+**	}
+
 save "$dataout/cleaned_nber_morg.dta", replace
 
 clear
