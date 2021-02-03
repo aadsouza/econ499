@@ -37,7 +37,7 @@ rename prcitshp citizen //>=1994
 gen esrall =.
 	replace esrall = 1 if esr == 1 | lfsr89 == 1 | lfsr94 == 1
 	replace esrall = 2 if esr == 2 | lfsr89 == 2 | lfsr94 == 2
-	replace esrall = 9 if (esr > 2 & esr <.) | (lfsr89 > 2 & lfsr <.) | (lfsr94 > 2 & lfsr <.)
+	replace esrall = 9 if (esr > 2 & esr <.) | (lfsr89 > 2 & lfsr89 <.) | (lfsr94 > 2 & lfsr94 <.)
 	lab var esrall "employment stat recode: working in 1 or 2, else 9"
 	
 rename hourslw hourst
