@@ -180,12 +180,19 @@ rename unionmme umember //>=1983
 	replace umember = 0 if umember==2
 	lab var umember "union member = 1, else = 0 (edited)"
 
+** rename unioncov ut //>=1983
+** 	gen ucov =.
+** 	replace ucov = 1 if umember == 1
+** 	replace ucov = 1 if umember == 0 & ut == 1
+** 	replace ucov = 0 if ucov    ==.
+** 	lab var ucov "union member or covered = 1, else = 0 (edited)"
+
 rename unioncov ut //>=1983
 	gen ucov =.
 	replace ucov = 1 if umember == 1
 	replace ucov = 1 if umember == 0 & ut == 1
-	replace ucov = 0 if ucov    ==.
-	lab var ucov "union member or covered = 1, else = 0 (edited)"
+	replace ucov = 0 if ut      == 2
+	lab var ucov "union member or covered = 1, not cov = 0 (edited)"
 
 rename schenr enroll //>=1984
 	replace enroll = 0 if enroll == 2
@@ -207,10 +214,10 @@ rename I25d al_earn //in [1979, 1993], > Aug 1995
 ** review cpsx documentation for top-coding
 ** includes overime, tips, and commissions
 gen wage =.
-	replace wage = earnwke/uhourse if (earnwke > 0 & earnwke <.) & (uhourse > 0 & uearnwke <.)
+	replace wage = earnwke/uhourse if (earnwke > 0 & earnwke <.) & (uhourse > 0 & uhourse <.)
 	lab var wage "hourly wage = earnwke/uhourse (>0)"
 
-gen nowage = elig == 1 & wage ==.
+gen nowage = (elig == 1 & wage ==.)
 	lab var nowage "elig sin wage = 1, else = 0"
 
 ** we use gradeat for year < 1992 and Lloyd's method for >=1992
@@ -298,7 +305,7 @@ gen twage = wage
 gen logw = ln(twage)
 	lab var logw "log trimmed nom wage 1-100 in 1979 dollars"
 
-keep if inrange(minsamp, 4, 8) & inrange(age, 16, 65)
+keep if inrange(minsamp, 4, 8) & inrange(age, 16, 64)
 	
 gen exper = age - educ - 6
 
@@ -336,6 +343,7 @@ gen topcode =.
 	replace topcode = 1 if earnwke == 999  & inrange(year, 1979, 1988)
 	replace topcode = 1 if earnwke == 1923 & inrange(year, 1989, 1993)
 	replace topcode = 1 if earnwke == 1923 & inrange(year, 1994, 1998)
+	replace topcode = 1 if earnwke == 2884 & inrange(year, 1998, 2019)
 	replace topcode = 0 if topcode ==. 	   & elig == 1
 ********************************************************************************
 ** FIXME review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
