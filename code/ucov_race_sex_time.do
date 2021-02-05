@@ -20,6 +20,8 @@ grstyle color major_grid black%10
 
 cd /Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
 
+global code "/Users/amedeusdsouza/econ499/code"
+global tabs "/Users/amedeusdsouza/econ499/tabs"
 global figs "/Users/amedeusdsouza/econ499/figures"
 
 use cleaned_nber_morg, clear

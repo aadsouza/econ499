@@ -366,13 +366,11 @@ gen public =.
 ** review in-line and by-line comments for more...
 ** Lloyd: gen allocw3 = (earnhre > 0 & al_wage > 0) | (wage > 0 & al_earn > 0)
 **  for us, means that we flag hourly wages w weekly earnings flag too
-** Inconsistency w DFL1996: twage 2-100, not 1-100
 ** do not rename hourly and prernhly as nber diff defined paidhr earnhr exist
 ********************************************************************************
 
-** FIXME missing from FLL marr^ partt^^ lwage lwage1
+** FIXME missing from FLL partt^
 ** FIXME missing from Lloyd famtype dualjob uftpt hours1 pxernh10 allocw2
-** ^marr candidate: marital
-** ^^partt candiidate: ftpt79 ftpt89 ftpt94
+** ^partt candiidate: ftpt79 ftpt89 ftpt94
 
 ** note contrary to cpsx doc, classer1 dne
