@@ -32,3 +32,6 @@ replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017)
 * lwage2 uses this imputation;
 gen lwage2 = lwage if topcode == 0
 replace lwage2 = lwage + log(pareto) if topcode == 1
+
+gen lwage3 = log(exp(lwage2) * 100 / cpi)
+lab var lwage3 "real lwage2"

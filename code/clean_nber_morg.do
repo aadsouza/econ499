@@ -345,6 +345,12 @@ gen topcode =.
 	replace topcode = 1 if earnwke == 1923 & inrange(year, 1994, 1998)
 	replace topcode = 1 if earnwke == 2884 & inrange(year, 1998, 2019)
 	replace topcode = 0 if topcode ==. 	   & elig == 1
+
+gen public =.
+	replace public = 1 if inrange(classx, 2, 4) & year <  1994
+	replace public = 1 if inrange(class94, 1, 3) & year >= 1994
+	replace public = 0 if classx !=. & public ==. & year < 1994
+	replace public = 0 if class94 !=. & public ==. & year >= 1994
 ********************************************************************************
 ** FIXME review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
 ********************************************************************************
