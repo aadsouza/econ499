@@ -44,7 +44,6 @@ rename hourslw hourst
 	lab var hourst "actual hours last week at all jobs"
 
 rename class classx
-
 lab var classx "private = 1, fed = 2, state = 3, loc = 4, self = 5, 6, w/o pay = 7" //<=1993
 lab var class94 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994
 
@@ -165,6 +164,8 @@ gen nind =.
 	lab var nind "uniform one-digit industry"
 
 ** FIXME gen nocc and other covariates
+
+** gen nind2 - 11 industry categories
 ********************************************************************************
 
 rename eligible elig
