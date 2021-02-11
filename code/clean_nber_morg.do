@@ -60,112 +60,436 @@ gen ind3nber =.
 
 ** see dind_nind_crosswalk
 gen nind =.
-	replace nind = 	1	 if dind == 	1	 & year < 2000
-	replace nind = 	1	 if dind == 	2	 & year < 2000
-	replace nind = 	2	 if dind == 	3	 & year < 2000
-	replace nind = 	3	 if dind == 	4	 & year < 2000
-	replace nind = 	4	 if dind == 	5	 & year < 2000
-	replace nind = 	4	 if dind == 	6	 & year < 2000
-	replace nind = 	4	 if dind == 	7	 & year < 2000
-	replace nind = 	4	 if dind == 	8	 & year < 2000
-	replace nind = 	4	 if dind == 	9	 & year < 2000
-	replace nind = 	4	 if dind == 	10	 & year < 2000
-	replace nind = 	4	 if dind == 	11	 & year < 2000
-	replace nind = 	4	 if dind == 	12	 & year < 2000
-	replace nind = 	4	 if dind == 	13	 & year < 2000
-	replace nind = 	4	 if dind == 	14	 & year < 2000
-	replace nind = 	4	 if dind == 	15	 & year < 2000
-	replace nind = 	4	 if dind == 	16	 & year < 2000
-	replace nind = 	4	 if dind == 	17	 & year < 2000
-	replace nind = 	4	 if dind == 	18	 & year < 2000
-	replace nind = 	5	 if dind == 	19	 & year < 2000
-	replace nind = 	5	 if dind == 	20	 & year < 2000
-	replace nind = 	5	 if dind == 	21	 & year < 2000
-	replace nind = 	5	 if dind == 	22	 & year < 2000
-	replace nind = 	5	 if dind == 	23	 & year < 2000
-	replace nind = 	5	 if dind == 	24	 & year < 2000
-	replace nind = 	5	 if dind == 	25	 & year < 2000
-	replace nind = 	5	 if dind == 	26	 & year < 2000
-	replace nind = 	5	 if dind == 	27	 & year < 2000
-	replace nind = 	5	 if dind == 	28	 & year < 2000
-	replace nind = 	6	 if dind == 	29	 & year < 2000
-	replace nind = 	7	 if dind == 	30	 & year < 2000
-	replace nind = 	7	 if dind == 	31	 & year < 2000
-	replace nind = 	8	 if dind == 	32	 & year < 2000
-	replace nind = 	9	 if dind == 	33	 & year < 2000
-	replace nind = 	10	 if dind == 	34	 & year < 2000
-	replace nind = 	10	 if dind == 	35	 & year < 2000
-	replace nind = 	11	 if dind == 	36	 & year < 2000
-	replace nind = 	12	 if dind == 	37	 & year < 2000
-	replace nind = 	12	 if dind == 	38	 & year < 2000
-	replace nind = 	11	 if dind == 	39	 & year < 2000
-	replace nind = 	13	 if dind == 	40	 & year < 2000
-	replace nind = 	15	 if dind == 	41	 & year < 2000
-	replace nind = 	14	 if dind == 	42	 & year < 2000
-	replace nind = 	17	 if dind == 	43	 & year < 2000
-	replace nind = 	16	 if dind == 	44	 & year < 2000
-	replace nind = 	12	 if dind == 	45	 & year < 2000
-	replace nind = 	1	 if dind == 	46	 & year < 2000
-	replace nind = 	.	 if dind == 	51	 & year < 2000
-	replace nind = 	19	 if dind == 	52	 & year < 2000
-	replace nind = 	1	 if dind02 == 	1	 & year >= 2000
-	replace nind = 	1	 if dind02 == 	2	 & year >= 2000
-	replace nind = 	2	 if dind02 == 	3	 & year >= 2000
-	replace nind = 	3	 if dind02 == 	4	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	5	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	6	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	7	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	8	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	9	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	10	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	11	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	12	 & year >= 2000
-	replace nind = 	4	 if dind02 == 	13	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	14	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	15	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	16	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	17	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	18	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	19	 & year >= 2000
-	replace nind = 	5	 if dind02 == 	20	 & year >= 2000
-	replace nind = 	6	 if dind02 == 	23	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	24	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	25	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	26	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	27	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	28	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	29	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	30	 & year >= 2000
-	replace nind = 	7	 if dind02 == 	31	 & year >= 2000
-	replace nind = 	8	 if dind02 == 	21	 & year >= 2000
-	replace nind = 	9	 if dind02 == 	22	 & year >= 2000
-	replace nind = 	9	 if dind02 == 	45	 & year >= 2000
-	replace nind = 	9	 if dind02 == 	46	 & year >= 2000
-	replace nind = 	10	 if dind02 == 	32	 & year >= 2000
-	replace nind = 	10	 if dind02 == 	33	 & year >= 2000
-	replace nind = 	10	 if dind02 == 	34	 & year >= 2000
-	replace nind = 	11	 if dind02 == 	48	 & year >= 2000
-	replace nind = 	11	 if dind02 == 	50	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	35	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	36	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	37	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	38	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	39	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	47	 & year >= 2000
-	replace nind = 	12	 if dind02 == 	49	 & year >= 2000
-	replace nind = 	13	 if dind02 == 	44	 & year >= 2000
-	replace nind = 	14	 if dind02 == 	42	 & year >= 2000
-	replace nind = 	15	 if dind02 == 	41	 & year >= 2000
-	replace nind = 	16	 if dind02 == 	43	 & year >= 2000
-	replace nind = 	17	 if dind02 == 	40	 & year >= 2000
-	replace nind = 	19	 if dind02 == 	51	 & year >= 2000
-	replace nind = 	.	 if dind02 == 	52	 & year >= 2000
-	replace nind = 	.	 if dind02 == 	6790	 & year >= 2000
+	replace nind = 	1	 if dind == 	1	 & year < 2003
+	replace nind = 	1	 if dind == 	2	 & year < 2003
+	replace nind = 	2	 if dind == 	3	 & year < 2003
+	replace nind = 	3	 if dind == 	4	 & year < 2003
+	replace nind = 	4	 if dind == 	5	 & year < 2003
+	replace nind = 	4	 if dind == 	6	 & year < 2003
+	replace nind = 	4	 if dind == 	7	 & year < 2003
+	replace nind = 	4	 if dind == 	8	 & year < 2003
+	replace nind = 	4	 if dind == 	9	 & year < 2003
+	replace nind = 	4	 if dind == 	10	 & year < 2003
+	replace nind = 	4	 if dind == 	11	 & year < 2003
+	replace nind = 	4	 if dind == 	12	 & year < 2003
+	replace nind = 	4	 if dind == 	13	 & year < 2003
+	replace nind = 	4	 if dind == 	14	 & year < 2003
+	replace nind = 	4	 if dind == 	15	 & year < 2003
+	replace nind = 	4	 if dind == 	16	 & year < 2003
+	replace nind = 	4	 if dind == 	17	 & year < 2003
+	replace nind = 	4	 if dind == 	18	 & year < 2003
+	replace nind = 	5	 if dind == 	19	 & year < 2003
+	replace nind = 	5	 if dind == 	20	 & year < 2003
+	replace nind = 	5	 if dind == 	21	 & year < 2003
+	replace nind = 	5	 if dind == 	22	 & year < 2003
+	replace nind = 	5	 if dind == 	23	 & year < 2003
+	replace nind = 	5	 if dind == 	24	 & year < 2003
+	replace nind = 	5	 if dind == 	25	 & year < 2003
+	replace nind = 	5	 if dind == 	26	 & year < 2003
+	replace nind = 	5	 if dind == 	27	 & year < 2003
+	replace nind = 	5	 if dind == 	28	 & year < 2003
+	replace nind = 	6	 if dind == 	29	 & year < 2003
+	replace nind = 	7	 if dind == 	30	 & year < 2003
+	replace nind = 	7	 if dind == 	31	 & year < 2003
+	replace nind = 	8	 if dind == 	32	 & year < 2003
+	replace nind = 	9	 if dind == 	33	 & year < 2003
+	replace nind = 	10	 if dind == 	34	 & year < 2003
+	replace nind = 	10	 if dind == 	35	 & year < 2003
+	replace nind = 	11	 if dind == 	36	 & year < 2003
+	replace nind = 	12	 if dind == 	37	 & year < 2003
+	replace nind = 	12	 if dind == 	38	 & year < 2003
+	replace nind = 	11	 if dind == 	39	 & year < 2003
+	replace nind = 	13	 if dind == 	40	 & year < 2003
+	replace nind = 	15	 if dind == 	41	 & year < 2003
+	replace nind = 	14	 if dind == 	42	 & year < 2003
+	replace nind = 	17	 if dind == 	43	 & year < 2003
+	replace nind = 	16	 if dind == 	44	 & year < 2003
+	replace nind = 	12	 if dind == 	45	 & year < 2003
+	replace nind = 	1	 if dind == 	46	 & year < 2003
+	replace nind = 	.	 if dind == 	51	 & year < 2003
+	replace nind = 	19	 if dind == 	52	 & year < 2003
+	replace nind = 	1	 if dind02 == 	1	 & year >= 2003
+	replace nind = 	1	 if dind02 == 	2	 & year >= 2003
+	replace nind = 	2	 if dind02 == 	3	 & year >= 2003
+	replace nind = 	3	 if dind02 == 	4	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	5	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	6	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	7	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	8	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	9	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	10	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	11	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	12	 & year >= 2003
+	replace nind = 	4	 if dind02 == 	13	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	14	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	15	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	16	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	17	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	18	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	19	 & year >= 2003
+	replace nind = 	5	 if dind02 == 	20	 & year >= 2003
+	replace nind = 	6	 if dind02 == 	23	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	24	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	25	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	26	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	27	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	28	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	29	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	30	 & year >= 2003
+	replace nind = 	7	 if dind02 == 	31	 & year >= 2003
+	replace nind = 	8	 if dind02 == 	21	 & year >= 2003
+	replace nind = 	9	 if dind02 == 	22	 & year >= 2003
+	replace nind = 	9	 if dind02 == 	45	 & year >= 2003
+	replace nind = 	9	 if dind02 == 	46	 & year >= 2003
+	replace nind = 	10	 if dind02 == 	32	 & year >= 2003
+	replace nind = 	10	 if dind02 == 	33	 & year >= 2003
+	replace nind = 	10	 if dind02 == 	34	 & year >= 2003
+	replace nind = 	11	 if dind02 == 	48	 & year >= 2003
+	replace nind = 	11	 if dind02 == 	50	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	35	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	36	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	37	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	38	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	39	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	47	 & year >= 2003
+	replace nind = 	12	 if dind02 == 	49	 & year >= 2003
+	replace nind = 	13	 if dind02 == 	44	 & year >= 2003
+	replace nind = 	14	 if dind02 == 	42	 & year >= 2003
+	replace nind = 	15	 if dind02 == 	41	 & year >= 2003
+	replace nind = 	16	 if dind02 == 	43	 & year >= 2003
+	replace nind = 	17	 if dind02 == 	40	 & year >= 2003
+	replace nind = 	19	 if dind02 == 	51	 & year >= 2003
+	replace nind = 	.	 if dind02 == 	52	 & year >= 2003
+	replace nind = 	.	 if dind02 == 	6790	 & year >= 2003
 	lab var nind "uniform one-digit industry"
 
-** FIXME gen nocc and other covariates
+gen armedforce = 0
 
-** gen nind2 - 11 industry categories
+
+gen occperiod = .
+	replace occperiod = 1 if inrange(year, 1971, 1982)
+	replace occperiod = 2 if inrange(year, 1983, 1991)
+	replace occperiod = 3 if inrange(year, 1992, 2002)
+	replace occperiod = 4 if inrange(year, 2003, 2010)
+	replace occperiod = 5 if year == 2011 | (year == 2012 & cmonth <= 4)
+	replace occperiod = 6 if (year == 2012 & cmonth > 4) | year >= 2013
+
+gen occ_p1 = 0
+** upper management  
+	replace occ_p1 = 1 if  occ70 == 202 | occ70 == 222 | occ70 == 245 
+** lower management  
+	replace occ_p1 = 2 if  occ70 == 1 | occ70 == 56 | occ70 == 201 | occ70 == 220   
+	replace occ_p1 = 2 if  inrange(occ70, 203, 215) | inrange(occ70, 223, 225)   
+	replace occ_p1 = 2 if  inrange(occ70, 231, 240) 
+** engineers & computer specialists  
+	replace occ_p1 = 3 if inrange(occ70, 2, 23) | inrange(occ70, 34, 36)   
+	replace occ_p1 = 3 if inrange(occ70, 152, 163) | occ70 == 55  
+** scientists  
+	replace occ_p1 = 4 if inrange(occ70, 24, 26) | inrange(occ70, 42, 54) | inrange(occ70, 91, 96)
+	replace occ_p1 = 4 if inrange(occ70, 150, 151) | occ70 == 165 
+	replace occ_p1 = 4 if inrange(occ70, 171, 173) | inrange(occ70, 195, 196)  
+** education, social support  
+	replace occ_p1 = 5 if inrange(occ70, 86, 90) | inrange(occ70, 100, 145)
+	replace occ_p1 = 5 if inrange(occ70, 32, 33) | inrange(occ70, 174, 194) 
+** lawyers & doctors 
+	replace occ_p1 = 6 if inrange(occ70, 30, 31) 
+	replace occ_p1 = 6 if occ70 == 62 | occ70 == 65 
+** health treatment  
+	replace occ_p1 = 7 if occ70 == 61 | occ70 == 63 | occ70 == 64 | inrange(occ70, 71, 85)
+** clerical occupations 
+	replace occ_p1 = 8 if inrange(occ70, 301, 396)
+** sales occupations 
+	replace occ_p1 = 9 if inrange(occ70, 260, 264) | occ70 == 266 | inrange(occ70, 280, 286)
+** insurance & real estate sales 
+	replace occ_p1 = 10 if occ70 == 265 | occ70 == 270   
+** finance sales 
+	replace occ_p1 = 11 if occ70 == 271  
+** service occupations 
+	replace occ_p1 = 12 if inrange(occ70, 901, 986) | occ70 == 230 | occ70 == 216  
+** primary occ 
+	replace occ_p1 = 13 if inrange(occ70, 801, 846) | occ70 == 450   
+	replace occ_p1 = 13 if occ70 == 752 | occ70 == 740 | occ70 == 761 | occ70 == 755 
+** construction & repair 
+	replace occ_p1 = 14 if occ70 == 401 | inrange(occ70, 410, 412)
+	replace occ_p1 = 14 if inrange(occ70, 415, 421) | inrange(occ70, 424, 425) | occ70 == 502 | occ70 == 516 
+	replace occ_p1 = 14 if inrange(occ70, 430, 433) | inrange(occ70, 436, 440)
+	replace occ_p1 = 14 if inrange(occ70, 470, 495)
+	replace occ_p1 = 14 if inrange(occ70, 510, 512) | inrange(occ70, 520, 523) | occ70 == 534  
+	replace occ_p1 = 14 if inrange(occ70, 552, 560) | occ70 == 546  
+	replace occ_p1 = 14 if occ70 == 601 | occ70 == 603 | occ70 == 605 | inrange(occ70, 614, 615)   
+	replace occ_p1 = 14 if occ70 == 623 | occ70 == 640   
+	replace occ_p1 = 14 if inrange(occ70, 750, 751)  
+** production 
+	replace occ_p1 = 15 if inrange(occ70, 402, 405) | occ70 == 413 | inrange(occ70, 422, 423)
+	replace occ_p1 = 15 if inrange(occ70, 434, 435) | inrange(occ70, 441, 446) | occ70 == 426   
+	replace occ_p1 = 15 if inrange(occ70, 452, 454) | inrange(occ70, 461, 462) 
+	replace occ_p1 = 15 if inrange(occ70, 503, 506) | inrange(occ70, 514, 515) 
+	replace occ_p1 = 15 if inrange(occ70, 525, 533) | inrange(occ70, 535, 540)
+	replace occ_p1 = 15 if inrange(occ70, 542, 545) | occ70 == 501 | occ70 == 514
+	replace occ_p1 = 15 if inrange(occ70, 550, 551) | inrange(occ70, 561, 586)
+	replace occ_p1 = 15 if occ70 == 602 | occ70 == 604 | inrange(occ70,610, 613)  
+	replace occ_p1 = 15 if inrange(occ70, 620, 622) | inrange(occ70, 624, 636)
+	replace occ_p1 = 15 if inrange(occ70, 641, 660) | inrange(occ70, 662, 696)
+** other transportation (incl. truck drivers) 
+	replace occ_p1 = 16 if inrange(occ70, 163, 164) | occ70 == 170 | occ70 == 221 | occ70 == 226 | occ70 == 661  
+	replace occ_p1 = 16 if inrange(occ70, 455, 456) | inrange(occ70, 701, 704)
+	replace occ_p1 = 16 if inrange(occ70, 706, 714) | occ70 == 726 | occ70 == 760   
+	replace occ_p1 = 16 if inrange(occ70, 753, 754) | inrange(occ70, 762, 796)
+	replace occ_p1 = 16 if occ70 == 715 | occ70 == 705 
+
+	replace occ_p1 = 0 if occperiod != 1
+
+** FIXME check that all values are assigned
+	tab occ70 if occ_p1 == 0 & occperiod == 1, m // only missing values left?
+	replace occ_p1 =. if occ70 ==. & occperiod == 1
+
+gen occ_p2 = 0
+** upper management  
+	replace occ_p2 = 1 if inrange(occ80, 1, 13) | occ80 == 19 
+** lower management  
+	replace occ_p2 = 2 if inrange(occ80, 14, 18) | inrange(occ80, 23, 37)
+	replace occ_p2 = 2 if inrange(occ80, 473, 476)
+** engineers & computer specialists  
+	replace occ_p2 = 3 if inrange(occ80, 43, 68) | inrange(occ80, 213, 218) 
+	replace occ_p2 = 3 if occ80 == 229  
+** scientists  
+	replace occ_p2 = 4 if inrange(occ80, 69, 83) | inrange(occ80, 166, 173)
+	replace occ_p2 = 4 if inrange(occ80, 223, 225) | occ80 == 235  
+** education, social support  
+	replace occ_p2 = 5 if inrange(occ80, 113, 165) | inrange(occ80, 174, 177)
+	replace occ_p2 = 5 if inrange(occ80, 183, 199) | occ80 == 234 | occ80 == 228
+** lawyers & doctors 
+	replace occ_p2 = 6 if inrange(occ80, 84, 85) 
+	replace occ_p2 = 6 if inrange(occ80, 178, 179)
+** health treatment  
+	replace occ_p2 = 7 if inrange(occ80, 86, 106) | inrange(occ80, 203, 208)
+** clerical occupations 
+	replace occ_p2 = 8 if inrnage(occ80, 303, 389)
+** sales occupations 
+	replace occ_p2 = 9 if inrange(occ80, 243, 252) | inrange(occ80, 256, 285)
+** insurance & real estate sales 
+	replace occ_p2 = 10 if occ80 == 253 | occ80 == 254 
+** finance sales 
+	replace occ_p2 = 11 if occ80 == 255 
+** service occupations 
+	replace occ_p2 = 12 if inrange(occ80, 403, 470) 
+** primary occ 
+	replace occ_p2 = 13 if inrange(occ80, 477, 499)
+** construction & repair 
+	replace occ_p2 = 14 if inrange(occ80, 503, 617)
+	replace occ_p2 = 14 if inrange(occ80, 863, 869)
+** production 
+	replace occ_p2 = 15 if inrange(occ80, 633, 799)
+	replace occ_p2 = 15 if occ80 == 873 | occ80 == 233  
+** other transportation (incl. truck drivers) 
+	replace occ_p2 = 16 if inrange(occ80, 803, 859)
+	replace occ_p2 = 16 if inrange(occ80, 875, 889)
+	replace occ_p2 = 16 if inrange(occ80, 226, 227)  
+
+	replace occ_p2 = 0 if occperiod != 2
+
+	replace armedforce = 1 if occ80 == 905 & occperiod == 2
+
+** FIXME check that all values are assigned
+	tab occ80 if occ_p2 == 0 & armedforce == 0 & occperiod == 2, m // only missing values left?
+	replace occ_p2 =. if occ80 ==. & occperiod == 2
+	
+gen occ_p3 = 0
+** upper management  
+	replace occ_p3 = 1 if inrange(occ80, 1, 13) | occ80 == 22 
+** lower management  
+	replace occ_p3 = 2 if inrange(occ80, 14, 21) | inrange(occ80, 23, 37)
+	replace occ_p3 = 2 if inrange(occ80, 473, 476)
+** engineers & computer specialists  
+	replace occ_p3 = 3 if inrange(occ80, 43, 68) | inrange(occ80, 213, 218)  
+	replace occ_p3 = 3 if occ80 == 229  
+** scientists  
+	replace occ_p3 = 4 if inrange(occ80, 69, 83) | inrange(occ80, 166, 173)
+	replace occ_p3 = 4 if inrange(occ80, 223, 225) | occ80 == 235  
+** education, social support  
+	replace occ_p3 = 5 if inrange(occ80, 113, 165) | inrange(occ80, 174, 177)
+	replace occ_p3 = 5 if inrange(occ80, 183, 199) | occ80 == 234 | occ80 == 228 
+** lawyers & doctors 
+	replace occ_p3 = 6 if inrange(occ80, 84, 85)
+	replace occ_p3 = 6 if inrange(occ80, 178, 179)
+** health treatment  
+	replace occ_p3 = 7 if inrange(occ80, 86, 106) | inrange(occ80, 203, 208)  
+** clerical occupations 
+	replace occ_p3 = 8 if inrange(occ80, 303, 389)
+** sales occupations 
+	replace occ_p3 = 9 if inrange(occ80, 243, 252) | inrange(occ80, 256, 285)
+** insurance & real estate sales 
+	replace occ_p3 = 10 if occ80 == 253 | occ80 == 254 
+** finance sales 
+	replace occ_p3 = 11 if occ80 == 255 
+** service occupations 
+	replace occ_p3 = 12 if inrange(occ80, 403, 470)
+** primary occ 
+	replace occ_p3 = 13 if inrange(occ80, 477, 499)
+** construction & repair 
+	replace occ_p3 = 14 if inrange(occ80, 503, 617)
+	replace occ_p3 = 14 if inrange(occ80, 864, 869)
+** production 
+	replace occ_p3 = 15 if inrange(occ80, 628, 799)
+	replace occ_p3 = 15 if occ80 == 874 | occ80 == 233  
+** other transportation (incl. truck drivers) 
+	replace occ_p3 = 16 if inrange(occ80, 803, 859)
+	replace occ_p3 = 16 if inrange(occ80, 875, 889)
+	replace occ_p3 = 16 if inrange(occ80, 226, 227)
+	
+	replace occ_p3 = 0 if occperiod != 3
+	
+	replace armedforce = 1 if occ80 == 905 & occperiod == 3
+
+** FIXME check that all values are assigned
+	tab occ80 if occ_p3 == 0 & armedforce == 0 & occperiod == 3, m // only -1's and missing left?
+	replace occ_p3 =. if (occ80 == -1 | occ80 ==.) & occperiod == 3
+	
+gen occ_p4 = 0
+** upper management  
+	replace occ_p4 = 1 if inrange(occ00, 10, 200) | occ00 == 430
+** lower management  
+	replace occ_p4 = 2 if inrange(occ00, 200, 1000) & occ00 != 430   
+** engineers & computer specialists  
+	replace occ_p4 = 3 if inrange(occ00, 1000, 1560)
+** scientists  
+	replace occ_p4 = 4 if inrange(occ00, 1600, 2000)
+** education, social support  
+	replace occ_p4 = 5 if inrange(occ00, 2000, 2100) | inrange(occ00, 2140, 3000)
+** lawyers & doctors 
+	replace occ_p4 = 6 if inrange(occ00, 2100, 2110)
+	replace occ_p4 = 6 if occ00 == 3010 | occ00 == 3060 
+** health treatment  
+	replace occ_p4 = 7 if occ00 == 3000 | inrange(occ00, 3030, 3050) | inrange(occ00, 3110, 3540)
+** clerical occupations 
+	replace occ_p4 = 8 if inrange(occ00, 5000, 5930)
+** sales occupations 
+	replace occ_p4 = 9 if inrange(occ00, 4700, 4960)
+** insurance & real estate sales 
+	replace occ_p4 = 10 if occ00 == 4810 | occ00 == 4920 // overwrites values above 
+** finance sales 
+	replace occ_p4 = 11 if occ00 == 4820 // overwrites values above 
+** service occupations 
+	replace occ_p4 = 12 if inrange(occ00, 3600, 4700)
+** primary occ 
+	replace occ_p4 = 13 if inrange(occ00, 6000, 6130)
+** construction & repair 
+	replace occ_p4 = 14 if inrange(occ00, 6200, 7620)
+** production 
+	replace occ_p4 = 15 if inrange(occ00, 7700, 8960)
+** other transportation (incl. truck drivers) 
+	replace occ_p4 = 16 if inrange(occ00, 9000, 9750)
+
+	replace occ_p4 = 0 if occperiod != 4	
+
+	replace armedforce = 1 if occ00 == 9840 & occperiod == 4
+	
+** FIXME check that all values are assigned
+	tab occ00 if occ_p4 == 0 & armedforce == 0 & occperiod == 4, m // only -1's left?
+	replace occ_p4 =. if occ00 == -1 & occperiod == 4
+
+gen occ_p5 = 0	
+** upper management  
+	replace occ_p5 = 1 if inrange(occ2011, 10, 200) | occ2011 == 430
+** lower management  
+	replace occ_p5 = 2 if inrange(occ2011, 200, 1000) & occ2011 != 430   
+** engineers & computer specialists  
+	replace occ_p5 = 3 if inrange(occ2011, 1000, 1560)
+** scientists  
+	replace occ_p5 = 4 if inrange(occ2011, 1600, 2000)
+** education, social support  
+	replace occ_p5 = 5 if inrange(occ2011, 2000, 2100) | inrange(occ2011, 2140, 3000)
+** lawyers & doctors 
+	replace occ_p5 = 6 if inrange(occ2011, 2100, 2110)
+	replace occ_p5 = 6 if occ2011 == 3010 | occ2011 == 3060
+** health treatment  
+	replace occ_p5 = 7 if occ2011 == 3000 | inrange(occ2011, 3030, 3050) | inrange(occ2011, 3110, 3540)	
+** clerical occupations 
+	replace occ_p5 = 8 if inrange(occ2011, 5000, 5940)	
+** sales occupations 
+	replace occ_p5 = 9 if inrange(occ2011, 4700, 4965)	
+** insurance & real estate sales 
+	replace occ_p5 = 10 if occ2011 == 4810 | occ2011 == 4920 // overwrites values above 
+** finance sales 
+	replace occ_p5 = 11 if occ2011 == 4820 // overwrites values above 	
+** service occupations 
+	replace occ_p5 = 12 if inrange(occ2011, 3600, 4700)
+** primary occ 
+	replace occ_p5 = 13 if inrange(occ2011, 6000, 6130)
+** construction & repair 
+	replace occ_p5 = 14 if inrange(occ2011, 6200, 7620)	
+** production 
+	replace occ_p5 = 15 if inrange(occ2011, 7700, 8960)
+** other transportation (incl. truck drivers) 
+	replace occ_p5 = 16 if inrange(occ2011, 9000, 9750)
+	
+	replace occ_p5 = 0 if occperiod != 5	
+
+	replace armedforce = 1 if occ2011 == 9840 & occperiod == 5
+
+** FIXME check that all values are assigned
+	tab occ2011 if occ_p5 == 0 & armedforce == 0 & occperiod == 5, m // only -1's left?
+	replace occ_p5 =. if occ2011 == -1 & occperiod == 5
+
+gen occ_p6 = 0	
+** upper management  
+	replace occ_p6 = 1 if inrange(occ2012, 10, 200) | occ2012 == 430
+** lower management  
+	replace occ_p6 = 2 if inrange(occ2012, 200, 1000) & occ2012 != 430   
+** engineers & computer specialists  
+	replace occ_p6 = 3 if inrange(occ2012, 1000, 1560)
+** scientists  
+	replace occ_p6 = 4 if inrange(occ2012, 1600, 2000)
+** education, social support  
+	replace occ_p6 = 5 if inrange(occ2012, 2000, 2100) | inrange(occ2012, 2140, 3000)
+** lawyers & doctors 
+	replace occ_p6 = 6 if inrange(occ2012, 2100, 2110)
+	replace occ_p6 = 6 if occ2012 == 3010 | occ2012 == 3060
+** health treatment  
+	replace occ_p6 = 7 if occ2012 == 3000 | inrange(occ2012, 3030, 3050) | inrange(occ2012, 3110, 3540)	
+** clerical occupations 
+	replace occ_p6 = 8 if inrange(occ2012, 5000, 5940)	
+** sales occupations 
+	replace occ_p6 = 9 if inrange(occ2012, 4700, 4965)	
+** insurance & real estate sales 
+	replace occ_p6 = 10 if occ2012 == 4810 | occ2012 == 4920 // overwrites values above 
+** finance sales 
+	replace occ_p6 = 11 if occ2012 == 4820 // overwrites values above 	
+** service occupations 
+	replace occ_p6 = 12 if inrange(occ2012, 3600, 4700)
+** primary occ 
+	replace occ_p6 = 13 if inrange(occ2012, 6000, 6130)
+** construction & repair 
+	replace occ_p6 = 14 if inrange(occ2012, 6200, 7620)	
+** production 
+	replace occ_p6 = 15 if inrange(occ2012, 7700, 8960)
+** other transportation (incl. truck drivers) 
+	replace occ_p6 = 16 if inrange(occ2012, 9000, 9750)
+	
+	replace occ_p6 = 0 if occperiod != 6	
+
+	replace armedforce = 1 if occ2012 == 9840 & occperiod == 6
+
+** FIXME check that all values are assigned
+	tab occ2012 if occ_p6 == 0 & armedforce == 0 & occperiod == 6, m // only -1's left?
+	replace occ_p6 =. if occ2012 == -1 & occperiod == 6
+
+gen nocc = occ_p1 + occ_p2 + occ_p3 + occ_p4 + occ_p5 + occ_p6 // missing values will remain missing
+
+tab nocc armedforce // all the 0's are armed forces?
+
+drop if armedforce == 1
+
+** nind2 - 11 industry categories
+recode nind (1 2 = 1) (3 = 2) (4 5 = 3) (8 9 = 4) (6 7 = 5) (10 = 6) (12 = 7) ///
+(14 15 16 = 8) (17 = 9) (11 13 = 10) (19 = 11), gen(nind2) 
+
+tab nind2, gen(indus)
+
+recode nocc (1 6 =1) (2=2) (3 4 =3) (5=4) (7=5) (8=6) (9=7) (10 11 = 8) ///
+(12=9) (13 15=10) (14=11) (16=12), gen(nocc2)
+
+tab nocc2, gen(occup)
 ********************************************************************************
 
 rename eligible elig
