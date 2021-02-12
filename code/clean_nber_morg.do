@@ -239,8 +239,7 @@ gen occ_p1 = 0
 
 	replace occ_p1 = 0 if occperiod != 1
 
-** FIXME check that all values are assigned
-	tab occ70 if occ_p1 == 0 & occperiod == 1, m // only missing values left?
+	tab occ70 if occ_p1 == 0 & occperiod == 1, m // only missing values left
 	replace occ_p1 =. if occ70 ==. & occperiod == 1
 
 gen occ_p2 = 0
@@ -264,7 +263,7 @@ gen occ_p2 = 0
 ** health treatment  
 	replace occ_p2 = 7 if inrange(occ80, 86, 106) | inrange(occ80, 203, 208)
 ** clerical occupations 
-	replace occ_p2 = 8 if inrnage(occ80, 303, 389)
+	replace occ_p2 = 8 if inrange(occ80, 303, 389)
 ** sales occupations 
 	replace occ_p2 = 9 if inrange(occ80, 243, 252) | inrange(occ80, 256, 285)
 ** insurance & real estate sales 
@@ -290,8 +289,7 @@ gen occ_p2 = 0
 
 	replace armedforce = 1 if occ80 == 905 & occperiod == 2
 
-** FIXME check that all values are assigned
-	tab occ80 if occ_p2 == 0 & armedforce == 0 & occperiod == 2, m // only missing values left?
+	tab occ80 if occ_p2 == 0 & armedforce == 0 & occperiod == 2, m // only missing values left
 	replace occ_p2 =. if occ80 ==. & occperiod == 2
 	
 gen occ_p3 = 0
@@ -341,9 +339,8 @@ gen occ_p3 = 0
 	
 	replace armedforce = 1 if occ80 == 905 & occperiod == 3
 
-** FIXME check that all values are assigned
-	tab occ80 if occ_p3 == 0 & armedforce == 0 & occperiod == 3, m // only -1's and missing left?
-	replace occ_p3 =. if (occ80 == -1 | occ80 ==.) & occperiod == 3
+	tab occ80 if occ_p3 == 0 & armedforce == 0 & occperiod == 3, m // only missing values left
+	replace occ_p3 =. if occ80 ==. & occperiod == 3
 	
 gen occ_p4 = 0
 ** upper management  
@@ -383,10 +380,9 @@ gen occ_p4 = 0
 	replace occ_p4 = 0 if occperiod != 4	
 
 	replace armedforce = 1 if occ00 == 9840 & occperiod == 4
-	
-** FIXME check that all values are assigned
-	tab occ00 if occ_p4 == 0 & armedforce == 0 & occperiod == 4, m // only -1's left?
-	replace occ_p4 =. if occ00 == -1 & occperiod == 4
+
+	tab occ00 if occ_p4 == 0 & armedforce == 0 & occperiod == 4, m // only missing values left
+	replace occ_p4 =. if occ00 ==. & occperiod == 4
 
 gen occ_p5 = 0	
 ** upper management  
@@ -417,9 +413,9 @@ gen occ_p5 = 0
 ** primary occ 
 	replace occ_p5 = 13 if inrange(occ2011, 6000, 6130)
 ** construction & repair 
-	replace occ_p5 = 14 if inrange(occ2011, 6200, 7620)	
+	replace occ_p5 = 14 if inrange(occ2011, 6200, 7630)	
 ** production 
-	replace occ_p5 = 15 if inrange(occ2011, 7700, 8960)
+	replace occ_p5 = 15 if inrange(occ2011, 7700, 8965)
 ** other transportation (incl. truck drivers) 
 	replace occ_p5 = 16 if inrange(occ2011, 9000, 9750)
 	
@@ -427,9 +423,8 @@ gen occ_p5 = 0
 
 	replace armedforce = 1 if occ2011 == 9840 & occperiod == 5
 
-** FIXME check that all values are assigned
-	tab occ2011 if occ_p5 == 0 & armedforce == 0 & occperiod == 5, m // only -1's left?
-	replace occ_p5 =. if occ2011 == -1 & occperiod == 5
+	tab occ2011 if occ_p5 == 0 & armedforce == 0 & occperiod == 5, m // only missing values left
+	replace occ_p5 =. if occ2011 ==. & occperiod == 5
 
 gen occ_p6 = 0	
 ** upper management  
@@ -460,9 +455,9 @@ gen occ_p6 = 0
 ** primary occ 
 	replace occ_p6 = 13 if inrange(occ2012, 6000, 6130)
 ** construction & repair 
-	replace occ_p6 = 14 if inrange(occ2012, 6200, 7620)	
+	replace occ_p6 = 14 if inrange(occ2012, 6200, 7630)	
 ** production 
-	replace occ_p6 = 15 if inrange(occ2012, 7700, 8960)
+	replace occ_p6 = 15 if inrange(occ2012, 7700, 8965)
 ** other transportation (incl. truck drivers) 
 	replace occ_p6 = 16 if inrange(occ2012, 9000, 9750)
 	
@@ -470,9 +465,8 @@ gen occ_p6 = 0
 
 	replace armedforce = 1 if occ2012 == 9840 & occperiod == 6
 
-** FIXME check that all values are assigned
-	tab occ2012 if occ_p6 == 0 & armedforce == 0 & occperiod == 6, m // only -1's left?
-	replace occ_p6 =. if occ2012 == -1 & occperiod == 6
+	tab occ2012 if occ_p6 == 0 & armedforce == 0 & occperiod == 6, m // only missing values left
+	replace occ_p6 =. if occ2012 ==. & occperiod == 6
 
 gen nocc = occ_p1 + occ_p2 + occ_p3 + occ_p4 + occ_p5 + occ_p6 // missing values will remain missing
 
