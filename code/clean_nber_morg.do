@@ -30,6 +30,15 @@ gen hispanic =.
 	replace hispanic = 0 if ethnic == 8           & year <  2003
 	replace hispanic = 0 if ethnic ==.            & year >= 2003
 
+gen hisprace =.
+	replace hisprace = 1 if race == 1 & hispanic == 0 //non hispanic white
+	replace hisprace = 2 if race == 2 & hispanic == 0 //non hispanic Black
+	replace hisprace = 3 if race == 1 & hispanic == 1 //hispanic white
+	replace hisprace = 4 if race == 2 & hispanic == 1 //hispanic Black
+	replace hisprace = 5 if race == 3 & hispanic == 0 //non hispanic other
+	replace hisprace = 6 if race == 3 & hispanic == 1 //hispanic other
+	lab var hisprace "nhw=1, nhB=2, hw=3, hB=4, nho=5, ho=6"
+
 rename pfamrel famrel //>=1994 ref/spouse, <1994 husband/wife
 
 rename prcitshp citizen //>=1994
@@ -45,7 +54,7 @@ rename hourslw hourst
 
 rename class classx
 lab var classx "private = 1, fed = 2, state = 3, loc = 4, self = 5, 6, w/o pay = 7" //<=1993
-lab var class94 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" // >=1994
+lab var class94 "fed = 1, state = 2, loc = 3, priv = 4, 5, self = 6, 7, w/o pay = 8" //>=1994
 
 
 ********************************************************************************
@@ -239,7 +248,7 @@ gen occ_p1 = 0
 
 	replace occ_p1 = 0 if occperiod != 1
 
-	tab occ70 if occ_p1 == 0 & occperiod == 1, m // only missing values left
+	tab occ70 if occ_p1 == 0 & occperiod == 1, m //only missing values left
 	replace occ_p1 =. if occ70 ==. & occperiod == 1
 
 gen occ_p2 = 0
@@ -289,7 +298,7 @@ gen occ_p2 = 0
 
 	replace armedforce = 1 if occ80 == 905 & occperiod == 2
 
-	tab occ80 if occ_p2 == 0 & armedforce == 0 & occperiod == 2, m // only missing values left
+	tab occ80 if occ_p2 == 0 & armedforce == 0 & occperiod == 2, m //only missing values left
 	replace occ_p2 =. if occ80 ==. & occperiod == 2
 	
 gen occ_p3 = 0
@@ -339,7 +348,7 @@ gen occ_p3 = 0
 	
 	replace armedforce = 1 if occ80 == 905 & occperiod == 3
 
-	tab occ80 if occ_p3 == 0 & armedforce == 0 & occperiod == 3, m // only missing values left
+	tab occ80 if occ_p3 == 0 & armedforce == 0 & occperiod == 3, m //only missing values left
 	replace occ_p3 =. if occ80 ==. & occperiod == 3
 	
 gen occ_p4 = 0
@@ -363,9 +372,9 @@ gen occ_p4 = 0
 ** sales occupations 
 	replace occ_p4 = 9 if inrange(occ00, 4700, 4960)
 ** insurance & real estate sales 
-	replace occ_p4 = 10 if occ00 == 4810 | occ00 == 4920 // overwrites values above 
+	replace occ_p4 = 10 if occ00 == 4810 | occ00 == 4920 //overwrites values above 
 ** finance sales 
-	replace occ_p4 = 11 if occ00 == 4820 // overwrites values above 
+	replace occ_p4 = 11 if occ00 == 4820 //overwrites values above 
 ** service occupations 
 	replace occ_p4 = 12 if inrange(occ00, 3600, 4700)
 ** primary occ 
@@ -381,7 +390,7 @@ gen occ_p4 = 0
 
 	replace armedforce = 1 if occ00 == 9840 & occperiod == 4
 
-	tab occ00 if occ_p4 == 0 & armedforce == 0 & occperiod == 4, m // only missing values left
+	tab occ00 if occ_p4 == 0 & armedforce == 0 & occperiod == 4, m //only missing values left
 	replace occ_p4 =. if occ00 ==. & occperiod == 4
 
 gen occ_p5 = 0	
@@ -405,9 +414,9 @@ gen occ_p5 = 0
 ** sales occupations 
 	replace occ_p5 = 9 if inrange(occ2011, 4700, 4965)	
 ** insurance & real estate sales 
-	replace occ_p5 = 10 if occ2011 == 4810 | occ2011 == 4920 // overwrites values above 
+	replace occ_p5 = 10 if occ2011 == 4810 | occ2011 == 4920 //overwrites values above 
 ** finance sales 
-	replace occ_p5 = 11 if occ2011 == 4820 // overwrites values above 	
+	replace occ_p5 = 11 if occ2011 == 4820 //overwrites values above 	
 ** service occupations 
 	replace occ_p5 = 12 if inrange(occ2011, 3600, 4700)
 ** primary occ 
@@ -423,7 +432,7 @@ gen occ_p5 = 0
 
 	replace armedforce = 1 if occ2011 == 9840 & occperiod == 5
 
-	tab occ2011 if occ_p5 == 0 & armedforce == 0 & occperiod == 5, m // only missing values left
+	tab occ2011 if occ_p5 == 0 & armedforce == 0 & occperiod == 5, m //only missing values left
 	replace occ_p5 =. if occ2011 ==. & occperiod == 5
 
 gen occ_p6 = 0	
@@ -447,9 +456,9 @@ gen occ_p6 = 0
 ** sales occupations 
 	replace occ_p6 = 9 if inrange(occ2012, 4700, 4965)	
 ** insurance & real estate sales 
-	replace occ_p6 = 10 if occ2012 == 4810 | occ2012 == 4920 // overwrites values above 
+	replace occ_p6 = 10 if occ2012 == 4810 | occ2012 == 4920 //overwrites values above 
 ** finance sales 
-	replace occ_p6 = 11 if occ2012 == 4820 // overwrites values above 	
+	replace occ_p6 = 11 if occ2012 == 4820 //overwrites values above 	
 ** service occupations 
 	replace occ_p6 = 12 if inrange(occ2012, 3600, 4700)
 ** primary occ 
@@ -465,12 +474,12 @@ gen occ_p6 = 0
 
 	replace armedforce = 1 if occ2012 == 9840 & occperiod == 6
 
-	tab occ2012 if occ_p6 == 0 & armedforce == 0 & occperiod == 6, m // only missing values left
+	tab occ2012 if occ_p6 == 0 & armedforce == 0 & occperiod == 6, m //only missing values left
 	replace occ_p6 =. if occ2012 ==. & occperiod == 6
 
-gen nocc = occ_p1 + occ_p2 + occ_p3 + occ_p4 + occ_p5 + occ_p6 // missing values will remain missing
+gen nocc = occ_p1 + occ_p2 + occ_p3 + occ_p4 + occ_p5 + occ_p6 //missing values will remain missing
 
-tab nocc armedforce // all the 0's are armed forces?
+tab nocc armedforce //all the 0's are armed forces?
 
 drop if armedforce == 1
 
@@ -670,9 +679,37 @@ gen public =.
 	replace public = 1 if inrange(class94, 1, 3) & year >= 1994
 	replace public = 0 if classx !=. & public ==. & year < 1994
 	replace public = 0 if class94 !=. & public ==. & year >= 1994
-********************************************************************************
-** FIXME review dfl1996, lemieux2006, fll2021 to ensure consistency in cleaning
-********************************************************************************
+
+gen exper2 = exper^2
+
+gen exper3 = exper^3
+
+gen exper4 = exper^4
+
+gen edex = educ*exper
+
+gen ee_cl=.
+	replace ee_cl=1 if inrange(educ,0,11) & inrange(exper,0,9)
+	replace ee_cl=2 if inrange(educ,12,12) & inrange(exper,0,9)
+	replace ee_cl=3 if inrange(educ,13,15) & inrange(exper,0,9)
+	replace ee_cl=4 if inrange(educ,16,18) & inrange(exper,0,9)
+	replace ee_cl=5 if inrange(educ,0,11) & inrange(exper,10,19)
+	replace ee_cl=6 if inrange(educ,12,12) & inrange(exper,10,19)
+	replace ee_cl=7 if inrange(educ,13,15) & inrange(exper,10,19)
+	replace ee_cl=8 if inrange(educ,16,18) & inrange(exper,10,19)
+	replace ee_cl=9 if inrange(educ,0,11) & inrange(exper,20,29)
+	replace ee_cl=10 if inrange(educ,12,12) & inrange(exper,20,29)
+	replace ee_cl=11 if inrange(educ,13,15) & inrange(exper,20,29)
+	replace ee_cl=12 if inrange(educ,16,18) & inrange(exper,20,29)
+	replace ee_cl=13 if inrange(educ,0,11) & inrange(exper,30,.)
+	replace ee_cl=14 if inrange(educ,12,12) & inrange(exper,30,.)
+	replace ee_cl=15 if inrange(educ,13,15) & inrange(exper,30,.)
+	replace ee_cl=16 if inrange(educ,16,18) & inrange(exper,30,.)
+	tab ee_cl, gen(ee)
+
+
+
+
 
 ********************************************************************************
 ** Notable insconsistencies with Lloyd
@@ -690,6 +727,6 @@ gen public =.
 
 ** FIXME missing from FLL partt^
 ** FIXME missing from Lloyd famtype dualjob uftpt hours1 pxernh10 allocw2
-** ^partt candiidate: ftpt79 ftpt89 ftpt94
+** ^partt candidate: ftpt79 ftpt89 ftpt94
 
 ** note contrary to cpsx doc, classer1 dne
