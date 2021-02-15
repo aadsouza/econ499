@@ -489,8 +489,8 @@ recode nind (1 2 = 1) (3 = 2) (4 5 = 3) (8 9 = 4) (6 7 = 5) (10 = 6) (12 = 7) //
 
 tab nind2, gen(indus)
 
-recode nocc (1 6 =1) (2=2) (3 4 =3) (5=4) (7=5) (8=6) (9=7) (10 11 = 8) ///
-(12=9) (13 15=10) (14=11) (16=12), gen(nocc2)
+recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+(12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
 
 tab nocc2, gen(occup)
 ********************************************************************************
@@ -707,9 +707,16 @@ gen ee_cl=.
 	replace ee_cl=16 if inrange(educ,16,18) & inrange(exper,30,.)
 	tab ee_cl, gen(ee)
 
+gen cmsa = inlist(centcity,1,2) if centcity !=.
 
-
-
+recode state (11/23 = 1) (31/47 = 2) (51/74 = 3) (81/95 = 4), gen(region)
+	tab region, gen(reg)
+	
+gen quarter =.
+	replace quarter = 1 if inrange(cmonth, 1, 3)
+	replace quarter = 2 if inrange(cmonth, 4, 6)
+	replace quarter = 3 if inrange(cmonth, 7, 9)
+	replace quarter = 4 if inrange(cmonth, 10, 12)
 
 ********************************************************************************
 ** Notable insconsistencies with Lloyd
