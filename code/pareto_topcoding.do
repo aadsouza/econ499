@@ -19,19 +19,20 @@ set seed 486372893
 gen ranuni = runiform() if topcode == 1
 
 gen     pareto = 1/(ranuni^(1/2.68)) if inrange(year, 1975, 1979)
-replace pareto = 1/(ranuni^(1/2.45)) if inrange(year, 1980, 1984) 
-replace pareto = 1/(ranuni^(1/2.15)) if inrange(year, 1985, 1989) 
-replace pareto = 1/(ranuni^(1/2.02)) if inrange(year, 1990, 1994) 
-replace pareto = 1/(ranuni^(1/1.89)) if inrange(year, 1995, 1999) 
-replace pareto = 1/(ranuni^(1/1.81)) if inrange(year, 2000, 2004) 
-replace pareto = 1/(ranuni^(1/1.78)) if inrange(year, 2005, 2009)
+	replace pareto = 1/(ranuni^(1/2.45)) if inrange(year, 1980, 1984) 
+	replace pareto = 1/(ranuni^(1/2.15)) if inrange(year, 1985, 1989) 
+	replace pareto = 1/(ranuni^(1/2.02)) if inrange(year, 1990, 1994) 
+	replace pareto = 1/(ranuni^(1/1.89)) if inrange(year, 1995, 1999) 
+	replace pareto = 1/(ranuni^(1/1.81)) if inrange(year, 2000, 2004) 
+	replace pareto = 1/(ranuni^(1/1.78)) if inrange(year, 2005, 2009)
 
 ** FIXME revise parameters using Tables A4 and B3
-replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
+	replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
 
 * lwage2 uses this imputation;
 gen lwage2 = lwage if topcode == 0
-replace lwage2 = lwage + log(pareto) if topcode == 1
+	replace lwage2 = lwage + log(pareto) if topcode == 1
+	lab var lwage2 "log trimmed imputed nom wage 1-100"
 
 gen lwage3 = log(exp(lwage2) * 100 / cpi)
-lab var lwage3 "real lwage2"
+	lab var lwage3 "log trimmed imputed real wage 1-100 in 1979 dollars"

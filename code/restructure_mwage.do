@@ -246,7 +246,9 @@ gen qcpi =.
     replace qcpi = 370.219 if year == 2019 & quarter == 3
     replace qcpi = 372.63 if year == 2019 & quarter == 4
 	
-gen rmwage = mwage*100/qcpi		
+gen rmwage = mwage*100/qcpi
+
+sort state year quarter		
 
 save "$dataout/qmwage7919.dta", replace
 

@@ -33,12 +33,14 @@ gen hispanic =.
 gen hisprace =.
 	replace hisprace = 1 if race == 1 & hispanic == 0 //non hispanic white
 	replace hisprace = 2 if race == 2 & hispanic == 0 //non hispanic Black
-	replace hisprace = 3 if race == 1 & hispanic == 1 //hispanic white
-	replace hisprace = 4 if race == 2 & hispanic == 1 //hispanic Black
-	replace hisprace = 5 if race == 3 & hispanic == 0 //non hispanic other
-	replace hisprace = 6 if race == 3 & hispanic == 1 //hispanic other
-	lab var hisprace "nhw=1, nhB=2, hw=3, hB=4, nho=5, ho=6"
+	replace hisprace = 3 if hispanic == 1 //hispanic all
+	lab var hisprace "nhw=1, nhB=2, h=3"
 
+gen hispracesex =.
+	replace hispracesex = hisprace 		if sex == 1
+	repalce hispracesex = hisprace + 3	if sex == 2
+	lab var hispracesex "mal: nhw=1, nhB=2, h=3; +3 for fem"
+	
 rename pfamrel famrel //>=1994 ref/spouse, <1994 husband/wife
 
 rename prcitshp citizen //>=1994
@@ -628,10 +630,10 @@ gen rwage = wage*100/cpi
 	
 gen twage = wage
 	replace twage = . if rwage<1 | rwage>100
-	lab var twage "trimmed nom wage 1-100 in 1979 dollars"
+	lab var twage "trimmed nom wage 1-100"
 
 gen logw = ln(twage)
-	lab var logw "log trimmed nom wage 1-100 in 1979 dollars"
+	lab var logw "log trimmed nom wage 1-100"
 
 keep if inrange(minsamp, 4, 8) & inrange(age, 16, 64)
 	
@@ -663,7 +665,8 @@ gen marr =.
 rename logw lwage 
 
 gen rtwage = twage*100/cpi
-
+	lab var rtwage "trimmed real wage 1-100 in 1979 dollars"
+	
 gen lwage1 = ln(rtwage)
 	lab var lwage1 "log trimmed real wage 1-100 in 1979 dollars"
 	

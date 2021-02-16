@@ -26,11 +26,13 @@ global figs "/Users/amedeusdsouza/econ499/figures"
 
 use cleaned_nber_morg, clear
 
-********************************************************************************
-** FIXME currently only using MORG so >83 - merge to gen may_morg
+** FIXME currently only using MORG so >=83 - merge to gen may_morg
 drop if year < 1983
+
 ** drop self employed and w/o pay
 keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
+
+** NOTE in current draft we have not dropped alloc, missing lwage3, 94-95
 ********************************************************************************
 
 preserve 

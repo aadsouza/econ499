@@ -1,0 +1,12 @@
+In this text file we outline the wage and related variables generated in our do files
+
+lab var wage "hourly wage = earnwke/uhourse (>0)"
+lab var nowage "elig sin wage = 1, else = 0"
+lab var alloc1 "allocated hourly wage, weekly earnings, or usual hrs" - flag
+lab var rwage "real hourly wage in 1979 dollars"
+lab var twage "trimmed nom wage 1-100" (rename twage nwage1)
+lab var logw "log trimmed nom wage 1-100" (rename logw lwage)
+lab var rtwage "trimmed real wage 1-100 in 1979 dollars"
+lab var lwage1 "log trimmed real wage 1-100 in 1979 dollars"
+lab var lwage2 "log trimmed imputed nom wage 1-100"
+lab var lwage3 "log trimmed imputed real wage 1-100 in 1979 dollars"
