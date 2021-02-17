@@ -62,16 +62,13 @@ keep if inrange(year, 2000, 2019)
 
 ** keep needed variables
 ** FIXME add partt to list once defined in clean_nber_morg
-keep state year quarter nwage1 lwage1 paidhre exper educ female nind2 nocc cmsa public marr hisprace hispracesex eweight alloc1 covered
-
-rename year syear1
+keep state year quarter nwage1 lwage1 hourly exper educ female nind2 nocc cmsa public marr hisprace hispracesex eweight alloc1 covered
 
 gen finalwt1 = round(eweight)
 
 gen lyear = year - 2000
 
-** FIXME confirm weights optiion fw, iw, pw legal for logit
-logit covered i.state i.year i.nind2 i.state#i.year inind2#i.year#c.lyear [w = finalwt1]
+logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year i.nind2#i.year#c.lyear [fw = finalwt1]
 	predict pcoveragerate
 
 sort state year nind2
@@ -105,8 +102,6 @@ while `hrs' <= 6 {
 	use $estimation/est_dat, clear
 	
 	keep if hispracesex == `hrs'
-	
-	rename syear1 year
 	
 	sort state year quarter
 	

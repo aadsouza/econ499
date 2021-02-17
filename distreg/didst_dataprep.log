@@ -1,0 +1,215 @@
+------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/distreg/didst_dataprep.log
+  log type:  text
+ opened on:  16 Feb 2021, 21:55:10
+
+. ********************************************************************************
+. 
+. rename twage nwage1
+
+. 
+. ** 0019 uses years 00 - 19
+. keep if inrange(year, 2000, 2019)
+(2,143,740 observations deleted)
+
+. 
+. ** keep needed variables
+. ** FIXME add partt to list once defined in clean_nber_morg
+. keep state year quarter nwage1 lwage1 hourly exper educ female nind2 nocc cmsa public marr his
+> prace hispracesex eweight alloc1 covered
+
+. 
+. gen finalwt1 = round(eweight)
+
+. 
+. gen lyear = year - 2000
+
+. 
+. logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year i.nind2#i.year#c.lyear [fw 
+> = finalwt1]
+
+note: 1.nind2#2000.year#c.lyear omitted because of collinearity
+note: 1.nind2#2001.year#c.lyear omitted because of collinearity
+note: 1.nind2#2002.year#c.lyear omitted because of collinearity
+note: 1.nind2#2003.year#c.lyear omitted because of collinearity
+note: 1.nind2#2004.year#c.lyear omitted because of collinearity
+note: 1.nind2#2005.year#c.lyear omitted because of collinearity
+note: 1.nind2#2006.year#c.lyear omitted because of collinearity
+note: 1.nind2#2007.year#c.lyear omitted because of collinearity
+note: 1.nind2#2008.year#c.lyear omitted because of collinearity
+note: 1.nind2#2009.year#c.lyear omitted because of collinearity
+note: 1.nind2#2010.year#c.lyear omitted because of collinearity
+note: 1.nind2#2011.year#c.lyear omitted because of collinearity
+note: 1.nind2#2012.year#c.lyear omitted because of collinearity
+note: 1.nind2#2013.year#c.lyear omitted because of collinearity
+note: 1.nind2#2014.year#c.lyear omitted because of collinearity
+note: 2.nind2#2000.year#c.lyear omitted because of collinearity
+note: 2.nind2#2001.year#c.lyear omitted because of collinearity
+note: 2.nind2#2002.year#c.lyear omitted because of collinearity
+note: 2.nind2#2003.year#c.lyear omitted because of collinearity
+note: 2.nind2#2004.year#c.lyear omitted because of collinearity
+note: 2.nind2#2005.year#c.lyear omitted because of collinearity
+note: 2.nind2#2006.year#c.lyear omitted because of collinearity
+note: 2.nind2#2007.year#c.lyear omitted because of collinearity
+note: 2.nind2#2008.year#c.lyear omitted because of collinearity
+note: 2.nind2#2009.year#c.lyear omitted because of collinearity
+note: 2.nind2#2010.year#c.lyear omitted because of collinearity
+note: 2.nind2#2011.year#c.lyear omitted because of collinearity
+note: 2.nind2#2012.year#c.lyear omitted because of collinearity
+note: 2.nind2#2013.year#c.lyear omitted because of collinearity
+note: 2.nind2#2014.year#c.lyear omitted because of collinearity
+note: 3.nind2#2000.year#c.lyear omitted because of collinearity
+note: 3.nind2#2001.year#c.lyear omitted because of collinearity
+note: 3.nind2#2002.year#c.lyear omitted because of collinearity
+note: 3.nind2#2003.year#c.lyear omitted because of collinearity
+note: 3.nind2#2004.year#c.lyear omitted because of collinearity
+note: 3.nind2#2005.year#c.lyear omitted because of collinearity
+note: 3.nind2#2006.year#c.lyear omitted because of collinearity
+note: 3.nind2#2007.year#c.lyear omitted because of collinearity
+note: 3.nind2#2008.year#c.lyear omitted because of collinearity
+note: 3.nind2#2009.year#c.lyear omitted because of collinearity
+note: 3.nind2#2010.year#c.lyear omitted because of collinearity
+note: 3.nind2#2011.year#c.lyear omitted because of collinearity
+note: 3.nind2#2012.year#c.lyear omitted because of collinearity
+note: 3.nind2#2013.year#c.lyear omitted because of collinearity
+note: 3.nind2#2014.year#c.lyear omitted because of collinearity
+note: 4.nind2#2000.year#c.lyear omitted because of collinearity
+note: 4.nind2#2001.year#c.lyear omitted because of collinearity
+note: 4.nind2#2002.year#c.lyear omitted because of collinearity
+note: 4.nind2#2003.year#c.lyear omitted because of collinearity
+note: 4.nind2#2004.year#c.lyear omitted because of collinearity
+note: 4.nind2#2005.year#c.lyear omitted because of collinearity
+note: 4.nind2#2006.year#c.lyear omitted because of collinearity
+note: 4.nind2#2007.year#c.lyear omitted because of collinearity
+note: 4.nind2#2008.year#c.lyear omitted because of collinearity
+note: 4.nind2#2009.year#c.lyear omitted because of collinearity
+note: 4.nind2#2010.year#c.lyear omitted because of collinearity
+note: 4.nind2#2011.year#c.lyear omitted because of collinearity
+note: 4.nind2#2012.year#c.lyear omitted because of collinearity
+note: 4.nind2#2013.year#c.lyear omitted because of collinearity
+note: 4.nind2#2014.year#c.lyear omitted because of collinearity
+note: 5.nind2#2000.year#c.lyear omitted because of collinearity
+note: 5.nind2#2001.year#c.lyear omitted because of collinearity
+note: 5.nind2#2002.year#c.lyear omitted because of collinearity
+note: 5.nind2#2003.year#c.lyear omitted because of collinearity
+note: 5.nind2#2004.year#c.lyear omitted because of collinearity
+note: 5.nind2#2005.year#c.lyear omitted because of collinearity
+note: 5.nind2#2006.year#c.lyear omitted because of collinearity
+note: 5.nind2#2007.year#c.lyear omitted because of collinearity
+note: 5.nind2#2008.year#c.lyear omitted because of collinearity
+note: 5.nind2#2009.year#c.lyear omitted because of collinearity
+note: 5.nind2#2010.year#c.lyear omitted because of collinearity
+note: 5.nind2#2011.year#c.lyear omitted because of collinearity
+note: 5.nind2#2012.year#c.lyear omitted because of collinearity
+note: 5.nind2#2013.year#c.lyear omitted because of collinearity
+note: 5.nind2#2014.year#c.lyear omitted because of collinearity
+note: 6.nind2#2000.year#c.lyear omitted because of collinearity
+note: 6.nind2#2001.year#c.lyear omitted because of collinearity
+note: 6.nind2#2002.year#c.lyear omitted because of collinearity
+note: 6.nind2#2003.year#c.lyear omitted because of collinearity
+note: 6.nind2#2004.year#c.lyear omitted because of collinearity
+note: 6.nind2#2005.year#c.lyear omitted because of collinearity
+note: 6.nind2#2006.year#c.lyear omitted because of collinearity
+note: 6.nind2#2007.year#c.lyear omitted because of collinearity
+note: 6.nind2#2008.year#c.lyear omitted because of collinearity
+note: 6.nind2#2009.year#c.lyear omitted because of collinearity
+note: 6.nind2#2010.year#c.lyear omitted because of collinearity
+note: 6.nind2#2011.year#c.lyear omitted because of collinearity
+note: 6.nind2#2012.year#c.lyear omitted because of collinearity
+note: 6.nind2#2013.year#c.lyear omitted because of collinearity
+note: 6.nind2#2014.year#c.lyear omitted because of collinearity
+note: 7.nind2#2000.year#c.lyear omitted because of collinearity
+note: 7.nind2#2001.year#c.lyear omitted because of collinearity
+note: 7.nind2#2002.year#c.lyear omitted because of collinearity
+note: 7.nind2#2003.year#c.lyear omitted because of collinearity
+note: 7.nind2#2004.year#c.lyear omitted because of collinearity
+note: 7.nind2#2005.year#c.lyear omitted because of collinearity
+note: 7.nind2#2006.year#c.lyear omitted because of collinearity
+note: 7.nind2#2007.year#c.lyear omitted because of collinearity
+note: 7.nind2#2008.year#c.lyear omitted because of collinearity
+note: 7.nind2#2009.year#c.lyear omitted because of collinearity
+note: 7.nind2#2010.year#c.lyear omitted because of collinearity
+note: 7.nind2#2011.year#c.lyear omitted because of collinearity
+note: 7.nind2#2012.year#c.lyear omitted because of collinearity
+note: 7.nind2#2013.year#c.lyear omitted because of collinearity
+note: 7.nind2#2014.year#c.lyear omitted because of collinearity
+note: 8.nind2#2000.year#c.lyear omitted because of collinearity
+note: 8.nind2#2001.year#c.lyear omitted because of collinearity
+note: 8.nind2#2002.year#c.lyear omitted because of collinearity
+note: 8.nind2#2003.year#c.lyear omitted because of collinearity
+note: 8.nind2#2004.year#c.lyear omitted because of collinearity
+note: 8.nind2#2005.year#c.lyear omitted because of collinearity
+note: 8.nind2#2006.year#c.lyear omitted because of collinearity
+note: 8.nind2#2007.year#c.lyear omitted because of collinearity
+note: 8.nind2#2008.year#c.lyear omitted because of collinearity
+note: 8.nind2#2009.year#c.lyear omitted because of collinearity
+note: 8.nind2#2010.year#c.lyear omitted because of collinearity
+note: 8.nind2#2011.year#c.lyear omitted because of collinearity
+note: 8.nind2#2012.year#c.lyear omitted because of collinearity
+note: 8.nind2#2013.year#c.lyear omitted because of collinearity
+note: 8.nind2#2014.year#c.lyear omitted because of collinearity
+note: 9.nind2#2000.year#c.lyear omitted because of collinearity
+note: 9.nind2#2001.year#c.lyear omitted because of collinearity
+note: 9.nind2#2002.year#c.lyear omitted because of collinearity
+note: 9.nind2#2003.year#c.lyear omitted because of collinearity
+note: 9.nind2#2004.year#c.lyear omitted because of collinearity
+note: 9.nind2#2005.year#c.lyear omitted because of collinearity
+note: 9.nind2#2006.year#c.lyear omitted because of collinearity
+note: 9.nind2#2007.year#c.lyear omitted because of collinearity
+note: 9.nind2#2008.year#c.lyear omitted because of collinearity
+note: 9.nind2#2009.year#c.lyear omitted because of collinearity
+note: 9.nind2#2010.year#c.lyear omitted because of collinearity
+note: 9.nind2#2011.year#c.lyear omitted because of collinearity
+note: 9.nind2#2012.year#c.lyear omitted because of collinearity
+note: 9.nind2#2013.year#c.lyear omitted because of collinearity
+note: 9.nind2#2014.year#c.lyear omitted because of collinearity
+note: 10.nind2#2000.year#c.lyear omitted because of collinearity
+note: 10.nind2#2001.year#c.lyear omitted because of collinearity
+note: 10.nind2#2002.year#c.lyear omitted because of collinearity
+note: 10.nind2#2003.year#c.lyear omitted because of collinearity
+note: 10.nind2#2004.year#c.lyear omitted because of collinearity
+note: 10.nind2#2005.year#c.lyear omitted because of collinearity
+note: 10.nind2#2006.year#c.lyear omitted because of collinearity
+note: 10.nind2#2007.year#c.lyear omitted because of collinearity
+note: 10.nind2#2008.year#c.lyear omitted because of collinearity
+note: 10.nind2#2009.year#c.lyear omitted because of collinearity
+note: 10.nind2#2010.year#c.lyear omitted because of collinearity
+note: 10.nind2#2011.year#c.lyear omitted because of collinearity
+note: 10.nind2#2012.year#c.lyear omitted because of collinearity
+note: 10.nind2#2013.year#c.lyear omitted because of collinearity
+note: 10.nind2#2014.year#c.lyear omitted because of collinearity
+note: 11.nind2#2000.year#c.lyear omitted because of collinearity
+note: 11.nind2#2001.year#c.lyear omitted because of collinearity
+note: 11.nind2#2002.year#c.lyear omitted because of collinearity
+note: 11.nind2#2003.year#c.lyear omitted because of collinearity
+note: 11.nind2#2004.year#c.lyear omitted because of collinearity
+note: 11.nind2#2005.year#c.lyear omitted because of collinearity
+note: 11.nind2#2006.year#c.lyear omitted because of collinearity
+note: 11.nind2#2007.year#c.lyear omitted because of collinearity
+note: 11.nind2#2008.year#c.lyear omitted because of collinearity
+note: 11.nind2#2009.year#c.lyear omitted because of collinearity
+note: 11.nind2#2010.year#c.lyear omitted because of collinearity
+note: 11.nind2#2011.year#c.lyear omitted because of collinearity
+note: 11.nind2#2012.year#c.lyear omitted because of collinearity
+note: 11.nind2#2013.year#c.lyear omitted because of collinearity
+note: 11.nind2#2014.year#c.lyear omitted because of collinearity
+Iteration 0:   log likelihood = -5.176e+09  
+Iteration 1:   log likelihood = -4.387e+09  
+Iteration 2:   log likelihood = -4.195e+09  
+Iteration 3:   log likelihood = -4.192e+09  
+Iteration 4:   log likelihood = -4.191e+09  
+Iteration 5:   log likelihood = -4.191e+09  
+Iteration 6:   log likelihood = -4.191e+09  
+Iteration 7:   log likelihood = -4.191e+09  
+Iteration 8:   log likelihood = -4.191e+09  
+Iteration 9:   log likelihood = -4.191e+09  (backed up)
+Iteration 10:  log likelihood = -4.191e+09  (backed up)
+Iteration 11:  log likelihood = -4.191e+09  (backed up)
+Iteration 12:  log likelihood = -4.191e+09  (backed up)
+Iteration 13:  log likelihood = -4.191e+09  (backed up)
+Iteration 14:  log likelihood = -4.191e+09  (backed up)
+Iteration 15:  log likelihood = -4.191e+09  (backed up)
+Iteration 16:  log likelihood = -4.191e+09  (backed up)
+Iteration 17:  log likelihood = -4.191e+09  (backed up)
+Iteration 18:  log likelihood = -4.191e+09  (backed up)
