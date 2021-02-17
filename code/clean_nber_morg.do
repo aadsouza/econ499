@@ -38,7 +38,7 @@ gen hisprace =.
 
 gen hispracesex =.
 	replace hispracesex = hisprace 		if sex == 1
-	repalce hispracesex = hisprace + 3	if sex == 2
+	replace hispracesex = hisprace + 3	if sex == 2
 	lab var hispracesex "mal: nhw=1, nhB=2, h=3; +3 for fem"
 	
 rename pfamrel famrel //>=1994 ref/spouse, <1994 husband/wife
