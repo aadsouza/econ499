@@ -62,13 +62,40 @@ keep if inrange(year, 2000, 2019)
 
 ** keep needed variables
 ** FIXME add partt to list once defined in clean_nber_morg
-keep state year quarter nwage1 lwage1 paidhre exper educ female nind nocc cmsa public marr hisprace hispracesex eweight alloc1
+keep state year quarter nwage1 lwage1 paidhre exper educ female nind2 nocc cmsa public marr hisprace hispracesex eweight alloc1 covered
 
 rename year syear1
 
 gen finalwt1 = round(eweight)
 
+gen lyear = year - 2000
+
+** FIXME confirm weights optiion fw, iw, pw legal for logit
+logit covered i.state i.year i.nind2 i.state#i.year inind2#i.year#c.lyear [w = finalwt1]
+	predict pcoveragerate
+
+sort state year nind2
+
 save "$estimation/est_dat.dta", replace
+
+gen cell = 1
+
+collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
+
+keep if cell >= 25
+
+keep state year nind2 coveragerate
+
+merge 1:m state year nind2 using "$estimation/est_dat.dta"
+
+tab _merge [w = finalwt1]
+
+replace coveragerate = pcoveragerate if _merge == 2
+
+drop _merge
+
+** FIXME ONLY DROP FOR UNION REGS, USE NIND FROM CLEANED_NBER_MORG FOR MW ONLY
+rename nind2 nind
 
 sum nwage1 lwage1
 
@@ -92,11 +119,116 @@ while `hrs' <= 6 {
 	gen rminw = log(mwage) - log(qcpi/104.88925) //1979 dollars [(sum_i^4 79q_i)/4 = 104.88925]
 	
 	gen wagcat = 0
-	replace wagcat = 1 if rdvwag <= foo
+		replace wagcat = 1 if rdvwag <= 0.383 //log(exp(1.6)*104.8925/354.242)
+	
+		local i = 1
+		while `i' <= 56{
+			replace wagcat = 1 + `i' if rdvwag > 0.383 + (`i' - 1)*0.05 & rdvwag <= 0.383 + `i'*0.05
+			local i = `i' + 1
+		}
+		
+		replace wagcat = 58 if rdvwag > 3.183
+
+		table wagcat, c(min rdvwag max rdvwag)
+		
+	gen mincat = 0
+		replace mincat = 1 if rminw <= 0.383
+		
+		local i = 1
+		while `i' <= 30{
+			replace mincat = 1 + `i' if rminw > 0.383 + (`i' - 1)*0.05 & rminw <= 0.383 + `i'*0.05
+		}
+	
+	sum hispracesex mincat
+	
+	rename finalwt1 fweight
+	
+	keep wagcat state year quarter mincat qcpi fweight exper educ nind nocc cmsa public marr
+	
+	gen pid = _n
+	
+	compress
+	
+	fillin pid wagcat
+	
+	gen wagein = 1 - _fillin
+	
+	egen state1 = mean(state), by(pid)
+		replace state = state1 if missing(state)
+		
+	egen year1 = mean(year), by(pid)
+		replace year = year1 if missing(year)
+		
+	egen quarter1 = mean(quarter), by(pid)
+		replace quarter = quarter1 if missing(quarter)
+		
+	egen mincat1 = mean(mincat), by(pid)
+		replace mincat = mincat1 if missing(mincat)
+		
+	egen exper1 = mean(exper), by(pid)
+		replace exper = exper1 if missing(exper)
+		
+	egen educ1 = mean(educ), by(pid)
+		replace educ = educ1 if missing(educ)
+		
+	egen nind1 = mean(nind), by(pid)
+		replace nind = nind1 if missing(nind)
+		
+	egen nocc1 = mean(nocc), by(pid)
+		replace nocc = nocc1 if missing(nocc)
+		
+	egen cmsa1 = mean(cmsa), by(pid)
+		replace cmsa = cmsa1 if missing(cmsa)
+		
+	egen public1 = mean(public), by(pid)
+		replace public = public1 if missing(public)
+	
+	egen marr1 = mean(marr), by(pid)
+		replace marr = marr1 if missing(marr)
+		
+	egen qcpi1 = mean(qcpi), by(pid)
+		replace qcpi = qcpi1 if missing(qcpi)
+	
+	egen fweight1 = mean(fweight), by(pid)
+		replace fweight = fweight1 if missing(fweight)
+		
+	egen covered1 = mean(covered), by(pid)
+		replace covered = covered1 if missing(covered)
+		
+	egen coveragerate1 = mean(coveragerate), by(pid)
+		replace coveragerate = coveragerate1 if missing(coveragerate)
+		
+	sort pid wagcat
+		by pid: gen cumwage = sum(wagein) // = 1 if at or below wage bin
+		replace cumwage = 1 - cumwage // = 1 if above wage bin
+		replace cumwage = cumwage + 1 if wagein == 1 // = 1 if at or above wage bin
+		
+	drop state1 year1 quarter1 mincat1 exper1 educ1 nind1 nocc1 cmsa1 public1 marr1 qcpi1 fweight1 covered1 coveragerate1
+		
+	gen cut_l = exp(0.383 + (wagcat - 2)*0.05)*qcpi/104.88925	if wagcat >= 2
+		replace cut_l = 1 if wagcat == 1
+		
+	gen rdol5 = cut_l < 5
+	
+	gen rdol10 = cut_l < 10
+	
+	gen rdollar(floor(11-cut_l)) if cut_l <= 10
+		replace rdollar = 9 if cut_l > 10
+		
+	gen diff = wagcat - mincat1
+	
+	drop qcpi pid _fillin wagein cut_l
+	
+	compress
+	
+	save "$estimation/stacked_0017_`hrs'", replace
+	
+	local hrs = `hrs' + 1
 }
 
+erase "$estimation/est_dat.dta"
 
-
+log close
 
 
 
