@@ -14,8 +14,59 @@ rename hhid houseid
 	
 rename intmonth cmonth
 	lab var cmonth "month in sample"
-
-lab var state "1960 census code for state" //Lloyd uses gestfips - dne<1989
+	
+lab var state "1960 census code for state" //Lloyd uses gestfips - dne<1989			
+    replace state = 	11	 if stfips == 	23	&	state ==.
+    replace state = 	12	 if stfips == 	33	&	state ==.
+    replace state = 	13	 if stfips == 	50	&	state ==.
+    replace state = 	14	 if stfips == 	25	&	state ==.
+    replace state = 	15	 if stfips == 	44	&	state ==.
+    replace state = 	16	 if stfips == 	9	&	state ==.
+    replace state = 	21	 if stfips == 	36	&	state ==.
+    replace state = 	22	 if stfips == 	34	&	state ==.
+    replace state = 	23	 if stfips == 	42	&	state ==.
+    replace state = 	31	 if stfips == 	39	&	state ==.
+    replace state = 	32	 if stfips == 	18	&	state ==.
+    replace state = 	33	 if stfips == 	17	&	state ==.
+    replace state = 	34	 if stfips == 	26	&	state ==.
+    replace state = 	35	 if stfips == 	55	&	state ==.
+    replace state = 	41	 if stfips == 	27	&	state ==.
+    replace state = 	42	 if stfips == 	19	&	state ==.
+    replace state = 	43	 if stfips == 	29	&	state ==.
+    replace state = 	44	 if stfips == 	38	&	state ==.
+    replace state = 	45	 if stfips == 	46	&	state ==.
+    replace state = 	46	 if stfips == 	31	&	state ==.
+    replace state = 	47	 if stfips == 	20	&	state ==.
+    replace state = 	51	 if stfips == 	10	&	state ==.
+    replace state = 	52	 if stfips == 	24	&	state ==.
+    replace state = 	53	 if stfips == 	11	&	state ==.
+    replace state = 	54	 if stfips == 	51	&	state ==.
+    replace state = 	55	 if stfips == 	54	&	state ==.
+    replace state = 	56	 if stfips == 	37	&	state ==.
+    replace state = 	57	 if stfips == 	45	&	state ==.
+    replace state = 	58	 if stfips == 	13	&	state ==.
+    replace state = 	59	 if stfips == 	12	&	state ==.
+    replace state = 	61	 if stfips == 	21	&	state ==.
+    replace state = 	62	 if stfips == 	47	&	state ==.
+    replace state = 	63	 if stfips == 	1	&	state ==.
+    replace state = 	64	 if stfips == 	28	&	state ==.
+    replace state = 	71	 if stfips == 	5	&	state ==.
+    replace state = 	72	 if stfips == 	22	&	state ==.
+    replace state = 	73	 if stfips == 	40	&	state ==.
+    replace state = 	74	 if stfips == 	48	&	state ==.
+    replace state = 	81	 if stfips == 	30	&	state ==.
+    replace state = 	82	 if stfips == 	16	&	state ==.
+    replace state = 	83	 if stfips == 	56	&	state ==.
+    replace state = 	84	 if stfips == 	8	&	state ==.
+    replace state = 	85	 if stfips == 	35	&	state ==.
+    replace state = 	86	 if stfips == 	4	&	state ==.
+    replace state = 	87	 if stfips == 	49	&	state ==.
+    replace state = 	88	 if stfips == 	32	&	state ==.
+    replace state = 	91	 if stfips == 	53	&	state ==.
+    replace state = 	92	 if stfips == 	41	&	state ==.
+    replace state = 	93	 if stfips == 	6	&	state ==.
+    replace state = 	94	 if stfips == 	2	&	state ==.
+    replace state = 	95	 if stfips == 	15	&	state ==.
 
 lab var sex "male = 1, female = 2"
 

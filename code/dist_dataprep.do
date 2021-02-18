@@ -68,8 +68,7 @@ gen finalwt1 = round(eweight)
 
 gen lyear = year - 2000
 
-** FIXME exists collinearity + does not converge, force stop at 8 iter
-logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year i.nind2#i.year#c.lyear [fw = finalwt1], iterate(8)
+logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year i.nind2#i.year#c.lyear [fw = finalwt1]
 	predict pcoveragerate
 
 sort state year nind2
