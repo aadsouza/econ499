@@ -91,8 +91,10 @@ replace coveragerate = pcoveragerate if _merge == 2
 
 drop _merge
 
-** FIXME ONLY DROP FOR UNION REGS, USE NIND FROM CLEANED_NBER_MORG FOR MW ONLY
+** FIXME USE NIND FROM CLEANED_NBER_MORG FOR MW ONLY
 rename nind2 nind
+
+save "$estimation/est_dat.dta", replace
 
 sum nwage1 lwage1
 
@@ -139,7 +141,7 @@ while `hrs' <= 6 {
 	
 	rename finalwt1 fweight
 	
-	keep wagcat state year quarter mincat qcpi fweight exper educ nind nocc cmsa public marr
+	keep wagcat state year quarter mincat qcpi fweight exper educ nind nocc cmsa public marr covered coveragerate
 	
 	gen pid = _n
 	
@@ -208,10 +210,10 @@ while `hrs' <= 6 {
 	
 	gen rdol10 = cut_l < 10
 	
-	gen rdollar(floor(11-cut_l)) if cut_l <= 10
+	gen rdollar = floor(11 - cut_l) if cut_l <= 10
 		replace rdollar = 9 if cut_l > 10
 		
-	gen diff = wagcat - mincat1
+	gen diff = wagcat - mincat
 	
 	drop qcpi pid _fillin wagein cut_l
 	

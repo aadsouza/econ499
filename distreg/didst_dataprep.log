@@ -1,0 +1,3222 @@
+------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/distreg/didst_dataprep.log
+  log type:  text
+ opened on:  19 Feb 2021, 00:21:59
+
+. ********************************************************************************
+. 
+. rename twage nwage1
+
+. 
+. ** 0019 uses years 00 - 19
+. keep if inrange(year, 2000, 2019)
+(2,143,740 observations deleted)
+
+. 
+. ** keep needed variables
+. ** FIXME add partt to list once defined in clean_nber_morg
+. keep state year quarter nwage1 lwage1 hourly exper educ female nind2 nocc cmsa public marr his
+> prace hispracesex eweight alloc1 covered
+
+. 
+. gen finalwt1 = round(eweight)
+
+. 
+. gen lyear = year - 2000
+
+. 
+. logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year i.nind2#i.year#c.lyear [fw 
+> = finalwt1]
+
+note: 1.nind2#2000.year#c.lyear omitted because of collinearity
+note: 1.nind2#2001.year#c.lyear omitted because of collinearity
+note: 1.nind2#2002.year#c.lyear omitted because of collinearity
+note: 1.nind2#2003.year#c.lyear omitted because of collinearity
+note: 1.nind2#2004.year#c.lyear omitted because of collinearity
+note: 1.nind2#2005.year#c.lyear omitted because of collinearity
+note: 1.nind2#2006.year#c.lyear omitted because of collinearity
+note: 1.nind2#2007.year#c.lyear omitted because of collinearity
+note: 1.nind2#2008.year#c.lyear omitted because of collinearity
+note: 1.nind2#2009.year#c.lyear omitted because of collinearity
+note: 1.nind2#2010.year#c.lyear omitted because of collinearity
+note: 1.nind2#2011.year#c.lyear omitted because of collinearity
+note: 1.nind2#2012.year#c.lyear omitted because of collinearity
+note: 1.nind2#2013.year#c.lyear omitted because of collinearity
+note: 1.nind2#2014.year#c.lyear omitted because of collinearity
+note: 1.nind2#2015.year#c.lyear omitted because of collinearity
+note: 1.nind2#2016.year#c.lyear omitted because of collinearity
+note: 1.nind2#2017.year#c.lyear omitted because of collinearity
+note: 1.nind2#2018.year#c.lyear omitted because of collinearity
+note: 1.nind2#2019.year#c.lyear omitted because of collinearity
+note: 2.nind2#2000.year#c.lyear omitted because of collinearity
+note: 2.nind2#2001.year#c.lyear omitted because of collinearity
+note: 2.nind2#2002.year#c.lyear omitted because of collinearity
+note: 2.nind2#2003.year#c.lyear omitted because of collinearity
+note: 2.nind2#2004.year#c.lyear omitted because of collinearity
+note: 2.nind2#2005.year#c.lyear omitted because of collinearity
+note: 2.nind2#2006.year#c.lyear omitted because of collinearity
+note: 2.nind2#2007.year#c.lyear omitted because of collinearity
+note: 2.nind2#2008.year#c.lyear omitted because of collinearity
+note: 2.nind2#2009.year#c.lyear omitted because of collinearity
+note: 2.nind2#2010.year#c.lyear omitted because of collinearity
+note: 2.nind2#2011.year#c.lyear omitted because of collinearity
+note: 2.nind2#2012.year#c.lyear omitted because of collinearity
+note: 2.nind2#2013.year#c.lyear omitted because of collinearity
+note: 2.nind2#2014.year#c.lyear omitted because of collinearity
+note: 2.nind2#2015.year#c.lyear omitted because of collinearity
+note: 2.nind2#2016.year#c.lyear omitted because of collinearity
+note: 2.nind2#2017.year#c.lyear omitted because of collinearity
+note: 2.nind2#2018.year#c.lyear omitted because of collinearity
+note: 2.nind2#2019.year#c.lyear omitted because of collinearity
+note: 3.nind2#2000.year#c.lyear omitted because of collinearity
+note: 3.nind2#2001.year#c.lyear omitted because of collinearity
+note: 3.nind2#2002.year#c.lyear omitted because of collinearity
+note: 3.nind2#2003.year#c.lyear omitted because of collinearity
+note: 3.nind2#2004.year#c.lyear omitted because of collinearity
+note: 3.nind2#2005.year#c.lyear omitted because of collinearity
+note: 3.nind2#2006.year#c.lyear omitted because of collinearity
+note: 3.nind2#2007.year#c.lyear omitted because of collinearity
+note: 3.nind2#2008.year#c.lyear omitted because of collinearity
+note: 3.nind2#2009.year#c.lyear omitted because of collinearity
+note: 3.nind2#2010.year#c.lyear omitted because of collinearity
+note: 3.nind2#2011.year#c.lyear omitted because of collinearity
+note: 3.nind2#2012.year#c.lyear omitted because of collinearity
+note: 3.nind2#2013.year#c.lyear omitted because of collinearity
+note: 3.nind2#2014.year#c.lyear omitted because of collinearity
+note: 3.nind2#2015.year#c.lyear omitted because of collinearity
+note: 3.nind2#2016.year#c.lyear omitted because of collinearity
+note: 3.nind2#2017.year#c.lyear omitted because of collinearity
+note: 3.nind2#2018.year#c.lyear omitted because of collinearity
+note: 3.nind2#2019.year#c.lyear omitted because of collinearity
+note: 4.nind2#2000.year#c.lyear omitted because of collinearity
+note: 4.nind2#2001.year#c.lyear omitted because of collinearity
+note: 4.nind2#2002.year#c.lyear omitted because of collinearity
+note: 4.nind2#2003.year#c.lyear omitted because of collinearity
+note: 4.nind2#2004.year#c.lyear omitted because of collinearity
+note: 4.nind2#2005.year#c.lyear omitted because of collinearity
+note: 4.nind2#2006.year#c.lyear omitted because of collinearity
+note: 4.nind2#2007.year#c.lyear omitted because of collinearity
+note: 4.nind2#2008.year#c.lyear omitted because of collinearity
+note: 4.nind2#2009.year#c.lyear omitted because of collinearity
+note: 4.nind2#2010.year#c.lyear omitted because of collinearity
+note: 4.nind2#2011.year#c.lyear omitted because of collinearity
+note: 4.nind2#2012.year#c.lyear omitted because of collinearity
+note: 4.nind2#2013.year#c.lyear omitted because of collinearity
+note: 4.nind2#2014.year#c.lyear omitted because of collinearity
+note: 4.nind2#2015.year#c.lyear omitted because of collinearity
+note: 4.nind2#2016.year#c.lyear omitted because of collinearity
+note: 4.nind2#2017.year#c.lyear omitted because of collinearity
+note: 4.nind2#2018.year#c.lyear omitted because of collinearity
+note: 4.nind2#2019.year#c.lyear omitted because of collinearity
+note: 5.nind2#2000.year#c.lyear omitted because of collinearity
+note: 5.nind2#2001.year#c.lyear omitted because of collinearity
+note: 5.nind2#2002.year#c.lyear omitted because of collinearity
+note: 5.nind2#2003.year#c.lyear omitted because of collinearity
+note: 5.nind2#2004.year#c.lyear omitted because of collinearity
+note: 5.nind2#2005.year#c.lyear omitted because of collinearity
+note: 5.nind2#2006.year#c.lyear omitted because of collinearity
+note: 5.nind2#2007.year#c.lyear omitted because of collinearity
+note: 5.nind2#2008.year#c.lyear omitted because of collinearity
+note: 5.nind2#2009.year#c.lyear omitted because of collinearity
+note: 5.nind2#2010.year#c.lyear omitted because of collinearity
+note: 5.nind2#2011.year#c.lyear omitted because of collinearity
+note: 5.nind2#2012.year#c.lyear omitted because of collinearity
+note: 5.nind2#2013.year#c.lyear omitted because of collinearity
+note: 5.nind2#2014.year#c.lyear omitted because of collinearity
+note: 5.nind2#2015.year#c.lyear omitted because of collinearity
+note: 5.nind2#2016.year#c.lyear omitted because of collinearity
+note: 5.nind2#2017.year#c.lyear omitted because of collinearity
+note: 5.nind2#2018.year#c.lyear omitted because of collinearity
+note: 5.nind2#2019.year#c.lyear omitted because of collinearity
+note: 6.nind2#2000.year#c.lyear omitted because of collinearity
+note: 6.nind2#2001.year#c.lyear omitted because of collinearity
+note: 6.nind2#2002.year#c.lyear omitted because of collinearity
+note: 6.nind2#2003.year#c.lyear omitted because of collinearity
+note: 6.nind2#2004.year#c.lyear omitted because of collinearity
+note: 6.nind2#2005.year#c.lyear omitted because of collinearity
+note: 6.nind2#2006.year#c.lyear omitted because of collinearity
+note: 6.nind2#2007.year#c.lyear omitted because of collinearity
+note: 6.nind2#2008.year#c.lyear omitted because of collinearity
+note: 6.nind2#2009.year#c.lyear omitted because of collinearity
+note: 6.nind2#2010.year#c.lyear omitted because of collinearity
+note: 6.nind2#2011.year#c.lyear omitted because of collinearity
+note: 6.nind2#2012.year#c.lyear omitted because of collinearity
+note: 6.nind2#2013.year#c.lyear omitted because of collinearity
+note: 6.nind2#2014.year#c.lyear omitted because of collinearity
+note: 6.nind2#2015.year#c.lyear omitted because of collinearity
+note: 6.nind2#2016.year#c.lyear omitted because of collinearity
+note: 6.nind2#2017.year#c.lyear omitted because of collinearity
+note: 6.nind2#2018.year#c.lyear omitted because of collinearity
+note: 6.nind2#2019.year#c.lyear omitted because of collinearity
+note: 7.nind2#2000.year#c.lyear omitted because of collinearity
+note: 7.nind2#2001.year#c.lyear omitted because of collinearity
+note: 7.nind2#2002.year#c.lyear omitted because of collinearity
+note: 7.nind2#2003.year#c.lyear omitted because of collinearity
+note: 7.nind2#2004.year#c.lyear omitted because of collinearity
+note: 7.nind2#2005.year#c.lyear omitted because of collinearity
+note: 7.nind2#2006.year#c.lyear omitted because of collinearity
+note: 7.nind2#2007.year#c.lyear omitted because of collinearity
+note: 7.nind2#2008.year#c.lyear omitted because of collinearity
+note: 7.nind2#2009.year#c.lyear omitted because of collinearity
+note: 7.nind2#2010.year#c.lyear omitted because of collinearity
+note: 7.nind2#2011.year#c.lyear omitted because of collinearity
+note: 7.nind2#2012.year#c.lyear omitted because of collinearity
+note: 7.nind2#2013.year#c.lyear omitted because of collinearity
+note: 7.nind2#2014.year#c.lyear omitted because of collinearity
+note: 7.nind2#2015.year#c.lyear omitted because of collinearity
+note: 7.nind2#2016.year#c.lyear omitted because of collinearity
+note: 7.nind2#2017.year#c.lyear omitted because of collinearity
+note: 7.nind2#2018.year#c.lyear omitted because of collinearity
+note: 7.nind2#2019.year#c.lyear omitted because of collinearity
+note: 8.nind2#2000.year#c.lyear omitted because of collinearity
+note: 8.nind2#2001.year#c.lyear omitted because of collinearity
+note: 8.nind2#2002.year#c.lyear omitted because of collinearity
+note: 8.nind2#2003.year#c.lyear omitted because of collinearity
+note: 8.nind2#2004.year#c.lyear omitted because of collinearity
+note: 8.nind2#2005.year#c.lyear omitted because of collinearity
+note: 8.nind2#2006.year#c.lyear omitted because of collinearity
+note: 8.nind2#2007.year#c.lyear omitted because of collinearity
+note: 8.nind2#2008.year#c.lyear omitted because of collinearity
+note: 8.nind2#2009.year#c.lyear omitted because of collinearity
+note: 8.nind2#2010.year#c.lyear omitted because of collinearity
+note: 8.nind2#2011.year#c.lyear omitted because of collinearity
+note: 8.nind2#2012.year#c.lyear omitted because of collinearity
+note: 8.nind2#2013.year#c.lyear omitted because of collinearity
+note: 8.nind2#2014.year#c.lyear omitted because of collinearity
+note: 8.nind2#2015.year#c.lyear omitted because of collinearity
+note: 8.nind2#2016.year#c.lyear omitted because of collinearity
+note: 8.nind2#2017.year#c.lyear omitted because of collinearity
+note: 8.nind2#2018.year#c.lyear omitted because of collinearity
+note: 8.nind2#2019.year#c.lyear omitted because of collinearity
+note: 9.nind2#2000.year#c.lyear omitted because of collinearity
+note: 9.nind2#2001.year#c.lyear omitted because of collinearity
+note: 9.nind2#2002.year#c.lyear omitted because of collinearity
+note: 9.nind2#2003.year#c.lyear omitted because of collinearity
+note: 9.nind2#2004.year#c.lyear omitted because of collinearity
+note: 9.nind2#2005.year#c.lyear omitted because of collinearity
+note: 9.nind2#2006.year#c.lyear omitted because of collinearity
+note: 9.nind2#2007.year#c.lyear omitted because of collinearity
+note: 9.nind2#2008.year#c.lyear omitted because of collinearity
+note: 9.nind2#2009.year#c.lyear omitted because of collinearity
+note: 9.nind2#2010.year#c.lyear omitted because of collinearity
+note: 9.nind2#2011.year#c.lyear omitted because of collinearity
+note: 9.nind2#2012.year#c.lyear omitted because of collinearity
+note: 9.nind2#2013.year#c.lyear omitted because of collinearity
+note: 9.nind2#2014.year#c.lyear omitted because of collinearity
+note: 9.nind2#2015.year#c.lyear omitted because of collinearity
+note: 9.nind2#2016.year#c.lyear omitted because of collinearity
+note: 9.nind2#2017.year#c.lyear omitted because of collinearity
+note: 9.nind2#2018.year#c.lyear omitted because of collinearity
+note: 9.nind2#2019.year#c.lyear omitted because of collinearity
+note: 10.nind2#2000.year#c.lyear omitted because of collinearity
+note: 10.nind2#2001.year#c.lyear omitted because of collinearity
+note: 10.nind2#2002.year#c.lyear omitted because of collinearity
+note: 10.nind2#2003.year#c.lyear omitted because of collinearity
+note: 10.nind2#2004.year#c.lyear omitted because of collinearity
+note: 10.nind2#2005.year#c.lyear omitted because of collinearity
+note: 10.nind2#2006.year#c.lyear omitted because of collinearity
+note: 10.nind2#2007.year#c.lyear omitted because of collinearity
+note: 10.nind2#2008.year#c.lyear omitted because of collinearity
+note: 10.nind2#2009.year#c.lyear omitted because of collinearity
+note: 10.nind2#2010.year#c.lyear omitted because of collinearity
+note: 10.nind2#2011.year#c.lyear omitted because of collinearity
+note: 10.nind2#2012.year#c.lyear omitted because of collinearity
+note: 10.nind2#2013.year#c.lyear omitted because of collinearity
+note: 10.nind2#2014.year#c.lyear omitted because of collinearity
+note: 10.nind2#2015.year#c.lyear omitted because of collinearity
+note: 10.nind2#2016.year#c.lyear omitted because of collinearity
+note: 10.nind2#2017.year#c.lyear omitted because of collinearity
+note: 10.nind2#2018.year#c.lyear omitted because of collinearity
+note: 10.nind2#2019.year#c.lyear omitted because of collinearity
+note: 11.nind2#2000.year#c.lyear omitted because of collinearity
+note: 11.nind2#2001.year#c.lyear omitted because of collinearity
+note: 11.nind2#2002.year#c.lyear omitted because of collinearity
+note: 11.nind2#2003.year#c.lyear omitted because of collinearity
+note: 11.nind2#2004.year#c.lyear omitted because of collinearity
+note: 11.nind2#2005.year#c.lyear omitted because of collinearity
+note: 11.nind2#2006.year#c.lyear omitted because of collinearity
+note: 11.nind2#2007.year#c.lyear omitted because of collinearity
+note: 11.nind2#2008.year#c.lyear omitted because of collinearity
+note: 11.nind2#2009.year#c.lyear omitted because of collinearity
+note: 11.nind2#2010.year#c.lyear omitted because of collinearity
+note: 11.nind2#2011.year#c.lyear omitted because of collinearity
+note: 11.nind2#2012.year#c.lyear omitted because of collinearity
+note: 11.nind2#2013.year#c.lyear omitted because of collinearity
+note: 11.nind2#2014.year#c.lyear omitted because of collinearity
+note: 11.nind2#2015.year#c.lyear omitted because of collinearity
+note: 11.nind2#2016.year#c.lyear omitted because of collinearity
+note: 11.nind2#2017.year#c.lyear omitted because of collinearity
+note: 11.nind2#2018.year#c.lyear omitted because of collinearity
+note: 11.nind2#2019.year#c.lyear omitted because of collinearity
+Iteration 0:   log likelihood = -7.109e+09  
+Iteration 1:   log likelihood = -6.045e+09  
+Iteration 2:   log likelihood = -5.770e+09  
+Iteration 3:   log likelihood = -5.765e+09  
+Iteration 4:   log likelihood = -5.765e+09  
+Iteration 5:   log likelihood = -5.765e+09  
+
+Logistic regression                             Number of obs     =  1.775e+10
+                                                LR chi2(1219)     =   2.69e+09
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5.765e+09                     Pseudo R2         =     0.1891
+
+------------------------------------------------------------------------------------
+           covered |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------------+----------------------------------------------------------------
+             state |
+               NH  |  -.4574379   .0020937  -218.48   0.000    -.4615415   -.4533343
+               VT  |  -.5472971   .0026337  -207.81   0.000    -.5524591   -.5421352
+               MA  |  -.0137349   .0015787    -8.70   0.000     -.016829   -.0106408
+               RI  |   .1692246   .0020253    83.56   0.000     .1652551    .1731941
+               CT  |   .0317005   .0016507    19.20   0.000     .0284652    .0349358
+               NY  |   .6737695   .0014618   460.92   0.000     .6709045    .6766346
+               NJ  |   .4422183   .0015153   291.84   0.000     .4392484    .4451882
+               PA  |   .0688897   .0014918    46.18   0.000     .0659657    .0718136
+               OH  |   .2194101   .0014867   147.59   0.000     .2164963    .2223239
+               IN  |  -.0488567   .0015531   -31.46   0.000    -.0519006   -.0458127
+               IL  |   .2128216   .0014846   143.35   0.000     .2099118    .2157315
+               MI  |    .423896   .0014905   284.39   0.000     .4209746    .4268174
+               WI  |   .1646745   .0015412   106.85   0.000     .1616538    .1676951
+               MN  |   .2370223   .0015481   153.10   0.000     .2339881    .2400566
+               IA  |  -.1216621   .0016735   -72.70   0.000     -.124942   -.1183821
+               MO  |   -.229515    .001573  -145.91   0.000    -.2325981    -.226432
+               ND  |  -1.084678   .0029143  -372.20   0.000     -1.09039   -1.078966
+               SD  |  -1.025417   .0026955  -380.42   0.000    -1.030701   -1.020134
+               NE  |  -.5159183   .0019037  -271.00   0.000    -.5196496    -.512187
+               KS  |  -.6906789    .001753  -394.00   0.000    -.6941147   -.6872431
+               DE  |  -.1277614   .0023914   -53.43   0.000    -.1324483   -.1230744
+               MD  |  -.1391182    .001576   -88.27   0.000    -.1422071   -.1360292
+               DC  |  -.3280868   .0025696  -127.68   0.000    -.3331231   -.3230504
+               VA  |  -1.153768   .0016318  -707.04   0.000    -1.156967    -1.15057
+               WV  |  -.1023835   .0018984   -53.93   0.000    -.1061043   -.0986626
+               NC  |   -1.57889   .0017264  -914.56   0.000    -1.582273   -1.575506
+               SC  |  -1.442026   .0018505  -779.27   0.000    -1.445653   -1.438399
+               GA  |   -1.25487   .0016605  -755.72   0.000    -1.258124   -1.251615
+               FL  |  -.7533011   .0015129  -497.92   0.000    -.7562663   -.7503359
+               KY  |  -.3929824   .0017006  -231.08   0.000    -.3963156   -.3896492
+               TN  |  -.7705641   .0016599  -464.22   0.000    -.7738175   -.7673107
+               AL  |  -.5606828   .0016882  -332.12   0.000    -.5639916    -.557374
+               MS  |  -.7581059   .0018511  -409.55   0.000    -.7617339   -.7544778
+               AR  |  -1.159722   .0019487  -595.13   0.000    -1.163542   -1.155903
+               LA  |  -.7926723   .0017636  -449.46   0.000    -.7961289   -.7892156
+               OK  |  -.9593728   .0018393  -521.59   0.000    -.9629778   -.9557678
+               TX  |  -1.040436   .0014938  -696.48   0.000    -1.043363   -1.037508
+               MT  |  -.1401913   .0021315   -65.77   0.000    -.1443689   -.1360136
+               ID  |  -.8674768   .0023067  -376.07   0.000    -.8719978   -.8629558
+               WY  |  -.7983758   .0028334  -281.77   0.000    -.8039292   -.7928224
+               CO  |  -.5883748   .0016402  -358.73   0.000    -.5915895   -.5851602
+               NM  |   -.785355   .0019766  -397.33   0.000    -.7892289    -.781481
+               AZ  |  -1.082864   .0017061  -634.69   0.000    -1.086208    -1.07952
+               UT  |  -.7474042   .0018633  -401.12   0.000    -.7510561   -.7437522
+               NV  |   .2955862   .0017538   168.54   0.000     .2921488    .2990236
+               WA  |   .3127462   .0015299   204.42   0.000     .3097476    .3157447
+               OR  |   .1035659   .0016387    63.20   0.000     .1003541    .1067776
+               CA  |   .1228375    .001445    85.01   0.000     .1200053    .1256697
+               AK  |   .2733981   .0023013   118.80   0.000     .2688877    .2779086
+               HI  |   .6742822    .001914   352.28   0.000     .6705308    .6780337
+                   |
+              year |
+             2001  |  -.2304372   .0025305   -91.06   0.000    -.2353969   -.2254775
+             2002  |  -.2250776   .0025173   -89.41   0.000    -.2300113   -.2201438
+             2003  |  -.2315483   .0027084   -85.49   0.000    -.2368567   -.2262399
+             2004  |  -.0168921   .0026421    -6.39   0.000    -.0220706   -.0117136
+             2005  |   .1501929   .0025708    58.42   0.000     .1451541    .1552316
+             2006  |   .0512096   .0025733    19.90   0.000     .0461661    .0562531
+             2007  |    .062608    .002528    24.77   0.000     .0576533    .0675627
+             2008  |   .1120877   .0025019    44.80   0.000      .107184    .1169913
+             2009  |  -.1972253    .002616   -75.39   0.000    -.2023525   -.1920981
+             2010  |  -.2641574   .0026705   -98.92   0.000    -.2693916   -.2589233
+             2011  |  -.3609983   .0026756  -134.92   0.000    -.3662425   -.3557542
+             2012  |  -.1367524   .0026122   -52.35   0.000    -.1418721   -.1316326
+             2013  |   -.345776   .0026723  -129.39   0.000    -.3510136   -.3405385
+             2014  |  -.3454012   .0026863  -128.58   0.000    -.3506663   -.3401361
+             2015  |   -.461208   .0027992  -164.77   0.000    -.4666942   -.4557217
+             2016  |  -.3473777    .002711  -128.14   0.000    -.3526912   -.3420642
+             2017  |  -.5155148   .0027588  -186.86   0.000    -.5209219   -.5101076
+             2018  |  -.2203054   .0026669   -82.61   0.000    -.2255325   -.2150784
+             2019  |  -.4902605   .0027088  -180.98   0.000    -.4955698   -.4849513
+                   |
+             nind2 |
+                2  |   1.571961   .0011201  1403.35   0.000     1.569765    1.574156
+                3  |   1.085088   .0010902   995.30   0.000     1.082951    1.087225
+                4  |  -.0462807   .0011116   -41.63   0.000    -.0484594    -.044102
+                5  |    2.06296   .0011004  1874.69   0.000     2.060804    2.065117
+                6  |  -.8721166    .001347  -647.47   0.000    -.8747566   -.8694766
+                7  |  -.5400683    .001195  -451.95   0.000    -.5424104   -.5377261
+                8  |   .6801655   .0011104   612.56   0.000     .6779892    .6823418
+                9  |   2.530506   .0010889  2323.93   0.000     2.528372    2.532641
+               10  |   .3217953   .0012122   265.47   0.000     .3194196    .3241711
+               11  |   2.333494   .0011136  2095.44   0.000     2.331311    2.335677
+                   |
+        state#year |
+          NH#2001  |   .2183889   .0029839    73.19   0.000     .2125406    .2242371
+          NH#2002  |   .0823934    .002934    28.08   0.000     .0766429     .088144
+          NH#2003  |   .1571143    .002981    52.71   0.000     .1512717     .162957
+          NH#2004  |   .1866448   .0029874    62.48   0.000     .1807895       .1925
+          NH#2005  |   .2124513   .0029642    71.67   0.000     .2066415     .218261
+          NH#2006  |   .2445895   .0029371    83.28   0.000     .2388329    .2503462
+          NH#2007  |   .3365227   .0029312   114.81   0.000     .3307777    .3422676
+          NH#2008  |   .3384319   .0028976   116.80   0.000     .3327527    .3441111
+          NH#2009  |   .3788525   .0029341   129.12   0.000     .3731019    .3846031
+          NH#2010  |   .3022003   .0030298    99.74   0.000      .296262    .3081386
+          NH#2011  |   .3706607    .002977   124.51   0.000      .364826    .3764955
+          NH#2012  |   .3691612   .0029718   124.22   0.000     .3633366    .3749858
+          NH#2013  |   .2720154   .0030362    89.59   0.000     .2660645    .2779662
+          NH#2014  |   .3834254   .0030114   127.32   0.000     .3775231    .3893277
+          NH#2015  |   .1121459    .003005    37.32   0.000     .1062563    .1180356
+          NH#2016  |   .2694913   .0029741    90.61   0.000     .2636621    .2753204
+          NH#2017  |   .4839878   .0029975   161.46   0.000     .4781128    .4898629
+          NH#2018  |   .2831961   .0029611    95.64   0.000     .2773926    .2889997
+          NH#2019  |   .3095764   .0029822   103.81   0.000     .3037313    .3154214
+          VT#2001  |   .2704287   .0036983    73.12   0.000     .2631802    .2776772
+          VT#2002  |   .0486172   .0036769    13.22   0.000     .0414106    .0558237
+          VT#2003  |   .2176016    .003709    58.67   0.000     .2103322    .2248711
+          VT#2004  |   .2673354   .0037499    71.29   0.000     .2599858    .2746849
+          VT#2005  |   .3135876   .0036567    85.76   0.000     .3064205    .3207546
+          VT#2006  |   .3447739   .0036002    95.77   0.000     .3377177    .3518301
+          VT#2007  |   .3507506   .0036722    95.51   0.000     .3435531     .357948
+          VT#2008  |   .3223693   .0036413    88.53   0.000     .3152324    .3295062
+          VT#2009  |   .4371002   .0036159   120.88   0.000     .4300131    .4441873
+          VT#2010  |   .4857665   .0036709   132.33   0.000     .4785718    .4929613
+          VT#2011  |   .3271452   .0036664    89.23   0.000     .3199592    .3343311
+          VT#2012  |   .4584531    .003657   125.36   0.000     .4512856    .4656206
+          VT#2013  |   .5718491   .0036829   155.27   0.000     .5646307    .5790674
+          VT#2014  |   .5074694   .0036964   137.29   0.000     .5002245    .5147143
+          VT#2015  |   .4365865    .003679   118.67   0.000     .4293758    .4437973
+          VT#2016  |   .5187749   .0036989   140.25   0.000     .5115252    .5260246
+          VT#2017  |   .4779885   .0038098   125.46   0.000     .4705215    .4854555
+          VT#2018  |   .3784019   .0037705   100.36   0.000     .3710119    .3857919
+          VT#2019  |   .5354278   .0037604   142.39   0.000     .5280576     .542798
+          MA#2001  |   .2319798   .0022459   103.29   0.000     .2275779    .2363818
+          MA#2002  |   .1005704   .0022011    45.69   0.000     .0962563    .1048844
+          MA#2003  |   .1901986   .0022619    84.09   0.000     .1857654    .1946318
+          MA#2004  |   .1893355    .002282    82.97   0.000     .1848629    .1938082
+          MA#2005  |   .1030945   .0022497    45.83   0.000     .0986852    .1075038
+          MA#2006  |   .1739265   .0022423    77.57   0.000     .1695317    .1783212
+          MA#2007  |   .1699024   .0022375    75.93   0.000     .1655169    .1742878
+          MA#2008  |   .1982404   .0021961    90.27   0.000     .1939362    .2025446
+          MA#2009  |   .4501421    .002223   202.49   0.000     .4457851    .4544991
+          MA#2010  |   .2979229   .0023071   129.13   0.000      .293401    .3024448
+          MA#2011  |   .1038075   .0022715    45.70   0.000     .0993554    .1082596
+          MA#2012  |   .2414929   .0022709   106.34   0.000     .2370419    .2459438
+          MA#2013  |   .2893589   .0022933   126.18   0.000     .2848642    .2938536
+          MA#2014  |   .1168452   .0023034    50.73   0.000     .1123307    .1213597
+          MA#2015  |   .0368962   .0022722    16.24   0.000     .0324428    .0413497
+          MA#2016  |  -.0596359    .002288   -26.07   0.000    -.0641203   -.0551516
+          MA#2017  |   .1261026   .0023227    54.29   0.000     .1215501     .130655
+          MA#2018  |   .1063056   .0022431    47.39   0.000     .1019092     .110702
+          MA#2019  |   .1577625   .0022552    69.96   0.000     .1533424    .1621826
+          RI#2001  |   .1427605   .0029147    48.98   0.000     .1370478    .1484733
+          RI#2002  |  -.0081369   .0028968    -2.81   0.005    -.0138145   -.0024593
+          RI#2003  |   .1354234   .0029301    46.22   0.000     .1296804    .1411663
+          RI#2004  |   .2893295   .0029263    98.87   0.000      .283594     .295065
+          RI#2005  |   .1025217   .0028975    35.38   0.000     .0968427    .1082007
+          RI#2006  |   .0538716   .0029238    18.43   0.000     .0481411    .0596021
+          RI#2007  |   .0635496   .0029187    21.77   0.000     .0578289    .0692702
+          RI#2008  |   .1357519   .0029002    46.81   0.000     .1300676    .1414362
+          RI#2009  |   .1684191   .0029658    56.79   0.000     .1626062     .174232
+          RI#2010  |   .2284499   .0030098    75.90   0.000     .2225507     .234349
+          RI#2011  |   .0985884   .0029981    32.88   0.000     .0927122    .1044646
+          RI#2012  |   .1449168   .0029959    48.37   0.000      .139045    .1507887
+          RI#2013  |    .335464   .0029885   112.25   0.000     .3296066    .3413213
+          RI#2014  |   .1315323   .0030892    42.58   0.000     .1254776     .137587
+          RI#2015  |  -.1887407   .0030756   -61.37   0.000    -.1947687   -.1827127
+          RI#2016  |   .0059888   .0030235     1.98   0.048     .0000629    .0119147
+          RI#2017  |   .1833621   .0030151    60.81   0.000     .1774526    .1892715
+          RI#2018  |   .3074119   .0029677   103.59   0.000     .3015954    .3132285
+          RI#2019  |     .30715   .0029631   103.66   0.000     .3013423    .3129576
+          CT#2001  |   .1838613   .0023633    77.80   0.000     .1792294    .1884932
+          CT#2002  |   .1239475   .0023101    53.65   0.000     .1194198    .1284753
+          CT#2003  |   .1484905   .0023905    62.12   0.000     .1438053    .1531757
+          CT#2004  |   .2592717   .0023965   108.19   0.000     .2545746    .2639688
+          CT#2005  |   .2430519   .0023768   102.26   0.000     .2383934    .2477104
+          CT#2006  |   .2864999   .0023554   121.63   0.000     .2818834    .2911164
+          CT#2007  |   .3579512   .0023368   153.18   0.000     .3533711    .3625312
+          CT#2008  |   .3055074   .0023033   132.64   0.000      .300993    .3100219
+          CT#2009  |   .3700276   .0023469   157.67   0.000     .3654278    .3746274
+          CT#2010  |   .4637841   .0024215   191.53   0.000      .459038    .4685302
+          CT#2011  |   .3017445   .0023957   125.95   0.000     .2970491      .30644
+          CT#2012  |   .0970762   .0024188    40.13   0.000     .0923354     .101817
+          CT#2013  |   .1740984   .0024471    71.14   0.000     .1693022    .1788947
+          CT#2014  |   .2756294    .002448   112.60   0.000     .2708314    .2804273
+          CT#2015  |   .1238391   .0024109    51.37   0.000     .1191139    .1285644
+          CT#2016  |   .3455646    .002403   143.81   0.000     .3408548    .3502743
+          CT#2017  |   .4502752   .0024361   184.83   0.000     .4455005      .45505
+          CT#2018  |   .2784273   .0023616   117.90   0.000     .2737987    .2830559
+          CT#2019  |    .241628   .0023865   101.25   0.000     .2369505    .2463054
+          NY#2001  |    .327246   .0020783   157.46   0.000     .3231726    .3313194
+          NY#2002  |    .145002   .0020373    71.17   0.000     .1410089     .148995
+          NY#2003  |   .2006299    .002102    95.45   0.000       .19651    .2047498
+          NY#2004  |   .3004832   .0021126   142.23   0.000     .2963426    .3046239
+          NY#2005  |   .3306593   .0020809   158.90   0.000     .3265808    .3347378
+          NY#2006  |   .2618209   .0020748   126.19   0.000     .2577544    .2658874
+          NY#2007  |   .3314466   .0020626   160.70   0.000      .327404    .3354891
+          NY#2008  |   .3092135   .0020316   152.20   0.000     .3052316    .3131954
+          NY#2009  |   .3293726   .0020749   158.74   0.000     .3253059    .3334393
+          NY#2010  |   .3607911    .002149   167.89   0.000     .3565792     .365003
+          NY#2011  |   .2271501   .0021095   107.68   0.000     .2230156    .2312846
+          NY#2012  |   .1885063   .0021207    88.89   0.000     .1843498    .1926627
+          NY#2013  |   .3626078    .002134   169.92   0.000     .3584252    .3667904
+          NY#2014  |   .3241723   .0021453   151.11   0.000     .3199675     .328377
+          NY#2015  |   .1460154   .0021145    69.05   0.000     .1418711    .1501597
+          NY#2016  |   .1756763   .0021171    82.98   0.000     .1715268    .1798258
+          NY#2017  |   .2550389   .0021715   117.45   0.000     .2507828     .259295
+          NY#2018  |   .0562452   .0020928    26.88   0.000     .0521434    .0603469
+          NY#2019  |   .0058701   .0021007     2.79   0.005     .0017527    .0099875
+          NJ#2001  |   .1555467   .0021537    72.22   0.000     .1513255     .159768
+          NJ#2002  |  -.0080176   .0021126    -3.80   0.000    -.0121582    -.003877
+          NJ#2003  |   .0482008   .0021812    22.10   0.000     .0439258    .0524758
+          NJ#2004  |   .1848911   .0021882    84.49   0.000     .1806022    .1891799
+          NJ#2005  |   .0538412     .00216    24.93   0.000     .0496077    .0580746
+          NJ#2006  |   .1394711   .0021538    64.76   0.000     .1352497    .1436925
+          NJ#2007  |   .1425283   .0021412    66.56   0.000     .1383316     .146725
+          NJ#2008  |  -.0487093   .0021178   -23.00   0.000      -.05286   -.0445585
+          NJ#2009  |   .0430239   .0021546    19.97   0.000      .038801    .0472468
+          NJ#2010  |  -.0619568   .0022331   -27.75   0.000    -.0663336   -.0575801
+          NJ#2011  |   -.124505   .0021972   -56.66   0.000    -.1288115   -.1201985
+          NJ#2012  |  -.0873611   .0022018   -39.68   0.000    -.0916766   -.0830457
+          NJ#2013  |  -.0347676   .0022211   -15.65   0.000     -.039121   -.0304143
+          NJ#2014  |   .0495021   .0022261    22.24   0.000      .045139    .0538653
+          NJ#2015  |   -.295062   .0022003  -134.10   0.000    -.2993745   -.2907496
+          NJ#2016  |  -.1045675   .0021977   -47.58   0.000    -.1088748   -.1002602
+          NJ#2017  |   .1355537   .0022509    60.22   0.000      .131142    .1399654
+          NJ#2018  |  -.1566308   .0021815   -71.80   0.000    -.1609066   -.1523551
+          NJ#2019  |   -.173579   .0021825   -79.53   0.000    -.1778566   -.1693015
+          PA#2001  |    .266627   .0021169   125.95   0.000      .262478    .2707761
+          PA#2002  |   .0496254   .0020794    23.87   0.000     .0455499     .053701
+          PA#2003  |   .0762305   .0021485    35.48   0.000     .0720196    .0804414
+          PA#2004  |   .1979222   .0021546    91.86   0.000     .1936992    .2021452
+          PA#2005  |   .0566731   .0021279    26.63   0.000     .0525025    .0608436
+          PA#2006  |   .0085134   .0021236     4.01   0.000     .0043513    .0126755
+          PA#2007  |   .1781583   .0021049    84.64   0.000     .1740326    .1822839
+          PA#2008  |   .2216811   .0020729   106.94   0.000     .2176183     .225744
+          PA#2009  |   .2119063   .0021162   100.13   0.000     .2077586    .2160541
+          PA#2010  |   .2228285   .0021948   101.53   0.000     .2185268    .2271302
+          PA#2011  |    .170331   .0021547    79.05   0.000     .1661078    .1745542
+          PA#2012  |   .0859862    .002166    39.70   0.000     .0817409    .0902315
+          PA#2013  |   .0744828   .0021795    34.17   0.000     .0702111    .0787545
+          PA#2014  |   .1462418   .0021886    66.82   0.000     .1419522    .1505314
+          PA#2015  |  -.0495769   .0021612   -22.94   0.000    -.0538127   -.0453411
+          PA#2016  |   -.134135   .0021645   -61.97   0.000    -.1383772   -.1298927
+          PA#2017  |   .0260038   .0022188    11.72   0.000      .021655    .0303525
+          PA#2018  |   -.046019   .0021364   -21.54   0.000    -.0502063   -.0418317
+          PA#2019  |  -.0233803   .0021441   -10.90   0.000    -.0275826   -.0191779
+          OH#2001  |   .1929579   .0021136    91.29   0.000     .1888153    .1971006
+          OH#2002  |   .0203112   .0020756     9.79   0.000      .016243    .0243794
+          OH#2003  |   .1320324   .0021383    61.75   0.000     .1278414    .1362234
+          OH#2004  |   .0671007    .002155    31.14   0.000      .062877    .0713243
+          OH#2005  |   .1029939   .0021201    48.58   0.000     .0988386    .1071491
+          OH#2006  |   .0159657   .0021159     7.55   0.000     .0118186    .0201127
+          OH#2007  |  -.0416001   .0021036   -19.78   0.000    -.0457231   -.0374771
+          OH#2008  |  -.0467817   .0020743   -22.55   0.000    -.0508472   -.0427162
+          OH#2009  |    -.00442   .0021167    -2.09   0.037    -.0085687   -.0002713
+          OH#2010  |  -.0811137   .0021966   -36.93   0.000     -.085419   -.0768084
+          OH#2011  |  -.1419395   .0021595   -65.73   0.000     -.146172   -.1377071
+          OH#2012  |  -.1017538   .0021698   -46.90   0.000    -.1060065   -.0975011
+          OH#2013  |  -.0238593    .002185   -10.92   0.000    -.0281418   -.0195768
+          OH#2014  |   .0112408   .0021914     5.13   0.000     .0069457    .0155358
+          OH#2015  |  -.3256607   .0021674  -150.25   0.000    -.3299088   -.3214127
+          OH#2016  |  -.1956888   .0021614   -90.54   0.000    -.1999252   -.1914524
+          OH#2017  |  -.0747345   .0022162   -33.72   0.000    -.0790781   -.0703909
+          OH#2018  |  -.1340551   .0021329   -62.85   0.000    -.1382355   -.1298747
+          OH#2019  |  -.1667146   .0021415   -77.85   0.000     -.170912   -.1625173
+          IN#2001  |   .1055482   .0022098    47.76   0.000     .1012171    .1098794
+          IN#2002  |  -.1486845    .002187   -67.99   0.000    -.1529709    -.144398
+          IN#2003  |  -.0936542   .0022516   -41.59   0.000    -.0980673    -.089241
+          IN#2004  |  -.0533219   .0022633   -23.56   0.000    -.0577579   -.0488859
+          IN#2005  |  -.1600946   .0022405   -71.45   0.000    -.1644859   -.1557032
+          IN#2006  |  -.0408075   .0022303   -18.30   0.000    -.0451787   -.0364363
+          IN#2007  |  -.0354772   .0022195   -15.98   0.000    -.0398273    -.031127
+          IN#2008  |  -.0776327   .0021884   -35.47   0.000     -.081922   -.0733434
+          IN#2009  |  -.2202321   .0022453   -98.09   0.000    -.2246328   -.2158314
+          IN#2010  |  -.0616832   .0023185   -26.60   0.000    -.0662275    -.057139
+          IN#2011  |  -.0456661    .002274   -20.08   0.000     -.050123   -.0412092
+          IN#2012  |  -.2991246   .0022959  -130.29   0.000    -.3036244   -.2946248
+          IN#2013  |  -.2331576    .002313  -100.80   0.000     -.237691   -.2286243
+          IN#2014  |  -.1217802   .0023198   -52.50   0.000    -.1263269   -.1172335
+          IN#2015  |  -.4620057    .002299  -200.96   0.000    -.4665117   -.4574996
+          IN#2016  |  -.2775596   .0022831  -121.57   0.000    -.2820345   -.2730848
+          IN#2017  |  -.1709613   .0023329   -73.28   0.000    -.1755336   -.1663889
+          IN#2018  |  -.4748051   .0022723  -208.95   0.000    -.4792588   -.4703513
+          IN#2019  |  -.3983386   .0022847  -174.35   0.000    -.4028164   -.3938607
+          IL#2001  |   .2464789   .0021116   116.72   0.000     .2423401    .2506176
+          IL#2002  |   .2155458    .002073   103.98   0.000     .2114827    .2196089
+          IL#2003  |    .160572   .0021395    75.05   0.000     .1563788    .1647653
+          IL#2004  |   .1979766   .0021523    91.98   0.000     .1937581     .202195
+          IL#2005  |   .0738498    .002122    34.80   0.000     .0696907    .0780088
+          IL#2006  |   .1824467   .0021116    86.40   0.000      .178308    .1865855
+          IL#2007  |   .0400793    .002101    19.08   0.000     .0359613    .0441972
+          IL#2008  |   .1274802   .0020673    61.67   0.000     .1234283     .131532
+          IL#2009  |   .2048404    .002109    97.13   0.000     .2007069     .208974
+          IL#2010  |   .1746789   .0021874    79.86   0.000     .1703916    .1789662
+          IL#2011  |   .1386064   .0021479    64.53   0.000     .1343966    .1428161
+          IL#2012  |  -.0247476   .0021592   -11.46   0.000    -.0289795   -.0205157
+          IL#2013  |   .0820874   .0021742    37.75   0.000     .0778259    .0863488
+          IL#2014  |   .1272784   .0021835    58.29   0.000     .1229989    .1315579
+          IL#2015  |  -.1983204   .0021547   -92.04   0.000    -.2025435   -.1940973
+          IL#2016  |  -.0402904   .0021571   -18.68   0.000    -.0445183   -.0360625
+          IL#2017  |   .0842901   .0022103    38.13   0.000     .0799579    .0886223
+          IL#2018  |  -.1410459   .0021294   -66.24   0.000    -.1452195   -.1368723
+          IL#2019  |  -.0893948    .002143   -41.72   0.000     -.093595   -.0851947
+          MI#2001  |   .1612314   .0021182    76.12   0.000     .1570798     .165383
+          MI#2002  |  -.0409903   .0020856   -19.65   0.000    -.0450779   -.0369026
+          MI#2003  |   .1339971   .0021492    62.35   0.000     .1297848    .1382094
+          MI#2004  |   .2188775    .002158   101.42   0.000     .2146478    .2231071
+          MI#2005  |   .1023109   .0021291    48.05   0.000      .098138    .1064839
+          MI#2006  |   .0468378   .0021269    22.02   0.000     .0426692    .0510065
+          MI#2007  |   .1852468   .0021121    87.71   0.000     .1811072    .1893864
+          MI#2008  |   .0046373   .0020874     2.22   0.026     .0005461    .0087286
+          MI#2009  |   .0444196   .0021322    20.83   0.000     .0402406    .0485986
+          MI#2010  |  -.0553962   .0022113   -25.05   0.000    -.0597303   -.0510621
+          MI#2011  |  -.0379121   .0021737   -17.44   0.000    -.0421724   -.0336518
+          MI#2012  |  -.0532776   .0021813   -24.42   0.000    -.0575529   -.0490023
+          MI#2013  |  -.1266953   .0022009   -57.57   0.000     -.131009   -.1223816
+          MI#2014  |   .0289995   .0022031    13.16   0.000     .0246815    .0333174
+          MI#2015  |  -.1999154   .0021774   -91.81   0.000    -.2041831   -.1956477
+          MI#2016  |  -.1711284   .0021803   -78.49   0.000    -.1754017   -.1668552
+          MI#2017  |   .0516576   .0022255    23.21   0.000     .0472958    .0560194
+          MI#2018  |  -.2375271   .0021538  -110.28   0.000    -.2417485   -.2333058
+          MI#2019  |  -.1463311   .0021631   -67.65   0.000    -.1505708   -.1420914
+          WI#2001  |    .150691   .0021935    68.70   0.000     .1463919    .1549902
+          WI#2002  |   -.013283   .0021588    -6.15   0.000    -.0175141   -.0090518
+          WI#2003  |    .063774   .0022215    28.71   0.000       .05942    .0681279
+          WI#2004  |   .1721507   .0022283    77.26   0.000     .1677833    .1765181
+          WI#2005  |   .1529518   .0022007    69.50   0.000     .1486384    .1572652
+          WI#2006  |   .0848952   .0021991    38.60   0.000     .0805849    .0892054
+          WI#2007  |   .0480403   .0021806    22.03   0.000     .0437665    .0523141
+          WI#2008  |   .0402277    .002151    18.70   0.000     .0360119    .0444435
+          WI#2009  |   .1163462   .0021937    53.04   0.000     .1120467    .1206457
+          WI#2010  |   .0936939   .0022703    41.27   0.000     .0892443    .0981435
+          WI#2011  |  -.0654371   .0022375   -29.25   0.000    -.0698225   -.0610516
+          WI#2012  |  -.2817043   .0022573  -124.79   0.000    -.2861286     -.27728
+          WI#2013  |  -.1364581   .0022697   -60.12   0.000    -.1409067   -.1320095
+          WI#2014  |  -.1690415   .0022798   -74.15   0.000    -.1735098   -.1645733
+          WI#2015  |  -.7164367   .0022745  -314.98   0.000    -.7208947   -.7119787
+          WI#2016  |  -.6987824   .0022773  -306.85   0.000    -.7032457    -.694319
+          WI#2017  |  -.4767521   .0023176  -205.71   0.000    -.4812945   -.4722097
+          WI#2018  |  -.7140805   .0022462  -317.90   0.000     -.718483    -.709678
+          WI#2019  |  -.5562026   .0022515  -247.03   0.000    -.5606155   -.5517897
+          MN#2001  |   .2206159   .0021966   100.43   0.000     .2163105    .2249212
+          MN#2002  |   .0914383   .0021577    42.38   0.000     .0872092    .0956673
+          MN#2003  |   .1522262   .0022251    68.41   0.000     .1478651    .1565873
+          MN#2004  |    .263186   .0022321   117.91   0.000     .2588112    .2675608
+          MN#2005  |   .0718363   .0022081    32.53   0.000     .0675085    .0761642
+          MN#2006  |   .1494533   .0022007    67.91   0.000     .1451401    .1537666
+          MN#2007  |   .2238258   .0021829   102.54   0.000     .2195475    .2281041
+          MN#2008  |   .1205223   .0021579    55.85   0.000     .1162928    .1247517
+          MN#2009  |    .066332    .002206    30.07   0.000     .0620082    .0706558
+          MN#2010  |   .1030317   .0022756    45.28   0.000     .0985715    .1074918
+          MN#2011  |  -.0220039   .0022387    -9.83   0.000    -.0263918   -.0176161
+          MN#2012  |   -.025787   .0022465   -11.48   0.000    -.0301901   -.0213839
+          MN#2013  |   .0492136   .0022581    21.79   0.000     .0447878    .0536395
+          MN#2014  |   .0490616   .0022692    21.62   0.000      .044614    .0535091
+          MN#2015  |  -.2442961   .0022494  -108.61   0.000    -.2487048   -.2398874
+          MN#2016  |   -.043023   .0022502   -19.12   0.000    -.0474334   -.0386127
+          MN#2017  |   .1933107   .0022879    84.49   0.000     .1888264     .197795
+          MN#2018  |   .0602497   .0022198    27.14   0.000     .0558989    .0646005
+          MN#2019  |  -.0640532   .0022368   -28.64   0.000    -.0684372   -.0596691
+          IA#2001  |   .2019885   .0023826    84.77   0.000     .1973186    .2066584
+          IA#2002  |   .0186439   .0023525     7.93   0.000     .0140331    .0232547
+          IA#2003  |   .0982744   .0024083    40.81   0.000     .0935542    .1029946
+          IA#2004  |     .09206   .0024284    37.91   0.000     .0873004    .0968195
+          IA#2005  |   .0761023   .0023899    31.84   0.000     .0714181    .0807865
+          IA#2006  |   .1603517   .0023852    67.23   0.000     .1556769    .1650266
+          IA#2007  |    .128948   .0023764    54.26   0.000     .1242903    .1336057
+          IA#2008  |   .0827881   .0023387    35.40   0.000     .0782042     .087372
+          IA#2009  |   .0002253   .0023959     0.09   0.925    -.0044705    .0049211
+          IA#2010  |   .1478938   .0024612    60.09   0.000       .14307    .1527175
+          IA#2011  |   .1368984   .0024277    56.39   0.000     .1321401    .1416566
+          IA#2012  |  -.0141783   .0024527    -5.78   0.000    -.0189855   -.0093711
+          IA#2013  |   .1653799   .0024565    67.32   0.000     .1605653    .1701945
+          IA#2014  |   .1942193   .0024676    78.71   0.000     .1893828    .1990558
+          IA#2015  |   -.052569   .0024584   -21.38   0.000    -.0573874   -.0477505
+          IA#2016  |  -.1084234   .0024968   -43.42   0.000    -.1133171   -.1035297
+          IA#2017  |   -.328239   .0025964  -126.42   0.000    -.3333278   -.3231502
+          IA#2018  |  -.2944138    .002501  -117.72   0.000    -.2993156   -.2895121
+          IA#2019  |  -.5673346   .0025479  -222.67   0.000    -.5723283   -.5623409
+          MO#2001  |   .2863167   .0022302   128.38   0.000     .2819455    .2906878
+          MO#2002  |   .1443148   .0022013    65.56   0.000     .1400003    .1486293
+          MO#2003  |   .2155095   .0022698    94.95   0.000     .2110609    .2199582
+          MO#2004  |   .2856999   .0022727   125.71   0.000     .2812454    .2901544
+          MO#2005  |   .1619215   .0022538    71.84   0.000      .157504    .1663389
+          MO#2006  |   .1717149   .0022398    76.66   0.000     .1673248    .1761049
+          MO#2007  |   .1520195   .0022375    67.94   0.000     .1476341    .1564049
+          MO#2008  |     .17789   .0022113    80.45   0.000     .1735559     .182224
+          MO#2009  |  -.0695996   .0022682   -30.68   0.000    -.0740451    -.065154
+          MO#2010  |   .1515125   .0023282    65.08   0.000     .1469493    .1560757
+          MO#2011  |   .1673683   .0022838    73.29   0.000     .1628921    .1718444
+          MO#2012  |  -.0094923   .0023046    -4.12   0.000    -.0140094   -.0049753
+          MO#2013  |  -.0062759   .0023241    -2.70   0.007    -.0108311   -.0017206
+          MO#2014  |   -.117919   .0023458   -50.27   0.000    -.1225166   -.1133215
+          MO#2015  |  -.1922588   .0023206   -82.85   0.000     -.196807   -.1877105
+          MO#2016  |   .0660494   .0022951    28.78   0.000     .0615511    .0705476
+          MO#2017  |   .0490612   .0023466    20.91   0.000      .044462    .0536604
+          MO#2018  |   .0168401   .0022589     7.46   0.000     .0124128    .0212674
+          MO#2019  |   .0902585   .0022609    39.92   0.000     .0858272    .0946897
+          ND#2001  |   .4260317    .003991   106.75   0.000     .4182095     .433854
+          ND#2002  |   .3838022   .0039433    97.33   0.000     .3760735    .3915309
+          ND#2003  |   .4203622   .0040133   104.74   0.000     .4124963    .4282281
+          ND#2004  |   .4752589   .0040132   118.42   0.000     .4673931    .4831247
+          ND#2005  |    .431506   .0039855   108.27   0.000     .4236946    .4393174
+          ND#2006  |   .3610163   .0040136    89.95   0.000     .3531497    .3688829
+          ND#2007  |   .2689966   .0040732    66.04   0.000     .2610134    .2769799
+          ND#2008  |   .3089177   .0039889    77.45   0.000     .3010997    .3167358
+          ND#2009  |   .5665334   .0039261   144.30   0.000     .5588385    .5742283
+          ND#2010  |    .617326   .0040056   154.12   0.000     .6094752    .6251768
+          ND#2011  |   .5804229   .0039929   145.36   0.000      .572597    .5882488
+          ND#2012  |   .4681989   .0040102   116.75   0.000     .4603391    .4760588
+          ND#2013  |   .5599646   .0040174   139.38   0.000     .5520907    .5678386
+          ND#2014  |   .3326194   .0041984    79.22   0.000     .3243906    .3408481
+          ND#2015  |   .1314654   .0042179    31.17   0.000     .1231986    .1397322
+          ND#2016  |   .2384656     .00409    58.30   0.000     .2304494    .2464819
+          ND#2017  |   .2981936   .0042103    70.82   0.000     .2899416    .3064457
+          ND#2018  |   .1372002   .0041724    32.88   0.000     .1290225    .1453779
+          ND#2019  |   .3693859   .0040077    92.17   0.000     .3615309    .3772408
+          SD#2001  |   .2942057   .0037901    77.63   0.000     .2867773    .3016341
+          SD#2002  |   .0176166   .0038032     4.63   0.000     .0101624    .0250708
+          SD#2003  |   .1174157   .0038759    30.29   0.000     .1098191    .1250123
+          SD#2004  |   .4845639   .0037496   129.23   0.000     .4772149    .4919129
+          SD#2005  |   .3966587   .0037408   106.03   0.000     .3893268    .4039906
+          SD#2006  |   .1669077   .0038526    43.32   0.000     .1593567    .1744586
+          SD#2007  |   .4520067    .003715   121.67   0.000     .4447254     .459288
+          SD#2008  |   .1981921   .0037848    52.36   0.000     .1907739    .2056102
+          SD#2009  |    .220665   .0038602    57.16   0.000     .2130992    .2282308
+          SD#2010  |   .3296575     .00392    84.10   0.000     .3219744    .3373406
+          SD#2011  |   .0283009   .0039797     7.11   0.000     .0205009     .036101
+          SD#2012  |   .1244536   .0040155    30.99   0.000     .1165832    .1323239
+          SD#2013  |    .186599   .0039741    46.95   0.000       .17881     .194388
+          SD#2014  |   .1632067   .0040101    40.70   0.000     .1553469    .1710664
+          SD#2015  |   .2250464   .0038612    58.28   0.000     .2174787    .2326142
+          SD#2016  |   .2594383   .0038826    66.82   0.000     .2518285    .2670481
+          SD#2017  |   .2454596   .0039574    62.03   0.000     .2377032     .253216
+          SD#2018  |   .2345356   .0038997    60.14   0.000     .2268923    .2421789
+          SD#2019  |   .2487655   .0038758    64.18   0.000      .241169     .256362
+          NE#2001  |   .2264301   .0027101    83.55   0.000     .2211184    .2317418
+          NE#2002  |   .1847308   .0026668    69.27   0.000     .1795039    .1899577
+          NE#2003  |   .1482338   .0027222    54.45   0.000     .1428984    .1535692
+          NE#2004  |   .1884386   .0027265    69.11   0.000     .1830948    .1937824
+          NE#2005  |   .0838253   .0027247    30.77   0.000      .078485    .0891656
+          NE#2006  |   .1273322   .0027088    47.01   0.000      .122023    .1326413
+          NE#2007  |   .1707786   .0027061    63.11   0.000     .1654747    .1760825
+          NE#2008  |   .2123164    .002669    79.55   0.000     .2070852    .2175475
+          NE#2009  |   .2177973   .0027097    80.38   0.000     .2124863    .2231083
+          NE#2010  |   .4394042   .0027601   159.20   0.000     .4339945    .4448139
+          NE#2011  |   .0678991   .0027682    24.53   0.000     .0624735    .0733246
+          NE#2012  |  -.1262758   .0028261   -44.68   0.000    -.1318148   -.1207368
+          NE#2013  |   .1080558   .0028163    38.37   0.000     .1025359    .1135757
+          NE#2014  |   .2199016   .0028097    78.27   0.000     .2143947    .2254085
+          NE#2015  |   .0130634   .0027969     4.67   0.000     .0075816    .0185451
+          NE#2016  |   .0517957   .0027644    18.74   0.000     .0463775    .0572139
+          NE#2017  |   .1723974    .002805    61.46   0.000     .1668998     .177895
+          NE#2018  |  -.1065606   .0027631   -38.57   0.000    -.1119762    -.101145
+          NE#2019  |   .1008161   .0027333    36.88   0.000     .0954589    .1061733
+          KS#2001  |   .2516633   .0024939   100.91   0.000     .2467752    .2565513
+          KS#2002  |   -.063439    .002482   -25.56   0.000    -.0683035   -.0585744
+          KS#2003  |   .1209022   .0025199    47.98   0.000     .1159633    .1258411
+          KS#2004  |   .1693776   .0025213    67.18   0.000     .1644359    .1743194
+          KS#2005  |    .138235   .0025047    55.19   0.000     .1333259    .1431441
+          KS#2006  |   .1218843   .0025155    48.45   0.000      .116954    .1268147
+          KS#2007  |   .1402267   .0025063    55.95   0.000     .1353144    .1451389
+          KS#2008  |  -.0279958    .002503   -11.18   0.000    -.0329017     -.02309
+          KS#2009  |  -.0650111   .0025527   -25.47   0.000    -.0700143   -.0600079
+          KS#2010  |   .0359792   .0026114    13.78   0.000      .030861    .0410974
+          KS#2011  |   .1212822   .0025424    47.70   0.000     .1162991    .1262652
+          KS#2012  |  -.0374618   .0025701   -14.58   0.000    -.0424992   -.0324245
+          KS#2013  |   .1225549   .0025824    47.46   0.000     .1174935    .1276163
+          KS#2014  |   .1707194    .002575    66.30   0.000     .1656725    .1757663
+          KS#2015  |   .1809296   .0025533    70.86   0.000     .1759251     .185934
+          KS#2016  |   .2616066   .0025694   101.82   0.000     .2565707    .2666426
+          KS#2017  |   .3717911   .0026045   142.75   0.000     .3666863    .3768959
+          KS#2018  |   .2029311   .0025404    79.88   0.000     .1979521    .2079102
+          KS#2019  |   .2837029   .0025399   111.70   0.000     .2787248    .2886809
+          DE#2001  |   .2000091   .0034053    58.73   0.000     .1933348    .2066834
+          DE#2002  |  -.1258658   .0034509   -36.47   0.000    -.1326293   -.1191022
+          DE#2003  |   .0165012   .0035364     4.67   0.000       .00957    .0234323
+          DE#2004  |   .1961839   .0035287    55.60   0.000     .1892677       .2031
+          DE#2005  |   .2126761    .003474    61.22   0.000     .2058671     .219485
+          DE#2006  |   .1243273   .0034961    35.56   0.000      .117475    .1311795
+          DE#2007  |    .168426   .0034618    48.65   0.000      .161641    .1752111
+          DE#2008  |   .1792272   .0033743    53.12   0.000     .1726138    .1858406
+          DE#2009  |   .1593752    .003482    45.77   0.000     .1525506    .1661998
+          DE#2010  |   .0469761   .0036641    12.82   0.000     .0397945    .0541576
+          DE#2011  |  -.0096382   .0036257    -2.66   0.008    -.0167444   -.0025319
+          DE#2012  |   .0897168    .003568    25.14   0.000     .0827236    .0967099
+          DE#2013  |   .1144282   .0035944    31.84   0.000     .1073833     .121473
+          DE#2014  |  -.0334525   .0036018    -9.29   0.000     -.040512    -.026393
+          DE#2015  |   -.234516   .0035639   -65.80   0.000    -.2415011    -.227531
+          DE#2016  |   .0293299   .0035058     8.37   0.000     .0224586    .0362012
+          DE#2017  |   .1533911   .0035079    43.73   0.000     .1465158    .1602665
+          DE#2018  |  -.1856817   .0034443   -53.91   0.000    -.1924325   -.1789309
+          DE#2019  |  -.2790683   .0035808   -77.93   0.000    -.2860866     -.27205
+          MD#2001  |   .0751125   .0022402    33.53   0.000     .0707218    .0795032
+          MD#2002  |   .1829899   .0021968    83.30   0.000     .1786843    .1872955
+          MD#2003  |    .168687    .002256    74.77   0.000     .1642654    .1731086
+          MD#2004  |  -.0741747   .0022868   -32.44   0.000    -.0786567   -.0696926
+          MD#2005  |   .0807314   .0022408    36.03   0.000     .0763395    .0851233
+          MD#2006  |  -.0136948   .0022371    -6.12   0.000    -.0180794   -.0093101
+          MD#2007  |   .0805858   .0022253    36.21   0.000     .0762243    .0849474
+          MD#2008  |   .0175701    .002201     7.98   0.000     .0132562    .0218841
+          MD#2009  |    .028085   .0022453    12.51   0.000     .0236843    .0324857
+          MD#2010  |  -.0558545   .0023242   -24.03   0.000    -.0604098   -.0512992
+          MD#2011  |  -.1625785   .0022951   -70.84   0.000    -.1670768   -.1580802
+          MD#2012  |   -.177676   .0022903   -77.58   0.000    -.1821649   -.1731871
+          MD#2013  |  -.0577531   .0023029   -25.08   0.000    -.0622666   -.0532396
+          MD#2014  |   .0321269   .0023161    13.87   0.000     .0275875    .0366664
+          MD#2015  |  -.3303934   .0022987  -143.73   0.000    -.3348987    -.325888
+          MD#2016  |  -.1692746   .0022886   -73.97   0.000    -.1737601    -.164789
+          MD#2017  |   .0101142   .0023468     4.31   0.000     .0055145    .0147139
+          MD#2018  |  -.1762472   .0022681   -77.71   0.000    -.1806925   -.1718019
+          MD#2019  |  -.1720115   .0022723   -75.70   0.000    -.1764651    -.167558
+          DC#2001  |   .6130618   .0036349   168.66   0.000     .6059375     .620186
+          DC#2002  |   .3929897   .0035601   110.39   0.000      .386012    .3999674
+          DC#2003  |    .340359   .0036101    94.28   0.000     .3332834    .3474346
+          DC#2004  |  -.0150886     .00376    -4.01   0.000     -.022458   -.0077192
+          DC#2005  |  -.0574801   .0037694   -15.25   0.000     -.064868   -.0500922
+          DC#2006  |  -.1134892    .003805   -29.83   0.000    -.1209468   -.1060316
+          DC#2007  |    .164357   .0036431    45.11   0.000     .1572167    .1714973
+          DC#2008  |   .1365355    .003594    37.99   0.000     .1294913    .1435796
+          DC#2009  |  -.1525933   .0036646   -41.64   0.000    -.1597758   -.1454108
+          DC#2010  |  -.3788331    .003827   -98.99   0.000    -.3863339   -.3713323
+          DC#2011  |  -.4498495   .0038531  -116.75   0.000    -.4574016   -.4422975
+          DC#2012  |  -.3670179   .0037386   -98.17   0.000    -.3743454   -.3596904
+          DC#2013  |  -.1988232   .0036679   -54.21   0.000    -.2060122   -.1916342
+          DC#2014  |  -.3038636   .0037064   -81.98   0.000    -.3111281   -.2965992
+          DC#2015  |  -.3382947   .0036227   -93.38   0.000     -.345395   -.3311945
+          DC#2016  |  -.2384599   .0036342   -65.62   0.000    -.2455827    -.231337
+          DC#2017  |  -.1314317   .0036575   -35.93   0.000    -.1386004    -.124263
+          DC#2018  |   -.248585    .003592   -69.20   0.000    -.2556253   -.2415448
+          DC#2019  |  -.3222847   .0035877   -89.83   0.000    -.3293164    -.315253
+          VA#2001  |   .2109331   .0023282    90.60   0.000     .2063699    .2154962
+          VA#2002  |   .2194874   .0022733    96.55   0.000     .2150318     .223943
+          VA#2003  |   .3398677   .0023287   145.95   0.000     .3353035    .3444319
+          VA#2004  |   .1734148   .0023573    73.57   0.000     .1687947     .178035
+          VA#2005  |   .0878804   .0023417    37.53   0.000     .0832908    .0924701
+          VA#2006  |   -.017918    .002359    -7.60   0.000    -.0225415   -.0132944
+          VA#2007  |  -.0668981   .0023575   -28.38   0.000    -.0715187   -.0622774
+          VA#2008  |  -.1538096   .0023186   -66.34   0.000     -.158354   -.1492652
+          VA#2009  |  -.0145088   .0023415    -6.20   0.000    -.0190981   -.0099194
+          VA#2010  |   .1111471   .0024099    46.12   0.000     .1064238    .1158704
+          VA#2011  |  -.0122338    .002375    -5.15   0.000    -.0168888   -.0075789
+          VA#2012  |  -.0223795   .0023882    -9.37   0.000    -.0270604   -.0176987
+          VA#2013  |   .0215176   .0023977     8.97   0.000     .0168182    .0262171
+          VA#2014  |   .0824013   .0024046    34.27   0.000     .0776883    .0871143
+          VA#2015  |   .0271881   .0023518    11.56   0.000     .0225786    .0317976
+          VA#2016  |  -.2042743   .0024063   -84.89   0.000    -.2089906    -.199558
+          VA#2017  |    .084437   .0024307    34.74   0.000     .0796729    .0892011
+          VA#2018  |  -.2241632   .0023677   -94.67   0.000    -.2288039   -.2195225
+          VA#2019  |   .0838362   .0023552    35.60   0.000     .0792202    .0884522
+          WV#2001  |   .1682465   .0027025    62.26   0.000     .1629497    .1735433
+          WV#2002  |   -.074428   .0027193   -27.37   0.000    -.0797577   -.0690983
+          WV#2003  |  -.0747226   .0028385   -26.32   0.000    -.0802859   -.0691593
+          WV#2004  |  -.0310851   .0028402   -10.94   0.000    -.0366517   -.0255184
+          WV#2005  |   .0063017   .0027889     2.26   0.024     .0008356    .0117678
+          WV#2006  |   .2774885   .0027438   101.13   0.000     .2721108    .2828662
+          WV#2007  |   .1809693    .002721    66.51   0.000     .1756362    .1863024
+          WV#2008  |  -.0303006   .0027359   -11.07   0.000    -.0356629   -.0249382
+          WV#2009  |   .0956264   .0027327    34.99   0.000     .0902705    .1009823
+          WV#2010  |   .3515621   .0028034   125.40   0.000     .3460675    .3570567
+          WV#2011  |   .0028121   .0028384     0.99   0.322    -.0027511    .0083753
+          WV#2012  |  -.0510381   .0028297   -18.04   0.000    -.0565842   -.0454919
+          WV#2013  |    .233038   .0028543    81.64   0.000     .2274436    .2386324
+          WV#2014  |  -.1466515   .0029408   -49.87   0.000    -.1524153   -.1408876
+          WV#2015  |  -.0082297   .0028456    -2.89   0.004    -.0138069   -.0026525
+          WV#2016  |  -.0059571   .0028676    -2.08   0.038    -.0115776   -.0003367
+          WV#2017  |   .0306549   .0029843    10.27   0.000     .0248058    .0365041
+          WV#2018  |  -.2009072   .0029039   -69.19   0.000    -.2065986   -.1952157
+          WV#2019  |   -.155365   .0029024   -53.53   0.000    -.1610536   -.1496765
+          NC#2001  |   .2084279   .0024521    85.00   0.000     .2036219    .2132339
+          NC#2002  |  -.1287843   .0024552   -52.45   0.000    -.1335963   -.1239723
+          NC#2003  |  -.1409266   .0025338   -55.62   0.000    -.1458928   -.1359604
+          NC#2004  |  -.0614421   .0025175   -24.41   0.000    -.0663763   -.0565078
+          NC#2005  |   .0256697   .0024621    10.43   0.000      .020844    .0304953
+          NC#2006  |   .0079622    .002465     3.23   0.001     .0031308    .0127936
+          NC#2007  |  -.0377818   .0024744   -15.27   0.000    -.0426316   -.0329321
+          NC#2008  |   .1758323   .0023921    73.51   0.000     .1711439    .1805208
+          NC#2009  |   .0181705   .0024624     7.38   0.000     .0133442    .0229968
+          NC#2010  |   .3319572    .002496   133.00   0.000     .3270651    .3368492
+          NC#2011  |   .0346894   .0025029    13.86   0.000     .0297838    .0395949
+          NC#2012  |   .1031468   .0024941    41.36   0.000     .0982585    .1080352
+          NC#2013  |   .3769526   .0024759   152.25   0.000     .3720998    .3818054
+          NC#2014  |   .0510439   .0025524    20.00   0.000     .0460412    .0560465
+          NC#2015  |   .0209239   .0025185     8.31   0.000     .0159878    .0258601
+          NC#2016  |   .0023965   .0025299     0.95   0.343     -.002562    .0073551
+          NC#2017  |  -.0249291    .002613    -9.54   0.000    -.0300505   -.0198077
+          NC#2018  |  -.2845398   .0025617  -111.08   0.000    -.2895606    -.279519
+          NC#2019  |  -.0412006   .0025498   -16.16   0.000    -.0461981   -.0362031
+          SC#2001  |   .2467844   .0026525    93.04   0.000     .2415857    .2519831
+          SC#2002  |   .1292452   .0026053    49.61   0.000      .124139    .1343515
+          SC#2003  |   .0221924   .0027583     8.05   0.000     .0167863    .0275985
+          SC#2004  |   .0474134    .002748    17.25   0.000     .0420275    .0527994
+          SC#2005  |   -.383779   .0028303  -135.60   0.000    -.3893263   -.3782317
+          SC#2006  |   -.029644   .0027091   -10.94   0.000    -.0349538   -.0243342
+          SC#2007  |   .4445928    .002576   172.59   0.000      .439544    .4496416
+          SC#2008  |   .4606579   .0025507   180.60   0.000     .4556585    .4656572
+          SC#2009  |    .236388   .0026594    88.89   0.000     .2311757    .2416003
+          SC#2010  |   .6497389   .0026623   244.06   0.000      .644521    .6549568
+          SC#2011  |   .2374031   .0026947    88.10   0.000     .2321217    .2426846
+          SC#2012  |   -.009884   .0027556    -3.59   0.000    -.0152849    -.004483
+          SC#2013  |   .3193927   .0026995   118.31   0.000     .3141018    .3246837
+          SC#2014  |  -.1731188    .002898   -59.74   0.000    -.1787987   -.1674389
+          SC#2015  |  -.5147983   .0028998  -177.53   0.000    -.5204817   -.5091148
+          SC#2016  |  -.7100017     .00306  -232.03   0.000    -.7159992   -.7040041
+          SC#2017  |   .1889268   .0028096    67.24   0.000     .1834201    .1944334
+          SC#2018  |  -.0335033   .0027713   -12.09   0.000    -.0389349   -.0280717
+          SC#2019  |  -.4568064   .0029691  -153.85   0.000    -.4626257   -.4509871
+          GA#2001  |   .2828298   .0023681   119.43   0.000     .2781884    .2874713
+          GA#2002  |  -.1797946   .0023952   -75.07   0.000     -.184489   -.1751001
+          GA#2003  |   .3891524   .0023676   164.37   0.000     .3845121    .3937928
+          GA#2004  |   .2445924   .0024083   101.56   0.000     .2398722    .2493126
+          GA#2005  |   .1379658   .0023709    58.19   0.000     .1333188    .1426127
+          GA#2006  |     .20865   .0023465    88.92   0.000     .2040509    .2132491
+          GA#2007  |   .1145249   .0023441    48.86   0.000     .1099305    .1191193
+          GA#2008  |  -.0177162   .0023113    -7.67   0.000    -.0222462   -.0131862
+          GA#2009  |   .2865578   .0023293   123.02   0.000     .2819924    .2911232
+          GA#2010  |   .0608398   .0024411    24.92   0.000     .0560554    .0656243
+          GA#2011  |  -.0595557   .0024148   -24.66   0.000    -.0642886   -.0548228
+          GA#2012  |   .0976848   .0024036    40.64   0.000     .0929739    .1023957
+          GA#2013  |   .5023908   .0023806   211.03   0.000     .4977249    .5070567
+          GA#2014  |   .2193444    .002423    90.53   0.000     .2145953    .2240934
+          GA#2015  |   .0471314   .0023992    19.64   0.000     .0424291    .0518336
+          GA#2016  |   .0139445    .002399     5.81   0.000     .0092425    .0186465
+          GA#2017  |   .1839754   .0024302    75.70   0.000     .1792123    .1887384
+          GA#2018  |   .1280287   .0023557    54.35   0.000     .1234116    .1326459
+          GA#2019  |   .0408696   .0023992    17.03   0.000     .0361673     .045572
+          FL#2001  |   .1778361   .0021536    82.58   0.000     .1736151    .1820571
+          FL#2002  |  -.0718421   .0021191   -33.90   0.000    -.0759955   -.0676888
+          FL#2003  |   .1629527   .0021753    74.91   0.000     .1586892    .1672161
+          FL#2004  |   .0553555   .0021919    25.25   0.000     .0510594    .0596516
+          FL#2005  |   .0386469   .0021618    17.88   0.000     .0344099    .0428839
+          FL#2006  |  -.0436938    .002159   -20.24   0.000    -.0479254   -.0394622
+          FL#2007  |   .0990197   .0021427    46.21   0.000     .0948201    .1032194
+          FL#2008  |   .1092369   .0021091    51.79   0.000     .1051032    .1133707
+          FL#2009  |  -.0096631   .0021612    -4.47   0.000    -.0138989   -.0054272
+          FL#2010  |   .0323809   .0022388    14.46   0.000      .027993    .0367687
+          FL#2011  |   .0869521    .002191    39.69   0.000     .0826578    .0912465
+          FL#2012  |   .0055893   .0022059     2.53   0.011     .0012659    .0099128
+          FL#2013  |   .1201582   .0022226    54.06   0.000     .1158018    .1245145
+          FL#2014  |   .1331818   .0022319    59.67   0.000     .1288074    .1375563
+          FL#2015  |   .0697571   .0021879    31.88   0.000     .0654689    .0740453
+          FL#2016  |  -.0377809   .0022033   -17.15   0.000    -.0420992   -.0334626
+          FL#2017  |   .0499634   .0022592    22.12   0.000     .0455355    .0543914
+          FL#2018  |   .0511017     .00217    23.55   0.000     .0468485     .055355
+          FL#2019  |   .2294819   .0021701   105.75   0.000     .2252286    .2337352
+          KY#2001  |  -.0538148   .0024363   -22.09   0.000    -.0585898   -.0490397
+          KY#2002  |  -.2437214   .0024033  -101.41   0.000    -.2484319    -.239011
+          KY#2003  |   .0895303   .0024147    37.08   0.000     .0847976     .094263
+          KY#2004  |   .2072238   .0024267    85.39   0.000     .2024675    .2119801
+          KY#2005  |  -.0502175   .0024138   -20.80   0.000    -.0549485   -.0454866
+          KY#2006  |   .0855039   .0023947    35.71   0.000     .0808104    .0901974
+          KY#2007  |   .2153156   .0023785    90.53   0.000     .2106538    .2199774
+          KY#2008  |  -.1988844   .0023866   -83.33   0.000     -.203562   -.1942068
+          KY#2009  |  -.0471489   .0024132   -19.54   0.000    -.0518786   -.0424192
+          KY#2010  |   .0886623   .0024853    35.67   0.000     .0837913    .0935334
+          KY#2011  |  -.1874009   .0024693   -75.89   0.000    -.1922405   -.1825612
+          KY#2012  |   .0239334   .0024517     9.76   0.000     .0191281    .0287387
+          KY#2013  |   .1923293   .0024522    78.43   0.000     .1875232    .1971354
+          KY#2014  |   .4140906   .0024397   169.73   0.000     .4093089    .4188723
+          KY#2015  |   .1405942   .0024326    57.80   0.000     .1358264    .1453619
+          KY#2016  |   .2694136   .0024423   110.31   0.000     .2646269    .2742004
+          KY#2017  |   .3602305   .0024671   146.01   0.000      .355395     .365066
+          KY#2018  |  -.0910416   .0024314   -37.44   0.000     -.095807   -.0862762
+          KY#2019  |   .0196589   .0024516     8.02   0.000     .0148537     .024464
+          TN#2001  |   .1449715   .0023606    61.41   0.000     .1403448    .1495982
+          TN#2002  |   .2390111   .0022995   103.94   0.000     .2345041    .2435181
+          TN#2003  |   .1038999   .0023939    43.40   0.000     .0992079    .1085919
+          TN#2004  |    .079349   .0024201    32.79   0.000     .0746057    .0840924
+          TN#2005  |  -.1542683   .0024409   -63.20   0.000    -.1590524   -.1494842
+          TN#2006  |  -.0249975   .0023933   -10.44   0.000    -.0296883   -.0203066
+          TN#2007  |  -.2217414   .0024091   -92.04   0.000    -.2264631   -.2170197
+          TN#2008  |   .0253196   .0023461    10.79   0.000     .0207213    .0299178
+          TN#2009  |  -.1123972   .0023999   -46.84   0.000    -.1171008   -.1076936
+          TN#2010  |  -.2397866   .0025154   -95.33   0.000    -.2447167   -.2348566
+          TN#2011  |  -.3733347   .0024802  -150.53   0.000    -.3781959   -.3684736
+          TN#2012  |  -.1881874     .00243   -77.44   0.000    -.1929501   -.1834248
+          TN#2013  |   .1568846   .0024311    64.53   0.000     .1521198    .1616495
+          TN#2014  |  -.1679551   .0025162   -66.75   0.000    -.1728867   -.1630236
+          TN#2015  |  -.3488786   .0024565  -142.02   0.000    -.3536932    -.344064
+          TN#2016  |  -.1429079   .0024531   -58.26   0.000    -.1477158   -.1380999
+          TN#2017  |   .0549331   .0024749    22.20   0.000     .0500823    .0597838
+          TN#2018  |  -.2473851   .0024295  -101.82   0.000    -.2521469   -.2426233
+          TN#2019  |  -.2456358   .0024308  -101.05   0.000    -.2504002   -.2408715
+          AL#2001  |   .1201424   .0024189    49.67   0.000     .1154014    .1248833
+          AL#2002  |  -.0069366   .0023924    -2.90   0.004    -.0116255   -.0022476
+          AL#2003  |   .0884942   .0024398    36.27   0.000     .0837124     .093276
+          AL#2004  |   .3799117   .0024159   157.25   0.000     .3751766    .3846468
+          AL#2005  |   .4101143   .0023788   172.40   0.000     .4054518    .4147767
+          AL#2006  |  -.0460443     .00245   -18.79   0.000    -.0508462   -.0412423
+          AL#2007  |    .181388   .0024048    75.43   0.000     .1766748    .1861013
+          AL#2008  |   .0709202   .0023934    29.63   0.000     .0662292    .0756111
+          AL#2009  |   .2174658   .0024228    89.76   0.000     .2127171    .2222144
+          AL#2010  |   .1180918   .0025053    47.14   0.000     .1131815    .1230021
+          AL#2011  |  -.0301687   .0025229   -11.96   0.000    -.0351136   -.0252239
+          AL#2012  |   .1427706   .0024789    57.59   0.000      .137912    .1476293
+          AL#2013  |   .3008462   .0024803   121.29   0.000     .2959848    .3057075
+          AL#2014  |   .3328288   .0025104   132.58   0.000     .3279085    .3377491
+          AL#2015  |   .0664919   .0024878    26.73   0.000      .061616    .0713679
+          AL#2016  |   .0610846   .0025027    24.41   0.000     .0561794    .0659898
+          AL#2017  |   .1284085   .0025731    49.91   0.000     .1233654    .1334516
+          AL#2018  |   .0352494   .0024914    14.15   0.000     .0303664    .0401324
+          AL#2019  |   .0351389     .00251    14.00   0.000     .0302193    .0400585
+          MS#2001  |   .0933171   .0026383    35.37   0.000     .0881461    .0984882
+          MS#2002  |  -.2247192   .0026906   -83.52   0.000    -.2299926   -.2194458
+          MS#2003  |  -.2708276   .0027904   -97.06   0.000    -.2762967   -.2653585
+          MS#2004  |  -.1629113    .002757   -59.09   0.000     -.168315   -.1575076
+          MS#2005  |    .170777   .0026805    63.71   0.000     .1655234    .1760307
+          MS#2006  |  -.0772997   .0027611   -28.00   0.000    -.0827113    -.071888
+          MS#2007  |   .0541151   .0026612    20.33   0.000     .0488992     .059331
+          MS#2008  |   -.326513   .0026931  -121.24   0.000    -.3317913   -.3212347
+          MS#2009  |  -.4630406   .0028365  -163.24   0.000       -.4686   -.4574812
+          MS#2010  |    -.38057   .0028997  -131.24   0.000    -.3862533   -.3748866
+          MS#2011  |  -.2818609   .0027784  -101.45   0.000    -.2873064   -.2764154
+          MS#2012  |  -.4182973    .002794  -149.71   0.000    -.4237736   -.4128211
+          MS#2013  |  -.7150827   .0030073  -237.78   0.000     -.720977   -.7091885
+          MS#2014  |  -.8177707   .0031269  -261.53   0.000    -.8238993    -.811642
+          MS#2015  |  -.6261072   .0029002  -215.88   0.000    -.6317915   -.6204228
+          MS#2016  |  -.0491802    .002782   -17.68   0.000    -.0546327   -.0437276
+          MS#2017  |  -.1511079   .0028787   -52.49   0.000      -.15675   -.1454658
+          MS#2018  |   -.196854   .0027884   -70.60   0.000    -.2023192   -.1913888
+          MS#2019  |  -.1179911   .0028228   -41.80   0.000    -.1235236   -.1124586
+          AR#2001  |   .3675592   .0027452   133.89   0.000     .3621786    .3729397
+          AR#2002  |   .0332928   .0027762    11.99   0.000     .0278517     .038734
+          AR#2003  |   .1126366   .0028496    39.53   0.000     .1070515    .1182216
+          AR#2004  |   .0458424   .0028641    16.01   0.000      .040229    .0514559
+          AR#2005  |  -.0201026   .0028439    -7.07   0.000    -.0256765   -.0145287
+          AR#2006  |   .0978772    .002802    34.93   0.000     .0923853    .1033691
+          AR#2007  |   .3280904   .0027162   120.79   0.000     .3227667    .3334141
+          AR#2008  |   .2661513    .002704    98.43   0.000     .2608515    .2714512
+          AR#2009  |  -.0769416   .0028684   -26.82   0.000    -.0825635   -.0713197
+          AR#2010  |  -.0288599   .0029664    -9.73   0.000    -.0346739    -.023046
+          AR#2011  |  -.1253446   .0029534   -42.44   0.000    -.1311332   -.1195559
+          AR#2012  |  -.3953454   .0031023  -127.43   0.000    -.4014259   -.3892649
+          AR#2013  |    .053666   .0029725    18.05   0.000     .0478401    .0594919
+          AR#2014  |   .0871762   .0030491    28.59   0.000     .0812001    .0931524
+          AR#2015  |    .114571   .0028877    39.68   0.000     .1089112    .1202308
+          AR#2016  |  -.2825811   .0030285   -93.31   0.000    -.2885168   -.2766454
+          AR#2017  |    .176976   .0029887    59.22   0.000     .1711183    .1828338
+          AR#2018  |  -.3365249   .0032236  -104.39   0.000    -.3428431   -.3302068
+          AR#2019  |    .172197   .0030471    56.51   0.000     .1662248    .1781693
+          LA#2001  |   .3021295   .0024943   121.13   0.000     .2972408    .3070182
+          LA#2002  |   .4759599   .0024317   195.73   0.000     .4711939     .480726
+          LA#2003  |    .049707   .0025668    19.37   0.000     .0446762    .0547379
+          LA#2004  |   .4132642   .0025368   162.91   0.000     .4082922    .4182362
+          LA#2005  |   .0847602   .0025364    33.42   0.000      .079789    .0897314
+          LA#2006  |   .1117554   .0025569    43.71   0.000     .1067439    .1167668
+          LA#2007  |  -.2995389   .0026007  -115.17   0.000    -.3046362   -.2944415
+          LA#2008  |  -.3082486   .0025354  -121.58   0.000    -.3132179   -.3032792
+          LA#2009  |   -.028717   .0025254   -11.37   0.000    -.0336666   -.0237673
+          LA#2010  |  -.0959233   .0026333   -36.43   0.000    -.1010844   -.0907622
+          LA#2011  |  -.3680698   .0026405  -139.39   0.000    -.3732451   -.3628945
+          LA#2012  |   .1228922   .0025616    47.97   0.000     .1178715    .1279128
+          LA#2013  |  -.1696581   .0026502   -64.02   0.000    -.1748524   -.1644637
+          LA#2014  |  -.0894375   .0026273   -34.04   0.000    -.0945869    -.084288
+          LA#2015  |  -.1627358   .0025823   -63.02   0.000    -.1677971   -.1576746
+          LA#2016  |  -.6263321    .002754  -227.43   0.000    -.6317298   -.6209343
+          LA#2017  |  -.2460876   .0027497   -89.50   0.000    -.2514769   -.2406983
+          LA#2018  |  -.4412752   .0027035  -163.22   0.000     -.446574   -.4359765
+          LA#2019  |  -.0965509   .0026655   -36.22   0.000    -.1017751   -.0913267
+          OK#2001  |   .2672358    .002606   102.55   0.000     .2621282    .2723434
+          OK#2002  |   .2829213   .0025382   111.47   0.000     .2779465    .2878961
+          OK#2003  |   .1443485   .0026161    55.18   0.000      .139221    .1494761
+          OK#2004  |   .1976778    .002631    75.13   0.000     .1925212    .2028344
+          OK#2005  |   .0035201   .0026448     1.33   0.183    -.0016636    .0087038
+          OK#2006  |   .3236928   .0025884   125.06   0.000     .3186197    .3287659
+          OK#2007  |   .4485385   .0025481   176.03   0.000     .4435445    .4535326
+          OK#2008  |   .1998091   .0025406    78.65   0.000     .1948296    .2047886
+          OK#2009  |    .041868   .0026289    15.93   0.000     .0367155    .0470206
+          OK#2010  |   .1711693   .0026934    63.55   0.000     .1658904    .1764482
+          OK#2011  |   .1271076    .002633    48.27   0.000     .1219469    .1322682
+          OK#2012  |   .1814981   .0026301    69.01   0.000     .1763432    .1866529
+          OK#2013  |   .4716735   .0026237   179.78   0.000     .4665312    .4768159
+          OK#2014  |   .2760147   .0027107   101.82   0.000     .2707018    .2813277
+          OK#2015  |   -.070774    .002711   -26.11   0.000    -.0760875   -.0654606
+          OK#2016  |   -.039681   .0027274   -14.55   0.000    -.0450265   -.0343354
+          OK#2017  |   .2045715   .0026972    75.84   0.000      .199285     .209858
+          OK#2018  |   .0622026   .0026226    23.72   0.000     .0570624    .0673427
+          OK#2019  |   .1866965   .0026272    71.06   0.000     .1815472    .1918458
+          TX#2001  |   .1470534   .0021252    69.19   0.000      .142888    .1512188
+          TX#2002  |  -.0593086   .0020898   -28.38   0.000    -.0634045   -.0552128
+          TX#2003  |   .0849105   .0021522    39.45   0.000     .0806923    .0891287
+          TX#2004  |   .1486581   .0021611    68.79   0.000     .1444225    .1528937
+          TX#2005  |   .0528335   .0021313    24.79   0.000     .0486562    .0570107
+          TX#2006  |   -.014778   .0021265    -6.95   0.000    -.0189458   -.0106101
+          TX#2007  |  -.0483454   .0021165   -22.84   0.000    -.0524937   -.0441971
+          TX#2008  |  -.0960726   .0020824   -46.13   0.000    -.1001541   -.0919911
+          TX#2009  |   .0925475    .002121    43.63   0.000     .0883903    .0967046
+          TX#2010  |   .1811151   .0021923    82.61   0.000     .1768182     .185412
+          TX#2011  |   .0724112   .0021537    33.62   0.000       .06819    .0766325
+          TX#2012  |   .2406205   .0021549   111.66   0.000      .236397    .2448441
+          TX#2013  |   .0719443   .0021768    33.05   0.000     .0676778    .0762108
+          TX#2014  |   .1427758   .0021868    65.29   0.000     .1384898    .1470617
+          TX#2015  |  -.2210917   .0021698  -101.89   0.000    -.2253445   -.2168389
+          TX#2016  |  -.1393685   .0021679   -64.29   0.000    -.1436175   -.1351196
+          TX#2017  |   .1068752   .0022111    48.34   0.000     .1025416    .1112089
+          TX#2018  |  -.1140526   .0021352   -53.42   0.000    -.1182374   -.1098677
+          TX#2019  |  -.0880727   .0021456   -41.05   0.000    -.0922779   -.0838674
+          MT#2001  |   .2265908   .0030812    73.54   0.000     .2205517    .2326299
+          MT#2002  |   .1636842   .0030129    54.33   0.000      .157779    .1695894
+          MT#2003  |   .1556983     .00308    50.55   0.000     .1496616    .1617351
+          MT#2004  |  -.0381574   .0031507   -12.11   0.000    -.0443326   -.0319821
+          MT#2005  |  -.1373564   .0030932   -44.41   0.000     -.143419   -.1312939
+          MT#2006  |  -.0144447   .0030499    -4.74   0.000    -.0204224   -.0084671
+          MT#2007  |   .3814165   .0029584   128.93   0.000     .3756181    .3872149
+          MT#2008  |   .3876977   .0029563   131.14   0.000     .3819035    .3934918
+          MT#2009  |   .6264934   .0029722   210.79   0.000     .6206681    .6323187
+          MT#2010  |    .340007   .0031242   108.83   0.000     .3338837    .3461303
+          MT#2011  |   .2211183    .003132    70.60   0.000     .2149797    .2272568
+          MT#2012  |   .4824775    .003076   156.85   0.000     .4764487    .4885062
+          MT#2013  |   .3350036   .0031358   106.83   0.000     .3288577    .3411496
+          MT#2014  |   .2953272    .003157    93.55   0.000     .2891396    .3015148
+          MT#2015  |   .0331611   .0030993    10.70   0.000     .0270865    .0392357
+          MT#2016  |   .2473584   .0030909    80.03   0.000     .2413004    .2534163
+          MT#2017  |   .2123749   .0031509    67.40   0.000     .2061992    .2185507
+          MT#2018  |   .1190969   .0030804    38.66   0.000     .1130595    .1251344
+          MT#2019  |    .033196   .0031243    10.63   0.000     .0270725    .0393194
+          ID#2001  |   .1769199   .0032337    54.71   0.000     .1705821    .1832578
+          ID#2002  |   .1723944   .0031893    54.05   0.000     .1661434    .1786453
+          ID#2003  |    .259478   .0032074    80.90   0.000     .2531916    .2657645
+          ID#2004  |   .0870015   .0032547    26.73   0.000     .0806225    .0933805
+          ID#2005  |  -.0246602    .003281    -7.52   0.000    -.0310909   -.0182295
+          ID#2006  |   .0984753   .0032227    30.56   0.000     .0921589    .1047917
+          ID#2007  |   .0436263   .0032189    13.55   0.000     .0373173    .0499353
+          ID#2008  |   .2777962   .0031584    87.95   0.000     .2716058    .2839866
+          ID#2009  |   .2263596   .0032094    70.53   0.000     .2200692      .23265
+          ID#2010  |   .2897882   .0032798    88.36   0.000       .28336    .2962165
+          ID#2011  |  -.0637477   .0033759   -18.88   0.000    -.0703643    -.057131
+          ID#2012  |  -.1100074   .0033418   -32.92   0.000    -.1165573   -.1034576
+          ID#2013  |  -.1337352   .0033885   -39.47   0.000    -.1403766   -.1270937
+          ID#2014  |    .064707   .0033598    19.26   0.000     .0581219    .0712921
+          ID#2015  |  -.1910873   .0033071   -57.78   0.000    -.1975692   -.1846055
+          ID#2016  |  -.0488954   .0032757   -14.93   0.000    -.0553156   -.0424752
+          ID#2017  |  -.0006718    .003315    -0.20   0.839    -.0071691    .0058256
+          ID#2018  |  -.4228562   .0033601  -125.85   0.000    -.4294419   -.4162705
+          ID#2019  |  -.0445117   .0032544   -13.68   0.000    -.0508902   -.0381332
+          WY#2001  |   .3844267   .0039698    96.84   0.000     .3766462    .3922073
+          WY#2002  |   .0792681   .0040086    19.77   0.000     .0714113    .0871248
+          WY#2003  |    .158891   .0040768    38.97   0.000     .1509006    .1668814
+          WY#2004  |   .2600952   .0040428    64.34   0.000     .2521716    .2680189
+          WY#2005  |   .1879251    .004016    46.79   0.000     .1800538    .1957964
+          WY#2006  |   .3117553   .0039577    78.77   0.000     .3039983    .3195122
+          WY#2007  |   .2269825   .0039956    56.81   0.000     .2191511    .2348138
+          WY#2008  |   .1297423   .0039898    32.52   0.000     .1219223    .1375623
+          WY#2009  |  -.0314387   .0041059    -7.66   0.000    -.0394861   -.0233913
+          WY#2010  |   .0662061   .0041143    16.09   0.000     .0581422    .0742699
+          WY#2011  |  -.1338144   .0042462   -31.51   0.000    -.1421367    -.125492
+          WY#2012  |  -.0438613   .0041496   -10.57   0.000    -.0519944   -.0357282
+          WY#2013  |  -.1079288   .0043217   -24.97   0.000    -.1163991   -.0994586
+          WY#2014  |  -.0152883   .0043149    -3.54   0.000    -.0237454   -.0068313
+          WY#2015  |  -.2125023   .0043608   -48.73   0.000    -.2210493   -.2039554
+          WY#2016  |  -.2386804   .0043056   -55.44   0.000    -.2471192   -.2302417
+          WY#2017  |  -.1370797   .0044623   -30.72   0.000    -.1458255   -.1283338
+          WY#2018  |  -.3020056   .0045115   -66.94   0.000    -.3108479   -.2931633
+          WY#2019  |  -.0259679   .0042982    -6.04   0.000    -.0343922   -.0175435
+          CO#2001  |    .148503     .00233    63.74   0.000     .1439364    .1530696
+          CO#2002  |  -.1482326    .002324   -63.78   0.000    -.1527876   -.1436776
+          CO#2003  |   .0708678   .0023769    29.82   0.000     .0662092    .0755263
+          CO#2004  |    .194686   .0023681    82.21   0.000     .1900447    .1993273
+          CO#2005  |   .0842901   .0023426    35.98   0.000     .0796986    .0888815
+          CO#2006  |   .1289657   .0023377    55.17   0.000     .1243838    .1335475
+          CO#2007  |   .1727395   .0023197    74.47   0.000      .168193     .177286
+          CO#2008  |   .0309661   .0022974    13.48   0.000     .0264633     .035469
+          CO#2009  |  -.0564802   .0023491   -24.04   0.000    -.0610843   -.0518761
+          CO#2010  |  -.0895451    .002443   -36.65   0.000    -.0943334   -.0847568
+          CO#2011  |   .0921496   .0023751    38.80   0.000     .0874945    .0968046
+          CO#2012  |   .0452063   .0023895    18.92   0.000     .0405229    .0498896
+          CO#2013  |   .1479338   .0024013    61.61   0.000     .1432274    .1526403
+          CO#2014  |   .3121265   .0023885   130.68   0.000      .307445    .3168079
+          CO#2015  |  -.0379563   .0023796   -15.95   0.000    -.0426202   -.0332923
+          CO#2016  |   .3570185   .0023518   151.81   0.000     .3524092    .3616278
+          CO#2017  |   .4994808   .0023944   208.60   0.000     .4947879    .5041738
+          CO#2018  |   .4144815   .0023124   179.24   0.000     .4099493    .4190137
+          CO#2019  |   .1851963   .0023472    78.90   0.000     .1805959    .1897967
+          NM#2001  |   .1281111   .0028492    44.96   0.000     .1225267    .1336955
+          NM#2002  |  -.1439544   .0028382   -50.72   0.000    -.1495172   -.1383916
+          NM#2003  |   .0679212   .0028459    23.87   0.000     .0623434    .0734991
+          NM#2004  |   .1569285   .0028495    55.07   0.000     .1513436    .1625134
+          NM#2005  |   .4203128   .0027653   151.99   0.000     .4148929    .4257328
+          NM#2006  |   .5583545   .0027202   205.26   0.000      .553023     .563686
+          NM#2007  |   .5135873   .0027249   188.48   0.000     .5082465    .5189281
+          NM#2008  |    .416534   .0027325   152.44   0.000     .4111784    .4218896
+          NM#2009  |   .3171844   .0028145   112.70   0.000     .3116681    .3227007
+          NM#2010  |   .2818702   .0029075    96.95   0.000     .2761717    .2875687
+          NM#2011  |   .0771825   .0029333    26.31   0.000     .0714334    .0829316
+          NM#2012  |  -.0553845    .002957   -18.73   0.000      -.06118   -.0495889
+          NM#2013  |   .0471198   .0029465    15.99   0.000     .0413448    .0528948
+          NM#2014  |   .0875888   .0029721    29.47   0.000     .0817637     .093414
+          NM#2015  |  -.0898787   .0029661   -30.30   0.000    -.0956921   -.0840653
+          NM#2016  |  -.0259741    .002954    -8.79   0.000    -.0317638   -.0201844
+          NM#2017  |   .2230542   .0029573    75.42   0.000      .217258    .2288505
+          NM#2018  |  -.0200604   .0028975    -6.92   0.000    -.0257393   -.0143815
+          NM#2019  |   .1935529   .0028743    67.34   0.000     .1879194    .1991864
+          AZ#2001  |   .0266112   .0024356    10.93   0.000     .0218376    .0313849
+          AZ#2002  |  -.0251084   .0023986   -10.47   0.000    -.0298096   -.0204073
+          AZ#2003  |   .1080432   .0024583    43.95   0.000     .1032251    .1128614
+          AZ#2004  |   .3111343    .002436   127.72   0.000     .3063597    .3159088
+          AZ#2005  |   .3408428   .0023997   142.04   0.000     .3361396    .3455461
+          AZ#2006  |   .4001915   .0023893   167.49   0.000     .3955085    .4048745
+          AZ#2007  |    .252862   .0023928   105.68   0.000     .2481722    .2575518
+          AZ#2008  |   .4437703   .0023517   188.70   0.000     .4391611    .4483795
+          AZ#2009  |   .3402757   .0024098   141.20   0.000     .3355526    .3449988
+          AZ#2010  |   .4643377   .0024579   188.92   0.000     .4595203    .4691551
+          AZ#2011  |   .2152142   .0024614    87.44   0.000     .2103899    .2200385
+          AZ#2012  |   .1987024   .0024842    79.99   0.000     .1938335    .2035712
+          AZ#2013  |    .040704    .002539    16.03   0.000     .0357276    .0456804
+          AZ#2014  |   .2430543   .0024938    97.46   0.000     .2381666     .247942
+          AZ#2015  |  -.1192703   .0024937   -47.83   0.000    -.1241579   -.1143827
+          AZ#2016  |   .1605293   .0024482    65.57   0.000     .1557308    .1653277
+          AZ#2017  |   .0757225   .0025114    30.15   0.000     .0708002    .0806448
+          AZ#2018  |   .0570797   .0024053    23.73   0.000     .0523654     .061794
+          AZ#2019  |   .2316244   .0024062    96.26   0.000     .2269084    .2363404
+          UT#2001  |  -.0280094   .0026859   -10.43   0.000    -.0332736   -.0227452
+          UT#2002  |  -.1651011   .0026544   -62.20   0.000    -.1703036   -.1598987
+          UT#2003  |   -.205667   .0027243   -75.49   0.000    -.2110065   -.2003275
+          UT#2004  |  -.2817807   .0027948  -100.82   0.000    -.2872583    -.276303
+          UT#2005  |  -.2399116   .0027648   -86.77   0.000    -.2453306   -.2344927
+          UT#2006  |  -.1810074   .0027187   -66.58   0.000    -.1863359   -.1756788
+          UT#2007  |  -.1327026   .0026712   -49.68   0.000    -.1379381   -.1274672
+          UT#2008  |  -.2261837   .0026664   -84.83   0.000    -.2314098   -.2209576
+          UT#2009  |   .0538504   .0026546    20.29   0.000     .0486475    .0590533
+          UT#2010  |   .0519642   .0027263    19.06   0.000     .0466207    .0573077
+          UT#2011  |  -.2006168   .0027591   -72.71   0.000    -.2060246   -.1952091
+          UT#2012  |  -.3195383   .0027877  -114.63   0.000     -.325002   -.3140746
+          UT#2013  |  -.4473046   .0028389  -157.56   0.000    -.4528688   -.4417404
+          UT#2014  |  -.5762291   .0029438  -195.74   0.000    -.5819989   -.5704593
+          UT#2015  |  -.5280077    .002812  -187.77   0.000     -.533519   -.5224963
+          UT#2016  |  -.2154031   .0027121   -79.42   0.000    -.2207187   -.2100874
+          UT#2017  |  -.4666802   .0028356  -164.58   0.000    -.4722378   -.4611226
+          UT#2018  |  -.4581146   .0027162  -168.66   0.000    -.4634382    -.452791
+          UT#2019  |   -.318286   .0026956  -118.08   0.000    -.3235692   -.3130028
+          NV#2001  |   .1341392   .0024817    54.05   0.000     .1292751    .1390033
+          NV#2002  |   .0065592   .0024456     2.68   0.007     .0017659    .0113524
+          NV#2003  |   -.002536   .0025331    -1.00   0.317    -.0075007    .0024288
+          NV#2004  |   .0293114   .0025486    11.50   0.000     .0243162    .0343065
+          NV#2005  |   .1188924   .0024879    47.79   0.000     .1140162    .1237686
+          NV#2006  |   .2635399   .0024561   107.30   0.000      .258726    .2683538
+          NV#2007  |   .3136909   .0024304   129.07   0.000     .3089274    .3184545
+          NV#2008  |   .2605756   .0024054   108.33   0.000     .2558612    .2652901
+          NV#2009  |   .1315734   .0024658    53.36   0.000     .1267405    .1364063
+          NV#2010  |   .1526671   .0025735    59.32   0.000      .147623    .1577111
+          NV#2011  |   .1295905   .0025423    50.97   0.000     .1246078    .1345733
+          NV#2012  |   .2180684   .0025182    86.60   0.000     .2131328     .223004
+          NV#2013  |   .2108816   .0025471    82.79   0.000     .2058895    .2158738
+          NV#2014  |   .2078696   .0025464    81.63   0.000     .2028788    .2128604
+          NV#2015  |  -.0184164   .0024801    -7.43   0.000    -.0232773   -.0135555
+          NV#2016  |  -.0166022   .0025026    -6.63   0.000    -.0215072   -.0116972
+          NV#2017  |   .0604852   .0025352    23.86   0.000     .0555162    .0654541
+          NV#2018  |   .0514945   .0024555    20.97   0.000     .0466818    .0563071
+          NV#2019  |  -.0209054   .0024918    -8.39   0.000    -.0257892   -.0160217
+          WA#2001  |    .252286   .0021818   115.63   0.000     .2480098    .2565621
+          WA#2002  |   .0595782   .0021421    27.81   0.000     .0553798    .0637767
+          WA#2003  |    .143438   .0022037    65.09   0.000     .1391188    .1477573
+          WA#2004  |   .2344338   .0022107   106.04   0.000     .2301008    .2387668
+          WA#2005  |   .2668251   .0021756   122.64   0.000      .262561    .2710892
+          WA#2006  |   .3779393   .0021684   174.30   0.000     .3736894    .3821892
+          WA#2007  |   .4345806   .0021478   202.34   0.000     .4303709    .4387902
+          WA#2008  |   .3310727    .002121   156.09   0.000     .3269155    .3352298
+          WA#2009  |   .3572876   .0021615   165.29   0.000     .3530511    .3615242
+          WA#2010  |   .4074355   .0022335   182.42   0.000     .4030579     .411813
+          WA#2011  |   .1479588   .0022032    67.16   0.000     .1436407     .152277
+          WA#2012  |   .1856388   .0022099    84.00   0.000     .1813074    .1899702
+          WA#2013  |   .2539916   .0022293   113.93   0.000     .2496221     .258361
+          WA#2014  |   .2143839   .0022366    95.85   0.000     .2100002    .2187676
+          WA#2015  |  -.1325466   .0022161   -59.81   0.000    -.1368901   -.1282032
+          WA#2016  |   .0919563     .00221    41.61   0.000     .0876249    .0962878
+          WA#2017  |   .3577966   .0022571   158.52   0.000     .3533728    .3622205
+          WA#2018  |   .2900665   .0021709   133.62   0.000     .2858117    .2943213
+          WA#2019  |   .2415095   .0021801   110.78   0.000     .2372364    .2457825
+          OR#2001  |   .2491778    .002324   107.22   0.000     .2446229    .2537327
+          OR#2002  |   .1163872   .0022985    50.64   0.000     .1118823    .1208921
+          OR#2003  |   .1558659   .0023633    65.95   0.000      .151234    .1604978
+          OR#2004  |   .2526785    .002365   106.84   0.000     .2480432    .2573138
+          OR#2005  |   .1509907   .0023438    64.42   0.000     .1463968    .1555845
+          OR#2006  |   .1513862   .0023351    64.83   0.000     .1468094     .155963
+          OR#2007  |   .1246986   .0023178    53.80   0.000     .1201558    .1292414
+          OR#2008  |   .2575256   .0022723   113.33   0.000     .2530719    .2619793
+          OR#2009  |   .3256654   .0023217   140.27   0.000     .3211148    .3302159
+          OR#2010  |   .4354676   .0023838   182.68   0.000     .4307955    .4401398
+          OR#2011  |   .3097125   .0023441   132.13   0.000     .3051182    .3143068
+          OR#2012  |   .1044917   .0023623    44.23   0.000     .0998617    .1091216
+          OR#2013  |    .163568   .0023895    68.45   0.000     .1588847    .1682513
+          OR#2014  |   .3954435   .0023852   165.79   0.000     .3907686    .4001183
+          OR#2015  |  -.0262352   .0023815   -11.02   0.000    -.0309028   -.0215676
+          OR#2016  |   .2337698   .0023522    99.38   0.000     .2291596    .2383801
+          OR#2017  |    .301048   .0023984   125.52   0.000     .2963472    .3057487
+          OR#2018  |   .0718445   .0023312    30.82   0.000     .0672754    .0764137
+          OR#2019  |   .1414938   .0023365    60.56   0.000     .1369144    .1460732
+          CA#2001  |   .2645418   .0020529   128.86   0.000     .2605182    .2685655
+          CA#2002  |   .2001432   .0020122    99.47   0.000     .1961993     .204087
+          CA#2003  |   .2894188   .0020772   139.33   0.000     .2853475    .2934901
+          CA#2004  |   .3520725   .0020869   168.71   0.000     .3479823    .3561627
+          CA#2005  |   .3186008   .0020555   155.00   0.000     .3145721    .3226296
+          CA#2006  |   .2699442   .0020508   131.63   0.000     .2659248    .2739636
+          CA#2007  |    .374079   .0020368   183.66   0.000     .3700869    .3780711
+          CA#2008  |   .4064999   .0020049   202.76   0.000     .4025704    .4104294
+          CA#2009  |   .3256097     .00205   158.84   0.000     .3215919    .3296275
+          CA#2010  |   .4256805   .0021258   200.24   0.000     .4215139     .429847
+          CA#2011  |   .3135318   .0020849   150.39   0.000     .3094456    .3176181
+          CA#2012  |   .3566165   .0020925   170.43   0.000     .3525153    .3607177
+          CA#2013  |   .3806048   .0021072   180.62   0.000     .3764747    .3847349
+          CA#2014  |   .4080401   .0021186   192.60   0.000     .4038877    .4121926
+          CA#2015  |   .1572943   .0020897    75.27   0.000     .1531987      .16139
+          CA#2016  |   .2317125   .0020899   110.87   0.000     .2276164    .2358086
+          CA#2017  |   .3359625   .0021451   156.62   0.000     .3317583    .3401668
+          CA#2018  |   .1618434   .0020637    78.42   0.000     .1577986    .1658882
+          CA#2019  |   .3222954    .002071   155.62   0.000     .3182363    .3263546
+          AK#2001  |    .223143    .003224    69.21   0.000      .216824     .229462
+          AK#2002  |   .2830484   .0032022    88.39   0.000     .2767723    .2893246
+          AK#2003  |   .2118018   .0032354    65.46   0.000     .2054606    .2181431
+          AK#2004  |   .2563187   .0032787    78.18   0.000     .2498925    .2627449
+          AK#2005  |   .3220065   .0032311    99.66   0.000     .3156737    .3283392
+          AK#2006  |   .3667849   .0031858   115.13   0.000     .3605408     .373029
+          AK#2007  |   .3773975   .0031921   118.23   0.000     .3711412    .3836538
+          AK#2008  |   .2770005    .003169    87.41   0.000     .2707893    .2832117
+          AK#2009  |    .367829   .0032279   113.95   0.000     .3615025    .3741556
+          AK#2010  |   .5847928   .0032862   177.95   0.000     .5783519    .5912337
+          AK#2011  |   .2678041   .0032949    81.28   0.000     .2613462    .2742621
+          AK#2012  |   .2465626   .0033098    74.50   0.000     .2400756    .2530496
+          AK#2013  |   .4412225   .0033191   132.93   0.000     .4347172    .4477279
+          AK#2014  |   .3085698   .0033325    92.59   0.000     .3020382    .3151015
+          AK#2015  |  -.0634371   .0033252   -19.08   0.000    -.0699544   -.0569199
+          AK#2016  |   .0337572   .0033258    10.15   0.000     .0272389    .0402756
+          AK#2017  |   .0707553    .003364    21.03   0.000     .0641619    .0773486
+          AK#2018  |   .0955484   .0033329    28.67   0.000     .0890161    .1020807
+          AK#2019  |  -.0309038   .0034042    -9.08   0.000    -.0375759   -.0242317
+          HI#2001  |   .1656413   .0027421    60.41   0.000     .1602669    .1710157
+          HI#2002  |   .0354513   .0027511    12.89   0.000     .0300593    .0408433
+          HI#2003  |    .094205   .0027995    33.65   0.000     .0887181     .099692
+          HI#2004  |   .2406651   .0027764    86.68   0.000     .2352235    .2461068
+          HI#2005  |   .3027544   .0027444   110.32   0.000     .2973754    .3081334
+          HI#2006  |   .4474683   .0027351   163.60   0.000     .4421075    .4528291
+          HI#2007  |   .3327766   .0027421   121.36   0.000     .3274023     .338151
+          HI#2008  |   .2490777   .0027089    91.95   0.000     .2437685     .254387
+          HI#2009  |   .1477576   .0027813    53.13   0.000     .1423064    .1532089
+          HI#2010  |   .0912636   .0028949    31.53   0.000     .0855898    .0969374
+          HI#2011  |  -.0293658   .0028381   -10.35   0.000    -.0349283   -.0238033
+          HI#2012  |   .1093486   .0028122    38.88   0.000     .1038368    .1148603
+          HI#2013  |   .2172412   .0028156    77.15   0.000     .2117226    .2227597
+          HI#2014  |  -.0042558    .002851    -1.49   0.136    -.0098437    .0013321
+          HI#2015  |  -.2137261   .0028662   -74.57   0.000    -.2193437   -.2081085
+          HI#2016  |  -.1954995   .0028826   -67.82   0.000    -.2011492   -.1898497
+          HI#2017  |   .1311828   .0028868    45.44   0.000     .1255248    .1368407
+          HI#2018  |  -.0419923   .0028285   -14.85   0.000     -.047536   -.0364486
+          HI#2019  |   .1069693   .0028662    37.32   0.000     .1013516     .112587
+                   |
+        nind2#year |
+           2 2001  |  -.0857275   .0016123   -53.17   0.000    -.0888875   -.0825675
+           2 2002  |   .0234917   .0016454    14.28   0.000     .0202668    .0267166
+           2 2003  |  -.0427106   .0018527   -23.05   0.000    -.0463418   -.0390794
+           2 2004  |  -.4513001    .001745  -258.62   0.000    -.4547203   -.4478799
+           2 2005  |   -.682174    .001675  -407.27   0.000    -.6854569   -.6788911
+           2 2006  |  -.6239858    .001687  -369.87   0.000    -.6272924   -.6206793
+           2 2007  |   -.593723   .0016271  -364.91   0.000     -.596912   -.5905341
+           2 2008  |  -.4767254   .0016292  -292.62   0.000    -.4799185   -.4735323
+           2 2009  |  -.2348967   .0017558  -133.78   0.000     -.238338   -.2314554
+           2 2010  |  -.3049559   .0017527  -173.99   0.000    -.3083912   -.3015207
+           2 2011  |  -.0604402   .0018121   -33.35   0.000    -.0639918   -.0568886
+           2 2012  |  -.3325101   .0017069  -194.80   0.000    -.3358556   -.3291645
+           2 2013  |  -.0898038   .0017753   -50.59   0.000    -.0932833   -.0863243
+           2 2014  |   -.139567   .0017845   -78.21   0.000    -.1430647   -.1360694
+           2 2015  |   .1594234   .0019839    80.36   0.000     .1555349    .1633118
+           2 2016  |   .0553949   .0018507    29.93   0.000     .0517675    .0590223
+           2 2017  |   .1195958   .0018551    64.47   0.000     .1159599    .1232316
+           2 2018  |  -.1222314    .001816   -67.31   0.000    -.1257906   -.1186722
+           2 2019  |   .0995907   .0018667    53.35   0.000     .0959321    .1032494
+           3 2001  |  -.0116215   .0015705    -7.40   0.000    -.0146996   -.0085433
+           3 2002  |   .0737462   .0016045    45.96   0.000     .0706015    .0768909
+           3 2003  |  -.0723064   .0018209   -39.71   0.000    -.0758753   -.0687374
+           3 2004  |  -.3403086     .00171  -199.01   0.000    -.3436602   -.3369571
+           3 2005  |  -.4583534   .0016387  -279.71   0.000    -.4615651   -.4551416
+           3 2006  |  -.4339039   .0016518  -262.68   0.000    -.4371415   -.4306664
+           3 2007  |  -.5017126    .001594  -314.74   0.000    -.5048368   -.4985883
+           3 2008  |  -.4995664   .0015947  -313.27   0.000     -.502692   -.4964409
+           3 2009  |  -.2146221   .0017197  -124.80   0.000    -.2179926   -.2112515
+           3 2010  |  -.2152709   .0017128  -125.68   0.000     -.218628   -.2119139
+           3 2011  |  -.0993029   .0017743   -55.97   0.000    -.1027805   -.0958253
+           3 2012  |  -.3111364   .0016642  -186.96   0.000    -.3143982   -.3078747
+           3 2013  |  -.1618753   .0017391   -93.08   0.000     -.165284   -.1584667
+           3 2014  |  -.2402388   .0017511  -137.19   0.000    -.2436709   -.2368066
+           3 2015  |   .1025657   .0019531    52.51   0.000     .0987376    .1063937
+           3 2016  |  -.1516093   .0018226   -83.18   0.000    -.1551816    -.148037
+           3 2017  |  -.0516842   .0018275   -28.28   0.000     -.055266   -.0481024
+           3 2018  |  -.1900384   .0017873  -106.33   0.000    -.1935414   -.1865354
+           3 2019  |  -.0132328    .001841    -7.19   0.000    -.0168411   -.0096245
+           4 2001  |  -.0252533   .0016012   -15.77   0.000    -.0283915    -.022115
+           4 2002  |   .1031753   .0016324    63.20   0.000     .0999758    .1063748
+           4 2003  |   .1094671   .0018406    59.47   0.000     .1058596    .1130745
+           4 2004  |    -.24879   .0017322  -143.63   0.000    -.2521849    -.245395
+           4 2005  |   -.409392   .0016617  -246.37   0.000    -.4126489   -.4061352
+           4 2006  |  -.3579131   .0016744  -213.75   0.000    -.3611948   -.3546313
+           4 2007  |  -.3449319   .0016154  -213.53   0.000     -.348098   -.3417658
+           4 2008  |  -.3423084   .0016165  -211.76   0.000    -.3454767   -.3391402
+           4 2009  |  -.0598202   .0017379   -34.42   0.000    -.0632263   -.0564141
+           4 2010  |  -.0992813   .0017309   -57.36   0.000    -.1026737   -.0958889
+           4 2011  |   .1036836   .0017909    57.90   0.000     .1001736    .1071937
+           4 2012  |  -.1437731    .001683   -85.43   0.000    -.1470716   -.1404745
+           4 2013  |  -.0366525   .0017587   -20.84   0.000    -.0400995   -.0332056
+           4 2014  |  -.0179373   .0017673   -10.15   0.000    -.0214012   -.0144735
+           4 2015  |   .3863089   .0019648   196.62   0.000      .382458    .3901598
+           4 2016  |   .1338859   .0018366    72.90   0.000     .1302862    .1374856
+           4 2017  |   .1430426   .0018436    77.59   0.000     .1394293    .1466559
+           4 2018  |   .0440132   .0018029    24.41   0.000     .0404795    .0475469
+           4 2019  |   .1794588   .0018592    96.53   0.000     .1758149    .1831027
+           5 2001  |   .0354958    .001584    22.41   0.000     .0323913    .0386003
+           5 2002  |   .1363527   .0016165    84.35   0.000     .1331843     .139521
+           5 2003  |   -.071677    .001828   -39.21   0.000    -.0752599   -.0680941
+           5 2004  |  -.3327237   .0017178  -193.69   0.000    -.3360905   -.3293569
+           5 2005  |  -.5395614    .001646  -327.79   0.000    -.5427876   -.5363352
+           5 2006  |  -.4877298   .0016577  -294.23   0.000    -.4909787   -.4844808
+           5 2007  |  -.5849201   .0016003  -365.50   0.000    -.5880567   -.5817836
+           5 2008  |  -.5298252   .0016007  -330.99   0.000    -.5329626   -.5266878
+           5 2009  |  -.2459921   .0017239  -142.69   0.000    -.2493709   -.2426133
+           5 2010  |  -.2617666   .0017157  -152.57   0.000    -.2651294   -.2584038
+           5 2011  |  -.1149943   .0017767   -64.72   0.000    -.1184765   -.1115121
+           5 2012  |  -.2927985   .0016677  -175.57   0.000    -.2960671   -.2895299
+           5 2013  |  -.2294556   .0017434  -131.62   0.000    -.2328725   -.2260386
+           5 2014  |  -.2345666   .0017527  -133.83   0.000    -.2380018   -.2311314
+           5 2015  |    .081473   .0019543    41.69   0.000     .0776426    .0853034
+           5 2016  |  -.1431382   .0018236   -78.49   0.000    -.1467125    -.139564
+           5 2017  |  -.0925041   .0018295   -50.56   0.000    -.0960899   -.0889183
+           5 2018  |  -.2476292   .0017884  -138.47   0.000    -.2511343   -.2441241
+           5 2019  |  -.0644882   .0018419   -35.01   0.000    -.0680984   -.0608781
+           6 2001  |   .1748061   .0019045    91.79   0.000     .1710734    .1785388
+           6 2002  |   .1069957   .0019568    54.68   0.000     .1031604     .110831
+           6 2003  |   .3064049   .0021075   145.39   0.000     .3022742    .3105355
+           6 2004  |  -.0999264   .0020252   -49.34   0.000    -.1038958    -.095957
+           6 2005  |  -.1529159   .0019518   -78.35   0.000    -.1567413   -.1490904
+           6 2006  |  -.1920765   .0019766   -97.18   0.000    -.1959506   -.1882025
+           6 2007  |  -.1305618   .0019162   -68.13   0.000    -.1343175    -.126806
+           6 2008  |  -.2309685   .0019297  -119.69   0.000    -.2347507   -.2271863
+           6 2009  |   .0799641   .0020315    39.36   0.000     .0759825    .0839458
+           6 2010  |   .2261123   .0020205   111.91   0.000     .2221521    .2300724
+           6 2011  |   .2990742   .0020932   142.88   0.000     .2949716    .3031768
+           6 2012  |   .1383333   .0019966    69.28   0.000     .1344199    .1422466
+           6 2013  |   .4566499   .0020308   224.86   0.000     .4526696    .4606301
+           6 2014  |   .2278116   .0020728   109.90   0.000     .2237489    .2318743
+           6 2015  |   .7482011   .0022176   337.39   0.000     .7438547    .7525475
+           6 2016  |   .7274157   .0020757   350.45   0.000     .7233475     .731484
+           6 2017  |   .7061785   .0020908   337.76   0.000     .7020806    .7102764
+           6 2018  |   .4064274     .00208   195.40   0.000     .4023506    .4105041
+           6 2019  |   .5909036   .0021295   277.48   0.000     .5867298    .5950775
+           7 2001  |  -.0118595   .0017176    -6.90   0.000     -.015226   -.0084931
+           7 2002  |   .1354121   .0017487    77.44   0.000     .1319847    .1388394
+           7 2003  |   .1374009   .0019369    70.94   0.000     .1336045    .1411972
+           7 2004  |  -.1769335    .001835   -96.42   0.000    -.1805301    -.173337
+           7 2005  |  -.2652304   .0017645  -150.31   0.000    -.2686888    -.261772
+           7 2006  |  -.1166529   .0017691   -65.94   0.000    -.1201203   -.1131856
+           7 2007  |   -.209867   .0017153  -122.35   0.000    -.2132289    -.206505
+           7 2008  |  -.2729214   .0017197  -158.70   0.000    -.2762919   -.2695508
+           7 2009  |   .0446069   .0018346    24.31   0.000     .0410112    .0482027
+           7 2010  |   .2534415   .0018167   139.50   0.000     .2498808    .2570022
+           7 2011  |   .2955164   .0018823   157.00   0.000     .2918271    .2992057
+           7 2012  |   .2170227   .0017671   122.82   0.000     .2135593     .220486
+           7 2013  |   .2824278   .0018436   153.19   0.000     .2788143    .2860412
+           7 2014  |   .2854237   .0018516   154.15   0.000     .2817946    .2890527
+           7 2015  |   .6505265   .0020411   318.71   0.000      .646526     .654527
+           7 2016  |   .4914353   .0019122   257.00   0.000     .4876875    .4951831
+           7 2017  |   .4315303   .0019202   224.73   0.000     .4277668    .4352938
+           7 2018  |   .2211691   .0018864   117.25   0.000     .2174719    .2248663
+           7 2019  |    .489835    .001932   253.53   0.000     .4860482    .4936217
+           8 2001  |  -.0456819   .0015984   -28.58   0.000    -.0488148   -.0425491
+           8 2002  |   .0922299   .0016285    56.64   0.000     .0890381    .0954216
+           8 2003  |   .0647948   .0018398    35.22   0.000     .0611889    .0684006
+           8 2004  |  -.2533516   .0017302  -146.43   0.000    -.2567426   -.2499605
+           8 2005  |  -.4225248   .0016598  -254.56   0.000    -.4257779   -.4192716
+           8 2006  |  -.3016436   .0016702  -180.60   0.000    -.3049171     -.29837
+           8 2007  |  -.3131914   .0016113  -194.37   0.000    -.3163495   -.3100333
+           8 2008  |  -.3054044    .001611  -189.57   0.000     -.308562   -.3022468
+           8 2009  |   .0288645   .0017304    16.68   0.000      .025473     .032256
+           8 2010  |   .0261556   .0017219    15.19   0.000     .0227807    .0295304
+           8 2011  |   .2185812   .0017824   122.63   0.000     .2150877    .2220747
+           8 2012  |  -.0379277   .0016738   -22.66   0.000    -.0412084    -.034647
+           8 2013  |   .0901347    .001749    51.53   0.000     .0867066    .0935628
+           8 2014  |   .1078628   .0017586    61.34   0.000     .1044161    .1113095
+           8 2015  |   .4270561   .0019589   218.01   0.000     .4232167    .4308955
+           8 2016  |   .2441455   .0018278   133.57   0.000     .2405631    .2477279
+           8 2017  |   .2643757   .0018341   144.15   0.000      .260781    .2679704
+           8 2018  |   .0476123   .0017946    26.53   0.000     .0440949    .0511297
+           8 2019  |   .3433427    .001846   185.99   0.000     .3397245    .3469609
+           9 2001  |    .018037   .0015671    11.51   0.000     .0149656    .0211085
+           9 2002  |   .1649979   .0015992   103.18   0.000     .1618636    .1681323
+           9 2003  |   .0670042   .0018135    36.95   0.000     .0634499    .0705586
+           9 2004  |  -.1915545   .0017016  -112.58   0.000    -.1948895   -.1882195
+           9 2005  |  -.2894248   .0016288  -177.69   0.000    -.2926173   -.2862324
+           9 2006  |   -.211637   .0016407  -128.99   0.000    -.2148527   -.2084214
+           9 2007  |  -.2672965   .0015823  -168.93   0.000    -.2703976   -.2641953
+           9 2008  |  -.2506289    .001583  -158.33   0.000    -.2537315   -.2475263
+           9 2009  |   .0171613   .0017057    10.06   0.000     .0138181    .0205045
+           9 2010  |   .0151151   .0016966     8.91   0.000     .0117898    .0184404
+           9 2011  |   .1996974   .0017579   113.60   0.000     .1962521    .2031428
+           9 2012  |  -.0749024   .0016475   -45.47   0.000    -.0781314   -.0716734
+           9 2013  |   .0623349   .0017228    36.18   0.000     .0589583    .0657115
+           9 2014  |   .0047606   .0017331     2.75   0.006     .0013639    .0081574
+           9 2015  |   .3824571   .0019349   197.67   0.000     .3786649    .3862493
+           9 2016  |   .1638727   .0018034    90.87   0.000     .1603382    .1674072
+           9 2017  |   .1783683   .0018101    98.54   0.000     .1748205    .1819162
+           9 2018  |    .049946   .0017686    28.24   0.000     .0464796    .0534124
+           9 2019  |   .1985184   .0018224   108.93   0.000     .1949465    .2020902
+          10 2001  |   .0708348   .0017386    40.74   0.000     .0674272    .0742425
+          10 2002  |   .0679155   .0017785    38.19   0.000     .0644297    .0714013
+          10 2003  |  -.1519061   .0020395   -74.48   0.000    -.1559034   -.1479088
+          10 2004  |  -.5044934   .0019563  -257.88   0.000    -.5083277   -.5006591
+          10 2005  |  -.4728817    .001871  -252.74   0.000    -.4765488   -.4692146
+          10 2006  |   -.316872   .0018744  -169.05   0.000    -.3205457   -.3131982
+          10 2007  |  -.4959982   .0018233  -272.03   0.000    -.4995718   -.4924246
+          10 2008  |  -.5560637    .001828  -304.20   0.000    -.5596465    -.552481
+          10 2009  |  -.2215068   .0019254  -115.04   0.000    -.2252806    -.217733
+          10 2010  |  -.2491481   .0019325  -128.92   0.000    -.2529358   -.2453604
+          10 2011  |   -.028554   .0019906   -14.34   0.000    -.0324556   -.0246524
+          10 2012  |  -.1358249   .0018739   -72.48   0.000    -.1394978   -.1321521
+          10 2013  |  -.1386998   .0019567   -70.88   0.000    -.1425349   -.1348648
+          10 2014  |    .005305   .0019547     2.71   0.007      .001474    .0091361
+          10 2015  |   .4001103   .0021324   187.63   0.000     .3959308    .4042898
+          10 2016  |   .0319843   .0020265    15.78   0.000     .0280125    .0359562
+          10 2017  |   .1724413   .0020159    85.54   0.000     .1684902    .1763924
+          10 2018  |  -.0526225   .0019918   -26.42   0.000    -.0565264   -.0487185
+          10 2019  |   .2949933   .0020258   145.62   0.000     .2910227    .2989639
+          11 2001  |   .1053407    .001602    65.76   0.000     .1022009    .1084806
+          11 2002  |   .1759347   .0016328   107.75   0.000     .1727345     .179135
+          11 2003  |   .1047631   .0018437    56.82   0.000     .1011496    .1083767
+          11 2004  |  -.1253104   .0017333   -72.30   0.000    -.1287076   -.1219132
+          11 2005  |  -.2972573   .0016613  -178.93   0.000    -.3005134   -.2940012
+          11 2006  |  -.1923642    .001673  -114.98   0.000    -.1956432   -.1890853
+          11 2007  |  -.2286408   .0016151  -141.57   0.000    -.2318063   -.2254754
+          11 2008  |  -.2114321   .0016163  -130.82   0.000    -.2145999   -.2082643
+          11 2009  |   .1212079   .0017365    69.80   0.000     .1178044    .1246113
+          11 2010  |   .1014226   .0017273    58.72   0.000     .0980372     .104808
+          11 2011  |   .3456991   .0017881   193.34   0.000     .3421946    .3492037
+          11 2012  |   .0674952   .0016804    40.17   0.000     .0642017    .0707887
+          11 2013  |   .2711751   .0017551   154.51   0.000     .2677352     .274615
+          11 2014  |   .2426752   .0017652   137.47   0.000     .2392154     .246135
+          11 2015  |   .5991148   .0019641   305.03   0.000     .5952652    .6029643
+          11 2016  |   .3680489   .0018348   200.59   0.000     .3644528     .371645
+          11 2017  |   .3847886     .00184   209.12   0.000     .3811823    .3883949
+          11 2018  |   .2061294   .0017994   114.55   0.000     .2026026    .2096562
+          11 2019  |   .4542642   .0018529   245.16   0.000     .4506326    .4578959
+                   |
+nind2#year#c.lyear |
+           1 2000  |          0  (omitted)
+           1 2001  |          0  (omitted)
+           1 2002  |          0  (omitted)
+           1 2003  |          0  (omitted)
+           1 2004  |          0  (omitted)
+           1 2005  |          0  (omitted)
+           1 2006  |          0  (omitted)
+           1 2007  |          0  (omitted)
+           1 2008  |          0  (omitted)
+           1 2009  |          0  (omitted)
+           1 2010  |          0  (omitted)
+           1 2011  |          0  (omitted)
+           1 2012  |          0  (omitted)
+           1 2013  |          0  (omitted)
+           1 2014  |          0  (omitted)
+           1 2015  |          0  (omitted)
+           1 2016  |          0  (omitted)
+           1 2017  |          0  (omitted)
+           1 2018  |          0  (omitted)
+           1 2019  |          0  (omitted)
+           2 2000  |          0  (omitted)
+           2 2001  |          0  (omitted)
+           2 2002  |          0  (omitted)
+           2 2003  |          0  (omitted)
+           2 2004  |          0  (omitted)
+           2 2005  |          0  (omitted)
+           2 2006  |          0  (omitted)
+           2 2007  |          0  (omitted)
+           2 2008  |          0  (omitted)
+           2 2009  |          0  (omitted)
+           2 2010  |          0  (omitted)
+           2 2011  |          0  (omitted)
+           2 2012  |          0  (omitted)
+           2 2013  |          0  (omitted)
+           2 2014  |          0  (omitted)
+           2 2015  |          0  (omitted)
+           2 2016  |          0  (omitted)
+           2 2017  |          0  (omitted)
+           2 2018  |          0  (omitted)
+           2 2019  |          0  (omitted)
+           3 2000  |          0  (omitted)
+           3 2001  |          0  (omitted)
+           3 2002  |          0  (omitted)
+           3 2003  |          0  (omitted)
+           3 2004  |          0  (omitted)
+           3 2005  |          0  (omitted)
+           3 2006  |          0  (omitted)
+           3 2007  |          0  (omitted)
+           3 2008  |          0  (omitted)
+           3 2009  |          0  (omitted)
+           3 2010  |          0  (omitted)
+           3 2011  |          0  (omitted)
+           3 2012  |          0  (omitted)
+           3 2013  |          0  (omitted)
+           3 2014  |          0  (omitted)
+           3 2015  |          0  (omitted)
+           3 2016  |          0  (omitted)
+           3 2017  |          0  (omitted)
+           3 2018  |          0  (omitted)
+           3 2019  |          0  (omitted)
+           4 2000  |          0  (omitted)
+           4 2001  |          0  (omitted)
+           4 2002  |          0  (omitted)
+           4 2003  |          0  (omitted)
+           4 2004  |          0  (omitted)
+           4 2005  |          0  (omitted)
+           4 2006  |          0  (omitted)
+           4 2007  |          0  (omitted)
+           4 2008  |          0  (omitted)
+           4 2009  |          0  (omitted)
+           4 2010  |          0  (omitted)
+           4 2011  |          0  (omitted)
+           4 2012  |          0  (omitted)
+           4 2013  |          0  (omitted)
+           4 2014  |          0  (omitted)
+           4 2015  |          0  (omitted)
+           4 2016  |          0  (omitted)
+           4 2017  |          0  (omitted)
+           4 2018  |          0  (omitted)
+           4 2019  |          0  (omitted)
+           5 2000  |          0  (omitted)
+           5 2001  |          0  (omitted)
+           5 2002  |          0  (omitted)
+           5 2003  |          0  (omitted)
+           5 2004  |          0  (omitted)
+           5 2005  |          0  (omitted)
+           5 2006  |          0  (omitted)
+           5 2007  |          0  (omitted)
+           5 2008  |          0  (omitted)
+           5 2009  |          0  (omitted)
+           5 2010  |          0  (omitted)
+           5 2011  |          0  (omitted)
+           5 2012  |          0  (omitted)
+           5 2013  |          0  (omitted)
+           5 2014  |          0  (omitted)
+           5 2015  |          0  (omitted)
+           5 2016  |          0  (omitted)
+           5 2017  |          0  (omitted)
+           5 2018  |          0  (omitted)
+           5 2019  |          0  (omitted)
+           6 2000  |          0  (omitted)
+           6 2001  |          0  (omitted)
+           6 2002  |          0  (omitted)
+           6 2003  |          0  (omitted)
+           6 2004  |          0  (omitted)
+           6 2005  |          0  (omitted)
+           6 2006  |          0  (omitted)
+           6 2007  |          0  (omitted)
+           6 2008  |          0  (omitted)
+           6 2009  |          0  (omitted)
+           6 2010  |          0  (omitted)
+           6 2011  |          0  (omitted)
+           6 2012  |          0  (omitted)
+           6 2013  |          0  (omitted)
+           6 2014  |          0  (omitted)
+           6 2015  |          0  (omitted)
+           6 2016  |          0  (omitted)
+           6 2017  |          0  (omitted)
+           6 2018  |          0  (omitted)
+           6 2019  |          0  (omitted)
+           7 2000  |          0  (omitted)
+           7 2001  |          0  (omitted)
+           7 2002  |          0  (omitted)
+           7 2003  |          0  (omitted)
+           7 2004  |          0  (omitted)
+           7 2005  |          0  (omitted)
+           7 2006  |          0  (omitted)
+           7 2007  |          0  (omitted)
+           7 2008  |          0  (omitted)
+           7 2009  |          0  (omitted)
+           7 2010  |          0  (omitted)
+           7 2011  |          0  (omitted)
+           7 2012  |          0  (omitted)
+           7 2013  |          0  (omitted)
+           7 2014  |          0  (omitted)
+           7 2015  |          0  (omitted)
+           7 2016  |          0  (omitted)
+           7 2017  |          0  (omitted)
+           7 2018  |          0  (omitted)
+           7 2019  |          0  (omitted)
+           8 2000  |          0  (omitted)
+           8 2001  |          0  (omitted)
+           8 2002  |          0  (omitted)
+           8 2003  |          0  (omitted)
+           8 2004  |          0  (omitted)
+           8 2005  |          0  (omitted)
+           8 2006  |          0  (omitted)
+           8 2007  |          0  (omitted)
+           8 2008  |          0  (omitted)
+           8 2009  |          0  (omitted)
+           8 2010  |          0  (omitted)
+           8 2011  |          0  (omitted)
+           8 2012  |          0  (omitted)
+           8 2013  |          0  (omitted)
+           8 2014  |          0  (omitted)
+           8 2015  |          0  (omitted)
+           8 2016  |          0  (omitted)
+           8 2017  |          0  (omitted)
+           8 2018  |          0  (omitted)
+           8 2019  |          0  (omitted)
+           9 2000  |          0  (omitted)
+           9 2001  |          0  (omitted)
+           9 2002  |          0  (omitted)
+           9 2003  |          0  (omitted)
+           9 2004  |          0  (omitted)
+           9 2005  |          0  (omitted)
+           9 2006  |          0  (omitted)
+           9 2007  |          0  (omitted)
+           9 2008  |          0  (omitted)
+           9 2009  |          0  (omitted)
+           9 2010  |          0  (omitted)
+           9 2011  |          0  (omitted)
+           9 2012  |          0  (omitted)
+           9 2013  |          0  (omitted)
+           9 2014  |          0  (omitted)
+           9 2015  |          0  (omitted)
+           9 2016  |          0  (omitted)
+           9 2017  |          0  (omitted)
+           9 2018  |          0  (omitted)
+           9 2019  |          0  (omitted)
+          10 2000  |          0  (omitted)
+          10 2001  |          0  (omitted)
+          10 2002  |          0  (omitted)
+          10 2003  |          0  (omitted)
+          10 2004  |          0  (omitted)
+          10 2005  |          0  (omitted)
+          10 2006  |          0  (omitted)
+          10 2007  |          0  (omitted)
+          10 2008  |          0  (omitted)
+          10 2009  |          0  (omitted)
+          10 2010  |          0  (omitted)
+          10 2011  |          0  (omitted)
+          10 2012  |          0  (omitted)
+          10 2013  |          0  (omitted)
+          10 2014  |          0  (omitted)
+          10 2015  |          0  (omitted)
+          10 2016  |          0  (omitted)
+          10 2017  |          0  (omitted)
+          10 2018  |          0  (omitted)
+          10 2019  |          0  (omitted)
+          11 2000  |          0  (omitted)
+          11 2001  |          0  (omitted)
+          11 2002  |          0  (omitted)
+          11 2003  |          0  (omitted)
+          11 2004  |          0  (omitted)
+          11 2005  |          0  (omitted)
+          11 2006  |          0  (omitted)
+          11 2007  |          0  (omitted)
+          11 2008  |          0  (omitted)
+          11 2009  |          0  (omitted)
+          11 2010  |          0  (omitted)
+          11 2011  |          0  (omitted)
+          11 2012  |          0  (omitted)
+          11 2013  |          0  (omitted)
+          11 2014  |          0  (omitted)
+          11 2015  |          0  (omitted)
+          11 2016  |          0  (omitted)
+          11 2017  |          0  (omitted)
+          11 2018  |          0  (omitted)
+          11 2019  |          0  (omitted)
+                   |
+             _cons |  -2.646552   .0017712 -1494.22   0.000    -2.650024   -2.643081
+------------------------------------------------------------------------------------
+
+.         predict pcoveragerate
+(option pr assumed; Pr(covered))
+(2,296 missing values generated)
+
+. 
+. sort state year nind2
+
+. 
+. save "$estimation/est_dat.dta", replace
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/est_dat.dta saved
+
+. 
+. gen cell = 1
+
+. 
+. collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year ni
+> nd2)
+(analytic weights assumed)
+
+. 
+. keep if cell >= 25
+(880 observations deleted)
+
+. 
+. keep state year nind2 coveragerate
+
+. 
+. merge 1:m state year nind2 using "$estimation/est_dat.dta"
+(label paidhre already defined)
+(label state already defined)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                        10,471
+        from master                         0  (_merge==1)
+        from using                     10,471  (_merge==2)
+
+    matched                         1,976,764  (_merge==3)
+    -----------------------------------------
+
+. 
+. tab _merge [w = finalwt1]
+(frequency weights assumed)
+
+                 _merge |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+         using only (2) |   94143259        0.53        0.53
+            matched (3) |17679343606       99.47      100.00
+------------------------+-----------------------------------
+                  Total |17773486865      100.00
+
+. 
+. replace coveragerate = pcoveragerate if _merge == 2
+(8,515 real changes made)
+
+. 
+. drop _merge
+
+. 
+. ** FIXME USE NIND FROM CLEANED_NBER_MORG FOR MW ONLY
+. rename nind2 nind
+
+. 
+. save "$estimation/est_dat.dta", replace
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/est_dat.dta saved
+
+. 
+. sum nwage1 lwage1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      nwage1 |  1,987,235    20.13662    13.74453      2.375        330
+      lwage1 |  1,987,235    1.745291     .581965   .0001761   4.603674
+
+. 
+. local hrs = 1 //hispracesex macro
+
+. 
+. while `hrs' <= 6 {
+  2.         use $estimation/est_dat, clear
+  3.         
+.         keep if hispracesex == `hrs'
+  4.         
+.         sort state year quarter
+  5.         
+.         merge m:1 state year quarter using "$mwagedata/qmwage7919.dta"
+  6.                 drop if _merge == 2 //drop if exists in mwage data but not in cps
+  7.                 drop _merge
+  8.         
+.         gen rdvwag = log(nwage1) - log(qcpi/104.88925) //1979 dollars [(sum_i^4 79q_i)/4 = 104
+> .88925]
+  9.         
+.         gen rminw = log(mwage) - log(qcpi/104.88925) //1979 dollars [(sum_i^4 79q_i)/4 = 104.8
+> 8925]
+ 10.         
+.         gen wagcat = 0
+ 11.                 replace wagcat = 1 if rdvwag <= 0.383 //log(exp(1.6)*104.8925/354.242)
+ 12.         
+.                 local i = 1
+ 13.                 while `i' <= 56{
+ 14.                         replace wagcat = 1 + `i' if rdvwag > 0.383 + (`i' - 1)*0.05 & rdvwa
+> g <= 0.383 + `i'*0.05
+ 15.                         local i = `i' + 1
+ 16.                 }
+ 17.                 
+.                 replace wagcat = 58 if rdvwag > 3.183
+ 18. 
+.                 table wagcat, c(min rdvwag max rdvwag)
+ 19.                 
+.         gen mincat = 0
+ 20.                 replace mincat = 1 if rminw <= 0.383
+ 21.                 
+.                 local i = 1
+ 22.                 while `i' <= 30{
+ 23.                         replace mincat = 1 + `i' if rminw > 0.383 + (`i' - 1)*0.05 & rminw 
+> <= 0.383 + `i'*0.05
+ 24.                         local i = `i' + 1
+ 25.                 }
+ 26.         
+.         sum hispracesex mincat
+ 27.         
+.         rename finalwt1 fweight
+ 28.         
+.         keep wagcat state year quarter mincat qcpi fweight exper educ nind nocc cmsa public ma
+> rr covered coveragerate
+ 29.         
+.         gen pid = _n
+ 30.         
+.         compress
+ 31.         
+.         fillin pid wagcat
+ 32.         
+.         gen wagein = 1 - _fillin
+ 33.         
+.         egen state1 = mean(state), by(pid)
+ 34.                 replace state = state1 if missing(state)
+ 35.                 
+.         egen year1 = mean(year), by(pid)
+ 36.                 replace year = year1 if missing(year)
+ 37.                 
+.         egen quarter1 = mean(quarter), by(pid)
+ 38.                 replace quarter = quarter1 if missing(quarter)
+ 39.                 
+.         egen mincat1 = mean(mincat), by(pid)
+ 40.                 replace mincat = mincat1 if missing(mincat)
+ 41.                 
+.         egen exper1 = mean(exper), by(pid)
+ 42.                 replace exper = exper1 if missing(exper)
+ 43.                 
+.         egen educ1 = mean(educ), by(pid)
+ 44.                 replace educ = educ1 if missing(educ)
+ 45.                 
+.         egen nind1 = mean(nind), by(pid)
+ 46.                 replace nind = nind1 if missing(nind)
+ 47.                 
+.         egen nocc1 = mean(nocc), by(pid)
+ 48.                 replace nocc = nocc1 if missing(nocc)
+ 49.                 
+.         egen cmsa1 = mean(cmsa), by(pid)
+ 50.                 replace cmsa = cmsa1 if missing(cmsa)
+ 51.                 
+.         egen public1 = mean(public), by(pid)
+ 52.                 replace public = public1 if missing(public)
+ 53.         
+.         egen marr1 = mean(marr), by(pid)
+ 54.                 replace marr = marr1 if missing(marr)
+ 55.                 
+.         egen qcpi1 = mean(qcpi), by(pid)
+ 56.                 replace qcpi = qcpi1 if missing(qcpi)
+ 57.         
+.         egen fweight1 = mean(fweight), by(pid)
+ 58.                 replace fweight = fweight1 if missing(fweight)
+ 59.                 
+.         egen covered1 = mean(covered), by(pid)
+ 60.                 replace covered = covered1 if missing(covered)
+ 61.                 
+.         egen coveragerate1 = mean(coveragerate), by(pid)
+ 62.                 replace coveragerate = coveragerate1 if missing(coveragerate)
+ 63.                 
+.         sort pid wagcat
+ 64.                 by pid: gen cumwage = sum(wagein) // = 1 if at or below wage bin
+ 65.                 replace cumwage = 1 - cumwage // = 1 if above wage bin
+ 66.                 replace cumwage = cumwage + 1 if wagein == 1 // = 1 if at or above wage bin
+ 67.                 
+.         drop state1 year1 quarter1 mincat1 exper1 educ1 nind1 nocc1 cmsa1 public1 marr1 qcpi1 
+> fweight1 covered1 coveragerate1
+ 68.                 
+.         gen cut_l = exp(0.383 + (wagcat - 2)*0.05)*qcpi/104.88925       if wagcat >= 2
+ 69.                 replace cut_l = 1 if wagcat == 1
+ 70.                 
+.         gen rdol5 = cut_l < 5
+ 71.         
+.         gen rdol10 = cut_l < 10
+ 72.         
+.         gen rdollar = floor(11 - cut_l) if cut_l <= 10
+ 73.                 replace rdollar = 9 if cut_l > 10
+ 74.                 
+.         gen diff = wagcat - mincat
+ 75.         
+.         drop qcpi pid _fillin wagein cut_l
+ 76.         
+.         compress
+ 77.         
+.         save "$estimation/stacked_0017_`hrs'", replace
+ 78.         
+.         local hrs = `hrs' + 1
+ 79. }
+(1,262,553 observations deleted)
+(note: variable year was int, now float to accommodate using data's values)
+(note: variable state was byte, now float to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         4,284
+        from master                         0  (_merge==1)
+        from using                      4,284  (_merge==2)
+
+    matched                           724,682  (_merge==3)
+    -----------------------------------------
+(4,284 observations deleted)
+(1,986 real changes made)
+(479 real changes made)
+(511 real changes made)
+(610 real changes made)
+(780 real changes made)
+(1,035 real changes made)
+(1,397 real changes made)
+(2,071 real changes made)
+(2,959 real changes made)
+(4,543 real changes made)
+(6,021 real changes made)
+(8,248 real changes made)
+(8,617 real changes made)
+(9,224 real changes made)
+(11,348 real changes made)
+(12,505 real changes made)
+(12,234 real changes made)
+(14,065 real changes made)
+(13,547 real changes made)
+(15,081 real changes made)
+(15,224 real changes made)
+(16,825 real changes made)
+(17,702 real changes made)
+(19,037 real changes made)
+(19,250 real changes made)
+(21,367 real changes made)
+(21,377 real changes made)
+(21,654 real changes made)
+(24,346 real changes made)
+(23,906 real changes made)
+(23,756 real changes made)
+(23,367 real changes made)
+(23,438 real changes made)
+(23,546 real changes made)
+(23,580 real changes made)
+(22,613 real changes made)
+(21,377 real changes made)
+(21,210 real changes made)
+(19,764 real changes made)
+(18,863 real changes made)
+(17,545 real changes made)
+(16,378 real changes made)
+(15,831 real changes made)
+(14,168 real changes made)
+(13,180 real changes made)
+(12,314 real changes made)
+(11,243 real changes made)
+(11,381 real changes made)
+(9,420 real changes made)
+(9,446 real changes made)
+(8,677 real changes made)
+(6,762 real changes made)
+(6,601 real changes made)
+(5,390 real changes made)
+(4,735 real changes made)
+(4,506 real changes made)
+(2,589 real changes made)
+(5,053 real changes made)
+
+------------------------------------
+   wagcat | min(rdvwag)  max(rdvwag)
+----------+-------------------------
+        1 |   -.0148793     .3829668
+        2 |    .3832519     .4328548
+        3 |    .4330797      .482763
+        4 |    .4831119     .5329488
+        5 |    .5330256     .5827523
+        6 |    .5830142     .6329266
+        7 |     .633048     .6826848
+        8 |    .6830272     .7329356
+        9 |    .7331142     .7829564
+       10 |    .7831087     .8329856
+       11 |    .8330196     .8829512
+       12 |    .8830217     .9329784
+       13 |    .9330205     .9829914
+       14 |    .9830084     1.032996
+       15 |    1.033109      1.08293
+       16 |    1.083005     1.132972
+       17 |     1.13308     1.182995
+       18 |    1.183032      1.23299
+       19 |    1.233026        1.283
+       20 |    1.283017     1.332997
+       21 |    1.333002      1.38295
+       22 |    1.383021     1.432998
+       23 |    1.433005     1.482943
+       24 |    1.483002     1.532999
+       25 |    1.533004     1.582996
+       26 |    1.583003     1.632985
+       27 |    1.633017     1.682986
+       28 |    1.683001     1.732988
+       29 |    1.733002        1.783
+       30 |    1.783039     1.832999
+       31 |    1.833011      1.88299
+       32 |       1.883     1.932999
+       33 |    1.933013     1.982999
+       34 |    1.983003     2.032995
+       35 |    2.033016     2.082998
+       36 |    2.083012     2.132991
+       37 |    2.133005      2.18299
+       38 |    2.183002     2.232993
+       39 |    2.233007     2.282985
+       40 |    2.283003     2.332998
+       41 |    2.333013     2.382986
+       42 |    2.383002     2.432995
+       43 |    2.433013     2.482979
+       44 |       2.483     2.532937
+       45 |    2.533003      2.58299
+       46 |    2.583002     2.632978
+       47 |    2.633013     2.682983
+       48 |    2.683005     2.732958
+       49 |    2.733026     2.782998
+       50 |    2.783039     2.832985
+       51 |    2.833003     2.882978
+       52 |    2.883002     2.932949
+       53 |    2.933021     2.982994
+       54 |    2.983109     3.032949
+       55 |    3.033059     3.082823
+       56 |    3.083033     3.132961
+       57 |    3.133101     3.182966
+       58 |    3.183176     4.583912
+------------------------------------
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(30,678 real changes made)
+(44,600 real changes made)
+(87,665 real changes made)
+(119,586 real changes made)
+(112,373 real changes made)
+(87,837 real changes made)
+(107,519 real changes made)
+(51,162 real changes made)
+(45,772 real changes made)
+(16,233 real changes made)
+(8,062 real changes made)
+(6,711 real changes made)
+(3,998 real changes made)
+(1,029 real changes made)
+(774 real changes made)
+(683 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ hispracesex |    724,682           1           0          1          1
+      mincat |    724,682      10.443    2.479466          6         21
+  variable state was float now byte
+  variable year was float now int
+  variable nind was float now byte
+  variable nocc was float now byte
+  variable covered was float now byte
+  variable marr was float now byte
+  variable public was float now byte
+  variable cmsa was float now byte
+  variable quarter was float now byte
+  variable wagcat was float now byte
+  variable mincat was float now byte
+  (23,189,824 bytes saved)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(68,382 missing values generated)
+(41,239,671 real changes made)
+(41,306,874 real changes made)
+(8,746,342 missing values generated)
+(32,711,331 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(41,306,874 real changes made)
+(61,422 missing values generated)
+(41,246,511 real changes made)
+(42,031,556 real changes made)
+(724,682 real changes made)
+(724,682 missing values generated)
+(724,682 real changes made)
+(28,610,969 missing values generated)
+(28,610,969 real changes made)
+  variable cumwage was float now byte
+  variable rdol5 was float now byte
+  variable rdol10 was float now byte
+  variable rdollar was float now byte
+  variable diff was float now byte
+  (630,473,340 bytes saved)
+(note: file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_1.dta not found)
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_1.dta saved
+(1,920,484 observations deleted)
+(note: variable year was int, now float to accommodate using data's values)
+(note: variable state was byte, now float to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         4,493
+        from master                         0  (_merge==1)
+        from using                      4,493  (_merge==2)
+
+    matched                            66,751  (_merge==3)
+    -----------------------------------------
+(4,493 observations deleted)
+(325 real changes made)
+(80 real changes made)
+(112 real changes made)
+(107 real changes made)
+(133 real changes made)
+(176 real changes made)
+(272 real changes made)
+(367 real changes made)
+(550 real changes made)
+(872 real changes made)
+(987 real changes made)
+(1,321 real changes made)
+(1,337 real changes made)
+(1,539 real changes made)
+(1,804 real changes made)
+(2,179 real changes made)
+(1,963 real changes made)
+(2,233 real changes made)
+(2,124 real changes made)
+(2,227 real changes made)
+(2,184 real changes made)
+(2,244 real changes made)
+(2,456 real changes made)
+(2,378 real changes made)
+(2,285 real changes made)
+(2,387 real changes made)
+(2,206 real changes made)
+(2,108 real changes made)
+(2,282 real changes made)
+(2,036 real changes made)
+(1,928 real changes made)
+(1,942 real changes made)
+(1,772 real changes made)
+(1,738 real changes made)
+(1,671 real changes made)
+(1,557 real changes made)
+(1,413 real changes made)
+(1,284 real changes made)
+(1,204 real changes made)
+(1,078 real changes made)
+(957 real changes made)
+(842 real changes made)
+(872 real changes made)
+(727 real changes made)
+(559 real changes made)
+(580 real changes made)
+(485 real changes made)
+(498 real changes made)
+(361 real changes made)
+(381 real changes made)
+(306 real changes made)
+(246 real changes made)
+(210 real changes made)
+(192 real changes made)
+(211 real changes made)
+(180 real changes made)
+(85 real changes made)
+(198 real changes made)
+
+------------------------------------
+   wagcat | min(rdvwag)  max(rdvwag)
+----------+-------------------------
+        1 |   -.0002283     .3806071
+        2 |    .3832727     .4324833
+        3 |    .4330797      .482861
+        4 |    .4831119     .5329645
+        5 |    .5339621     .5822062
+        6 |    .5831947      .632815
+        7 |     .633048     .6827706
+        8 |    .6830553     .7327126
+        9 |    .7330397     .7826182
+       10 |    .7832602     .8329856
+       11 |    .8332652     .8828444
+       12 |     .883024     .9329731
+       13 |    .9330354     .9829914
+       14 |    .9831598     1.032904
+       15 |    1.033109     1.082927
+       16 |    1.083006     1.132813
+       17 |    1.133042     1.182924
+       18 |    1.183045     1.232879
+       19 |    1.233145     1.282905
+       20 |    1.283067     1.332954
+       21 |    1.333194     1.382947
+       22 |    1.383005     1.432891
+       23 |    1.433073     1.482934
+       24 |    1.483066     1.532969
+       25 |    1.533035     1.582985
+       26 |    1.583065     1.632991
+       27 |    1.633057     1.682986
+       28 |    1.683116     1.732991
+       29 |    1.733003     1.782936
+       30 |    1.783043     1.832923
+       31 |    1.833011     1.882913
+       32 |    1.883061     1.932944
+       33 |    1.933003     1.982955
+       34 |    1.983013     2.032982
+       35 |    2.033134     2.082932
+       36 |    2.083047     2.132656
+       37 |     2.13311     2.182991
+       38 |    2.183084     2.232916
+       39 |    2.233009      2.28295
+       40 |    2.283038     2.332968
+       41 |    2.333094     2.382669
+       42 |    2.383036     2.432959
+       43 |    2.433428     2.482979
+       44 |    2.483071     2.532844
+       45 |    2.533352     2.582956
+       46 |    2.583063     2.632663
+       47 |    2.633013     2.682329
+       48 |    2.683079      2.73284
+       49 |    2.733025     2.782769
+       50 |    2.783309     2.832985
+       51 |    2.833015     2.882752
+       52 |    2.883504     2.932923
+       53 |    2.933233     2.982171
+       54 |    2.983379     3.032913
+       55 |    3.033059      3.08275
+       56 |    3.083942     3.132226
+       57 |    3.135055     3.182966
+       58 |    3.184666     4.528612
+------------------------------------
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,770 real changes made)
+(3,808 real changes made)
+(8,014 real changes made)
+(11,829 real changes made)
+(11,865 real changes made)
+(8,174 real changes made)
+(10,018 real changes made)
+(4,242 real changes made)
+(2,801 real changes made)
+(1,118 real changes made)
+(499 real changes made)
+(690 real changes made)
+(381 real changes made)
+(147 real changes made)
+(185 real changes made)
+(210 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ hispracesex |     66,751           2           0          2          2
+      mincat |     66,751    10.35541    2.463852          6         21
+  variable state was float now byte
+  variable year was float now int
+  variable nind was float now byte
+  variable nocc was float now byte
+  variable covered was float now byte
+  variable marr was float now byte
+  variable public was float now byte
+  variable cmsa was float now byte
+  variable quarter was float now byte
+  variable wagcat was float now byte
+  variable mincat was float now byte
+  (2,136,032 bytes saved)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(5,568 missing values generated)
+(3,799,335 real changes made)
+(3,804,807 real changes made)
+(496,422 missing values generated)
+(3,316,944 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(3,804,807 real changes made)
+(4,814 missing values generated)
+(3,800,076 real changes made)
+(3,871,558 real changes made)
+(66,751 real changes made)
+(66,751 missing values generated)
+(66,751 real changes made)
+(2,647,235 missing values generated)
+(2,647,235 real changes made)
+  variable cumwage was float now byte
+  variable rdol5 was float now byte
+  variable rdol10 was float now byte
+  variable rdollar was float now byte
+  variable diff was float now byte
+  (58,073,370 bytes saved)
+(note: file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_2.dta not found)
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_2.dta saved
+(1,859,205 observations deleted)
+(note: variable year was int, now float to accommodate using data's values)
+(note: variable state was byte, now float to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         4,362
+        from master                         0  (_merge==1)
+        from using                      4,362  (_merge==2)
+
+    matched                           128,030  (_merge==3)
+    -----------------------------------------
+(4,362 observations deleted)
+(588 real changes made)
+(173 real changes made)
+(209 real changes made)
+(230 real changes made)
+(258 real changes made)
+(369 real changes made)
+(497 real changes made)
+(703 real changes made)
+(1,065 real changes made)
+(1,486 real changes made)
+(2,158 real changes made)
+(3,318 real changes made)
+(3,959 real changes made)
+(4,399 real changes made)
+(5,155 real changes made)
+(5,906 real changes made)
+(5,474 real changes made)
+(5,640 real changes made)
+(5,339 real changes made)
+(5,510 real changes made)
+(5,115 real changes made)
+(5,307 real changes made)
+(5,062 real changes made)
+(4,860 real changes made)
+(4,528 real changes made)
+(4,470 real changes made)
+(4,002 real changes made)
+(3,657 real changes made)
+(3,939 real changes made)
+(3,436 real changes made)
+(3,085 real changes made)
+(2,753 real changes made)
+(2,628 real changes made)
+(2,336 real changes made)
+(2,332 real changes made)
+(1,995 real changes made)
+(1,802 real changes made)
+(1,620 real changes made)
+(1,454 real changes made)
+(1,393 real changes made)
+(1,284 real changes made)
+(1,095 real changes made)
+(1,007 real changes made)
+(879 real changes made)
+(751 real changes made)
+(689 real changes made)
+(637 real changes made)
+(585 real changes made)
+(426 real changes made)
+(437 real changes made)
+(401 real changes made)
+(300 real changes made)
+(296 real changes made)
+(226 real changes made)
+(225 real changes made)
+(218 real changes made)
+(116 real changes made)
+(248 real changes made)
+
+------------------------------------
+   wagcat | min(rdvwag)  max(rdvwag)
+----------+-------------------------
+        1 |   -.0020165     .3826001
+        2 |    .3832519     .4323239
+        3 |    .4330797     .4829266
+        4 |    .4830477      .532881
+        5 |    .5334522     .5822777
+        6 |    .5831947     .6324791
+        7 |     .633048     .6829625
+        8 |    .6830553     .7328277
+        9 |    .7330272     .7828676
+       10 |    .7831233     .8329856
+       11 |    .8330196     .8829512
+       12 |     .883024     .9329048
+       13 |    .9330415     .9829914
+       14 |    .9831231     1.032967
+       15 |    1.033099     1.082723
+       16 |    1.083006     1.132981
+       17 |    1.133044     1.182973
+       18 |    1.183094     1.232989
+       19 |    1.233061     1.282994
+       20 |    1.283017     1.332998
+       21 |    1.333109     1.382947
+       22 |    1.383018     1.432977
+       23 |    1.433008     1.482943
+       24 |    1.483024     1.532999
+       25 |    1.533063     1.582985
+       26 |     1.58307     1.632926
+       27 |    1.633057      1.68298
+       28 |    1.683021     1.732985
+       29 |    1.733002     1.782989
+       30 |    1.783047     1.832961
+       31 |    1.833011     1.882918
+       32 |    1.883061     1.932975
+       33 |    1.933004     1.982991
+       34 |    1.983003     2.032982
+       35 |    2.033077     2.082985
+       36 |    2.083041     2.132945
+       37 |     2.13311     2.182902
+       38 |    2.183022     2.232916
+       39 |    2.233146     2.282976
+       40 |    2.283038     2.332983
+       41 |    2.333014     2.382911
+       42 |    2.383302     2.432949
+       43 |    2.433385     2.482638
+       44 |    2.483071      2.53291
+       45 |    2.533007     2.582772
+       46 |    2.583523     2.632973
+       47 |    2.633078     2.682943
+       48 |    2.683079      2.73284
+       49 |    2.733032     2.782769
+       50 |    2.783241     2.832985
+       51 |     2.83309     2.882746
+       52 |    2.883156     2.932923
+       53 |    2.933172     2.982993
+       54 |    2.983464     3.032946
+       55 |    3.033965     3.082657
+       56 |    3.083942     3.132226
+       57 |    3.133796     3.182966
+       58 |    3.185197     4.541587
+------------------------------------
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(4,794 real changes made)
+(6,432 real changes made)
+(12,874 real changes made)
+(16,822 real changes made)
+(16,537 real changes made)
+(14,546 real changes made)
+(20,977 real changes made)
+(14,800 real changes made)
+(10,735 real changes made)
+(1,907 real changes made)
+(2,748 real changes made)
+(3,002 real changes made)
+(1,324 real changes made)
+(401 real changes made)
+(70 real changes made)
+(61 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ hispracesex |    128,030           3           0          3          3
+      mincat |    128,030    10.97951    2.664259          6         21
+  variable state was float now byte
+  variable year was float now int
+  variable nind was float now byte
+  variable nocc was float now byte
+  variable covered was float now byte
+  variable marr was float now byte
+  variable public was float now byte
+  variable cmsa was float now byte
+  variable quarter was float now byte
+  variable wagcat was float now byte
+  variable mincat was float now byte
+  (4,096,960 bytes saved)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(18,792 missing values generated)
+(7,279,242 real changes made)
+(7,297,710 real changes made)
+(939,716 missing values generated)
+(6,374,196 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(7,297,710 real changes made)
+(12,470 missing values generated)
+(7,285,455 real changes made)
+(7,425,740 real changes made)
+(128,030 real changes made)
+(128,030 missing values generated)
+(128,030 real changes made)
+(5,070,138 missing values generated)
+(5,070,138 real changes made)
+  variable cumwage was float now byte
+  variable rdol5 was float now byte
+  variable rdol10 was float now byte
+  variable rdollar was float now byte
+  variable diff was float now byte
+  (111,386,100 bytes saved)
+(note: file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_3.dta not found)
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_3.dta saved
+(1,260,185 observations deleted)
+(note: variable year was int, now float to accommodate using data's values)
+(note: variable state was byte, now float to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         4,284
+        from master                         0  (_merge==1)
+        from using                      4,284  (_merge==2)
+
+    matched                           727,050  (_merge==3)
+    -----------------------------------------
+(4,284 observations deleted)
+(3,381 real changes made)
+(848 real changes made)
+(909 real changes made)
+(1,080 real changes made)
+(1,275 real changes made)
+(1,779 real changes made)
+(2,298 real changes made)
+(3,513 real changes made)
+(4,928 real changes made)
+(7,349 real changes made)
+(9,921 real changes made)
+(13,386 real changes made)
+(14,301 real changes made)
+(15,808 real changes made)
+(18,490 real changes made)
+(19,936 real changes made)
+(19,405 real changes made)
+(21,863 real changes made)
+(21,217 real changes made)
+(22,762 real changes made)
+(22,515 real changes made)
+(23,942 real changes made)
+(24,345 real changes made)
+(25,026 real changes made)
+(24,540 real changes made)
+(25,002 real changes made)
+(23,951 real changes made)
+(23,618 real changes made)
+(25,199 real changes made)
+(23,296 real changes made)
+(22,462 real changes made)
+(21,509 real changes made)
+(20,639 real changes made)
+(20,200 real changes made)
+(19,449 real changes made)
+(17,864 real changes made)
+(16,771 real changes made)
+(15,736 real changes made)
+(14,791 real changes made)
+(13,555 real changes made)
+(12,299 real changes made)
+(10,829 real changes made)
+(10,299 real changes made)
+(9,008 real changes made)
+(7,880 real changes made)
+(7,232 real changes made)
+(6,121 real changes made)
+(5,832 real changes made)
+(4,610 real changes made)
+(4,383 real changes made)
+(3,851 real changes made)
+(3,101 real changes made)
+(2,703 real changes made)
+(2,223 real changes made)
+(1,901 real changes made)
+(1,806 real changes made)
+(1,078 real changes made)
+(3,035 real changes made)
+
+------------------------------------
+   wagcat | min(rdvwag)  max(rdvwag)
+----------+-------------------------
+        1 |   -.0076481     .3829727
+        2 |     .383132     .4329226
+        3 |    .4330797     .4829961
+        4 |    .4830106     .5329307
+        5 |    .5330663     .5827523
+        6 |    .5830029     .6329646
+        7 |    .6330273     .6828685
+        8 |    .6830509     .7329356
+        9 |    .7330272     .7829905
+       10 |    .7830894     .8329856
+       11 |    .8330047     .8829512
+       12 |     .883024     .9329731
+       13 |    .9330205     .9829914
+       14 |    .9830455     1.032996
+       15 |    1.033027     1.082997
+       16 |    1.083006     1.132993
+       17 |    1.133008        1.183
+       18 |    1.183026     1.232996
+       19 |    1.233017        1.283
+       20 |    1.283006     1.332998
+       21 |    1.333002     1.382987
+       22 |    1.383005     1.432998
+       23 |    1.433004     1.482996
+       24 |    1.483006     1.532999
+       25 |    1.533018     1.582998
+       26 |    1.583003      1.63298
+       27 |    1.633005     1.682993
+       28 |    1.683001     1.732978
+       29 |       1.733      1.78298
+       30 |    1.783005     1.832999
+       31 |    1.833011      1.88299
+       32 |    1.883001     1.932983
+       33 |    1.933001     1.982999
+       34 |    1.983003     2.032986
+       35 |    2.033007     2.082998
+       36 |    2.083008     2.132985
+       37 |    2.133013     2.182986
+       38 |    2.183009     2.232976
+       39 |    2.233008     2.282999
+       40 |    2.283003     2.332994
+       41 |    2.333013     2.382977
+       42 |    2.383036     2.432992
+       43 |    2.433013     2.482998
+       44 |    2.483002     2.532924
+       45 |    2.533002     2.582983
+       46 |    2.583028     2.632987
+       47 |    2.633013     2.682984
+       48 |    2.683004     2.732926
+       49 |    2.733025     2.782964
+       50 |    2.783005     2.832985
+       51 |    2.833024     2.882988
+       52 |    2.883089     2.932949
+       53 |    2.933008     2.982993
+       54 |    2.983062     3.032946
+       55 |    3.033048      3.08275
+       56 |    3.083117     3.132754
+       57 |    3.133594     3.182966
+       58 |    3.183218     4.606126
+------------------------------------
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(30,301 real changes made)
+(44,769 real changes made)
+(87,753 real changes made)
+(118,439 real changes made)
+(111,596 real changes made)
+(88,861 real changes made)
+(109,462 real changes made)
+(52,532 real changes made)
+(46,111 real changes made)
+(16,504 real changes made)
+(8,063 real changes made)
+(6,492 real changes made)
+(3,783 real changes made)
+(979 real changes made)
+(726 real changes made)
+(679 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ hispracesex |    727,050           4           0          4          4
+      mincat |    727,050     10.4546    2.471587          6         21
+  variable state was float now byte
+  variable year was float now int
+  variable nind was float now byte
+  variable nocc was float now byte
+  variable covered was float now byte
+  variable marr was float now byte
+  variable public was float now byte
+  variable cmsa was float now byte
+  variable quarter was float now byte
+  variable wagcat was float now byte
+  variable mincat was float now byte
+  (23,265,600 bytes saved)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(25,056 missing values generated)
+(41,417,226 real changes made)
+(41,441,850 real changes made)
+(8,906,770 missing values generated)
+(32,688,645 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(41,441,850 real changes made)
+(22,446 missing values generated)
+(41,419,791 real changes made)
+(42,168,900 real changes made)
+(727,050 real changes made)
+(727,050 missing values generated)
+(727,050 real changes made)
+(28,686,426 missing values generated)
+(28,686,426 real changes made)
+  variable cumwage was float now byte
+  variable rdol5 was float now byte
+  variable rdol10 was float now byte
+  variable rdollar was float now byte
+  variable diff was float now byte
+  (632,533,500 bytes saved)
+(note: file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_4.dta not found)
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_4.dta saved
+(1,897,020 observations deleted)
+(note: variable year was int, now float to accommodate using data's values)
+(note: variable state was byte, now float to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         4,614
+        from master                         0  (_merge==1)
+        from using                      4,614  (_merge==2)
+
+    matched                            90,215  (_merge==3)
+    -----------------------------------------
+(4,614 observations deleted)
+(549 real changes made)
+(165 real changes made)
+(151 real changes made)
+(178 real changes made)
+(240 real changes made)
+(316 real changes made)
+(457 real changes made)
+(619 real changes made)
+(1,052 real changes made)
+(1,511 real changes made)
+(1,916 real changes made)
+(2,495 real changes made)
+(2,559 real changes made)
+(2,728 real changes made)
+(3,311 real changes made)
+(3,436 real changes made)
+(3,153 real changes made)
+(3,490 real changes made)
+(3,289 real changes made)
+(3,240 real changes made)
+(3,255 real changes made)
+(3,282 real changes made)
+(3,342 real changes made)
+(3,217 real changes made)
+(2,869 real changes made)
+(3,061 real changes made)
+(2,821 real changes made)
+(2,558 real changes made)
+(2,697 real changes made)
+(2,541 real changes made)
+(2,346 real changes made)
+(2,263 real changes made)
+(2,017 real changes made)
+(1,996 real changes made)
+(1,824 real changes made)
+(1,708 real changes made)
+(1,639 real changes made)
+(1,376 real changes made)
+(1,260 real changes made)
+(1,127 real changes made)
+(1,056 real changes made)
+(983 real changes made)
+(868 real changes made)
+(701 real changes made)
+(682 real changes made)
+(596 real changes made)
+(535 real changes made)
+(499 real changes made)
+(325 real changes made)
+(364 real changes made)
+(283 real changes made)
+(229 real changes made)
+(221 real changes made)
+(179 real changes made)
+(160 real changes made)
+(178 real changes made)
+(80 real changes made)
+(222 real changes made)
+
+------------------------------------
+   wagcat | min(rdvwag)  max(rdvwag)
+----------+-------------------------
+        1 |   -.0106612     .3827042
+        2 |    .3832519     .4325349
+        3 |    .4330797     .4826753
+        4 |    .4831843     .5327255
+        5 |    .5339368     .5827523
+        6 |    .5831947     .6324791
+        7 |    .6330307     .6827706
+        8 |    .6830051     .7329674
+        9 |    .7330226     .7828676
+       10 |     .783002     .8329481
+       11 |    .8330439     .8829058
+       12 |     .883024     .9329382
+       13 |    .9330928     .9829914
+       14 |    .9830129     1.032974
+       15 |    1.033109     1.082927
+       16 |    1.083006     1.132972
+       17 |     1.13308     1.182906
+       18 |    1.183155     1.232917
+       19 |    1.233018        1.283
+       20 |    1.283022     1.332954
+       21 |    1.333049      1.38295
+       22 |    1.383005     1.432957
+       23 |    1.433042     1.482943
+       24 |    1.483019     1.532999
+       25 |    1.533004     1.582958
+       26 |    1.583025     1.632942
+       27 |    1.633057      1.68287
+       28 |    1.683001     1.732998
+       29 |    1.733003     1.782936
+       30 |    1.783047     1.832949
+       31 |    1.833051     1.882993
+       32 |     1.88307     1.932975
+       33 |    1.933162     1.982999
+       34 |    1.983042     2.032982
+       35 |    2.033026     2.082993
+       36 |     2.08308     2.132787
+       37 |    2.133029     2.182985
+       38 |    2.183048     2.232916
+       39 |     2.23327     2.282883
+       40 |    2.283038     2.332983
+       41 |    2.333019     2.382832
+       42 |    2.383229     2.432928
+       43 |    2.433217     2.482979
+       44 |    2.483031      2.53291
+       45 |    2.533003     2.582844
+       46 |    2.583028     2.632819
+       47 |    2.633126     2.682634
+       48 |    2.683038      2.73284
+       49 |    2.733057     2.782924
+       50 |    2.783454     2.832937
+       51 |     2.83309     2.882926
+       52 |    2.883463     2.932923
+       53 |    2.933192     2.982991
+       54 |    2.983011     3.032946
+       55 |    3.034547     3.081568
+       56 |    3.083135     3.132226
+       57 |    3.135642     3.182966
+       58 |    3.184948     4.575459
+------------------------------------
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(4,009 real changes made)
+(5,187 real changes made)
+(11,156 real changes made)
+(16,415 real changes made)
+(16,146 real changes made)
+(10,909 real changes made)
+(13,559 real changes made)
+(5,403 real changes made)
+(3,519 real changes made)
+(1,310 real changes made)
+(552 real changes made)
+(862 real changes made)
+(432 real changes made)
+(183 real changes made)
+(304 real changes made)
+(269 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ hispracesex |     90,215           5           0          5          5
+      mincat |     90,215    10.27696    2.435917          6         21
+  variable state was float now byte
+  variable year was float now int
+  variable nind was float now byte
+  variable nocc was float now byte
+  variable covered was float now byte
+  variable marr was float now byte
+  variable public was float now byte
+  variable cmsa was float now byte
+  variable quarter was float now byte
+  variable wagcat was float now byte
+  variable mincat was float now byte
+  (2,886,880 bytes saved)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(2,552 missing values generated)
+(5,139,747 real changes made)
+(5,142,255 real changes made)
+(631,620 missing values generated)
+(4,521,525 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(5,142,255 real changes made)
+(2,320 missing values generated)
+(5,139,975 real changes made)
+(5,232,470 real changes made)
+(90,215 real changes made)
+(90,215 missing values generated)
+(90,215 real changes made)
+(3,572,077 missing values generated)
+(3,572,077 real changes made)
+  variable cumwage was float now byte
+  variable rdol5 was float now byte
+  variable rdol10 was float now byte
+  variable rdollar was float now byte
+  variable diff was float now byte
+  (78,487,050 bytes saved)
+(note: file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_5.dta not found)
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_5.dta saved
+(1,883,833 observations deleted)
+(note: variable year was int, now float to accommodate using data's values)
+(note: variable state was byte, now float to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         4,387
+        from master                         0  (_merge==1)
+        from using                      4,387  (_merge==2)
+
+    matched                           103,402  (_merge==3)
+    -----------------------------------------
+(4,387 observations deleted)
+(795 real changes made)
+(218 real changes made)
+(221 real changes made)
+(258 real changes made)
+(306 real changes made)
+(463 real changes made)
+(722 real changes made)
+(1,007 real changes made)
+(1,409 real changes made)
+(1,997 real changes made)
+(2,909 real changes made)
+(4,078 real changes made)
+(4,500 real changes made)
+(4,902 real changes made)
+(5,156 real changes made)
+(5,482 real changes made)
+(4,719 real changes made)
+(4,787 real changes made)
+(4,248 real changes made)
+(4,289 real changes made)
+(3,906 real changes made)
+(3,974 real changes made)
+(3,822 real changes made)
+(3,598 real changes made)
+(3,177 real changes made)
+(3,100 real changes made)
+(2,754 real changes made)
+(2,605 real changes made)
+(2,548 real changes made)
+(2,237 real changes made)
+(2,067 real changes made)
+(1,874 real changes made)
+(1,644 real changes made)
+(1,557 real changes made)
+(1,439 real changes made)
+(1,279 real changes made)
+(1,181 real changes made)
+(1,045 real changes made)
+(887 real changes made)
+(892 real changes made)
+(709 real changes made)
+(649 real changes made)
+(610 real changes made)
+(505 real changes made)
+(426 real changes made)
+(354 real changes made)
+(325 real changes made)
+(290 real changes made)
+(256 real changes made)
+(237 real changes made)
+(188 real changes made)
+(125 real changes made)
+(135 real changes made)
+(102 real changes made)
+(91 real changes made)
+(98 real changes made)
+(49 real changes made)
+(201 real changes made)
+
+------------------------------------
+   wagcat | min(rdvwag)  max(rdvwag)
+----------+-------------------------
+        1 |   -.0059148     .3822176
+        2 |    .3833275     .4319483
+        3 |    .4330797     .4826753
+        4 |     .483086     .5329307
+        5 |    .5330256     .5827523
+        6 |    .5830603     .6326999
+        7 |     .633048     .6828685
+        8 |    .6830553     .7329808
+        9 |    .7331142     .7829564
+       10 |    .7832602     .8329673
+       11 |    .8330166     .8828444
+       12 |     .883024     .9329731
+       13 |    .9330205     .9829914
+       14 |    .9831231     1.032932
+       15 |    1.033109      1.08293
+       16 |    1.083006     1.132972
+       17 |    1.133029     1.182924
+       18 |    1.183033     1.232879
+       19 |    1.233061     1.282996
+       20 |    1.283006     1.332954
+       21 |    1.333087     1.382857
+       22 |    1.383032     1.432985
+       23 |    1.433042     1.482968
+       24 |    1.483023     1.532999
+       25 |    1.533038     1.582969
+       26 |    1.583059     1.632926
+       27 |    1.633058     1.682912
+       28 |    1.683061     1.732989
+       29 |    1.733003     1.782936
+       30 |     1.78302     1.832961
+       31 |    1.833011     1.882963
+       32 |    1.883029     1.932975
+       33 |    1.933162     1.982975
+       34 |    1.983003     2.032982
+       35 |    2.033062     2.082988
+       36 |    2.083117     2.132945
+       37 |    2.133071     2.182985
+       38 |    2.183206     2.232916
+       39 |     2.23306     2.282956
+       40 |    2.283025     2.332968
+       41 |    2.333048     2.382772
+       42 |    2.383015     2.432968
+       43 |    2.433428     2.482641
+       44 |    2.483071      2.53291
+       45 |    2.533305     2.582769
+       46 |    2.583028     2.632452
+       47 |    2.633128     2.682093
+       48 |    2.683192     2.732692
+       49 |    2.733266     2.782578
+       50 |    2.783699     2.832415
+       51 |     2.83309     2.881816
+       52 |    2.883843     2.932899
+       53 |     2.93319     2.982515
+       54 |    2.984124     3.031466
+       55 |    3.033059     3.081148
+       56 |    3.083357     3.132226
+       57 |    3.134703     3.182966
+       58 |     3.18352     4.549706
+------------------------------------
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(3,469 real changes made)
+(4,671 real changes made)
+(9,696 real changes made)
+(12,989 real changes made)
+(13,203 real changes made)
+(12,266 real changes made)
+(17,903 real changes made)
+(11,933 real changes made)
+(8,872 real changes made)
+(1,702 real changes made)
+(2,343 real changes made)
+(2,627 real changes made)
+(1,227 real changes made)
+(366 real changes made)
+(82 real changes made)
+(53 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ hispracesex |    103,402           6           0          6          6
+      mincat |    103,402     11.1079    2.664372          6         21
+  variable state was float now byte
+  variable year was float now int
+  variable nind was float now byte
+  variable nocc was float now byte
+  variable covered was float now byte
+  variable marr was float now byte
+  variable public was float now byte
+  variable cmsa was float now byte
+  variable quarter was float now byte
+  variable wagcat was float now byte
+  variable mincat was float now byte
+  (3,308,864 bytes saved)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(4,640 missing values generated)
+(5,889,354 real changes made)
+(5,893,914 real changes made)
+(789,612 missing values generated)
+(5,117,916 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(5,893,914 real changes made)
+(3,074 missing values generated)
+(5,890,893 real changes made)
+(5,997,316 real changes made)
+(103,402 real changes made)
+(103,402 missing values generated)
+(103,402 real changes made)
+(4,106,537 missing values generated)
+(4,106,537 real changes made)
+  variable cumwage was float now byte
+  variable rdol5 was float now byte
+  variable rdol10 was float now byte
+  variable rdollar was float now byte
+  variable diff was float now byte
+  (89,959,740 bytes saved)
+(note: file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_6.dta not found)
+file /Users/amedeusdsouza/Desktop/econ499data/estimation/stacked_0017_6.dta saved
+
+. 
+. erase "$estimation/est_dat.dta"
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/distreg/didst_dataprep.log
+  log type:  text
+ closed on:  19 Feb 2021, 01:08:28
+------------------------------------------------------------------------------------------------
