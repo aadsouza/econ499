@@ -132,6 +132,7 @@ while `hrs' <= 6 {
 		local i = 1
 		while `i' <= 30{
 			replace mincat = 1 + `i' if rminw > 0.383 + (`i' - 1)*0.05 & rminw <= 0.383 + `i'*0.05
+			local i = `i' + 1
 		}
 	
 	sum hispracesex mincat
