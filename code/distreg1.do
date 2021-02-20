@@ -83,9 +83,9 @@ while `hrs' <= 6{
 				marr i.nind i.nocc3 i.ee_cl#c.lwagcat i.quarter ///
 				i.year i.state i.state#c.lyear i.nind#c.lyear ///
 				i.state#c.lwagcat i.year#c.lwagcat i.wagcat ///
-				if wagcat>=2 & wagcat<=58 [w=fweight], vce(cluster state) iterate(7)
+				if wagcat>=2 & wagcat<=58 [w=fweight], vce(cluster state) iterate(8)
 				
-		est save output/model/un_0017_`hrs'_`union',replace
+		est save "$estimation//un_0017_`hrs'_`union'",replace
 		
 		local union = `union' + 1
 	}
