@@ -742,23 +742,23 @@ gen exper4 = exper^4
 
 gen edex = educ*exper
 
-gen ee_cl=.
-	replace ee_cl=1 if inrange(educ,0,11) & inrange(exper,0,9)
-	replace ee_cl=2 if inrange(educ,12,12) & inrange(exper,0,9)
-	replace ee_cl=3 if inrange(educ,13,15) & inrange(exper,0,9)
-	replace ee_cl=4 if inrange(educ,16,18) & inrange(exper,0,9)
-	replace ee_cl=5 if inrange(educ,0,11) & inrange(exper,10,19)
-	replace ee_cl=6 if inrange(educ,12,12) & inrange(exper,10,19)
-	replace ee_cl=7 if inrange(educ,13,15) & inrange(exper,10,19)
-	replace ee_cl=8 if inrange(educ,16,18) & inrange(exper,10,19)
-	replace ee_cl=9 if inrange(educ,0,11) & inrange(exper,20,29)
-	replace ee_cl=10 if inrange(educ,12,12) & inrange(exper,20,29)
-	replace ee_cl=11 if inrange(educ,13,15) & inrange(exper,20,29)
-	replace ee_cl=12 if inrange(educ,16,18) & inrange(exper,20,29)
-	replace ee_cl=13 if inrange(educ,0,11) & inrange(exper,30,.)
-	replace ee_cl=14 if inrange(educ,12,12) & inrange(exper,30,.)
-	replace ee_cl=15 if inrange(educ,13,15) & inrange(exper,30,.)
-	replace ee_cl=16 if inrange(educ,16,18) & inrange(exper,30,.)
+gen ee_cl =.
+	replace ee_cl = 1  if inrange(educ, 0, 11)  & inrange(exper, 0, 9)
+	replace ee_cl = 2  if inrange(educ, 12, 12) & inrange(exper, 0, 9)
+	replace ee_cl = 3  if inrange(educ, 13, 15) & inrange(exper, 0, 9)
+	replace ee_cl = 4  if inrange(educ, 16, 18) & inrange(exper, 0, 9)
+	replace ee_cl = 5  if inrange(educ, 0, 11)  & inrange(exper, 10, 19)
+	replace ee_cl = 6  if inrange(educ, 12, 12) & inrange(exper, 10, 19)
+	replace ee_cl = 7  if inrange(educ, 13, 15) & inrange(exper, 10, 19)
+	replace ee_cl = 8  if inrange(educ, 16, 18) & inrange(exper, 10, 19)
+	replace ee_cl = 9  if inrange(educ, 0, 11)  & inrange(exper, 20, 29)
+	replace ee_cl = 10 if inrange(educ, 12, 12) & inrange(exper, 20, 29)
+	replace ee_cl = 11 if inrange(educ, 13, 15) & inrange(exper, 20, 29)
+	replace ee_cl = 12 if inrange(educ, 16, 18) & inrange(exper, 20, 29)
+	replace ee_cl = 13 if inrange(educ, 0, 11)  & inrange(exper, 30, .)
+	replace ee_cl = 14 if inrange(educ, 12, 12) & inrange(exper, 30, .)
+	replace ee_cl = 15 if inrange(educ, 13, 15) & inrange(exper, 30, .)
+	replace ee_cl = 16 if inrange(educ, 16, 18) & inrange(exper, 30, .)
 	tab ee_cl, gen(ee)
 
 gen cmsa = inlist(centcity,1,2) if centcity !=.

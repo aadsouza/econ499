@@ -52,7 +52,7 @@ gen hweight = eweight * uhourse / 100.0
 keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 
 cap log close
-log using $distreg/didst_dataprep.log, replace
+log using $distreg/dist_dataprep.log, replace
 ********************************************************************************
 
 rename twage nwage1
