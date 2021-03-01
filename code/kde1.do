@@ -52,27 +52,33 @@ gen xstep = (r(max) - r(min)) / 200
 gen kwage = r(min) + (_n-1)*xstep if _n <= 200
 
 forval i = 1979(1)2019{
-	kdensity lwage3 [aweight = hweight] if year == `i' & race == 1, at(kwage) gauss width(0.065) ///
+	kdensity lwage3 [aweight = hweight] if year == `i' & hisprace == 1, at(kwage) gauss width(0.065) ///
 		generate(wmestpt`i' wmde`i') nograph
 }
 
 forval i = 1979(1)2019{
-	kdensity lwage3 [aweight = hweight] if year == `i' & race == 2, at(kwage) gauss width(0.065) ///
+	kdensity lwage3 [aweight = hweight] if year == `i' & hisprace == 2, at(kwage) gauss width(0.065) ///
 		generate(bmestpt`i' bmde`i') nograph
 }
 
-** lab wmestpt "white men estimation points"
-** lab wmde "white men density estimate"
+forval i = 1979(1)2019{
+	kdensity lwage3 [aweight = hweight] if year == `i' & hisprace == 3, at(kwage) gauss width(0.065) ///
+		generate(hmestpt`i' hmde`i') nograph
+}
+
+** lab wmestpt "non hisp white men estimation points"
+** lab wmde "non hisp white men density estimate"
 
 forval i = 1979(1)2019{
 graph twoway (connected wmde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
-			 (connected bmde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)), ///
+			 (connected bmde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
+			 (connected hmde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(midgreen) lp(solid)), ///
 			 xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 			 ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
-			 legend(order(1 "white" 2 "Black") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
+			 legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "Hispanic") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Men", size(vlarge))
-graph export "$figs/kde1men/bw_men_`i'.png", replace
+graph export "$figs/kde1men/bhw_men_`i'.png", replace
 }
 
 restore
@@ -90,13 +96,18 @@ gen xstep = (r(max) - r(min)) / 200
 gen kwage = r(min) + (_n-1)*xstep if _n <= 200
 
 forval i = 1979(1)2019{
-	kdensity lwage3 [aweight = hweight] if year == `i' & race == 1, at(kwage) gauss width(0.065) ///
+	kdensity lwage3 [aweight = hweight] if year == `i' & hisprace == 1, at(kwage) gauss width(0.065) ///
 		generate(wfestpt`i' wfde`i') nograph
 }
 
 forval i = 1979(1)2019{
-	kdensity lwage3 [aweight = hweight] if year == `i' & race == 2, at(kwage) gauss width(0.065) ///
+	kdensity lwage3 [aweight = hweight] if year == `i' & hisprace == 2, at(kwage) gauss width(0.065) ///
 		generate(bfestpt`i' bfde`i') nograph
+}
+
+forval i = 1979(1)2019{
+	kdensity lwage3 [aweight = hweight] if year == `i' & hisprace == 3, at(kwage) gauss width(0.065) ///
+		generate(hfestpt`i' hfde`i') nograph
 }
 
 ** lab wmestpt "white men estimation points"
@@ -104,13 +115,14 @@ forval i = 1979(1)2019{
 
 forval i = 1979(1)2019{
 graph twoway (connected wfde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
-			 (connected bfde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)), ///
+			 (connected bfde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)) ///
+			 (connected hfde`i' kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(midgreen) lp(solid)), ///
 			 xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 			 ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
-			 legend(order(1 "white" 2 "Black") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
+			 legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "Hispanic") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Women", size(vlarge))
-graph export "$figs/kde1wom/bw_wom_`i'.png", replace
+graph export "$figs/kde1wom/bhw_wom_`i'.png", replace
 }
 
 restore

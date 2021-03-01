@@ -27,15 +27,17 @@ drop if inrange(year, 1994, 1995)
 
 cd $figs
 
-keep lwage3 race sex year eweight
+keep lwage3 hispracesex year eweight
 
-collapse (p50) lwage3 [aweight = eweight], by(race sex year)
+collapse (p50) lwage3 [aweight = eweight], by(hispracesex year)
 
-twoway	(connected lwage3 year if race == 1 & sex == 1, msymbol(x))  ///
-		(connected lwage3 year if race == 1 & sex == 2, msymbol(x))  ///
-		(connected lwage3 year if race == 2 & sex == 1, msymbol(x))  ///
-		(connected lwage3 year if race == 2 & sex == 2, msymbol(x)), ///
-		legend(order(1 "white men" 2 "white women" 3 "Black men" 4 "Black women") cols(4)) ///
+twoway	(connected lwage3 year if hispracesex == 1, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 2, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 3, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 4, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 5, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 6, msymbol(x)), ///
+		legend(order(1 "non-Hisp white men" 2 "non-Hisp Black men" 3 "Hispanic men" 4 "non-Hisp white women" 5 "non-Hisp Black women" 6 "Hispanic women") cols(3)) ///
 		ytitle("real log trimmed imputed wages") ///
 		xtitle("year") title("Median Real Log Trimmed Imputed Wages Time Trends")
 

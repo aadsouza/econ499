@@ -21,7 +21,7 @@ while `hrs' <= 6{
 	local union = 0
 	
 	while `union' <= 1{
-		use "$estimation/stacked_0017_`hrs'", clear
+		use "$estimation/stacked_0019_`hrs'", clear
 		
 		keep if covered == `union'
 		
@@ -85,7 +85,7 @@ while `hrs' <= 6{
 				i.state#c.lwagcat i.year#c.lwagcat i.wagcat ///
 				if wagcat>=2 & wagcat<=58 [w=fweight], vce(cluster state) iterate(8)
 				
-		est save "$estimation//un_0017_`hrs'_`union'",replace
+		est save "$estimation//un_0019_`hrs'_`union'",replace
 		
 		local union = `union' + 1
 	}
@@ -94,3 +94,5 @@ while `hrs' <= 6{
 }
 
 log close
+
+** FIXME remove any state/ind linear time trends and state/nind#year interactions due to collineraity 

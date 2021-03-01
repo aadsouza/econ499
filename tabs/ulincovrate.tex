@@ -1,0 +1,31 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{OLS of Log Real Trimmed Wages on Unionization Rate for People Covered by Union}
+\begin{tabular}{l*{6}{c}}
+\hline
+&\multicolumn{3}{c}{Men}                                          &\multicolumn{3}{c}{Women}                                        \\\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+&\multicolumn{1}{c}{white}&\multicolumn{1}{c}{Black}&\multicolumn{1}{c}{Hispanic}&\multicolumn{1}{c}{white}&\multicolumn{1}{c}{Black}&\multicolumn{1}{c}{Hispanic}\\
+\hline
+coveragerate&       0.321\sym{***}&       0.397\sym{***}&       0.566\sym{***}&       0.327\sym{***}&       0.405\sym{***}&       0.416\sym{**} \\
+&    (0.0391)         &    (0.0839)         &     (0.138)         &    (0.0605)         &    (0.0917)         &     (0.160)         \\
+\hline
+\(N\)       &       72125         &        9666         &        5600         &       39825         &        9230         &        2950         \\
+\hline
+\end{table}
+\multicolumn{3}{l}{\linebreak \textbf{\textit{Panel B: 1988-2000}}} \\
+coveragerate&       0.301\sym{***}&       0.340\sym{***}&       0.536\sym{***}&       0.229\sym{***}&       0.370\sym{***}&       0.573\sym{***}\\
+&    (0.0401)         &    (0.0526)         &    (0.0922)         &    (0.0572)         &    (0.0628)         &     (0.167)         \\
+\hline
+\(N\)       &       86997         &       11948         &        8554         &       58186         &       12723         &        5582         \\
+\hline
+\end{table}
+\multicolumn{3}{l}{\linebreak \textbf{\textit{Panel C: 2000-2019}}} \\
+coveragerate&       0.375\sym{***}&       0.353\sym{***}&       0.413\sym{***}&       0.316\sym{***}&       0.200\sym{**} &       0.319\sym{*}  \\
+&    (0.0417)         &    (0.0663)         &    (0.0987)         &    (0.0558)         &    (0.0683)         &     (0.125)         \\
+\hline
+\(N\)       &       80288         &       10091         &       12032         &       71835         &       12033         &        9933         \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

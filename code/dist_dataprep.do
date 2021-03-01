@@ -68,7 +68,7 @@ gen finalwt1 = round(eweight)
 
 gen lyear = year - 2000
 
-logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year i.nind2#i.year#c.lyear [fw = finalwt1]
+logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year [w = finalwt1]
 	predict pcoveragerate
 
 sort state year nind2
@@ -77,7 +77,7 @@ save "$estimation/est_dat.dta", replace
 
 gen cell = 1
 
-collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
+collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(hispracesex state year nind2)
 
 keep if cell >= 25
 
@@ -219,7 +219,7 @@ while `hrs' <= 6 {
 	
 	compress
 	
-	save "$estimation/stacked_0017_`hrs'", replace
+	save "$estimation/stacked_0019_`hrs'", replace
 	
 	local hrs = `hrs' + 1
 }
@@ -228,6 +228,5 @@ erase "$estimation/est_dat.dta"
 
 log close
 
-
-
+** FIXME remove any state/ind linear time trends and state/nind#year interactions due to collineraity 
 

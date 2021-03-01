@@ -1,0 +1,22 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{OLS Regression of Log Real Trimmed Wages on Union Coverage and Race}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{Men}&\multicolumn{1}{c}{Women}\\
+\hline
+1.covered   &       0.167\sym{***}&       0.151\sym{***}\\
+            &   (0.00744)         &   (0.00665)         \\
+[1em]
+1.hisprace  &      -0.184\sym{***}&     -0.0914\sym{***}\\
+            &   (0.00443)         &   (0.00463)         \\
+[1em]
+1.covered#1.hisprace&      0.0378\sym{***}&      0.0379\sym{***}\\
+            &   (0.00917)         &   (0.00922)         \\
+\hline
+\(N\)       &      474062         &      465740         \\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

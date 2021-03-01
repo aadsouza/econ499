@@ -1,0 +1,48 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{OLS Regression of Log Real Trimmed Wages on Union Coverage and Race}
+\begin{tabular}{l*{2}{c}}
+\hline
+&\multicolumn{1}{c}{Men}&\multicolumn{1}{c}{Women}\\
+\hline \multicolumn{3}{l}{ \linebreak \textbf{\textit{Panel A: 1983-1988}}} \\
+1.covered   &       0.187\sym{***}&       0.178\sym{***}\\
+&   (0.00959)         &   (0.00824)         \\
+[1em]
+1.hisprace  &      -0.185\sym{***}&     -0.0702\sym{***}\\
+&   (0.00563)         &   (0.00593)         \\
+[1em]
+1.covered#1.hisprace&      0.0588\sym{***}&      0.0217\sym{*}  \\
+&   (0.00960)         &   (0.00894)         \\
+\hline
+\(N\)       &      312495         &      286909         \\
+\hline
+\end{table}
+\multicolumn{3}{l}{\linebreak \textbf{\textit{Panel B: 1988-2000}}} \\
+1.covered   &       0.167\sym{***}&       0.151\sym{***}\\
+&   (0.00744)         &   (0.00665)         \\
+[1em]
+1.hisprace  &      -0.184\sym{***}&     -0.0914\sym{***}\\
+&   (0.00443)         &   (0.00463)         \\
+[1em]
+1.covered#1.hisprace&      0.0378\sym{***}&      0.0379\sym{***}\\
+&   (0.00917)         &   (0.00922)         \\
+\hline
+\(N\)       &      474062         &      465740         \\
+\hline
+\end{table}
+\multicolumn{3}{l}{\linebreak \textbf{\textit{Panel C: 2000-2019}}} \\
+1.covered   &       0.158\sym{***}&       0.111\sym{***}\\
+&   (0.00821)         &   (0.00756)         \\
+[1em]
+1.hisprace  &      -0.186\sym{***}&      -0.108\sym{***}\\
+&   (0.00378)         &   (0.00479)         \\
+[1em]
+1.covered#1.hisprace&      0.0406\sym{***}&      0.0533\sym{***}\\
+&   (0.00809)         &   (0.00879)         \\
+\hline
+\(N\)       &      594118         &      613344         \\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

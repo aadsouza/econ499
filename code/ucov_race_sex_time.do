@@ -36,19 +36,34 @@ keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 ********************************************************************************
 
 preserve 
-keep covered race sex year eweight
+** keep covered race sex year eweight
+keep covered hispracesex year eweight
 
-collapse (mean) covered [aweight = eweight], by(race sex year)
+** collapse (mean) covered [aweight = eweight], by(race sex year)
+collapse (mean) covered [aweight = eweight], by(hispracesex year)
 
-twoway	(connected covered year if race == 1 & sex == 1, msymbol(x))  ///
-		(connected covered year if race == 1 & sex == 2, msymbol(x))  ///
-		(connected covered year if race == 2 & sex == 1, msymbol(x))  ///
-		(connected covered year if race == 2 & sex == 2, msymbol(x)), ///
-		legend(order(1 "white men" 2 "white women" 3 "Black men" 4 "Black women") cols(4)) ///
+** twoway	(connected covered year if race == 1 & sex == 1, msymbol(x))  ///
+**		(connected covered year if race == 1 & sex == 2, msymbol(x))  ///
+**		(connected covered year if race == 2 & sex == 1, msymbol(x))  ///
+**		(connected covered year if race == 2 & sex == 2, msymbol(x)), ///
+**		legend(order(1 "white men" 2 "white women" 3 "Black men" 4 "Black women") cols(4)) ///
+**		ytitle("proportion of elig covered by union or members") ///
+**		xtitle("year") title("Union Coverage Time Trends by Race and Sex")
+
+** graph export "$figs/1ucov_race_sex_time.png", replace
+** restore
+
+twoway	(connected covered year if hispracesex == 1, msymbol(x))  ///
+		(connected covered year if hispracesex == 2, msymbol(x))  ///
+		(connected covered year if hispracesex == 3, msymbol(x))  ///
+		(connected covered year if hispracesex == 4, msymbol(x))  ///
+		(connected covered year if hispracesex == 5, msymbol(x))  ///
+		(connected covered year if hispracesex == 6, msymbol(x)), ///
+		legend(order(1 "non-Hisp white men" 2 "non-Hisp Black men" 3 "Hispanic men" 4 "non-Hisp white women" 5 "non-Hisp Black women" 6 "Hispanic women") cols(3)) ///
 		ytitle("proportion of elig covered by union or members") ///
-		xtitle("year") title("Union Coverage Time Trends by Race and Sex")
+		xtitle("year") title("Union Coverage Time Trends")
 
-graph export "$figs/1ucov_race_sex_time.png", replace
+graph export "$figs/1ucov_hrs_time.png", replace
 restore
 
 ** preserve
@@ -63,22 +78,41 @@ restore
 **		legend(order(1 "white men" 2 "white women" 3 "Black men" 4 "Black women"))
 ** restore
 
+** preserve
+** keep covered public race sex year eweight
+** label define publabel 0 "Private Sector" 1 "Public Sector"
+** label value public publabel
+
+** collapse (mean) covered [aweight = eweight], by(public race sex year)
+
+** twoway	(connected covered year if race == 1 & sex == 1, msymbol(x))  ///
+**		(connected covered year if race == 1 & sex == 2, msymbol(x))  ///
+**		(connected covered year if race == 2 & sex == 1, msymbol(x))  ///
+**		(connected covered year if race == 2 & sex == 2, msymbol(x)), ///
+**		legend(order(1 "white men" 2 "white women" 3 "Black men" 4 "Black women") cols(4)) ///
+**		by(public, title("Private and Public Sector Union Coverage Time Trends by Race and Sex") note("")) ///
+**		ytitle("proportion of elig covered by union or members")
+		
+** graph export "$figs/2pub_ucov_race_sex_time.png", replace
+** restore
+
 preserve
-keep covered public race sex year eweight
+keep covered public hispracesex year eweight
 label define publabel 0 "Private Sector" 1 "Public Sector"
 label value public publabel
 
-collapse (mean) covered [aweight = eweight], by(public race sex year)
+collapse (mean) covered [aweight = eweight], by(public hispracesex year)
 
-twoway	(connected covered year if race == 1 & sex == 1, msymbol(x))  ///
-		(connected covered year if race == 1 & sex == 2, msymbol(x))  ///
-		(connected covered year if race == 2 & sex == 1, msymbol(x))  ///
-		(connected covered year if race == 2 & sex == 2, msymbol(x)), ///
-		legend(order(1 "white men" 2 "white women" 3 "Black men" 4 "Black women") cols(4)) ///
-		by(public, title("Private and Public Sector Union Coverage Time Trends by Race and Sex") note("")) ///
+twoway	(connected covered year if hispracesex == 1, msymbol(x))  ///
+		(connected covered year if hispracesex == 2, msymbol(x))  ///
+		(connected covered year if hispracesex == 3, msymbol(x))  ///
+		(connected covered year if hispracesex == 4, msymbol(x))  ///
+		(connected covered year if hispracesex == 5, msymbol(x))  ///
+		(connected covered year if hispracesex == 6, msymbol(x)), ///
+		legend(order(1 "non-Hisp white men" 2 "non-Hisp Black men" 3 "Hispanic men" 4 "non-Hisp white women" 5 "non-Hisp Black women" 6 "Hispanic women") cols(3)) ///
+		by(public, title("Private and Public Sector Union Coverage Time Trends") note("")) ///
 		ytitle("proportion of elig covered by union or members")
 		
-graph export "$figs/2pub_ucov_race_sex_time.png", replace
+graph export "$figs/2pub_ucov_hrs_time.png", replace
 restore
-
 

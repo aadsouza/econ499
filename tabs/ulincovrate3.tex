@@ -1,0 +1,17 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{OLS of Log Real Trimmed Wages on Unionization Rate for People Covered by Union}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+            &\multicolumn{3}{c}{Men}                                          &\multicolumn{3}{c}{Women}                                        \\\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+            &\multicolumn{1}{c}{white}&\multicolumn{1}{c}{Black}&\multicolumn{1}{c}{Hispanic}&\multicolumn{1}{c}{white}&\multicolumn{1}{c}{Black}&\multicolumn{1}{c}{Hispanic}\\
+\hline
+coveragerate&       0.375\sym{***}&       0.353\sym{***}&       0.413\sym{***}&       0.316\sym{***}&       0.200\sym{**} &       0.319\sym{*}  \\
+            &    (0.0417)         &    (0.0663)         &    (0.0987)         &    (0.0558)         &    (0.0683)         &     (0.125)         \\
+\hline
+\(N\)       &       80288         &       10091         &       12032         &       71835         &       12033         &        9933         \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}
