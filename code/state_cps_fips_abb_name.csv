@@ -1,0 +1,56 @@
+state,stfips,stateabb,state_name
+11,23,ME,maine
+12,33,NH,new hampshire
+13,50,VT,vermont
+14,25,MA,massachusetts
+15,44,RI,rhode island
+16,9,CT,connecticut
+21,36,NY,new york
+22,34,NJ,new jersey
+23,42,PA,pennsylvania
+31,39,OH,ohio
+32,18,IN,indiana
+33,17,IL,illinois
+34,26,MI,michigan
+35,55,WI,wisconsin
+41,27,MN,minnesota
+42,19,IA,iowa
+43,29,MO,missouri
+44,38,ND,north dakota
+45,46,SD,south dakota
+46,31,NE,nebraska
+47,20,KS,kansas
+51,10,DE,delaware
+52,24,MD,maryland
+53,11,DC,district of columbia
+54,51,VA,virginia
+55,54,WV,west virginia
+56,37,NC,north carolina
+57,45,SC,south carolina
+58,13,GA,georgia
+59,12,FL,florida
+61,21,KY,kentucky
+62,47,TN,tennessee
+63,1,AL,alabama
+64,28,MS,mississippi
+71,5,AR,arkansas
+72,22,LA,louisiana
+73,40,OK,oklahoma
+74,48,TX,texas
+81,30,MT,montana
+82,16,ID,idaho
+83,56,WY,wyoming
+84,8,CO,colorado
+85,35,NM,new mexico
+86,4,AZ,arizona
+87,49,UT,utah
+88,32,NV,nevada
+91,53,WA,washington
+92,41,OR,oregon
+93,6,CA,california
+94,2,AK,alaska
+95,15,HI,hawaii
+1000,60,AS,american samoa
+1001,66,GU,guam
+1002,72,PR,puerto rico
+1003,78,VI,virgin islands

@@ -11,6 +11,7 @@ Work in Progress
   - pre-cleaning:
     - gen_cpi.ipynb
     - dind_nind_crosswalk.xlsx
+    - state_cps_fips_abb_name.csv
   - tables:
     - sumstats.do (in: cleaned_nber_morg.dta)
   - figures:

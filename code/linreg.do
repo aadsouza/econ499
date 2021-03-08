@@ -36,14 +36,13 @@ log using $linreg/linreg.log, replace
 
 use cleaned_nber_morg, clear
 
-** FIXME notice that FLL2021 do not use pareto data for dist reg?
-** do "$code/pareto_topcoding.do"
+do "$code/pareto_topcoding.do"
 
 ** drop if allocated hourly wage, weekly earnings, or usual hrs and missing wage
 drop if alloc1 == 1
 
 ** use twage : nwage1 equiv
-drop if twage ==.
+drop if lwage3 ==.
 
 ** FIXME currently only using MORG so >=83 - merge to gen may_morg
 drop if year < 1983
@@ -74,7 +73,7 @@ forval i = 1(1)3{
 	
 	** keep needed variables
 	** FIXME add partt to list once defined in clean_nber_morg
-	keep state year quarter nwage1 lwage1 hourly exper* educ ee_cl female nind2 nocc cmsa public marr hisprace hispracesex eweight alloc1 covered
+	keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc1 covered
 
 	drop if hispracesex ==.
 
@@ -120,7 +119,7 @@ forval i = 1(1)3{
  
 	forvalues j = 0(1)1{
 		forvalues k = 1(1)6{
-			reg lwage1 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.nocc3 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+			reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc3 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
 		
 			eststo re`i'_`j'_`k'
 		}

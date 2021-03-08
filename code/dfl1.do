@@ -144,13 +144,13 @@ drop edex
 
 gen edex = educ*exper
 
-probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year [w = finalwt1]
+probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year [w = finalwt1]
 	predict pb1m
 
-probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 1 [w = finalwt1]
+probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 1 [w = finalwt1]
 	predict pu1b1m
 
-probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 0 [w = finalwt1]
+probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 0 [w = finalwt1]
 	predict pu1b0m
 
 gen theta2m = (pb1m/(1-pb1m)) * (pu1b1m/pu1b0m) if nhblack == 0 & covered == 1
@@ -282,13 +282,13 @@ drop edex
 
 gen edex = educ*exper
 
-probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year [w = finalwt1]
+probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year [w = finalwt1]
 	predict pb1f
 
-probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 1 [w = finalwt1]
+probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 1 [w = finalwt1]
 	predict pu1b1f
 
-probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 0 [w = finalwt1]
+probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 0 [w = finalwt1]
 	predict pu1b0f
 
 gen theta2f = (pb1f/(1-pb1f)) * (pu1b1f/pu1b0f) if nhblack == 0 & covered == 1

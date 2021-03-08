@@ -77,7 +77,7 @@ save "$estimation/est_dat.dta", replace
 
 gen cell = 1
 
-collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(hispracesex state year nind2)
+collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
 
 keep if cell >= 25
 

@@ -37,14 +37,13 @@ log using $linreg/linreg2.log, replace
 
 use cleaned_nber_morg, clear
 
-** FIXME notice that FLL2021 do not use pareto data for dist reg?
-** do "$code/pareto_topcoding.do"
+do "$code/pareto_topcoding.do"
 
 ** drop if allocated hourly wage, weekly earnings, or usual hrs and missing wage
 drop if alloc1 == 1
 
 ** use twage : nwage1 equiv
-drop if twage ==.
+drop if lwage3 ==.
 
 ** FIXME currently only using MORG so >=83 - merge to gen may_morg
 drop if year < 1983
@@ -64,43 +63,13 @@ rename twage nwage1
 
 ** keep needed variables
 ** FIXME add partt to list once defined in clean_nber_morg
-keep state year quarter nwage1 lwage1 hourly exper* educ ee_cl female nind2 nocc cmsa public marr hisprace hispracesex eweight alloc1 covered
+keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc1 covered
 
 drop if hispracesex ==.
 
 gen finalwt1 = round(eweight)
 
-** gen lyear = year - 2000
-
-** logit covered i.state i.year i.nind2 i.hispracesex i.hispracesex#i.year i.state#i.year i.nind2#i.year i.hispracesex#i.nind2 [w = finalwt1]
-**	predict pcoveragerate
-
-** logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year [w = finalwt1]
-**	predict pcoveragerate
-
-** sort state year nind2
-
-** save "$estimation/est_dat.dta", replace
-
-** gen cell = 1
-
-** collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
-
-** keep if cell >= 25
-
-** keep state year nind2 coveragerate
-
-** merge 1:m state year nind2 using "$estimation/est_dat.dta"
-
-** tab _merge [w = finalwt1]
-
-** replace coveragerate = pcoveragerate if _merge == 2
-
-** drop _merge
-
 rename nind2 nind
-
-** save "$estimation/est_dat.dta", replace
 
 recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
 		(12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
@@ -123,11 +92,11 @@ replace hisprace = hisprace - 1
 eststo clear
 
 forval i = 1(1)3{
-	reg lwage1 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.nocc3 i.quarter if 		female == 0 & period == `i' [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc3 i.quarter if 		female == 0 & period == `i' [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_mal_`i'
 
-	reg lwage1 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.nocc3 i.quarter if 		female == 1 & period == `i' [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc3 i.quarter if 		female == 1 & period == `i' [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_fem_`i'
 	

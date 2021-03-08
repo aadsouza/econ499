@@ -771,6 +771,14 @@ gen quarter =.
 	replace quarter = 2 if inrange(cmonth, 4, 6)
 	replace quarter = 3 if inrange(cmonth, 7, 9)
 	replace quarter = 4 if inrange(cmonth, 10, 12)
+	
+gen partt =. 
+	replace partt = 0 if year >= 1994 & (inrange(ftpt94, 2, 5) | ftpt94 == 11)
+	replace partt = 1 if year >= 1994 & (inrange(ftpt94, 6, 10) | ftpt94 == 12)
+	replace partt = 0 if inrange(year, 1989, 1993) & (inrange(ftpt89, 2, 3) | ftpt89 == 6)
+	replace partt = 1 if inrange(year, 1989, 1993) & (inrange(ftpt89, 4, 5) | ftpt89 == 7)
+	replace partt = 0 if inrange(year, 1979, 1988) & inlist(ftpt79, 1, 3)
+	replace partt = 1 if inrange(year, 1979, 1988) & inlist(ftpt79, 2, 4, 5)
 
 ********************************************************************************
 ** Notable insconsistencies with Lloyd
@@ -786,8 +794,6 @@ gen quarter =.
 ** do not rename hourly and prernhly as nber diff defined paidhr earnhr exist
 ********************************************************************************
 
-** FIXME missing from FLL partt^
 ** FIXME missing from Lloyd famtype dualjob uftpt hours1 pxernh10 allocw2
-** ^partt candidate: ftpt79 ftpt89 ftpt94
 
 ** note contrary to cpsx doc, classer1 dne
