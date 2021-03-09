@@ -32,7 +32,7 @@ global linreg "/Users/amedeusdsouza/econ499/linreg"
 global dfl1 "/Users/amedeusdsouza/econ499/dfl1"
 
 cap log close 
-log using $dfl1/dfl1.log, replace
+log using $dfl1/rifreg1.log, replace
 
 use cleaned_nber_morg, clear
 
@@ -116,27 +116,27 @@ drop edex
 
 gen edex = educ*exper
 
-probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year [w = finalwt1]
+probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year [w = finalwt1]
 	predict pb1m
 
-probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 1 [w = finalwt1]
+probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 1 [w = finalwt1]
 	predict pu1b1m
 
-probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 0 [w = finalwt1]
+probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc3 i.quarter i.year if nhblack == 0 [w = finalwt1]
 	predict pu1b0m
 
 gen theta2m = (pb1m/(1-pb1m)) * (pu1b1m/pu1b0m) if nhblack == 0 & covered == 1
 
 replace theta2m = theta2m * hweight if nhblack == 0 & covered == 1
 
-kdensity lwage3 [aweight = theta2m] if hisprace == 1, at(kwage) gauss width(0.065) ///
+kdensity lwage3 [aweight = theta2m] if hisprace == 1 & covered == 1, at(kwage) gauss width(0.065) ///
 	generate(cu_wmestpt cu_wmde) nograph
 	
 gen theta3m = (pb1m/(1-pb1m)) * ((1-pu1b1m)/(1-pu1b1m)) if nhblack == 0 & covered == 0
 
 replace theta3m = theta3m * hweight if nhblack == 0 & covered == 0
 
-kdensity lwage3 [aweight = theta3m] if hisprace == 1, at(kwage) gauss width(0.065) ///
+kdensity lwage3 [aweight = theta3m] if hisprace == 1 & covered == 0, at(kwage) gauss width(0.065) ///
 	generate(cn_wmestpt cn_wmde) nograph
 
 ** median
@@ -150,33 +150,31 @@ qui tab nocc3, 	 gen(dumnocc3)
 qui tab quarter, gen(dumquarter)
 
 ** note collinearity from dummy variable trap
-** RIF for white men covered by a union
+** RIF for white men covered by a union et no
 forvalues qt = 20(30)80{
-	rifreg lwage1 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 1 [w = hweight], q(`qt') retain(rifwmu_`qt')
+	rifreg lwage3 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 1 [w = hweight], q(`qt') retain(rifwmu_`qt')
 	
-	rifreg lwage1 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* if hisprace == 2 & covered == 1 [w = hweight], q(`qt') retain(rifbmu_`qt')
+	rifreg lwage3 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* if hisprace == 2 & covered == 1 [w = hweight], q(`qt') retain(rifbmu_`qt')
 	
-	rifreg lwage1 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 1 [w = theta2m], q(`qt') retain(rifwmcu_`qt')
+	rifreg lwage3 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 1 [w = theta2m], q(`qt') retain(rifwmcu_`qt')
 	
-	rifreg lwage1 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 0 [w = hweight], q(`qt') retain(rifwmn_`qt')
+	rifreg lwage3 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 0 [w = hweight], q(`qt') retain(rifwmn_`qt')
 	
-	rifreg lwage1 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* if hisprace == 2 & covered == 0 [w = hweight], q(`qt') retain(rifbmn_`qt')
+	rifreg lwage3 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* if hisprace == 2 & covered == 0 [w = hweight], q(`qt') retain(rifbmn_`qt')
 	
-	rifreg lwage1 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 0 [w = theta3m], q(`qt') retain(rifwmcn_`qt')
+	rifreg lwage3 dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* if hisprace == 1 & covered == 0 [w = theta3m], q(`qt') retain(rifwmcn_`qt')
 	
 }
 
-** Oaxaca-Blinder decomposition for composition : covered == 1
-gen rifat_delx =.
-
-** FIXME if foo == 1 for counterfactual!!!!!
+** Oaxaca-Blinder decomposition for wage structure : covered == 1 - could try backing out decomposition for composition by running decomposition for overall and subtracting
+gen rifat_betx =.
 
 forvalues qt = 20(30)80{
-	replace rifat_delx = rifwmcu_`qt' if hisprace == 1 & 
+	replace rifat_betx = rifwmcu_`qt' if hisprace == 1
 	
-	replace rifat_delx = rifwmu_`qt' if hisprace == 1
+	replace rifat_betx = rifbmu_`qt' if hisprace == 2
 	
-	oaxaca rifat_delx dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr public cmsa dumnocc3* dumquarter* [aweight = hweight] if hisprace == 1 .......
+	oaxaca rifat_betx dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* [aweight = hweight?] if hisprace == 1 | hisprace == 2 ? //theta or hweight or both by bringing in for missing?
 	
 	** FIXME review Q3 of file:///Users/amedeusdsouza/Desktop/econ560_320/a3econ561_20.pdf
 	

@@ -157,7 +157,7 @@ gen theta2m = (pb1m/(1-pb1m)) * (pu1b1m/pu1b0m) if nhblack == 0 & covered == 1
 
 replace theta2m = theta2m * hweight if nhblack == 0 & covered == 1
 
-kdensity lwage3 [aweight = theta2m] if hisprace == 1, at(kwage) gauss width(0.065) ///
+kdensity lwage3 [aweight = theta2m] if hisprace == 1 & covered == 1, at(kwage) gauss width(0.065) ///
 	generate(cu_wmestpt cu_wmde) nograph
 
 graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
@@ -174,7 +174,7 @@ gen theta3m = (pb1m/(1-pb1m)) * ((1-pu1b1m)/(1-pu1b1m)) if nhblack == 0 & covere
 
 replace theta3m = theta3m * hweight if nhblack == 0 & covered == 0
 
-kdensity lwage3 [aweight = theta3m] if hisprace == 1, at(kwage) gauss width(0.065) ///
+kdensity lwage3 [aweight = theta3m] if hisprace == 1 & covered == 0, at(kwage) gauss width(0.065) ///
 	generate(cn_wmestpt cn_wmde) nograph
 
 graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
@@ -295,7 +295,7 @@ gen theta2f = (pb1f/(1-pb1f)) * (pu1b1f/pu1b0f) if nhblack == 0 & covered == 1
 
 replace theta2f = theta2f * hweight if nhblack == 0 & covered == 1
 
-kdensity lwage3 [aweight = theta2f] if hisprace == 1, at(kwage) gauss width(0.065) ///
+kdensity lwage3 [aweight = theta2f] if hisprace == 1 & covered == 1, at(kwage) gauss width(0.065) ///
 	generate(cu_wfestpt cu_wfde) nograph
 
 graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
@@ -312,7 +312,7 @@ gen theta3f = (pb1f/(1-pb1f)) * ((1-pu1b1f)/(1-pu1b1f)) if nhblack == 0 & covere
 
 replace theta3f = theta3f * hweight if nhblack == 0 & covered == 0
 
-kdensity lwage3 [aweight = theta3f] if hisprace == 1, at(kwage) gauss width(0.065) ///
+kdensity lwage3 [aweight = theta3f] if hisprace == 1 & covered == 0, at(kwage) gauss width(0.065) ///
 	generate(cn_wfestpt cn_wfde) nograph
 
 graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 

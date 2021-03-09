@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/dfl1/dfl1.log
   log type:  text
- opened on:   8 Mar 2021, 14:53:16
+ opened on:   8 Mar 2021, 15:30:22
 
 . 
 . use cleaned_nber_morg, clear
@@ -763,7 +763,8 @@ Log likelihood = -3.648e+09                     Pseudo R2         =     0.2452
 (239,410 real changes made)
 
 . 
-. kdensity lwage3 [aweight = theta2m] if hisprace == 1, at(kwage) gauss width(0.065) ///
+. kdensity lwage3 [aweight = theta2m] if hisprace == 1 & covered == 1, at(kwage) gauss width(0.0
+> 65) ///
 >         generate(cu_wmestpt cu_wmde) nograph
 
 . 
@@ -794,7 +795,8 @@ Log likelihood = -3.648e+09                     Pseudo R2         =     0.2452
 (1,013,235 real changes made)
 
 . 
-. kdensity lwage3 [aweight = theta3m] if hisprace == 1, at(kwage) gauss width(0.065) ///
+. kdensity lwage3 [aweight = theta3m] if hisprace == 1 & covered == 0, at(kwage) gauss width(0.0
+> 65) ///
 >         generate(cn_wmestpt cn_wmde) nograph
 
 . 
@@ -1493,7 +1495,8 @@ Log likelihood = -2.658e+09                     Pseudo R2         =     0.2982
 (163,675 real changes made)
 
 . 
-. kdensity lwage3 [aweight = theta2f] if hisprace == 1, at(kwage) gauss width(0.065) ///
+. kdensity lwage3 [aweight = theta2f] if hisprace == 1 & covered == 1, at(kwage) gauss width(0.0
+> 65) ///
 >         generate(cu_wfestpt cu_wfde) nograph
 
 . 
@@ -1525,7 +1528,8 @@ Log likelihood = -2.658e+09                     Pseudo R2         =     0.2982
 (989,352 real changes made)
 
 . 
-. kdensity lwage3 [aweight = theta3f] if hisprace == 1, at(kwage) gauss width(0.065) ///
+. kdensity lwage3 [aweight = theta3f] if hisprace == 1 & covered == 0, at(kwage) gauss width(0.0
+> 65) ///
 >         generate(cn_wfestpt cn_wfde) nograph
 
 . 
