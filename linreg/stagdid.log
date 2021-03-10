@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid.log
   log type:  text
- opened on:   8 Mar 2021, 22:54:27
+ opened on:   9 Mar 2021, 22:00:34
 
 . 
 . use cleaned_nber_morg, clear
@@ -261,10 +261,13 @@ end of do-file
 (266,799 missing values generated)
 
 . 
+. eststo clear
+
+. 
 . ** BLACK-WHITE
 . reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper expe
 > r2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
-> f female == 0, vce(cluster state) 
+> f female == 0, vce(cluster state)
 (sum of wgt is 9,210,046,331)
 
 Linear regression                               Number of obs     =  1,068,211
@@ -427,6 +430,9 @@ treat_stblackrelwhite |  -.0608236   .0080984    -7.51   0.000    -.0770899   -.
                       |
                 _cons |  -.1565474   .0331071    -4.73   0.000    -.2230449   -.0900499
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo covstagdid_mal_all 
 
 .         
 . reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper expe
@@ -596,6 +602,9 @@ treat_stblackrelwhite |  -.0645833   .0122901    -5.25   0.000    -.0892687   -.
 ---------------------------------------------------------------------------------------
 
 . 
+. eststo covstagdid_fem_all 
+
+. 
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
 > 2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
 > f female == 0, vce(cluster state) 
@@ -761,6 +770,9 @@ treat_stblackrelwhite |  -.0222117   .0088452    -2.51   0.015    -.0399777   -.
                       |
                 _cons |   .6550849    .033325    19.66   0.000     .5881497      .72202
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo wagstagdid_mal_all 
 
 .         
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
@@ -930,6 +942,9 @@ treat_stblackrelwhite |   -.039853   .0080114    -4.97   0.000    -.0559443   -.
 ---------------------------------------------------------------------------------------
 
 . 
+. eststo wagstagdid_fem_all 
+
+. 
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
 > 2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
 > f female == 0 & covered == 0, vce(cluster state)
@@ -1095,6 +1110,9 @@ treat_stblackrelwhite |  -.0032944   .0081203    -0.41   0.687    -.0196045    .
                       |
                 _cons |   .7313393   .0292678    24.99   0.000     .6725532    .7901255
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo uwagstagdid_mal_all 
 
 .         
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
@@ -1264,6 +1282,9 @@ treat_stblackrelwhite |   -.028488   .0082706    -3.44   0.001    -.0450999   -.
 ---------------------------------------------------------------------------------------
 
 . 
+. eststo uwagstagdid_fem_all 
+
+. 
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
 > 2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
 > f female == 0 & covered == 1, vce(cluster state)
@@ -1429,6 +1450,9 @@ treat_stblackrelwhite |  -.0147781   .0147232    -1.00   0.320    -.0443506    .
                       |
                 _cons |    .530839   .0572357     9.27   0.000     .4158777    .6458003
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo nwagstagdid_mal_all 
 
 .         
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
@@ -1596,6 +1620,9 @@ treat_stblackrelwhite |   .0001848    .015602     0.01   0.991    -.0311527    .
                       |
                 _cons |    .180274   .0539948     3.34   0.002     .0718223    .2887257
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo nwagstagdid_fem_all 
 
 . 
 . ** HISP-WHITE
@@ -3033,6 +3060,9 @@ treat_stblackrelwhite |  -.0284392   .0128759    -2.21   0.055    -.0575665    .
                 _cons |  -.2426374    .037226    -6.52   0.000    -.3268484   -.1584264
 ---------------------------------------------------------------------------------------
 
+. 
+. eststo covstagdid_mal_rust 
+
 .         
 . reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper expe
 > r2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
@@ -3160,6 +3190,9 @@ treat_stblackrelwhite |  -.0150866   .0192451    -0.78   0.453    -.0586219    .
 ---------------------------------------------------------------------------------------
 
 . 
+. eststo covstagdid_fem_rust 
+
+. 
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
 > 2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
 > f female == 0, vce(cluster state) 
@@ -3284,6 +3317,9 @@ treat_stblackrelwhite |  -.0255628   .0124143    -2.06   0.070    -.0536458    .
                       |
                 _cons |   .6894384   .0545528    12.64   0.000     .5660313    .8128455
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo wagstagdid_mal_rust 
 
 .         
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
@@ -3412,6 +3448,9 @@ treat_stblackrelwhite |  -.0290251   .0060039    -4.83   0.001     -.042607   -.
 ---------------------------------------------------------------------------------------
 
 . 
+. eststo wagstagdid_fem_rust 
+
+. 
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
 > 2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
 > f female == 0 & covered == 0, vce(cluster state)
@@ -3536,6 +3575,9 @@ treat_stblackrelwhite |  -.0048705   .0100755    -0.48   0.640    -.0276629    .
                       |
                 _cons |    .770252   .0574111    13.42   0.000     .6403792    .9001249
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo uwagstagdid_mal_rust 
 
 .         
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
@@ -3664,6 +3706,9 @@ treat_stblackrelwhite |  -.0256929   .0080858    -3.18   0.011    -.0439843   -.
 ---------------------------------------------------------------------------------------
 
 . 
+. eststo uwagstagdid_fem_rust
+
+. 
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
 > 2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] i
 > f female == 0 & covered == 1, vce(cluster state)
@@ -3788,6 +3833,9 @@ treat_stblackrelwhite |  -.0451163   .0252748    -1.79   0.108    -.1022918    .
                       |
                 _cons |   .6403398   .0885652     7.23   0.000     .4399915    .8406881
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo nwagstagdid_mal_rust 
 
 .         
 . reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper
@@ -3914,6 +3962,9 @@ treat_stblackrelwhite |   .0066141   .0315245     0.21   0.838    -.0646994    .
                       |
                 _cons |   .3223191   .0745323     4.32   0.002     .1537154    .4909229
 ---------------------------------------------------------------------------------------
+
+. 
+. eststo nwagstagdid_fem_rust 
 
 . 
 . ** RUST BELT ONLY HISP-WHITE + WV, KY - IA
@@ -4893,9 +4944,43 @@ treat_sthisprelwhite |  -.0055195   .0418956    -0.13   0.898    -.1002941     .
 --------------------------------------------------------------------------------------
 
 . 
+. 
+. esttab covstagdid_mal_all covstagdid_fem_all covstagdid_mal_rust covstagdid_fem_rust using $ta
+> bs/covstagdid.tex, se title(Difference in Differences of Union Coverage on Right to Work Laws 
+> Treatment in State and Time) nonumbers mgroups("All States" "Rust-Belt States +", pattern(1 0 
+> 1 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("me
+> n" "women" "men" "women") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
+(note: file /Users/amedeusdsouza/econ499/tabs/covstagdid.tex not found)
+(output written to /Users/amedeusdsouza/econ499/tabs/covstagdid.tex)
+
+. 
+. esttab wagstagdid_mal_all wagstagdid_fem_all uwagstagdid_mal_all uwagstagdid_fem_all nwagstagd
+> id_mal_all nwagstagdid_fem_all using $tabs/wagstagdid_all.tex, se title(Difference in Differen
+> ces of Real Log Trimmed Imputed Wages on Right to Work Laws Treatment in State and Time) nonum
+> bers mtitles("men" "women" "men covered by union" "women covered by union" "men not covered by
+>  union" "women not covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) repla
+> ce
+(note: file /Users/amedeusdsouza/econ499/tabs/wagstagdid_all.tex not found)
+(output written to /Users/amedeusdsouza/econ499/tabs/wagstagdid_all.tex)
+
+. 
+. esttab wagstagdid_mal_rust wagstagdid_fem_rust uwagstagdid_mal_rust uwagstagdid_fem_rust nwags
+> tagdid_mal_rust nwagstagdid_fem_rust using $tabs/wagstagdid_rust.tex, se title(Difference in D
+> ifferences of Real Log Trimmed Imputed Wages on Right to Work Laws Treatment in State and Time
+> ) nonumbers mtitles("men" "women" "men covered by union" "women covered by union" "men not cov
+> ered by union" "women not covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite
+> ) replace
+(note: file /Users/amedeusdsouza/econ499/tabs/wagstagdid_rust.tex not found)
+(output written to /Users/amedeusdsouza/econ499/tabs/wagstagdid_rust.tex)
+
+. 
+. panelcombine, use($tabs/wagstagdid_all.tex $tabs/wagstagdid_rust.tex) paneltitles("All States"
+>  "Rust-Belt States") columncount(3) save($tabs/wagstagdid.tex)
+
+. 
 . log close 
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid.log
   log type:  text
- closed on:   8 Mar 2021, 22:57:23
+ closed on:   9 Mar 2021, 22:03:35
 ------------------------------------------------------------------------------------------------

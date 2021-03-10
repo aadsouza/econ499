@@ -125,9 +125,9 @@ forval i = 1(1)3{
 		}
 	}
 	
-	esttab re`i'_0_1 re`i'_0_2 re`i'_0_3 re`i'_0_4 re`i'_0_5 re`i'_0_6 using $tabs/nlincovrate`i'.tex, se title(OLS of Log Real Trimmed Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+	esttab re`i'_0_1 re`i'_0_2 re`i'_0_3 re`i'_0_4 re`i'_0_5 re`i'_0_6 using $tabs/nlincovrate`i'.tex, se title(OLS of Real Log Trimmed Imputed Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
 	
-	esttab re`i'_1_1 re`i'_1_2 re`i'_1_3 re`i'_1_4 re`i'_1_5 re`i'_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Log Real Trimmed Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+	esttab re`i'_1_1 re`i'_1_2 re`i'_1_3 re`i'_1_4 re`i'_1_5 re`i'_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Trimmed Imputed Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
 	restore
 }
 

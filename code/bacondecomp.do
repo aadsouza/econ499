@@ -123,13 +123,13 @@ gen treat_stblackrelwhite = treat_st*blackrelwhite
 gen treat_sthisprelwhite = treat_st*hisprelwhite
 
 
-** bacondecomp
+** bacondecomp doesnt work for on/off/on treatments (being white after treatment) welp
 
 
 
 
 
 ** RUST BELT ONLY BLACK-WHITE + WV, KY - IA
-keep if inrange(state, 31, 35) | inlist(state, 23, 41, 43) | inlist(state, 55, 61)
+** keep if inrange(state, 31, 35) | inlist(state, 23, 41, 43) | inlist(state, 55, 61)
 
 ** bacondecomp
