@@ -123,74 +123,74 @@ gen treat_stblackrelwhite = treat_st*blackrelwhite
 gen treat_sthisprelwhite = treat_st*hisprelwhite
 
 ** BLACK-WHITE
-reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0, vce(cluster state) 
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1, vce(cluster state)
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0, vce(cluster state) 
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
 ** HISP-WHITE
-reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen [aw = finalwt1] if female == 0, vce(cluster state) 
+reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen [aw = finalwt1] if female == 1, vce(cluster state)
+reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen [aw = finalwt1] if female == 0, vce(cluster state) 
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 1, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 0 & covered == 0, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 	
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 1 & covered == 0, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 0 & covered == 1, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 	
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 1 & covered == 1, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
 ** RUST BELT ONLY BLACK-WHITE + WV, KY - IA
 keep if inrange(state, 31, 35) | inlist(state, 23, 41, 43) | inlist(state, 55, 61)
 
-reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0, vce(cluster state) 
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1, vce(cluster state)
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0, vce(cluster state) 
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
 ** RUST BELT ONLY HISP-WHITE + WV, KY - IA
-reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen [aw = finalwt1] if female == 0, vce(cluster state) 
+reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen [aw = finalwt1] if female == 1, vce(cluster state)
+reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen [aw = finalwt1] if female == 0, vce(cluster state) 
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 1, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 0 & covered == 0, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 	
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 1 & covered == 0, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 0 & covered == 1, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 	
-reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen if female == 1 & covered == 1, vce(cluster state)
+reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
 log close 
 

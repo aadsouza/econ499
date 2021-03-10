@@ -1,4 +1,5 @@
 ** In this dofile we attempt RIF on DFL
+** !!!!!!! FIXMEs and gotchas !!!!!!!
 
 ** gen kde by hispracesex and covered for all yrs together
 
@@ -140,8 +141,6 @@ kdensity lwage3 [aweight = theta3m] if hisprace == 1 & covered == 0, at(kwage) g
 	generate(cn_wmestpt cn_wmde) nograph
 
 ** median
-** FIXME run foreach loop for q20 q50 q80
-
 qui tab state,	 gen(dumstate)
 qui tab year,	 gen(dumyear)
 qui tab nind, 	 gen(dumnind)
