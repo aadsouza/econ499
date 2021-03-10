@@ -326,3 +326,5 @@ graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 graph export "$figs/kde1wom/cn_bhw_wom.png", replace
 	
 restore
+
+log close

@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/dfl1/dfl1.log
   log type:  text
- opened on:   9 Mar 2021, 17:16:35
+ opened on:   9 Mar 2021, 19:17:03
 
 . 
 . use cleaned_nber_morg, clear
@@ -1556,5 +1556,9 @@ Log likelihood = -2.658e+09                     Pseudo R2         =     0.2982
 . restore
 
 . 
-end of do-file
-
+. log close
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/dfl1/dfl1.log
+  log type:  text
+ closed on:   9 Mar 2021, 19:30:39
+------------------------------------------------------------------------------------------------
