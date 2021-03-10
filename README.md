@@ -22,3 +22,4 @@ Work in Progress
     - dist_dataprep.do (in: cleaned_nber_morg.dta)
 - lab_var_wage.txt
   - wage and related variable labels outline
+- FIGURES MAY NOT BE UPDATED ON GITHUB, CONFIRM WITH LOCAL FILES
