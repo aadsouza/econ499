@@ -48,7 +48,8 @@ drop if inrange(year, 1994, 1995)
 ** hours weighted
 gen hweight = eweight * uhourse / 100.0
 
-** NOTE in current draft we have not dropped <83, self empl + w/o pay
+** drop self employed and w/o pay
+keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 ********************************************************************************
 
 drop if year < 1983
