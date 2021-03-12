@@ -123,14 +123,14 @@ gen treat_sthisprelwhite = treat_st*hisprelwhite
 eststo clear
 
 ** FIXME current manual intervention in tex
-** label define nindlab 1 "Primary Sector" 2 "Construction" 3 "Manufacturing" 4 "Wholesale and Retail Trade" 5 "Transportation and Utilities" 6 "Financial Services" 7 "Business and Professional Services" 8 "Health and Welfare Services" 9 "Educational Services" 10 "Personal Services" 11 "Public Administration"
-** 	label values nind nindlab
-** 	label var nind ""
-** 	decode nind, generate(industry)
+label define nindlab 1 "Primary Sector" 2 "Construction" 3 "Manufacturing" 4 "Wholesale and Retail Trade" 5 "Transportation and Utilities" 6 "Financial Services" 7 "Business and Professional Services" 8 "Health and Welfare Services" 9 "Educational Services" 10 "Personal Services" 11 "Public Administration"
+	label values nind nindlab
+	label var nind ""
 
 label define hrslab 1 "White Men" 2 "Black Men" 3 "Hispanic Men" 4 "White Women" 5 "Black Women" 6 "Hispanic Women"
 	label values hispracesex hrslab
 	label var hispracesex ""
-	
-estpost tab nind hispracesex [aw = finalwt1] 
-esttab using $tabs/nindtab.tex, unstack noobs label replace
+
+tabout nind hispracesex [aw = finalwt1] using $tabs/nindtab.tex, cells(col) format(3) style(tex) replace
+
+tabout nind hispracesex [aw = finalwt1] using $tabs/unindtab.tex, sum cells(mean covered) format(3) style(tex) replace

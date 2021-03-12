@@ -23,17 +23,21 @@ drop if lwage3 ==.
 ** drop obs in 1994 1995 - allocation flag missing
 drop if inrange(year, 1994, 1995)
 
+** drop self employed and w/o pay
+keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 ********************************************************************************
+
+drop if year < 1983
 
 keep covered umem lwage3 educ exper elig public hispracesex year eweight
 
 cd $tabs
 
-label define hrs 1 "Non-Hispanic white men" 2 "Non-Hispanic Black men" 3 "Hispanic Men" 4 "Non-Hispanic white women" 5 "Non-Hispanic Black women" 6 "Hispanic women"
+label define hrs 1 "White Men" 2 "Black Men" 3 "Hispanic Men" 4 "White Women" 5 "Black Women" 6 "Hispanic Women"
 label values hispracesex hrs
 
 qui estpost tabstat covered umem lwage3 educ exper public [aweight = eweight], by(hispracesex) statistics(mean sd count)
-esttab using bhw_sumstats.tex, main(mean) aux(sd) cells("covered umem lwage3 educ exper public") nomtitles long title(Summary Statistics by Hispanicity, Race, and Sex) varlabels(`e(labels)') replace
+esttab using bhw_sumstats.tex, cells("covered(fmt(3)) umem lwage3 educ exper public") nomtitles long title(Summary Statistics by Hispanicity, Race, and Sex) varlabels(`e(labels)') replace
 
 ** mean
 ** qui estpost tabstat covered umem lwage3 educ exper public [aweight = eweight] if race == 1 & sex == 1, by(year)

@@ -146,24 +146,172 @@ qui tab quarter, gen(dumquarter)
 
 ** note collinearity from dummy variable trap ?
 ** with quarter fe 
-forvalues qt = 20(30)80{
+putexcel set $linreg/rifdid_coefs, replace sheet("data")
+	putexcel A1 = "name"
+	putexcel B1 = "coef"
+	putexcel C1 = "bse"
+	putexcel D1 = "lb"
+	putexcel E1 = "ub"
+	
+local row = 2
+
+forvalues qt = 10(5)90{
 	di "men at `qt' quantile"
 	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 0 [w = finalwt1], q(`qt') bootstrap reps(200)
+		putexcel A`row' = "m_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = _b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		putexcel E`row' = _b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "m_treat_st`qt'"
+		putexcel B`row' = _b[treat_st]
+		putexcel C`row' = _se[treat_st]
+		putexcel D`row' = _b[treat_st] - invttail(e(df_r), 0.025) * _se[treat_st]
+		putexcel E`row' = _b[treat_st] + invttail(e(df_r), 0.025) * _se[treat_st]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "m_times`qt'"
+		putexcel B`row' = _b[treat_stblackrelwhite]
+		putexcel C`row' = _se[treat_stblackrelwhite]
+		putexcel D`row' = _b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+		putexcel E`row' = _b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+	
+		local row = `row' + 1
 	
 	di "women at `qt' quantile"
 	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 [w = finalwt1], q(`qt') bootstrap reps(200)
+		putexcel A`row' = "f_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = _b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		putexcel E`row' = _b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "f_treat_st`qt'"
+		putexcel B`row' = _b[treat_st]
+		putexcel C`row' = _se[treat_st]
+		putexcel D`row' = _b[treat_st] - invttail(e(df_r), 0.025) * _se[treat_st]
+		putexcel E`row' = _b[treat_st] + invttail(e(df_r), 0.025) * _se[treat_st]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "f_times`qt'"
+		putexcel B`row' = _b[treat_stblackrelwhite]
+		putexcel C`row' = _se[treat_stblackrelwhite]
+		putexcel D`row' = _b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+		putexcel E`row' = _b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+	
+		local row = `row' + 1
 	
 	di "men not covered by union at `qt' quantile"
 	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 0 & covered == 0 [w = finalwt1], q(`qt') bootstrap reps(200)
+		putexcel A`row' = "nm_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = _b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		putexcel E`row' = _b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "nm_treat_st`qt'"
+		putexcel B`row' = _b[treat_st]
+		putexcel C`row' = _se[treat_st]
+		putexcel D`row' = _b[treat_st] - invttail(e(df_r), 0.025) * _se[treat_st]
+		putexcel E`row' = _b[treat_st] + invttail(e(df_r), 0.025) * _se[treat_st]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "nm_times`qt'"
+		putexcel B`row' = _b[treat_stblackrelwhite]
+		putexcel C`row' = _se[treat_stblackrelwhite]
+		putexcel D`row' = _b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+		putexcel E`row' = _b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+	
+		local row = `row' + 1	
 	
 	di "women not covered by union at `qt' quantile"
 	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 & covered == 0 [w = finalwt1], q(`qt') bootstrap reps(200)
+		putexcel A`row' = "nf_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = _b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		putexcel E`row' = _b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "nf_treat_st`qt'"
+		putexcel B`row' = _b[treat_st]
+		putexcel C`row' = _se[treat_st]
+		putexcel D`row' = _b[treat_st] - invttail(e(df_r), 0.025) * _se[treat_st]
+		putexcel E`row' = _b[treat_st] + invttail(e(df_r), 0.025) * _se[treat_st]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "nf_times`qt'"
+		putexcel B`row' = _b[treat_stblackrelwhite]
+		putexcel C`row' = _se[treat_stblackrelwhite]
+		putexcel D`row' = _b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+		putexcel E`row' = _b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+	
+		local row = `row' + 1	
 	
 	di "men covered by union at `qt' quantile"
 	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 0 & covered == 1 [w = finalwt1], q(`qt') bootstrap reps(200)
+		putexcel A`row' = "um_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = _b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		putexcel E`row' = _b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "um_treat_st`qt'"
+		putexcel B`row' = _b[treat_st]
+		putexcel C`row' = _se[treat_st]
+		putexcel D`row' = _b[treat_st] - invttail(e(df_r), 0.025) * _se[treat_st]
+		putexcel E`row' = _b[treat_st] + invttail(e(df_r), 0.025) * _se[treat_st]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "um_times`qt'"
+		putexcel B`row' = _b[treat_stblackrelwhite]
+		putexcel C`row' = _se[treat_stblackrelwhite]
+		putexcel D`row' = _b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+		putexcel E`row' = _b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+	
+		local row = `row' + 1		
 
 	di "women covered by union at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 & covered == 1 [w = finalwt1], q(`qt') bootstrap reps(200)		
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 & covered == 1 [w = finalwt1], q(`qt') bootstrap reps(200)
+		putexcel A`row' = "uf_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = _b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		putexcel E`row' = _b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "uf_treat_st`qt'"
+		putexcel B`row' = _b[treat_st]
+		putexcel C`row' = _se[treat_st]
+		putexcel D`row' = _b[treat_st] - invttail(e(df_r), 0.025) * _se[treat_st]
+		putexcel E`row' = _b[treat_st] + invttail(e(df_r), 0.025) * _se[treat_st]
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "uf_times`qt'"
+		putexcel B`row' = _b[treat_stblackrelwhite]
+		putexcel C`row' = _se[treat_stblackrelwhite]
+		putexcel D`row' = _b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+		putexcel E`row' = _b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite]
+	
+		local row = `row' + 1	
+	
 }
 
 log close
