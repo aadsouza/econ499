@@ -179,3 +179,5 @@ forvalues qt = 20(30)80{
 	** FIXME review Q3 of file:///Users/amedeusdsouza/Desktop/econ560_320/a3econ561_20.pdf
 	
 }
+
+log close
