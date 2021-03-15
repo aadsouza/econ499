@@ -137,6 +137,24 @@ gen treat_stm2 = 0 if stater2w == 0 | stater2w == 2
 	replace treat_stm2 = 1 if state == 55 & date >= (678 - 24)
 	replace treat_stm2 = 1 if state == 61 & date >= (684 - 24)
 	
+gen treat_stm3 = 0 if stater2w == 0 | stater2w == 2
+	replace treat_stm3 = 1 if stater2w == 1
+	replace treat_stm3 = 1 if state == 73 & date >= (500 - 36)
+	replace treat_stm3 = 1 if state == 32 & date >= (625 - 36)
+	replace treat_stm3 = 1 if state == 34 & date >= (638 - 36)
+	replace treat_stm3 = 1 if state == 35 & date >= (662 - 36)
+	replace treat_stm3 = 1 if state == 55 & date >= (678 - 36)
+	replace treat_stm3 = 1 if state == 61 & date >= (684 - 36)
+	
+gen treat_stm4 = 0 if stater2w == 0 | stater2w == 2
+	replace treat_stm4 = 1 if stater2w == 1
+	replace treat_stm4 = 1 if state == 73 & date >= (500 - 48)
+	replace treat_stm4 = 1 if state == 32 & date >= (625 - 48)
+	replace treat_stm4 = 1 if state == 34 & date >= (638 - 48)
+	replace treat_stm4 = 1 if state == 35 & date >= (662 - 48)
+	replace treat_stm4 = 1 if state == 55 & date >= (678 - 48)
+	replace treat_stm4 = 1 if state == 61 & date >= (684 - 48)
+	
 gen treat_stp1 = 0 if stater2w == 0 | stater2w == 2
 	replace treat_stp1 = 1 if stater2w == 1
 	replace treat_stp1 = 1 if state == 73 & date >= (500 + 12)
@@ -166,20 +184,20 @@ gen treat_sthisprelwhite = treat_st*hisprelwhite
 ** no pretrends for before 2000
 drop if alwaysr2w == 1
 
-reg covered blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
+reg covered blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg covered blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+reg covered blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
+reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
-reg lwage3 blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
 log close
