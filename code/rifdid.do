@@ -104,7 +104,7 @@ gen neverr2w = 1
 	replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
 
 gen stater2w = 0
-	replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72)
+	replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
 	replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
 	lab def str2w 0 "no r2w" 1 "r2w before 2000" 2 "r2w after 2000"
 	lab val stater2w str2w

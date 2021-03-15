@@ -27,7 +27,8 @@ gen     pareto = 1/(ranuni^(1/2.68)) if inrange(year, 1975, 1979)
 	replace pareto = 1/(ranuni^(1/1.78)) if inrange(year, 2005, 2009)
 
 ** FIXME revise parameters using Tables A4 and B3
-	replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
+**	replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
+	replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2019) 
 
 * lwage2 uses this imputation;
 gen lwage2 = lwage if topcode == 0

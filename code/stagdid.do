@@ -104,7 +104,7 @@ gen neverr2w = 1
 	replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
 
 gen stater2w = 0
-	replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72)
+	replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
 	replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
 	lab def str2w 0 "no r2w" 1 "r2w before 2000" 2 "r2w after 2000"
 	lab val stater2w str2w
@@ -176,41 +176,47 @@ reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ
 reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
 ** RUST BELT ONLY BLACK-WHITE + WV, KY - IA
-keep if inrange(state, 31, 35) | inlist(state, 23, 41, 43) | inlist(state, 55, 61)
+** keep if inrange(state, 31, 35) | inlist(state, 23, 41, 43) | inlist(state, 55, 61)
+
+** DROP ALWAYS RTW BLACK-WHITE
+drop if alwaysr2w == 1
 
 reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 
-eststo covstagdid_mal_rust 
+eststo covstagdid_mal_cf 
 	
 reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-eststo covstagdid_fem_rust 
+eststo covstagdid_fem_cf 
 
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 
-eststo wagstagdid_mal_rust 
+eststo wagstagdid_mal_cf 
 	
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-eststo wagstagdid_fem_rust 
+eststo wagstagdid_fem_cf 
 
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 
-eststo uwagstagdid_mal_rust 
+eststo uwagstagdid_mal_cf 
 	
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-eststo uwagstagdid_fem_rust
+eststo uwagstagdid_fem_cf
 
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 
-eststo nwagstagdid_mal_rust 
+eststo nwagstagdid_mal_cf 
 	
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
-eststo nwagstagdid_fem_rust 
+eststo nwagstagdid_fem_cf 
 
 ** RUST BELT ONLY HISP-WHITE + WV, KY - IA
+
+** DROP ALWAYS RTW HISP-WHITE
+
 reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 	
 reg covered hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
@@ -227,14 +233,14 @@ reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ
 	
 reg lwage3 hisprelwhite treat_st treat_sthisprelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp citizen i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
-
-esttab covstagdid_mal_all covstagdid_fem_all covstagdid_mal_rust covstagdid_fem_rust using $tabs/covstagdid.tex, se title(Difference in Differences of Union Coverage on Right to Work Laws Treatment in State and Time) nonumbers mgroups("All States" "Rust-Belt States +", pattern(1 0 1 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("men" "women" "men" "women") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
+** FIXME ignore rust best stuff, dropping always rtw
+esttab covstagdid_mal_all covstagdid_fem_all covstagdid_mal_cf covstagdid_fem_cf using $tabs/covstagdid.tex, se title(Difference in Differences of Union Coverage on Right to Work Laws Treatment in State and Time) nonumbers mgroups("All States" "W/O Always RTW States", pattern(1 0 1 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("men" "women" "men" "women") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
 
 esttab wagstagdid_mal_all wagstagdid_fem_all uwagstagdid_mal_all uwagstagdid_fem_all nwagstagdid_mal_all nwagstagdid_fem_all using $tabs/wagstagdid_all.tex, se title(Difference in Differences of Real Log Trimmed Imputed Wages on Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men covered by union" "women covered by union" "men not covered by union" "women not covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
 
-esttab wagstagdid_mal_rust wagstagdid_fem_rust uwagstagdid_mal_rust uwagstagdid_fem_rust nwagstagdid_mal_rust nwagstagdid_fem_rust using $tabs/wagstagdid_rust.tex, se title(Difference in Differences of Real Log Trimmed Imputed Wages on Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men covered by union" "women covered by union" "men not covered by union" "women not covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
+esttab wagstagdid_mal_cf wagstagdid_fem_cf uwagstagdid_mal_cf uwagstagdid_fem_cf nwagstagdid_mal_cf nwagstagdid_fem_cf using $tabs/wagstagdid_cf.tex, se title(Difference in Differences of Real Log Trimmed Imputed Wages on Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men covered by union" "women covered by union" "men not covered by union" "women not covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
 
-panelcombine, use($tabs/wagstagdid_all.tex $tabs/wagstagdid_rust.tex) paneltitles("All States" "Rust-Belt States") columncount(3) save($tabs/wagstagdid.tex)
+panelcombine, use($tabs/wagstagdid_all.tex $tabs/wagstagdid_cf.tex) paneltitles("All States" "W/O Always RTW States") columncount(3) save($tabs/wagstagdid.tex)
 
 log close 
 
