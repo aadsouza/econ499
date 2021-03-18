@@ -51,9 +51,8 @@ keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 ********************************************************************************
 
 ** FIXME - decide why (current from diagnostics)
-keep if inrange(year, 2000, 2019)
-
-** keep if inrange(year, 1989, 2019)
+** keep if inrange(year, 2000, 2019)
+keep if inrange(year, 1989, 2019)
 
 rename twage nwage1
 
@@ -125,24 +124,24 @@ gen treat_stblackrelwhite = treat_st*blackrelwhite
 gen treat_sthisprelwhite = treat_st*hisprelwhite
 
 ** mean with nocc3 with quarter fe
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc3 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc3 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc3 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc3 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc3 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 	
-reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc3 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
-** RIF-DiD with nocc3
+** RIF-DiD with nocc2
 qui tab state,	 gen(dumstate)
 qui tab year,	 gen(dumyear)
 qui tab nind, 	 gen(dumnind)
 qui tab ee_cl, 	 gen(dumee_cl)
-qui tab nocc3, 	 gen(dumnocc3)
+qui tab nocc2, 	 gen(dumnocc2)
 qui tab quarter, gen(dumquarter)
 
 ** note collinearity from dummy variable trap ?
@@ -158,7 +157,7 @@ local row = 2
 
 forvalues qt = 10(10)90{
 	di "men at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "m_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -184,7 +183,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1
 	
 	di "women at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "f_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -210,7 +209,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1
 	
 	di "men not covered by union at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 0 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "nm_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -236,7 +235,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1	
 	
 	di "women not covered by union at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "nf_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -262,7 +261,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1	
 	
 	di "men covered by union at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 0 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "um_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -288,7 +287,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1		
 
 	di "women covered by union at `qt' quantile"
-	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc3* dumquarter* unemp if female == 1 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "uf_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]

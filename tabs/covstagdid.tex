@@ -1,23 +1,23 @@
 \begin{table}[htbp]\centering
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
 \caption{Difference in Differences of Union Coverage on Right to Work Laws Treatment in State and Time}
-\begin{tabular}{l*{4}{c}}
+\begin{tabular}{l*{2}{c}}
 \hline\hline
-            &\multicolumn{2}{c}{All States}             &\multicolumn{2}{c}{W/O Always RTW States}  \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-            &\multicolumn{1}{c}{men}&\multicolumn{1}{c}{women}&\multicolumn{1}{c}{men}&\multicolumn{1}{c}{women}\\
+            &\multicolumn{2}{c}{All States}             \\\cmidrule(lr){2-3}
+            &\multicolumn{1}{c}{men}&\multicolumn{1}{c}{women}\\
 \hline
-blackrelwhite&      0.0594\sym{***}&      0.0795\sym{***}&      0.0514\sym{***}&      0.0721\sym{***}\\
-            &   (0.00766)         &    (0.0115)         &   (0.00742)         &    (0.0112)         \\
+blackrelwhite&      0.0594\sym{***}&      0.0795\sym{***}\\
+            &   (0.00766)         &    (0.0115)         \\
 [1em]
-treat\_st    &     -0.0299\sym{**} &     -0.0221         &     -0.0271\sym{*}  &     -0.0257\sym{*}  \\
-            &    (0.0104)         &    (0.0114)         &    (0.0107)         &    (0.0115)         \\
+treat\_st    &     -0.0299\sym{**} &     -0.0221         \\
+            &    (0.0104)         &    (0.0114)         \\
 [1em]
-treat\_stblackrelwhite&     -0.0609\sym{***}&     -0.0646\sym{***}&     -0.0261\sym{*}  &     -0.0251         \\
-            &   (0.00810)         &    (0.0123)         &    (0.0112)         &    (0.0204)         \\
+treat\_stblackrelwhite&     -0.0609\sym{***}&     -0.0646\sym{***}\\
+            &   (0.00810)         &    (0.0123)         \\
 \hline
-\(N\)       &     1068180         &     1079084         &      675883         &      682696         \\
+\(N\)       &     1068180         &     1079084         \\
 \hline\hline
-\multicolumn{5}{l}{\footnotesize Standard errors in parentheses}\\
-\multicolumn{5}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
 \end{tabular}
 \end{table}
