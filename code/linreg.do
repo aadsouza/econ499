@@ -119,15 +119,15 @@ forval i = 1(1)3{
  
 	forvalues j = 0(1)1{
 		forvalues k = 1(1)6{
-			reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc3 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+			reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
 		
 			eststo re`i'_`j'_`k'
 		}
 	}
 	
-	esttab re`i'_0_1 re`i'_0_2 re`i'_0_3 re`i'_0_4 re`i'_0_5 re`i'_0_6 using $tabs/nlincovrate`i'.tex, se title(OLS of Real Log Trimmed Imputed Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+	esttab re`i'_0_1 re`i'_0_2 re`i'_0_3 re`i'_0_4 re`i'_0_5 re`i'_0_6 using $tabs/nlincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
 	
-	esttab re`i'_1_1 re`i'_1_2 re`i'_1_3 re`i'_1_4 re`i'_1_5 re`i'_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Trimmed Imputed Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+	esttab re`i'_1_1 re`i'_1_2 re`i'_1_3 re`i'_1_4 re`i'_1_5 re`i'_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
 	restore
 }
 
