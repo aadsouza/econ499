@@ -81,10 +81,9 @@ gen edex = educ*exper
 
 drop if hisprace > 2
 
-gen period = 3 if inrange(year, 2000, 2019)
-	replace period = 2 if inrange(year, 1988, 2000)
-	replace period = 1 if inrange(year, 1983, 1988)
-
+** gen period = 3 if inrange(year, 2000, 2019)
+**	replace period = 2 if inrange(year, 1988, 2000)
+**	replace period = 1 if inrange(year, 1983, 1988)
 
 gen blackrelwhite = hisprace - 1
 	replace blackrelwhite =. if hisprace > 2
@@ -92,22 +91,22 @@ gen blackrelwhite = hisprace - 1
 gen coveredblackrelwhite = covered*blackrelwhite
 ** eststo clear
 
-forval i = 1(1)3{
-	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & period == `i' [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 
-	** eststo naive_mal_`i'
-
-	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & period == `i' [w = finalwt1], vce(cluster state_ind)
-
-	** eststo naive_fem_`i'
+	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 	
-	** esttab naive_mal_`i' naive_fem_`i' using $tabs/naive`i'.tex, se title(OLS Regression of Real Log Trimmed Imputed Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(1.covered 1.hisprace 1.covered#1.hisprace) replace
-}
+	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 
-forval i = 1(1)3{
+	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
+
+	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
+
+	reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
+
+	
 preserve
 
-keep if period == `i'
+keep if inrange(year, 1983, 1988)
 
 ** RIF-DiD with nocc2
 qui tab state,	 gen(dumstate)
@@ -119,7 +118,7 @@ qui tab quarter, gen(dumquarter)
 
 	** note collinearity from dummy variable trap ?
 	** with quarter fe 
-    putexcel set $linreg/rifreg2_coefs_`i', replace sheet("data")
+    putexcel set $linreg/rifreg2_coefs_1, replace sheet("data")
 	putexcel A1 = "name"
 	putexcel B1 = "coef"
 	putexcel C1 = "bse"
@@ -130,7 +129,7 @@ qui tab quarter, gen(dumquarter)
 	
 	
 	forval qt = 10(10)90{
-		di "men at `qt' quantile in period `i'"
+		di "men at `qt' quantile in period 1"
 		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "m_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
@@ -156,7 +155,7 @@ qui tab quarter, gen(dumquarter)
 	
 		local row = `row' + 1
 		
-		di "women at `qt' quantile in period `i'"
+		di "women at `qt' quantile in period 1"
 		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
 		putexcel A`row' = "f_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
@@ -185,6 +184,164 @@ qui tab quarter, gen(dumquarter)
 
 restore
 
-}
+preserve
+
+keep if inrange(year, 1988, 2000)
+
+** RIF-DiD with nocc2
+qui tab state,	 gen(dumstate)
+qui tab year,	 gen(dumyear)
+qui tab nind, 	 gen(dumnind)
+qui tab ee_cl, 	 gen(dumee_cl)
+qui tab nocc2, 	 gen(dumnocc2)
+qui tab quarter, gen(dumquarter)
+
+	** note collinearity from dummy variable trap ?
+	** with quarter fe 
+    putexcel set $linreg/rifreg2_coefs_2, replace sheet("data")
+	putexcel A1 = "name"
+	putexcel B1 = "coef"
+	putexcel C1 = "bse"
+	putexcel D1 = "lb"
+	putexcel E1 = "ub"
+	
+    local row = 2
+	
+	
+	forval qt = 10(10)90{
+		di "men at `qt' quantile in period 2"
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		putexcel A`row' = "m_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = (_b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		putexcel E`row' = (_b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "m_covered`qt'"
+		putexcel B`row' = _b[covered]
+		putexcel C`row' = _se[covered]
+		putexcel D`row' = (_b[covered] - invttail(e(df_r), 0.025) * _se[covered])
+		putexcel E`row' = (_b[covered] + invttail(e(df_r), 0.025) * _se[covered])
+		
+		local row = `row' + 1
+
+		putexcel A`row' = "m_times`qt'"
+		putexcel B`row' = _b[coveredblackrelwhite]
+		putexcel C`row' = _se[coveredblackrelwhite]
+		putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+		putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+	
+		local row = `row' + 1
+		
+		di "women at `qt' quantile in period 2"
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		putexcel A`row' = "f_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = (_b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		putexcel E`row' = (_b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "f_covered`qt'"
+		putexcel B`row' = _b[covered]
+		putexcel C`row' = _se[covered]
+		putexcel D`row' = (_b[covered] - invttail(e(df_r), 0.025) * _se[covered])
+		putexcel E`row' = (_b[covered] + invttail(e(df_r), 0.025) * _se[covered])
+		
+		local row = `row' + 1
+
+		putexcel A`row' = "f_times`qt'"
+		putexcel B`row' = _b[coveredblackrelwhite]
+		putexcel C`row' = _se[coveredblackrelwhite]
+		putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+		putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+	
+		local row = `row' + 1
+	}
+
+restore
+
+preserve
+
+keep if inrange(year, 2000, 2019)
+
+** RIF-DiD with nocc2
+qui tab state,	 gen(dumstate)
+qui tab year,	 gen(dumyear)
+qui tab nind, 	 gen(dumnind)
+qui tab ee_cl, 	 gen(dumee_cl)
+qui tab nocc2, 	 gen(dumnocc2)
+qui tab quarter, gen(dumquarter)
+
+	** note collinearity from dummy variable trap ?
+	** with quarter fe 
+    putexcel set $linreg/rifreg2_coefs_3, replace sheet("data")
+	putexcel A1 = "name"
+	putexcel B1 = "coef"
+	putexcel C1 = "bse"
+	putexcel D1 = "lb"
+	putexcel E1 = "ub"
+	
+    local row = 2
+	
+	
+	forval qt = 10(10)90{
+		di "men at `qt' quantile in period 3"
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		putexcel A`row' = "m_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = (_b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		putexcel E`row' = (_b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "m_covered`qt'"
+		putexcel B`row' = _b[covered]
+		putexcel C`row' = _se[covered]
+		putexcel D`row' = (_b[covered] - invttail(e(df_r), 0.025) * _se[covered])
+		putexcel E`row' = (_b[covered] + invttail(e(df_r), 0.025) * _se[covered])
+		
+		local row = `row' + 1
+
+		putexcel A`row' = "m_times`qt'"
+		putexcel B`row' = _b[coveredblackrelwhite]
+		putexcel C`row' = _se[coveredblackrelwhite]
+		putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+		putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+	
+		local row = `row' + 1
+		
+		di "women at `qt' quantile in period 3"
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		putexcel A`row' = "f_blackrelwhite`qt'"
+		putexcel B`row' = _b[blackrelwhite]
+		putexcel C`row' = _se[blackrelwhite]
+		putexcel D`row' = (_b[blackrelwhite] - invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		putexcel E`row' = (_b[blackrelwhite] + invttail(e(df_r), 0.025) * _se[blackrelwhite])
+		
+		local row = `row' + 1
+		
+		putexcel A`row' = "f_covered`qt'"
+		putexcel B`row' = _b[covered]
+		putexcel C`row' = _se[covered]
+		putexcel D`row' = (_b[covered] - invttail(e(df_r), 0.025) * _se[covered])
+		putexcel E`row' = (_b[covered] + invttail(e(df_r), 0.025) * _se[covered])
+		
+		local row = `row' + 1
+
+		putexcel A`row' = "f_times`qt'"
+		putexcel B`row' = _b[coveredblackrelwhite]
+		putexcel C`row' = _se[coveredblackrelwhite]
+		putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+		putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+	
+		local row = `row' + 1
+	}
+
+restore
 
 log close

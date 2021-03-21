@@ -60,76 +60,204 @@ keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 
 rename twage nwage1
 
-gen period = 3 if inrange(year, 2000, 2019)
-	replace period = 2 if inrange(year, 1988, 2000)
-	replace period = 1 if inrange(year, 1983, 1988)
+** gen period = 3 if inrange(year, 2000, 2019)
+**	replace period = 2 if inrange(year, 1988, 2000)
+**	replace period = 1 if inrange(year, 1983, 1988)
 	
 eststo clear
 	
-forval i = 1(1)3{
-	preserve
+
+preserve
+
+keep if inrange(year, 1983, 1988)
+
+** keep needed variables
+** FIXME add partt to list once defined in clean_nber_morg
+keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc1 covered
+
+drop if hispracesex ==.
+
+gen finalwt1 = round(eweight)
+
+gen lyear = year - 1900
+
+logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year [w = finalwt1]
+	predict pcoveragerate
+
+sort state year nind2
+
+save "$estimation/est_dat.dta", replace
+
+gen cell = 1
+
+collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
+
+keep if cell >= 25
+
+keep state year nind2 coveragerate
+
+merge 1:m state year nind2 using "$estimation/est_dat.dta"
+
+tab _merge [w = finalwt1]
+
+replace coveragerate = pcoveragerate if _merge == 2
+
+drop _merge
+
+rename nind2 nind
+
+save "$estimation/est_dat.dta", replace
+
+recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+		(12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
 	
-	keep if period == `i'
+recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
+
+egen state_ind = group(state nind)
+
+gen edex = educ*exper
+
+forvalues j = 0(1)1{
+	forvalues k = 1(1)6{
+		reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
 	
-	** keep needed variables
-	** FIXME add partt to list once defined in clean_nber_morg
-	keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc1 covered
-
-	drop if hispracesex ==.
-
-	gen finalwt1 = round(eweight)
-
-	gen lyear = year - 1900
-
-	logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year [w = finalwt1]
-		predict pcoveragerate
-
-	sort state year nind2
-
-	save "$estimation/est_dat.dta", replace
-
-	gen cell = 1
-
-	collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
-
-	keep if cell >= 25
-
-	keep state year nind2 coveragerate
-
-	merge 1:m state year nind2 using "$estimation/est_dat.dta"
-	
-	tab _merge [w = finalwt1]
-
-	replace coveragerate = pcoveragerate if _merge == 2
-
-	drop _merge
-
-	rename nind2 nind
-
-	save "$estimation/est_dat.dta", replace
-
-	recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
-			(12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
-		
-	recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
-
-	egen state_ind = group(state nind)
-
-	gen edex = educ*exper
- 
-	forvalues j = 0(1)1{
-		forvalues k = 1(1)6{
-			reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
-		
-			eststo re`i'_`j'_`k'
-		}
+		eststo re1_`j'_`k'
 	}
-	
-	esttab re`i'_0_1 re`i'_0_2 re`i'_0_3 re`i'_0_4 re`i'_0_5 re`i'_0_6 using $tabs/nlincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
-	
-	esttab re`i'_1_1 re`i'_1_2 re`i'_1_3 re`i'_1_4 re`i'_1_5 re`i'_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
-	restore
 }
+
+esttab re1_0_1 re1_0_2 re1_0_3 re1_0_4 re1_0_5 re1_0_6 using $tabs/nlincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+
+esttab re1_1_1 re1_1_2 re1_1_3 re1_1_4 re1_1_5 re1_1_6 using $tabs/ulincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+
+restore
+
+preserve
+
+keep if inrange(year, 1988, 2000)
+
+** keep needed variables
+** FIXME add partt to list once defined in clean_nber_morg
+keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc1 covered
+
+drop if hispracesex ==.
+
+gen finalwt1 = round(eweight)
+
+gen lyear = year - 1900
+
+logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year [w = finalwt1]
+	predict pcoveragerate
+
+sort state year nind2
+
+save "$estimation/est_dat.dta", replace
+
+gen cell = 1
+
+collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
+
+keep if cell >= 25
+
+keep state year nind2 coveragerate
+
+merge 1:m state year nind2 using "$estimation/est_dat.dta"
+
+tab _merge [w = finalwt1]
+
+replace coveragerate = pcoveragerate if _merge == 2
+
+drop _merge
+
+rename nind2 nind
+
+save "$estimation/est_dat.dta", replace
+
+recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+		(12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
+	
+recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
+
+egen state_ind = group(state nind)
+
+gen edex = educ*exper
+
+forvalues j = 0(1)1{
+	forvalues k = 1(1)6{
+		reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+	
+		eststo re2_`j'_`k'
+	}
+}
+
+esttab re2_0_1 re2_0_2 re2_0_3 re2_0_4 re2_0_5 re2_0_6 using $tabs/nlincovrate2.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+
+esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+
+restore
+
+preserve
+
+keep if inrange(year, 2000, 2019)
+
+** keep needed variables
+** FIXME add partt to list once defined in clean_nber_morg
+keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc1 covered
+
+drop if hispracesex ==.
+
+gen finalwt1 = round(eweight)
+
+gen lyear = year - 1900
+
+logit covered i.state i.year i.nind2 i.state#i.year i.nind2#i.year [w = finalwt1]
+	predict pcoveragerate
+
+sort state year nind2
+
+save "$estimation/est_dat.dta", replace
+
+gen cell = 1
+
+collapse (rawsum) finalwt1 cell (mean) coveragerate = covered [w = finalwt1], by(state year nind2)
+
+keep if cell >= 25
+
+keep state year nind2 coveragerate
+
+merge 1:m state year nind2 using "$estimation/est_dat.dta"
+
+tab _merge [w = finalwt1]
+
+replace coveragerate = pcoveragerate if _merge == 2
+
+drop _merge
+
+rename nind2 nind
+
+save "$estimation/est_dat.dta", replace
+
+recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+		(12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
+	
+recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
+
+egen state_ind = group(state nind)
+
+gen edex = educ*exper
+
+forvalues j = 0(1)1{
+	forvalues k = 1(1)6{
+		reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+	
+		eststo re3_`j'_`k'
+	}
+}
+
+esttab re3_0_1 re3_0_2 re3_0_3 re3_0_4 re3_0_5 re3_0_6 using $tabs/nlincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+
+esttab re3_1_1 re3_1_2 re3_1_3 re3_1_4 re3_1_5 re3_1_6 using $tabs/ulincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+
+restore
 
 panelcombine, use($tabs/nlincovrate1.tex $tabs/nlincovrate2.tex $tabs/nlincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/nlincovrate.tex)
 
