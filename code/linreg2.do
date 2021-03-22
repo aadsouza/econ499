@@ -89,37 +89,43 @@ drop if hisprace > 2
 ** hisprace: Black == 1, white == 0
 replace hisprace = hisprace - 1
 
+gen coveredhisprace = covered*hisprace
+
+label variable hisprace "$ Black $"
+label variable covered "$ covered $"
+label variable coveredhisprace "$ covered \times Black $"
+
 eststo clear
 
-	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_mal_1
 
-	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_fem_1
 	
-	esttab naive_mal_1 naive_fem_1 using $tabs/naive1.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(1.covered 1.hisprace 1.covered#1.hisprace) replace
+	esttab naive_mal_1 naive_fem_1 using $tabs/naive1.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 	
-	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_mal_2
 
-	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_fem_2
 	
-	esttab naive_mal_2 naive_fem_2 using $tabs/naive2.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(1.covered 1.hisprace 1.covered#1.hisprace) replace
+	esttab naive_mal_2 naive_fem_2 using $tabs/naive2.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 	
-	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_mal_3
 
-	reg lwage3 covered##hisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
+	reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
 
 	eststo naive_fem_3
 	
-	esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(1.covered 1.hisprace 1.covered#1.hisprace) replace	
+	esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
 
 panelcombine, use($tabs/naive1.tex $tabs/naive2.tex $tabs/naive3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/naive.tex)

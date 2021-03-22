@@ -3,20 +3,20 @@
 \caption{OLS Regression of Real Log Wages on Union Coverage and Race}
 \begin{tabular}{l*{2}{c}}
 \hline\hline
-            &\multicolumn{1}{c}{Men}&\multicolumn{1}{c}{Women}\\
+                    &\multicolumn{1}{c}{Men}&\multicolumn{1}{c}{Women}\\
 \hline
-1.covered   &       0.171\sym{***}&       0.120\sym{***}\\
-            &   (0.00755)         &   (0.00700)         \\
+$ Black $           &      -0.163***&      -0.103***\\
+                    &   (0.00350)   &   (0.00426)   \\
 [1em]
-1.hisprace  &      -0.163\sym{***}&      -0.103\sym{***}\\
-            &   (0.00350)         &   (0.00426)         \\
+$ covered $         &       0.171***&       0.120***\\
+                    &   (0.00755)   &   (0.00700)   \\
 [1em]
-1.covered#1.hisprace&      0.0262\sym{***}&      0.0405\sym{***}\\
-            &   (0.00770)         &   (0.00806)         \\
+$ covered \times Black $&      0.0262***&      0.0405***\\
+                    &   (0.00770)   &   (0.00806)   \\
 \hline
-\(N\)       &      628445         &      648645         \\
+Observations        &      628445   &      648645   \\
 \hline\hline
 \multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
-\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\multicolumn{3}{l}{\footnotesize * p<0.1, ** p<0.05, *** p<0.01}\\
 \end{tabular}
 \end{table}
