@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifdid.log
   log type:  text
- opened on:  18 Mar 2021, 11:08:14
+ opened on:  22 Mar 2021, 13:06:29
 
 . 
 . use cleaned_nber_morg, clear
@@ -112,12 +112,11 @@ end of do-file
 . rename twage nwage1
 
 . 
-. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt pu
-> blic marr hisprace hispracesex citizen eweight alloc1 covered umem
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex citize
+> n eweight alloc1 covered umem
 
 . 
-. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unem
-> p.dta"
+. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unemp.dta"
 (note: variable year was int, now long to accommodate using data's values)
 (note: variable cmonth was byte, now long to accommodate using data's values)
 (note: variable state was byte, now long to accommodate using data's values)
@@ -185,16 +184,16 @@ end of do-file
 . local newr2wstates "73 32 34 35 55 61"
 
 . 
-. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effectiv
-> e; signed Dec2012) Mar1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effective; signed Dec2012) Mar1,2015(Mar11,20
+> 15) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
 . local newr2wdate "500 625 638 662 678 684"
 
 . 
 . gen alwaysr2w = 0
 
 .         replace alwaysr2w = 1 if /// 
->                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72
-> , 82) //incl Idaho which changed in 1985 and Texas which had since 47 but bolstered in 93
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82) //incl Idaho which changed in 1
+> 985 and Texas which had since 47 but bolstered in 93
 (1,149,124 real changes made)
 
 . 
@@ -204,8 +203,7 @@ end of do-file
 . 
 . gen neverr2w = 1
 
-.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
-> , 87, 47, 83, 72, 82)
+.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
 (1,149,124 real changes made)
 
 .         replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
@@ -214,8 +212,7 @@ end of do-file
 . 
 . gen stater2w = 0
 
-.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
-> , 87, 47, 83, 72, 82)
+.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
 (1,149,124 real changes made)
 
 .         replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
@@ -250,8 +247,7 @@ end of do-file
 .         replace treat_st = 1 if state == 61 & date >= 684
 (3,150 real changes made)
 
-. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change t
-> o treat_jst
+. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change to treat_jst
 .         
 . gen treat_stblackrelwhite = treat_st*blackrelwhite
 (324,138 missing values generated)
@@ -262,9 +258,8 @@ end of do-file
 
 . 
 . ** mean with nocc3 with quarter fe
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster s
-> tate)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cms
+> a i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
 (sum of wgt is 9,220,846,537)
 
 Linear regression                               Number of obs     =  1,069,676
@@ -428,9 +423,8 @@ treat_stblackrelwhite |  -.0223464   .0088487    -2.53   0.015    -.0401195   -.
 ---------------------------------------------------------------------------------------
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster s
-> tate)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cms
+> a i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
 (sum of wgt is 9,024,033,393)
 
 Linear regression                               Number of obs     =  1,080,732
@@ -594,9 +588,8 @@ treat_stblackrelwhite |  -.0398934   .0080072    -4.98   0.000    -.0559762   -.
 ---------------------------------------------------------------------------------------
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cms
+> a i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 (sum of wgt is 7,596,028,224)
 
 Linear regression                               Number of obs     =    878,856
@@ -760,9 +753,8 @@ treat_stblackrelwhite |  -.0034263   .0081269    -0.42   0.675    -.0197495     
 ---------------------------------------------------------------------------------------
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cms
+> a i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 (sum of wgt is 7,731,988,392)
 
 Linear regression                               Number of obs     =    924,307
@@ -926,9 +918,8 @@ treat_stblackrelwhite |  -.0285357   .0082668    -3.45   0.001      -.04514   -.
 ---------------------------------------------------------------------------------------
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 1
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cms
+> a i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 (sum of wgt is 1,613,820,660)
 
 Linear regression                               Number of obs     =    189,324
@@ -1092,9 +1083,8 @@ treat_stblackrelwhite |  -.0149683   .0147252    -1.02   0.314    -.0445447    .
 ---------------------------------------------------------------------------------------
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 1
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cms
+> a i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 (sum of wgt is 1,280,694,556)
 
 Linear regression                               Number of obs     =    154,777
@@ -1298,9 +1288,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 . 
 . forvalues qt = 10(10)90{
   2.         di "men at `qt' quantile"
-  3.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper
->  exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+  3.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* 
+> marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
   4.                 putexcel A`row' = "m_blackrelwhite`qt'"
   5.                 putexcel B`row' = _b[blackrelwhite]
   6.                 putexcel C`row' = _se[blackrelwhite]
@@ -1320,17 +1309,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 .                 putexcel A`row' = "m_times`qt'"
  17.                 putexcel B`row' = _b[treat_stblackrelwhite]
  18.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 19.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 20.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 19.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 20.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  21.         
 .                 local row = `row' + 1
  22.         
 .         di "women at `qt' quantile"
- 23.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper
->  exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+ 23.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* 
+> marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  24.                 putexcel A`row' = "f_blackrelwhite`qt'"
  25.                 putexcel B`row' = _b[blackrelwhite]
  26.                 putexcel C`row' = _se[blackrelwhite]
@@ -1350,17 +1336,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 .                 putexcel A`row' = "f_times`qt'"
  37.                 putexcel B`row' = _b[treat_stblackrelwhite]
  38.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 39.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 40.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 39.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 40.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  41.         
 .                 local row = `row' + 1
  42.         
 .         di "men not covered by union at `qt' quantile"
- 43.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper
->  exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & cov
-> ered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+ 43.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* 
+> marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
  44.                 putexcel A`row' = "nm_blackrelwhite`qt'"
  45.                 putexcel B`row' = _b[blackrelwhite]
  46.                 putexcel C`row' = _se[blackrelwhite]
@@ -1380,17 +1363,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 .                 putexcel A`row' = "nm_times`qt'"
  57.                 putexcel B`row' = _b[treat_stblackrelwhite]
  58.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 59.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 60.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 59.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 60.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  61.         
 .                 local row = `row' + 1   
  62.         
 .         di "women not covered by union at `qt' quantile"
- 63.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper
->  exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & cov
-> ered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+ 63.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* 
+> marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
  64.                 putexcel A`row' = "nf_blackrelwhite`qt'"
  65.                 putexcel B`row' = _b[blackrelwhite]
  66.                 putexcel C`row' = _se[blackrelwhite]
@@ -1410,17 +1390,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 .                 putexcel A`row' = "nf_times`qt'"
  77.                 putexcel B`row' = _b[treat_stblackrelwhite]
  78.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 79.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 80.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 79.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 80.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  81.         
 .                 local row = `row' + 1   
  82.         
 .         di "men covered by union at `qt' quantile"
- 83.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper
->  exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & cov
-> ered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+ 83.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* 
+> marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  84.                 putexcel A`row' = "um_blackrelwhite`qt'"
  85.                 putexcel B`row' = _b[blackrelwhite]
  86.                 putexcel C`row' = _se[blackrelwhite]
@@ -1440,17 +1417,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 .                 putexcel A`row' = "um_times`qt'"
  97.                 putexcel B`row' = _b[treat_stblackrelwhite]
  98.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 99.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
-100.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 99.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+100.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
 101.         
 .                 local row = `row' + 1           
 102. 
 .         di "women covered by union at `qt' quantile"
-103.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper
->  exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & cov
-> ered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+103.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* 
+> marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
 104.                 putexcel A`row' = "uf_blackrelwhite`qt'"
 105.                 putexcel B`row' = _b[blackrelwhite]
 106.                 putexcel C`row' = _se[blackrelwhite]
@@ -1470,10 +1444,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
 .                 putexcel A`row' = "uf_times`qt'"
 117.                 putexcel B`row' = _b[treat_stblackrelwhite]
 118.                 putexcel C`row' = _se[treat_stblackrelwhite]
-119.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
-120.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+119.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+120.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
 121.         
 .                 local row = `row' + 1   
 122.         
@@ -10826,5 +10798,5 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs.xlsx saved
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifdid.log
   log type:  text
- closed on:  18 Mar 2021, 11:29:41
---------------------------------------------------------------------------------------------------------------
+ closed on:  22 Mar 2021, 13:15:59
+---------------------------------------------------------------------------------------------------------------------------------------------------
