@@ -125,7 +125,7 @@ eststo clear
 
 	eststo naive_fem_3
 	
-	esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wage on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01) addnote("Standard errors are clustered at the state-industry level. Real log wage is the dependent variable throughout. Having the property of the coefficient in each panel is associated with a $ 100(e^\beta - 1) $ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects. ")
+	esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wage on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
 
 panelcombine, use($tabs/naive1.tex $tabs/naive2.tex $tabs/naive3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/naive.tex) 
