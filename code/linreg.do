@@ -117,6 +117,8 @@ egen state_ind = group(state nind)
 
 gen edex = educ*exper
 
+label variable coveragerate "$ coveragerate $"
+
 forvalues j = 0(1)1{
 	forvalues k = 1(1)6{
 		reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
@@ -125,9 +127,9 @@ forvalues j = 0(1)1{
 	}
 }
 
-esttab re1_0_1 re1_0_2 re1_0_3 re1_0_4 re1_0_5 re1_0_6 using $tabs/nlincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+esttab re1_0_1 re1_0_2 re1_0_3 re1_0_4 re1_0_5 re1_0_6 using $tabs/nlincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
-esttab re1_1_1 re1_1_2 re1_1_3 re1_1_4 re1_1_5 re1_1_6 using $tabs/ulincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+esttab re1_1_1 re1_1_2 re1_1_3 re1_1_4 re1_1_5 re1_1_6 using $tabs/ulincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
 restore
 
@@ -181,6 +183,8 @@ egen state_ind = group(state nind)
 
 gen edex = educ*exper
 
+label variable coveragerate "$ coveragerate $"
+
 forvalues j = 0(1)1{
 	forvalues k = 1(1)6{
 		reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
@@ -189,9 +193,9 @@ forvalues j = 0(1)1{
 	}
 }
 
-esttab re2_0_1 re2_0_2 re2_0_3 re2_0_4 re2_0_5 re2_0_6 using $tabs/nlincovrate2.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+esttab re2_0_1 re2_0_2 re2_0_3 re2_0_4 re2_0_5 re2_0_6 using $tabs/nlincovrate2.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
-esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
 restore
 
@@ -245,6 +249,8 @@ egen state_ind = group(state nind)
 
 gen edex = educ*exper
 
+label variable coveragerate "$ coveragerate $"
+
 forvalues j = 0(1)1{
 	forvalues k = 1(1)6{
 		reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
@@ -253,9 +259,9 @@ forvalues j = 0(1)1{
 	}
 }
 
-esttab re3_0_1 re3_0_2 re3_0_3 re3_0_4 re3_0_5 re3_0_6 using $tabs/nlincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+esttab re3_0_1 re3_0_2 re3_0_3 re3_0_4 re3_0_5 re3_0_6 using $tabs/nlincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
-esttab re3_1_1 re3_1_2 re3_1_3 re3_1_4 re3_1_5 re3_1_6 using $tabs/ulincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "white" "Black" "Hispanic") keep(coveragerate) replace
+esttab re3_1_1 re3_1_2 re3_1_3 re3_1_4 re3_1_5 re3_1_6 using $tabs/ulincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
 restore
 
