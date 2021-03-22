@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifreg2.log
   log type:  text
- opened on:  20 Mar 2021, 14:36:15
+ opened on:  21 Mar 2021, 20:33:11
 
 . 
 . use cleaned_nber_morg, clear
@@ -116,8 +116,8 @@ end of do-file
 . 
 . ** keep needed variables
 . ** FIXME add partt to list once defined in clean_nber_morg
-. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public ma
-> rr hisprace hispracesex eweight alloc1 covered
+. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc
+> 1 covered
 
 . 
 . drop if hispracesex ==.
@@ -165,9 +165,8 @@ end of do-file
 
 . ** eststo clear
 . 
-.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3
->  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w 
-> = finalwt1], vce(cluster state_ind)
+.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt publi
+> c cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 2,167,259,754)
 
@@ -308,9 +307,8 @@ coveredblackrelwhite |   .0440587    .009789     4.50   0.000     .0248311    .0
 --------------------------------------------------------------------------------------
 
 . 
-.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3
->  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w 
-> = finalwt1], vce(cluster state_ind)
+.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt publi
+> c cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 1,917,831,567)
 
@@ -451,9 +449,8 @@ coveredblackrelwhite |   .0160247   .0092096     1.74   0.082     -.002065    .0
 --------------------------------------------------------------------------------------
 
 .         
-.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3
->  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w 
-> = finalwt1], vce(cluster state_ind)
+.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt publi
+> c cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 4,153,338,354)
 
@@ -599,9 +596,8 @@ coveredblackrelwhite |    .030419   .0090029     3.38   0.001     .0127354    .0
 --------------------------------------------------------------------------------------
 
 . 
-.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3
->  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w 
-> = finalwt1], vce(cluster state_ind)
+.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt publi
+> c cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 3,920,689,798)
 
@@ -747,9 +743,8 @@ coveredblackrelwhite |   .0335624   .0090527     3.71   0.000      .015781    .0
 --------------------------------------------------------------------------------------
 
 . 
-.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3
->  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w 
-> = finalwt1], vce(cluster state_ind)
+.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt publi
+> c cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 5,739,708,710)
 
@@ -904,9 +899,8 @@ coveredblackrelwhite |   .0262197   .0077013     3.40   0.001     .0110926    .0
 --------------------------------------------------------------------------------------
 
 . 
-.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3
->  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w 
-> = finalwt1], vce(cluster state_ind)
+.         reg lwage3 covered blackrelwhite coveredblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt publi
+> c cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 5,740,898,485)
 
@@ -1110,9 +1104,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_1.xlsx saved
 .         
 .         forval qt = 10(10)90{
   2.                 di "men at `qt' quantile in period 1"
-  3.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ
->  exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+  3.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dume
+> e_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
   4.                 putexcel A`row' = "m_blackrelwhite`qt'"
   5.                 putexcel B`row' = _b[blackrelwhite]
   6.                 putexcel C`row' = _se[blackrelwhite]
@@ -1132,17 +1125,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_1.xlsx saved
 .                 putexcel A`row' = "m_times`qt'"
  17.                 putexcel B`row' = _b[coveredblackrelwhite]
  18.                 putexcel C`row' = _se[coveredblackrelwhite]
- 19.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
- 20.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
+ 19.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+ 20.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
  21.         
 .                 local row = `row' + 1
  22.                 
 .                 di "women at `qt' quantile in period 1"
- 23.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ
->  exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+ 23.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dume
+> e_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  24.                 putexcel A`row' = "f_blackrelwhite`qt'"
  25.                 putexcel B`row' = _b[blackrelwhite]
  26.                 putexcel C`row' = _se[blackrelwhite]
@@ -1162,10 +1152,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_1.xlsx saved
 .                 putexcel A`row' = "f_times`qt'"
  37.                 putexcel B`row' = _b[coveredblackrelwhite]
  38.                 putexcel C`row' = _se[coveredblackrelwhite]
- 39.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
- 40.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
+ 39.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+ 40.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
  41.         
 .                 local row = `row' + 1
  42.         }
@@ -3904,9 +3892,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_2.xlsx saved
 .         
 .         forval qt = 10(10)90{
   2.                 di "men at `qt' quantile in period 2"
-  3.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ
->  exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+  3.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dume
+> e_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
   4.                 putexcel A`row' = "m_blackrelwhite`qt'"
   5.                 putexcel B`row' = _b[blackrelwhite]
   6.                 putexcel C`row' = _se[blackrelwhite]
@@ -3926,17 +3913,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_2.xlsx saved
 .                 putexcel A`row' = "m_times`qt'"
  17.                 putexcel B`row' = _b[coveredblackrelwhite]
  18.                 putexcel C`row' = _se[coveredblackrelwhite]
- 19.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
- 20.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
+ 19.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+ 20.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
  21.         
 .                 local row = `row' + 1
  22.                 
 .                 di "women at `qt' quantile in period 2"
- 23.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ
->  exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+ 23.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dume
+> e_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  24.                 putexcel A`row' = "f_blackrelwhite`qt'"
  25.                 putexcel B`row' = _b[blackrelwhite]
  26.                 putexcel C`row' = _se[blackrelwhite]
@@ -3956,10 +3940,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_2.xlsx saved
 .                 putexcel A`row' = "f_times`qt'"
  37.                 putexcel B`row' = _b[coveredblackrelwhite]
  38.                 putexcel C`row' = _se[coveredblackrelwhite]
- 39.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
- 40.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
+ 39.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+ 40.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
  41.         
 .                 local row = `row' + 1
  42.         }
@@ -6788,9 +6770,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_3.xlsx saved
 .         
 .         forval qt = 10(10)90{
   2.                 di "men at `qt' quantile in period 3"
-  3.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ
->  exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+  3.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dume
+> e_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
   4.                 putexcel A`row' = "m_blackrelwhite`qt'"
   5.                 putexcel B`row' = _b[blackrelwhite]
   6.                 putexcel C`row' = _se[blackrelwhite]
@@ -6810,17 +6791,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_3.xlsx saved
 .                 putexcel A`row' = "m_times`qt'"
  17.                 putexcel B`row' = _b[coveredblackrelwhite]
  18.                 putexcel C`row' = _se[coveredblackrelwhite]
- 19.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
- 20.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
+ 19.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+ 20.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
  21.         
 .                 local row = `row' + 1
  22.                 
 .                 di "women at `qt' quantile in period 3"
- 23.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ
->  exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = 
-> finalwt1], q(`qt') //bootstrap reps(200)
+ 23.                 rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dume
+> e_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  24.                 putexcel A`row' = "f_blackrelwhite`qt'"
  25.                 putexcel B`row' = _b[blackrelwhite]
  26.                 putexcel C`row' = _se[blackrelwhite]
@@ -6840,10 +6818,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_3.xlsx saved
 .                 putexcel A`row' = "f_times`qt'"
  37.                 putexcel B`row' = _b[coveredblackrelwhite]
  38.                 putexcel C`row' = _se[coveredblackrelwhite]
- 39.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
- 40.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblack
-> relwhite])
+ 39.                 putexcel D`row' = (_b[coveredblackrelwhite] - invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
+ 40.                 putexcel E`row' = (_b[coveredblackrelwhite] + invttail(e(df_r), 0.025) * _se[coveredblackrelwhite])
  41.         
 .                 local row = `row' + 1
  42.         }
@@ -9790,5 +9766,5 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2_coefs_3.xlsx saved
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifreg2.log
   log type:  text
- closed on:  20 Mar 2021, 14:46:20
---------------------------------------------------------------------------------------------------------------
+ closed on:  21 Mar 2021, 20:38:15
+---------------------------------------------------------------------------------------------------------------------------------------------------
