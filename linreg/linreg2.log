@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/linreg2.log
   log type:  text
- opened on:  21 Mar 2021, 18:32:11
+ opened on:  21 Mar 2021, 18:39:51
 
 . 
 . use cleaned_nber_morg, clear
@@ -1091,9 +1091,11 @@ coveredhisprace |    .040467   .0080647     5.02   0.000     .0246263    .056307
 .         eststo naive_fem_3
 
 .         
-.         esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mt
-> itles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01) addnote("Lorem ipsum dolor sit amet"
-> )
+.         esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wage on Union Coverage and Race) nonumbers mti
+> tles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01) addnote("Standard errors are clustere
+> d at the state-industry level. Real log wage is the dependent variable throughout. Having the property of the coefficient in each panel is associ
+> ated with a $ 100(e^\beta - 1) $ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed
+>  effects. ")
 (output written to /Users/amedeusdsouza/econ499/tabs/naive3.tex)
 
 . 
@@ -1105,5 +1107,5 @@ coveredhisprace |    .040467   .0080647     5.02   0.000     .0246263    .056307
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/linreg2.log
   log type:  text
- closed on:  21 Mar 2021, 18:33:03
+ closed on:  21 Mar 2021, 18:40:43
 ---------------------------------------------------------------------------------------------------------------------------------------------------
