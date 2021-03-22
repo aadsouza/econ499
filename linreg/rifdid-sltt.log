@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifdid-sltt.log
   log type:  text
- opened on:  20 Mar 2021, 11:43:38
+ opened on:  22 Mar 2021, 13:58:07
 
 . 
 . use cleaned_nber_morg, clear
@@ -112,12 +112,11 @@ end of do-file
 . rename twage nwage1
 
 . 
-. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt pu
-> blic marr hisprace hispracesex citizen eweight alloc1 covered umem
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex citize
+> n eweight alloc1 covered umem
 
 . 
-. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unem
-> p.dta"
+. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unemp.dta"
 (note: variable year was int, now long to accommodate using data's values)
 (note: variable cmonth was byte, now long to accommodate using data's values)
 (note: variable state was byte, now long to accommodate using data's values)
@@ -185,16 +184,16 @@ end of do-file
 . local newr2wstates "73 32 34 35 55 61"
 
 . 
-. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effectiv
-> e; signed Dec2012) Mar1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effective; signed Dec2012) Mar1,2015(Mar11,20
+> 15) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
 . local newr2wdate "500 625 638 662 678 684"
 
 . 
 . gen alwaysr2w = 0
 
 .         replace alwaysr2w = 1 if /// 
->                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72
-> , 82) //incl Idaho which changed in 1985 and Texas which had since 47 but bolstered in 93
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82) //incl Idaho which changed in 1
+> 985 and Texas which had since 47 but bolstered in 93
 (1,149,124 real changes made)
 
 . 
@@ -204,8 +203,7 @@ end of do-file
 . 
 . gen neverr2w = 1
 
-.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
-> , 87, 47, 83, 72, 82)
+.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
 (1,149,124 real changes made)
 
 .         replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
@@ -214,8 +212,7 @@ end of do-file
 . 
 . gen stater2w = 0
 
-.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
-> , 87, 47, 83, 72, 82)
+.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
 (1,149,124 real changes made)
 
 .         replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
@@ -250,8 +247,7 @@ end of do-file
 .         replace treat_st = 1 if state == 61 & date >= 684
 (3,150 real changes made)
 
-. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change t
-> o treat_jst
+. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change to treat_jst
 .         
 . gen treat_stblackrelwhite = treat_st*blackrelwhite
 (324,138 missing values generated)
@@ -265,9 +261,8 @@ end of do-file
 
 . 
 . ** mean with nocc3 with quarter fe
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  p
+> ublic cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
 (sum of wgt is 9,220,846,537)
 
 Linear regression                               Number of obs     =  1,069,676
@@ -454,9 +449,8 @@ treat_stblackrelwhite |  -.0222434   .0087409    -2.54   0.014       -.0398   -.
 ---------------------------------------------------------------------------------------
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  p
+> ublic cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
 (sum of wgt is 9,024,033,393)
 
 Linear regression                               Number of obs     =  1,080,732
@@ -643,9 +637,8 @@ treat_stblackrelwhite |  -.0391621    .008067    -4.85   0.000    -.0553651   -.
 ---------------------------------------------------------------------------------------
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & cov
-> ered == 0, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  p
+> ublic cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 (sum of wgt is 7,596,028,224)
 
 Linear regression                               Number of obs     =    878,856
@@ -832,9 +825,8 @@ treat_stblackrelwhite |  -.0037795   .0081848    -0.46   0.646    -.0202192    .
 ---------------------------------------------------------------------------------------
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & cov
-> ered == 0, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  p
+> ublic cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 (sum of wgt is 7,731,988,392)
 
 Linear regression                               Number of obs     =    924,307
@@ -1021,9 +1013,8 @@ treat_stblackrelwhite |  -.0277521   .0083082    -3.34   0.002    -.0444396   -.
 ---------------------------------------------------------------------------------------
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & cov
-> ered == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  p
+> ublic cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 (sum of wgt is 1,613,820,660)
 
 Linear regression                               Number of obs     =    189,324
@@ -1210,9 +1201,8 @@ treat_stblackrelwhite |  -.0138991   .0144625    -0.96   0.341     -.042948    .
 ---------------------------------------------------------------------------------------
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & cov
-> ered == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  p
+> ublic cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 (sum of wgt is 1,280,694,556)
 
 Linear regression                               Number of obs     =    154,777
@@ -1414,8 +1404,8 @@ treat_stblackrelwhite |   .0003094   .0149558     0.02   0.984    -.0297301    .
 
 . 
 . levelsof state
-11 12 13 14 15 16 21 22 23 31 32 33 34 35 41 42 43 44 45 46 47 51 52 53 54 55 56 57 58 59 61 62 63 64 71 72 73
->  74 81 82 83 84 85 86 87 88 91 92 93 94 95
+11 12 13 14 15 16 21 22 23 31 32 33 34 35 41 42 43 44 45 46 47 51 52 53 54 55 56 57 58 59 61 62 63 64 71 72 73 74 81 82 83 84 85 86 87 88 91 92 93 
+> 94 95
 
 . foreach i in `r(levels)'{
   2.         gen statetrend`i' = lyear
@@ -1500,9 +1490,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 . 
 . forvalues qt = 10(10)90{
   2.         di "men at `qt' quantile"
-  3.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ ex
-> per exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 [w
->  = finalwt1], q(`qt') //bootstrap reps(200)
+  3.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_c
+> l* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
   4.                 putexcel A`row' = "m_blackrelwhite`qt'"
   5.                 putexcel B`row' = _b[blackrelwhite]
   6.                 putexcel C`row' = _se[blackrelwhite]
@@ -1522,17 +1511,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 .                 putexcel A`row' = "m_times`qt'"
  17.                 putexcel B`row' = _b[treat_stblackrelwhite]
  18.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 19.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 20.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 19.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 20.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  21.         
 .                 local row = `row' + 1
  22.         
 .         di "women at `qt' quantile"
- 23.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ ex
-> per exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 [w
->  = finalwt1], q(`qt') //bootstrap reps(200)
+ 23.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_c
+> l* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  24.                 putexcel A`row' = "f_blackrelwhite`qt'"
  25.                 putexcel B`row' = _b[blackrelwhite]
  26.                 putexcel C`row' = _se[blackrelwhite]
@@ -1552,17 +1538,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 .                 putexcel A`row' = "f_times`qt'"
  37.                 putexcel B`row' = _b[treat_stblackrelwhite]
  38.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 39.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 40.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 39.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 40.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  41.         
 .                 local row = `row' + 1
  42.         
 .         di "men not covered by union at `qt' quantile"
- 43.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ ex
-> per exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & 
-> covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+ 43.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_c
+> l* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
  44.                 putexcel A`row' = "nm_blackrelwhite`qt'"
  45.                 putexcel B`row' = _b[blackrelwhite]
  46.                 putexcel C`row' = _se[blackrelwhite]
@@ -1582,17 +1565,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 .                 putexcel A`row' = "nm_times`qt'"
  57.                 putexcel B`row' = _b[treat_stblackrelwhite]
  58.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 59.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 60.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 59.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 60.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  61.         
 .                 local row = `row' + 1   
  62.         
 .         di "women not covered by union at `qt' quantile"
- 63.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ ex
-> per exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & 
-> covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+ 63.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_c
+> l* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
  64.                 putexcel A`row' = "nf_blackrelwhite`qt'"
  65.                 putexcel B`row' = _b[blackrelwhite]
  66.                 putexcel C`row' = _se[blackrelwhite]
@@ -1612,17 +1592,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 .                 putexcel A`row' = "nf_times`qt'"
  77.                 putexcel B`row' = _b[treat_stblackrelwhite]
  78.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 79.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
- 80.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 79.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+ 80.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
  81.         
 .                 local row = `row' + 1   
  82.         
 .         di "men covered by union at `qt' quantile"
- 83.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ ex
-> per exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & 
-> covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+ 83.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_c
+> l* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
  84.                 putexcel A`row' = "um_blackrelwhite`qt'"
  85.                 putexcel B`row' = _b[blackrelwhite]
  86.                 putexcel C`row' = _se[blackrelwhite]
@@ -1642,17 +1619,14 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 .                 putexcel A`row' = "um_times`qt'"
  97.                 putexcel B`row' = _b[treat_stblackrelwhite]
  98.                 putexcel C`row' = _se[treat_stblackrelwhite]
- 99.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
-100.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+ 99.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+100.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
 101.         
 .                 local row = `row' + 1           
 102. 
 .         di "women covered by union at `qt' quantile"
-103.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ ex
-> per exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & 
-> covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+103.         rifreg lwage3 blackrelwhite treat_st treat_stblackrelwhite dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_c
+> l* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
 104.                 putexcel A`row' = "uf_blackrelwhite`qt'"
 105.                 putexcel B`row' = _b[blackrelwhite]
 106.                 putexcel C`row' = _se[blackrelwhite]
@@ -1672,10 +1646,8 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 .                 putexcel A`row' = "uf_times`qt'"
 117.                 putexcel B`row' = _b[treat_stblackrelwhite]
 118.                 putexcel C`row' = _se[treat_stblackrelwhite]
-119.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
-120.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stbla
-> ckrelwhite])
+119.                 putexcel D`row' = (_b[treat_stblackrelwhite] - invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
+120.                 putexcel E`row' = (_b[treat_stblackrelwhite] + invttail(e(df_r), 0.025) * _se[treat_stblackrelwhite])
 121.         
 .                 local row = `row' + 1   
 122.         
@@ -1913,7 +1885,7 @@ treat_stblackrelwhite |  -.0796078   .0043502   -18.30   0.000     -.088134   -.
            dumstate16 |   .4547403   .1287658     3.53   0.000     .2023637    .7071169
            dumstate17 |   .8299619   .1255587     6.61   0.000     .5838711    1.076053
            dumstate18 |  -.4011678   .1359028    -2.95   0.003    -.6675326    -.134803
-           dumstate19 |  -.1823157   .1316341    -1.39   0.166    -.4403141    .0756828
+           dumstate19 |  -.1823156   .1316341    -1.39   0.166    -.4403141    .0756828
            dumstate20 |   .2470033   .1240804     1.99   0.047     .0038099    .4901966
            dumstate21 |   .6159096   .1250207     4.93   0.000     .3708734    .8609459
            dumstate22 |   .9799696   .1863938     5.26   0.000     .6146441    1.345295
@@ -2077,7 +2049,7 @@ note: dumnocc28 dropped because of collinearity
 note: dumquarter4 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  878856
--------------+------------------------------           F(154,878701) =  926.35
+-------------+------------------------------           F(154,878701) =  926.36
        Model |  170320.736   154   1105.9788           Prob > F      =  0.0000
     Residual |  420460.495 878701  .478502352          R-squared     =  0.2883
 -------------+------------------------------           Adj R-squared =  0.2882
@@ -2097,7 +2069,7 @@ treat_stblackrelwhite |  -.0866965    .007704   -11.25   0.000    -.1017962   -.
             dumstate6 |   .9074208    .144961     6.26   0.000      .623302     1.19154
             dumstate7 |   .5801743   .1329857     4.36   0.000     .3195269    .8408218
             dumstate8 |    .835412   .1362007     6.13   0.000     .5684631    1.102361
-            dumstate9 |   .6581954   .1348814     4.88   0.000     .3938323    .9225585
+            dumstate9 |   .6581954   .1348814     4.88   0.000     .3938323    .9225586
            dumstate10 |    .505627   .1340079     3.77   0.000      .242976    .7682779
            dumstate11 |   .5149269   .1553168     3.32   0.001     .2105112    .8193426
            dumstate12 |   .5618803   .1339695     4.19   0.000     .2993045     .824456
@@ -2655,7 +2627,7 @@ women covered by union at 10 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -2680,7 +2652,7 @@ treat_stblackrelwhite |  -.0923629   .0163873    -5.64   0.000    -.1244816   -.
             dumstate7 |   .6148722   .3886501     1.58   0.114     -.146874    1.376618
             dumstate8 |   .5547776   .3993952     1.39   0.165    -.2280287    1.337584
             dumstate9 |   .0008241   .4016025     0.00   0.998    -.7863085    .7879567
-           dumstate10 |    .349153   .3966997     0.88   0.379    -.4283701    1.126676
+           dumstate10 |    .349153   .3966996     0.88   0.379    -.4283701    1.126676
            dumstate11 |   .6269719   .4584688     1.37   0.171    -.2716176    1.525561
            dumstate12 |   .6636685   .4004513     1.66   0.097    -.1212077    1.448545
            dumstate13 |   .7453607   .4066027     1.83   0.067    -.0515721    1.542294
@@ -3819,7 +3791,7 @@ women covered by union at 20 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -4827,7 +4799,7 @@ treat_stblackrelwhite |  -.0369963   .0104038    -3.56   0.000    -.0573876   -.
            dumstate20 |  -.9571614   .3871595    -2.47   0.013    -1.715985   -.1983378
            dumstate21 |  -.5994518   .3865173    -1.55   0.121    -1.357017    .1581131
            dumstate22 |          0  (omitted)
-           dumstate23 |  -.6290529   .3873733    -1.62   0.104    -1.388296    .1301897
+           dumstate23 |  -.6290529   .3873733    -1.62   0.104    -1.388296    .1301896
            dumstate24 |  -.7961567   .3834525    -2.08   0.038    -1.547715   -.0445987
            dumstate25 |  -.3838993   .3877555    -0.99   0.322    -1.143891    .3760923
            dumstate26 |  -.1678432   .3920019    -0.43   0.669    -.9361577    .6004714
@@ -4983,7 +4955,7 @@ women covered by union at 30 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -5027,7 +4999,7 @@ treat_stblackrelwhite |  -.0517689    .010428    -4.96   0.000    -.0722076   -.
            dumstate26 |    .666105    .366873     1.82   0.069    -.0529586    1.385169
            dumstate27 |   1.033762   .3631702     2.85   0.004      .321956    1.745568
            dumstate28 |   .8848564   .4041157     2.19   0.029      .092798    1.676915
-           dumstate29 |   1.135548   .3568776     3.18   0.001     .4360753    1.835021
+           dumstate29 |   1.135548   .3568776     3.18   0.001     .4360754    1.835021
            dumstate30 |   1.044424   .3253869     3.21   0.001     .4066723    1.682176
            dumstate31 |    .730568   .3486773     2.10   0.036     .0471677    1.413968
            dumstate32 |   .5022983   .3579552     1.40   0.161    -.1992865    1.203883
@@ -5972,7 +5944,7 @@ treat_stblackrelwhite |  -.0286164   .0090584    -3.16   0.002    -.0463707   -.
             dumstate1 |  -.9692701    .338096    -2.87   0.004     -1.63193   -.3066099
             dumstate2 |  -.9872516   .3413156    -2.89   0.004    -1.656222    -.318281
             dumstate3 |  -1.428127    .334956    -4.26   0.000    -2.084633   -.7716212
-            dumstate4 |  -.8178021   .3175023    -2.58   0.010    -1.440099    -.195505
+            dumstate4 |  -.8178021   .3175024    -2.58   0.010    -1.440099    -.195505
             dumstate5 |  -1.021815   .3248183    -3.15   0.002    -1.658452   -.3851791
             dumstate6 |  -.7001597   .3266896    -2.14   0.032    -1.340464   -.0598557
             dumstate7 |  -.7395176   .3118098    -2.37   0.018    -1.350658   -.1283777
@@ -5998,13 +5970,13 @@ treat_stblackrelwhite |  -.0286164   .0090584    -3.16   0.002    -.0463707   -.
            dumstate27 |  -.5716095   .3414307    -1.67   0.094    -1.240806    .0975867
            dumstate28 |  -.3501452   .3947075    -0.89   0.375    -1.123763    .4234723
            dumstate29 |  -.6783393   .3382179    -2.01   0.045    -1.341238   -.0154402
-           dumstate30 |  -.5511684   .3233182    -1.70   0.088    -1.184865    .0825277
+           dumstate30 |  -.5511684   .3233182    -1.70   0.088    -1.184865    .0825278
            dumstate31 |  -.3341513   .3273877    -1.02   0.307    -.9758236    .3075209
            dumstate32 |  -1.013991   .3324057    -3.05   0.002    -1.665499   -.3624838
            dumstate33 |  -.8667069   .3353703    -2.58   0.010    -1.524025   -.2093889
            dumstate34 |  -1.068629    .340249    -3.14   0.002    -1.735509   -.4017492
            dumstate35 |  -.8786801   .3407249    -2.58   0.010    -1.546493   -.2108674
-           dumstate36 |  -.8253958   .3565318    -2.32   0.021     -1.52419   -.1266018
+           dumstate36 |  -.8253958   .3565318    -2.32   0.021     -1.52419   -.1266017
            dumstate37 |  -1.142808   .3456848    -3.31   0.001    -1.820342   -.4652735
            dumstate38 |  -.7894659   .3217865    -2.45   0.014     -1.42016   -.1587719
            dumstate39 |   -.701006   .3277779    -2.14   0.032    -1.343443   -.0585691
@@ -6147,7 +6119,7 @@ women covered by union at 40 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -6560,7 +6532,7 @@ treat_stblackrelwhite |  -.0569258   .0039707   -14.34   0.000    -.0647082   -.
             dumstate7 |   .9605145   .0953579    10.07   0.000     .7736163    1.147413
             dumstate8 |   1.090439    .100496    10.85   0.000     .8934698    1.287407
             dumstate9 |   .8311514   .0968603     8.58   0.000     .6413085    1.020994
-           dumstate10 |   .8085036   .0957847     8.44   0.000     .6207687    .9962385
+           dumstate10 |   .8085036   .0957848     8.44   0.000     .6207687    .9962385
            dumstate11 |   .3938357   .1097398     3.59   0.000     .1787494    .6089221
            dumstate12 |   .8540621   .0968704     8.82   0.000     .6641994    1.043925
            dumstate13 |   .8106037   .0999763     8.11   0.000     .6146536    1.006554
@@ -7311,7 +7283,7 @@ women covered by union at 50 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -8475,7 +8447,7 @@ women covered by union at 60 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -8673,7 +8645,7 @@ note: dumnocc28 dropped because of collinearity
 note: dumquarter4 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs = 1069676
--------------+------------------------------           F(154,1069521) = 4106.25
+-------------+------------------------------           F(154,1069521) = 4106.26
        Model |  223745.888   154  1452.89538           Prob > F      =  0.0000
     Residual |  437589.513 1069521  .409145321         R-squared     =  0.3383
 -------------+------------------------------           Adj R-squared =  0.3382
@@ -9073,7 +9045,7 @@ note: dumquarter4 dropped because of collinearity
         blackrelwhite |  -.1741978   .0042976   -40.53   0.000     -.182621   -.1657746
              treat_st |   .0000702   .0086983     0.01   0.994    -.0169782    .0171185
 treat_stblackrelwhite |   .0379408   .0054506     6.96   0.000     .0272578    .0486237
-            dumstate1 |   .7321603    .145153     5.04   0.000     .4476653    1.016655
+            dumstate1 |   .7321603    .145153     5.04   0.000     .4476652    1.016655
             dumstate2 |    .788271   .1444269     5.46   0.000      .505199    1.071343
             dumstate3 |   .8716443    .139308     6.26   0.000     .5986053    1.144683
             dumstate4 |   .5874556   .1324424     4.44   0.000     .3278729    .8470384
@@ -9639,7 +9611,7 @@ women covered by union at 70 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -10031,7 +10003,7 @@ note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs = 1080732
--------------+------------------------------           F(154,1080577) = 2291.66
+-------------+------------------------------           F(154,1080577) = 2291.65
        Model |  251788.231   154  1634.98852           Prob > F      =  0.0000
     Residual |  571752.497 1080577  .529117774         R-squared     =  0.3057
 -------------+------------------------------           Adj R-squared =  0.3056
@@ -10091,7 +10063,7 @@ treat_stblackrelwhite |   .0105101    .004566     2.30   0.021      .001561    .
            dumstate46 |    .192503   .1240372     1.55   0.121    -.0506058    .4356118
            dumstate47 |  -.1205358   .1172681    -1.03   0.304    -.3503773    .1093058
            dumstate48 |   .0568902   .1177224     0.48   0.629    -.1738417    .2876221
-           dumstate49 |   .0449796   .1034565     0.43   0.664    -.1577917     .247751
+           dumstate49 |   .0449796   .1034565     0.43   0.664    -.1577917    .2477509
            dumstate50 |    .712685   .1296791     5.50   0.000     .4585183    .9668516
            dumstate51 |   .0536658   .1748198     0.31   0.759    -.2889751    .3963068
          statetrend11 |   .0009675   .0006858     1.41   0.158    -.0003765    .0023116
@@ -10393,7 +10365,7 @@ treat_stblackrelwhite |   .0610169   .0057679    10.58   0.000      .049712    .
           dumquarter3 |          0  (omitted)
           dumquarter4 |   .0070294   .0027526     2.55   0.011     .0016343    .0124245
                 unemp |  -.0038654   .0006062    -6.38   0.000    -.0050534   -.0026773
-                _cons |  -.0395208   .1236427    -0.32   0.749    -.2818562    .2028147
+                _cons |  -.0395208   .1236427    -0.32   0.749    -.2818563    .2028147
 ---------------------------------------------------------------------------------------
 file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
 file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
@@ -10803,7 +10775,7 @@ women covered by union at 80 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -11219,7 +11191,7 @@ treat_stblackrelwhite |   .0297537   .0056387     5.28   0.000     .0187019    .
            dumstate10 |   .0172923     .10897     0.16   0.874    -.1962853    .2308699
            dumstate11 |   .1982468   .1251289     1.58   0.113    -.0470016    .4434951
            dumstate12 |   -.261827   .1156925    -2.26   0.024    -.4885803   -.0350736
-           dumstate13 |   .1749753   .1171003     1.49   0.135    -.0545373    .4044878
+           dumstate13 |   .1749753   .1171003     1.49   0.135    -.0545373    .4044879
            dumstate14 |  -.1400341    .119561    -1.17   0.242    -.3743696    .0943014
            dumstate15 |  -.3800979    .126388    -3.01   0.003    -.6278142   -.1323816
            dumstate16 |   .2716833   .1200322     2.26   0.024     .0364243    .5069424
@@ -11967,7 +11939,7 @@ women covered by union at 90 quantile
 note: dumstate22 dropped because of collinearity
 note: dumnind2 dropped because of collinearity
 note: dumee_cl13 dropped because of collinearity
-note: dumnocc28 dropped because of collinearity
+note: dumnocc211 dropped because of collinearity
 note: dumquarter3 dropped because of collinearity
 
       Source |       SS       df       MS              Number of obs =  154777
@@ -11986,7 +11958,7 @@ treat_stblackrelwhite |   .0756639   .0119732     6.32   0.000     .0521967    .
             dumstate1 |   .3809977   .3108592     1.23   0.220      -.22828    .9902753
             dumstate2 |    .069743   .3526907     0.20   0.843    -.6215234    .7610095
             dumstate3 |  -.0698372   .2994395    -0.23   0.816    -.6567323     .517058
-            dumstate4 |  -.9663515    .310885    -3.11   0.002     -1.57568   -.3570232
+            dumstate4 |  -.9663515   .3108851    -3.11   0.002     -1.57568   -.3570232
             dumstate5 |   -.931961   .3288176    -2.83   0.005    -1.576437   -.2874854
             dumstate6 |   -.122231   .3528173    -0.35   0.729    -.8137456    .5692836
             dumstate7 |  -.6542341   .2866227    -2.28   0.022    -1.216009   -.0924595
@@ -12162,5 +12134,5 @@ file /Users/amedeusdsouza/econ499/linreg/rifdid_coefs-sltt.xlsx saved
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifdid-sltt.log
   log type:  text
- closed on:  20 Mar 2021, 12:06:32
---------------------------------------------------------------------------------------------------------------
+ closed on:  22 Mar 2021, 14:10:01
+---------------------------------------------------------------------------------------------------------------------------------------------------
