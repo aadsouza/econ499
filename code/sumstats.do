@@ -36,8 +36,26 @@ cd $tabs
 label define hrs 1 "White Men" 2 "Black Men" 3 "Hispanic Men" 4 "White Women" 5 "Black Women" 6 "Hispanic Women"
 label values hispracesex hrs
 
-qui estpost tabstat covered umem lwage3 educ exper public [aweight = eweight], by(hispracesex) statistics(mean sd count)
-esttab using bhw_sumstats.tex, cells("covered(fmt(3)) umem lwage3 educ exper public") nomtitles long title(Summary Statistics by Hispanicity, Race, and Sex) varlabels(`e(labels)') replace
+** qui estpost tabstat covered umem lwage3 educ exper public [aweight = eweight], by(hispracesex) statistics(mean sd count)
+** esttab using bhw_sumstats.tex, cells("covered(fmt(3)) umem lwage3 educ exper public") nomtitles long title(Summary Statistics by Hispanicity, Race, and Sex) varlabels(`e(labels)') replace
+
+eststo clear
+
+label variable covered "Union Coverage"
+label variable umem "Union Membership"
+label variable lwage3 "Real Log Wage (1979\$)"
+label variable educ "Education"
+label variable exper "Experience"
+label variable public "Public Sector"
+
+qui forval i = 1(1)6{
+estpost sum covered umem lwage3 educ exper public [aw = eweight] if hispracesex == `i'
+eststo hrs`i'
+}
+
+esttab using bhw_sumstats.tex, cell(mean(fmt(3)) sd(par)) mti collabels(none) nonum mtitles("White Men" "Black Men" "Hispanic Men" "White Women" "Black Women" "Hispanic Women") label replace addnote("Sample includes years 1983-2019 excluding 1994 and 1995.")
+
+
 
 ** mean
 ** qui estpost tabstat covered umem lwage3 educ exper public [aweight = eweight] if race == 1 & sex == 1, by(year)
