@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifreg2bw.log
   log type:  text
- opened on:  20 Mar 2021, 15:56:57
+ opened on:  21 Mar 2021, 23:04:19
 
 . 
 . use cleaned_nber_morg, clear
@@ -116,8 +116,8 @@ end of do-file
 . 
 . ** keep needed variables
 . ** FIXME add partt to list once defined in clean_nber_morg
-. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public ma
-> rr hisprace hispracesex eweight alloc1 covered
+. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc
+> 1 covered
 
 . 
 . drop if hispracesex ==.
@@ -168,34 +168,28 @@ end of do-file
 . 
 . forval blk = 0(1)1{
   2.         di "men in period 1 who are black = `blk'"
-  3.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt 
-> public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) & blackrelwhite == `blk' [w = final
-> wt1], vce(cluster state_ind)
+  3.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if fema
+> le == 0 & inrange(year, 1983, 1988) & blackrelwhite == `blk' [w = finalwt1], vce(cluster state_ind)
   4. 
 .         di "women in period 1 who are black = `blk'"
-  5.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt 
-> public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) & blackrelwhite == `blk' [w = final
-> wt1], vce(cluster state_ind)
+  5.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if fema
+> le == 1 & inrange(year, 1983, 1988) & blackrelwhite == `blk' [w = finalwt1], vce(cluster state_ind)
   6.         
 .         di "men in period 2 who are black = `blk'"
-  7.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt 
-> public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) & blackrelwhite == `blk' [w = final
-> wt1], vce(cluster state_ind)
+  7.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if fema
+> le == 0 & inrange(year, 1988, 2000) & blackrelwhite == `blk' [w = finalwt1], vce(cluster state_ind)
   8. 
 .         di "women in period 2 who are black = `blk'"
-  9.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt 
-> public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) & blackrelwhite == `blk' [w = final
-> wt1], vce(cluster state_ind)
+  9.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if fema
+> le == 1 & inrange(year, 1988, 2000) & blackrelwhite == `blk' [w = finalwt1], vce(cluster state_ind)
  10.         
 .         di "men in period 3 who are black = `blk'"
- 11.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt 
-> public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) & blackrelwhite == `blk' [w = final
-> wt1], vce(cluster state_ind)
+ 11.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if fema
+> le == 0 & inrange(year, 2000, 2019) & blackrelwhite == `blk' [w = finalwt1], vce(cluster state_ind)
  12. 
 .         di "women in period 3 who are black = `blk'"
- 13.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt 
-> public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) & blackrelwhite == `blk' [w = final
-> wt1], vce(cluster state_ind)
+ 13.         reg lwage3 covered i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter if fema
+> le == 1 & inrange(year, 2000, 2019) & blackrelwhite == `blk' [w = finalwt1], vce(cluster state_ind)
  14. 
 . }
 men in period 1 who are black = 0
@@ -1945,9 +1939,8 @@ Linear regression                               Number of obs     =     78,922
 .         
 .         forval qt = 10(10)90{
  18.                 di "men at `qt' quantile in period 1 who are black = `blk'"
- 19.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex du
-> mee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1],
->  q(`qt') //bootstrap reps(200)
+ 19.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnoc
+> c2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
  20.                 putexcel A`row' = "m_covered`qt'"
  21.                 putexcel B`row' = _b[covered]
  22.                 putexcel C`row' = _se[covered]
@@ -1957,9 +1950,8 @@ Linear regression                               Number of obs     =     78,922
 .                 local row = `row' + 1
  26.                 
 .                 di "women at `qt' quantile in period 1 who are black = `blk'"
- 27.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex du
-> mee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1],
->  q(`qt') //bootstrap reps(200)
+ 27.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnoc
+> c2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
  28.                 putexcel A`row' = "f_covered`qt'"
  29.                 putexcel B`row' = _b[covered]
  30.                 putexcel C`row' = _se[covered]
@@ -1996,9 +1988,8 @@ Linear regression                               Number of obs     =     78,922
 .         
 .         forval qt = 10(10)90{
  52.                 di "men at `qt' quantile in period 2 who are black = `blk'"
- 53.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex du
-> mee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1],
->  q(`qt') //bootstrap reps(200)
+ 53.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnoc
+> c2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
  54.                 putexcel A`row' = "m_covered`qt'"
  55.                 putexcel B`row' = _b[covered]
  56.                 putexcel C`row' = _se[covered]
@@ -2008,9 +1999,8 @@ Linear regression                               Number of obs     =     78,922
 .                 local row = `row' + 1
  60.                 
 .                 di "women at `qt' quantile in period 2 who are black = `blk'"
- 61.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex du
-> mee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1],
->  q(`qt') //bootstrap reps(200)
+ 61.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnoc
+> c2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
  62.                 putexcel A`row' = "f_covered`qt'"
  63.                 putexcel B`row' = _b[covered]
  64.                 putexcel C`row' = _se[covered]
@@ -2048,9 +2038,8 @@ Linear regression                               Number of obs     =     78,922
 .         
 .         forval qt = 10(10)90{
  86.                 di "men at `qt' quantile in period 3 who are black = `blk'"
- 87.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex du
-> mee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1],
->  q(`qt') //bootstrap reps(200)
+ 87.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnoc
+> c2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
  88.                 putexcel A`row' = "m_covered`qt'"
  89.                 putexcel B`row' = _b[covered]
  90.                 putexcel C`row' = _se[covered]
@@ -2060,9 +2049,8 @@ Linear regression                               Number of obs     =     78,922
 .                 local row = `row' + 1
  94.                 
 .                 di "women at `qt' quantile in period 3 who are black = `blk'"
- 95.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex du
-> mee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1],
->  q(`qt') //bootstrap reps(200)
+ 95.                 rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnoc
+> c2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
  96.                 putexcel A`row' = "f_covered`qt'"
  97.                 putexcel B`row' = _b[covered]
  98.                 putexcel C`row' = _se[covered]
@@ -17619,5 +17607,5 @@ file /Users/amedeusdsouza/econ499/linreg/rifreg2bw_coefs_3_blk1.xlsx saved
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/rifreg2bw.log
   log type:  text
- closed on:  20 Mar 2021, 16:10:05
---------------------------------------------------------------------------------------------------------------
+ closed on:  21 Mar 2021, 23:10:38
+---------------------------------------------------------------------------------------------------------------------------------------------------
