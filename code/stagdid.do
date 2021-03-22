@@ -123,40 +123,178 @@ gen treat_stblackrelwhite = treat_st*blackrelwhite
 
 gen treat_sthisprelwhite = treat_st*hisprelwhite
 
+gen lyear = year - 1900
+
 eststo clear
 
 ** BLACK-WHITE
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster state)
+
+estadd local unemp_level "No"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo covstagdid_mal_all
+
 reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state)
 
-eststo covstagdid_mal_all 
+estadd local unemp_level "Yes"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo covstagdid_mal_all_unemp 
+
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state)
+
+estadd local unemp_level "Yes"
+estadd local yr_dum "No"
+estadd local sltt "Yes"
+eststo covstagdid_mal_all_sltt 
 	
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+
+estadd local unemp_level "No"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo covstagdid_fem_all
+
 reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-eststo covstagdid_fem_all 
+estadd local unemp_level "Yes"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo covstagdid_fem_all_unemp 
+
+reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+
+estadd local unemp_level "Yes"
+estadd local yr_dum "No"
+estadd local sltt "Yes"
+eststo covstagdid_fem_all_sltt 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
+
+** estadd local unemp_level "No"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo wagstagdid_mal_all 
 
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
 
-eststo wagstagdid_mal_all 
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo wagstagdid_mal_all_unemp
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
+
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "No"
+** estadd local sltt "Yes"
+eststo wagstagdid_mal_all_sltt  
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+
+** estadd local unemp_level "No"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo wagstagdid_fem_all 
 	
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
 
-eststo wagstagdid_fem_all 
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo wagstagdid_fem_all_unemp 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "No"
+** estadd local sltt "Yes"
+eststo wagstagdid_fem_all_sltt
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+
+** estadd local unemp_level "No"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo nwagstagdid_mal_all
 
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 
-eststo nwagstagdid_mal_all 
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo nwagstagdid_mal_all_unemp 
+	
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "No"
+** estadd local sltt "Yes"
+eststo nwagstagdid_mal_all_sltt 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+
+** estadd local unemp_level "No"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo nwagstagdid_fem_all 
 	
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-eststo nwagstagdid_fem_all 
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "Yes"
+** estadd local sltt "No"
+eststo nwagstagdid_fem_all_unemp 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+
+** estadd local unemp_level "Yes"
+** estadd local yr_dum "No"
+** estadd local sltt "Yes"
+eststo nwagstagdid_fem_all_sltt 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+
+estadd local unemp_level "No"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo uwagstagdid_mal_all 
 
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
 
-eststo uwagstagdid_mal_all 
+estadd local unemp_level "Yes"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo uwagstagdid_mal_all_unemp 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+
+estadd local unemp_level "Yes"
+estadd local yr_dum "No"
+estadd local sltt "Yes"
+eststo uwagstagdid_mal_all_sltt 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+
+estadd local unemp_level "No"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo uwagstagdid_fem_all
 	
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
 
-eststo uwagstagdid_fem_all 
+estadd local unemp_level "Yes"
+estadd local yr_dum "Yes"
+estadd local sltt "No"
+eststo uwagstagdid_fem_all_unemp 
+
+reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+
+estadd local unemp_level "Yes"
+estadd local yr_dum "No"
+estadd local sltt "Yes"
+eststo uwagstagdid_fem_all_sltt
 
 ** RUST BELT ONLY BLACK-WHITE + WV, KY - IA
 ** keep if inrange(state, 31, 35) | inlist(state, 23, 41, 43) | inlist(state, 55, 61)
@@ -196,11 +334,22 @@ eststo uwagstagdid_fem_all
 
 ** eststo uwagstagdid_fem_cf 
 
+label variable blackrelwhite "$ Black $"
+label variable treat_st "$ Treat_{st} $"
+label variable treat_stblackrelwhite "$ Treat_{st} \times Black $"
 
 ** FIXME ignore rust best stuff, dropping always rtw
-esttab covstagdid_mal_all covstagdid_fem_all using $tabs/covstagdid.tex, se title(Difference in Differences of Union Coverage on Right to Work Laws Treatment in State and Time) nonumbers mgroups("All States", pattern(1 0 1 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("men" "women" "men" "women") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
+esttab covstagdid_mal_all covstagdid_mal_all_unemp covstagdid_mal_all_sltt covstagdid_fem_all covstagdid_fem_all_unemp covstagdid_fem_all_sltt using $tabs/covstagdid.tex, se title(Difference in Differences of Union Coverage on Right to Work Laws Treatment in State and Time) mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace label starlevels(* 0.1 ** 0.05 *** 0.01) scalars("unemp_level State Monthly Unemployment Rate" "yr_dum Year Fixed Effect" "sltt State Linear Time Trends")
 
-esttab wagstagdid_mal_all wagstagdid_fem_all nwagstagdid_mal_all nwagstagdid_fem_all uwagstagdid_mal_all uwagstagdid_fem_all using $tabs/wagstagdid.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union" "women not covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
+esttab wagstagdid_mal_all wagstagdid_mal_all_unemp wagstagdid_mal_all_sltt wagstagdid_fem_all wagstagdid_fem_all_unemp wagstagdid_fem_all_sltt using $tabs/wagstagdid1.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time) mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace label starlevels(* 0.1 ** 0.05 *** 0.01) 
+
+esttab nwagstagdid_mal_all nwagstagdid_mal_all_unemp nwagstagdid_mal_all_sltt nwagstagdid_fem_all nwagstagdid_fem_all_unemp nwagstagdid_fem_all_sltt using $tabs/wagstagdid2.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time) mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+
+esttab uwagstagdid_mal_all uwagstagdid_mal_all_unemp uwagstagdid_mal_all_sltt uwagstagdid_fem_all uwagstagdid_fem_all_unemp uwagstagdid_fem_all_sltt using $tabs/wagstagdid3.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time) mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace label starlevels(* 0.1 ** 0.05 *** 0.01) scalars("unemp_level State Monthly Unemployment Rate" "yr_dum Year Fixed Effect" "sltt State Linear Time Trends")
+
+panelcombine, use($tabs/wagstagdid1.tex $tabs/wagstagdid2.tex $tabs/wagstagdid3.tex) paneltitles("All (Black and White) People" "People Not Covered by Union - Spillover Effect" "People Covered by Union - Direct Effect") columncount(3) save($tabs/wagstagdid.tex)
+
+*** esttab wagstagdid_mal_all wagstagdid_fem_all nwagstagdid_mal_all nwagstagdid_fem_all uwagstagdid_mal_all uwagstagdid_fem_all using $tabs/wagstagdid.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union" "women not covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
 
 ** esttab wagstagdid_mal_cf wagstagdid_fem_cf nwagstagdid_mal_cf nwagstagdid_fem_cf uwagstagdid_mal_cf uwagstagdid_fem_cf using $tabs/wagstagdid_cf.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union" "women not covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_st treat_stblackrelwhite) replace
 
