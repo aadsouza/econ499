@@ -125,9 +125,8 @@ eststo clear
 
 	eststo naive_fem_3
 	
-	esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+	esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01) addnote("Lorem ipsum dolor sit amet")
 
 
-panelcombine, use($tabs/naive1.tex $tabs/naive2.tex $tabs/naive3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/naive.tex)
-
+panelcombine, use($tabs/naive1.tex $tabs/naive2.tex $tabs/naive3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/naive.tex) 
 log close
