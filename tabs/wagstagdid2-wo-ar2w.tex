@@ -1,0 +1,23 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time - W/O Always RTW States}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{3}{c}{Men}                        &\multicolumn{3}{c}{Women}                      \\\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+                    &\multicolumn{1}{c}{(1)}   &\multicolumn{1}{c}{(2)}   &\multicolumn{1}{c}{(3)}   &\multicolumn{1}{c}{(4)}   &\multicolumn{1}{c}{(5)}   &\multicolumn{1}{c}{(6)}   \\
+\hline
+$ Black $           &      -0.156***&      -0.157***&      -0.157***&     -0.0847***&     -0.0847***&     -0.0852***\\
+                    &   (0.00504)   &   (0.00504)   &   (0.00498)   &   (0.00704)   &   (0.00704)   &   (0.00683)   \\
+[1em]
+$ Treat\_{st} $      &     -0.0261*  &     -0.0272*  &     -0.0209*  &     -0.0321***&     -0.0321***&     -0.0574***\\
+                    &    (0.0142)   &    (0.0148)   &    (0.0116)   &   (0.00719)   &   (0.00745)   &    (0.0125)   \\
+[1em]
+$ Treat\_{st} \times Black $&     0.00250   &     0.00229   &     0.00490   &     -0.0170*  &     -0.0170*  &     -0.0169** \\
+                    &   (0.00685)   &   (0.00688)   &   (0.00721)   &   (0.00875)   &   (0.00879)   &   (0.00814)   \\
+\hline
+Observations        &      528582   &      528582   &      528582   &      561535   &      561535   &      561535   \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize * p<0.1, ** p<0.05, *** p<0.01}\\
+\end{tabular}
+\end{table}

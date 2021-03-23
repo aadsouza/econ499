@@ -1,0 +1,26 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time - W/O Always RTW States}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{3}{c}{Men}                        &\multicolumn{3}{c}{Women}                      \\\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+                    &\multicolumn{1}{c}{(1)}   &\multicolumn{1}{c}{(2)}   &\multicolumn{1}{c}{(3)}   &\multicolumn{1}{c}{(4)}   &\multicolumn{1}{c}{(5)}   &\multicolumn{1}{c}{(6)}   \\
+\hline
+$ Black $           &      -0.137***&      -0.137***&      -0.138***&     -0.0496***&     -0.0496***&     -0.0507***\\
+                    &    (0.0124)   &    (0.0124)   &    (0.0123)   &   (0.00999)   &   (0.00998)   &   (0.00967)   \\
+[1em]
+$ Treat\_{st} $      &     -0.0540*  &     -0.0546*  &     -0.0415** &     -0.0692***&     -0.0696***&     -0.0569** \\
+                    &    (0.0309)   &    (0.0317)   &    (0.0202)   &    (0.0172)   &    (0.0177)   &    (0.0224)   \\
+[1em]
+$ Treat\_{st} \times Black $&     -0.0256   &     -0.0256   &     -0.0176   &      0.0401   &      0.0400   &      0.0465   \\
+                    &    (0.0185)   &    (0.0185)   &    (0.0169)   &    (0.0278)   &    (0.0278)   &    (0.0289)   \\
+\hline
+Observations        &      147301   &      147301   &      147301   &      121161   &      121161   &      121161   \\
+State Monthly Unemployment Rate&          No   &         Yes   &         Yes   &          No   &         Yes   &         Yes   \\
+Year Fixed Effect   &         Yes   &         Yes   &          No   &         Yes   &         Yes   &          No   \\
+State Linear Time Trends&          No   &          No   &         Yes   &          No   &          No   &         Yes   \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize * p<0.1, ** p<0.05, *** p<0.01}\\
+\end{tabular}
+\end{table}
