@@ -119,85 +119,154 @@ gen treat_st = 0 if stater2w == 0 | stater2w == 2
 	replace treat_st = 1 if state == 61 & date >= 684
 **	replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change to treat_jst
 
-gen treat_stm1 = 0 if stater2w == 0 | stater2w == 2
-	replace treat_stm1 = 1 if stater2w == 1
-	replace treat_stm1 = 1 if state == 73 & date >= (500 - 12)
-	replace treat_stm1 = 1 if state == 32 & date >= (625 - 12)
-	replace treat_stm1 = 1 if state == 34 & date >= (638 - 12)
-	replace treat_stm1 = 1 if state == 35 & date >= (662 - 12)
-	replace treat_stm1 = 1 if state == 55 & date >= (678 - 12)
-	replace treat_stm1 = 1 if state == 61 & date >= (684 - 12)
-	
-gen treat_stm2 = 0 if stater2w == 0 | stater2w == 2
-	replace treat_stm2 = 1 if stater2w == 1
-	replace treat_stm2 = 1 if state == 73 & date >= (500 - 24)
-	replace treat_stm2 = 1 if state == 32 & date >= (625 - 24)
-	replace treat_stm2 = 1 if state == 34 & date >= (638 - 24)
-	replace treat_stm2 = 1 if state == 35 & date >= (662 - 24)
-	replace treat_stm2 = 1 if state == 55 & date >= (678 - 24)
-	replace treat_stm2 = 1 if state == 61 & date >= (684 - 24)
-	
-gen treat_stm3 = 0 if stater2w == 0 | stater2w == 2
-	replace treat_stm3 = 1 if stater2w == 1
-	replace treat_stm3 = 1 if state == 73 & date >= (500 - 36)
-	replace treat_stm3 = 1 if state == 32 & date >= (625 - 36)
-	replace treat_stm3 = 1 if state == 34 & date >= (638 - 36)
-	replace treat_stm3 = 1 if state == 35 & date >= (662 - 36)
-	replace treat_stm3 = 1 if state == 55 & date >= (678 - 36)
-	replace treat_stm3 = 1 if state == 61 & date >= (684 - 36)
-	
-gen treat_stm4 = 0 if stater2w == 0 | stater2w == 2
-	replace treat_stm4 = 1 if stater2w == 1
-	replace treat_stm4 = 1 if state == 73 & date >= (500 - 48)
-	replace treat_stm4 = 1 if state == 32 & date >= (625 - 48)
-	replace treat_stm4 = 1 if state == 34 & date >= (638 - 48)
-	replace treat_stm4 = 1 if state == 35 & date >= (662 - 48)
-	replace treat_stm4 = 1 if state == 55 & date >= (678 - 48)
-	replace treat_stm4 = 1 if state == 61 & date >= (684 - 48)
-	
-gen treat_stp1 = 0 if stater2w == 0 | stater2w == 2
-	replace treat_stp1 = 1 if stater2w == 1
-	replace treat_stp1 = 1 if state == 73 & date >= (500 + 12)
-	replace treat_stp1 = 1 if state == 32 & date >= (625 + 12)
-	replace treat_stp1 = 1 if state == 34 & date >= (638 + 12)
-	replace treat_stp1 = 1 if state == 35 & date >= (662 + 12)
-	replace treat_stp1 = 1 if state == 55 & date >= (678 + 12)
-	replace treat_stp1 = 1 if state == 61 & date >= (684 + 12)
-	
-gen treat_stp2 = 0 if stater2w == 0 | stater2w == 2
-	replace treat_stp2 = 1 if stater2w == 1
-	replace treat_stp2 = 1 if state == 73 & date >= (500 + 24)
-	replace treat_stp2 = 1 if state == 32 & date >= (625 + 24)
-	replace treat_stp2 = 1 if state == 34 & date >= (638 + 24)
-	replace treat_stp2 = 1 if state == 35 & date >= (662 + 24)
-	replace treat_stp2 = 1 if state == 55 & date >= (678 + 24)
-	replace treat_stp2 = 1 if state == 61 & date >= (684 + 24)
-	
-gen treat_stblackrelwhite = treat_st*blackrelwhite
-gen treat_stm1blackrelwhite = treat_stm1*blackrelwhite
-gen treat_stm2blackrelwhite = treat_stm2*blackrelwhite
-gen treat_stp1blackrelwhite = treat_stp1*blackrelwhite
-gen treat_stp2blackrelwhite = treat_stp2*blackrelwhite
-
-gen treat_sthisprelwhite = treat_st*hisprelwhite
-
-** no pretrends for before 2000
+** no pretrends for before treatments before 2000
 drop if alwaysr2w == 1
 
-reg covered blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
+** gen event =.
+** 	replace event = 1989 if alwaysr2w == 1
+**	replace event = 2001 if state == 73
+**	replace event = 2012 if state == 32
+**	replace event = 2013 if state == 34
+**	replace event = 2015 if state == 35
+**	replace event = 2016 if state == 55
+**	replace event = 2017 if state == 61
 	
-reg covered blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+** gen postevent =.
+**	replace postevent = 1 if (year >= event & inlist(state, 73, 32, 34, 35, 55, 61)) | alwaysr2w == 1
+**	replace postevent = 0 if year < event & inlist(state, 73, 32, 34, 35, 55, 61)
+**	replace postevent = 0 if neverr2w == 1
 
-reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
-	
-reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+** gen timetoevent = year - event
 
-reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+gen lag5 = 0
+	replace lag5 = 1 if state == 73 & date <= (500 - (4*12))
+	replace lag5 = 1 if state == 32 & date <= (625 - (4*12))
+	replace lag5 = 1 if state == 34 & date <= (638 - (4*12))
+	replace lag5 = 1 if state == 35 & date <= (662 - (4*12))
+	replace lag5 = 1 if state == 55 & date <= (678 - (4*12))
+	replace lag5 = 1 if state == 61 & date <= (684 - (4*12))
 	
-reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+gen lag4 = 0
+	replace lag4 = 1 if state == 73 & (500 - (4*12)) < date & date <= (500 - (3*12))
+	replace lag4 = 1 if state == 32 & (625 - (4*12)) < date & date <= (625 - (3*12))
+	replace lag4 = 1 if state == 34 & (638 - (4*12)) < date & date <= (638 - (3*12))
+	replace lag4 = 1 if state == 35 & (662 - (4*12)) < date & date <= (662 - (3*12))
+	replace lag4 = 1 if state == 55 & (678 - (4*12)) < date & date <= (678 - (3*12))
+	replace lag4 = 1 if state == 61 & (684 - (4*12)) < date & date <= (684 - (3*12))
+	
+gen lag3 = 0
+	replace lag3 = 1 if state == 73 & (500 - (3*12)) < date & date <= (500 - (2*12))
+	replace lag3 = 1 if state == 32 & (625 - (3*12)) < date & date <= (625 - (2*12))
+	replace lag3 = 1 if state == 34 & (638 - (3*12)) < date & date <= (638 - (2*12))
+	replace lag3 = 1 if state == 35 & (662 - (3*12)) < date & date <= (662 - (2*12))
+	replace lag3 = 1 if state == 55 & (678 - (3*12)) < date & date <= (678 - (2*12))
+	replace lag3 = 1 if state == 61 & (684 - (3*12)) < date & date <= (684 - (2*12))
+	
+gen lag2 = 0
+	replace lag2 = 1 if state == 73 & (500 - (2*12)) < date & date <= (500 - (1*12))
+	replace lag2 = 1 if state == 32 & (625 - (2*12)) < date & date <= (625 - (1*12))
+	replace lag2 = 1 if state == 34 & (638 - (2*12)) < date & date <= (638 - (1*12))
+	replace lag2 = 1 if state == 35 & (662 - (2*12)) < date & date <= (662 - (1*12))
+	replace lag2 = 1 if state == 55 & (678 - (2*12)) < date & date <= (678 - (1*12))
+	replace lag2 = 1 if state == 61 & (684 - (2*12)) < date & date <= (684 - (1*12))
 
-reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(cluster state)
+gen lead0 = 0
+	replace lead0 = 1 if state == 73 & (500 + (0*12)) < date & date <= (500 + (1*12))
+	replace lead0 = 1 if state == 32 & (625 + (0*12)) < date & date <= (625 + (1*12))
+	replace lead0 = 1 if state == 34 & (638 + (0*12)) < date & date <= (638 + (1*12))
+	replace lead0 = 1 if state == 35 & (662 + (0*12)) < date & date <= (662 + (1*12))
+	replace lead0 = 1 if state == 55 & (678 + (0*12)) < date & date <= (678 + (1*12))
+	replace lead0 = 1 if state == 61 & (684 + (0*12)) < date & date <= (684 + (1*12))
 	
-reg lwage3 blackrelwhite treat_stm4 treat_stm3 treat_stm2 treat_stm1 treat_st treat_stp1 treat_stp2 treat_stm2blackrelwhite treat_stm1blackrelwhite treat_stblackrelwhite treat_stp1blackrelwhite treat_stp2blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(cluster state)
+gen lead1 = 0
+	replace lead1 = 1 if state == 73 & (500 + (1*12)) < date & date <= (500 + (2*12))
+	replace lead1 = 1 if state == 32 & (625 + (1*12)) < date & date <= (625 + (2*12))
+	replace lead1 = 1 if state == 34 & (638 + (1*12)) < date & date <= (638 + (2*12))
+	replace lead1 = 1 if state == 35 & (662 + (1*12)) < date & date <= (662 + (2*12))
+	replace lead1 = 1 if state == 55 & (678 + (1*12)) < date & date <= (678 + (2*12))
+	replace lead1 = 1 if state == 61 & (684 + (1*12)) < date & date <= (684 + (2*12))
+
+gen lead2 = 0
+	replace lead2 = 1 if state == 73 & (500 + (2*12)) < date 
+	replace lead2 = 1 if state == 32 & (625 + (2*12)) < date 
+	replace lead2 = 1 if state == 34 & (638 + (2*12)) < date 
+	replace lead2 = 1 if state == 35 & (662 + (2*12)) < date 
+	replace lead2 = 1 if state == 55 & (678 + (2*12)) < date
+	replace lead2 = 1 if state == 61 & (684 + (2*12)) < date
+	
+gen lag5black = lag5*blackrelwhite
+gen lag4black = lag4*blackrelwhite
+gen lag3black = lag3*blackrelwhite
+gen lag2black = lag2*blackrelwhite
+gen lead0black = lead0*blackrelwhite
+gen lead1black = lead1*blackrelwhite
+gen lead2black = lead2*blackrelwhite
+
+** label variable lag5 "-5"
+** label variable lag4 "-4"
+** label variable lag3 "-3"
+** label variable lag2 "-2"
+** label variable lead0 "0"
+** label variable lead1 "1"
+** label variable lead2 "2"
+
+
+reg covered lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on Coverage for Men - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_covstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on Coverage for Men - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_covstag_mal_blk.png", replace
+
+reg covered lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on Coverage for Women - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_covstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on Coverage for Women - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_covstag_fem_blk.png", replace
+
+reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Men - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_wagstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Men - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_wagstag_mal_blk.png", replace	
+
+reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Women - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_wagstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Women - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_wagstag_fem_blk.png", replace	
+
+reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for NonUnion Men - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_nwagstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for NonUnion Men - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_nwagstag_mal_blk.png", replace
+	
+reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for NonUnion Women - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_nwagstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for NonUnion Women - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_nwagstag_fem_blk.png", replace
+
+reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Union Men - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_uwagstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Union Men - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_uwagstag_mal_blk.png", replace	
+
+reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
+
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Union Women - Coefs on Leads and Lags")
+graph export "$figs/eventstd/evs_uwagstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Union Women - Coefs on Leads and Lags with Interaction")
+graph export "$figs/eventstd/evs_uwagstag_fem_blk.png", replace
+
+
 
 log close
