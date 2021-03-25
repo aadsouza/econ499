@@ -136,8 +136,6 @@ gen r2wstates = 0 if neverr2w == 1
 
 preserve
 
-keep if female == 0 & blackrelwhite == 0
-
 reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & blackrelwhite == 0, vce(cluster state)
 predict plwage3
 
@@ -196,8 +194,6 @@ graph export "$figs/pta/wm_ky.png", replace
 restore
 
 preserve
-
-keep if female == 0 & blackrelwhite == 1
 
 reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & blackrelwhite == 1, vce(cluster state)
 predict plwage3
@@ -258,8 +254,6 @@ restore
 
 preserve
 
-keep if female == 1 & blackrelwhite == 0
-
 reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & blackrelwhite == 0, vce(cluster state)
 predict plwage3
 
@@ -318,8 +312,6 @@ graph export "$figs/pta/wf_ky.png", replace
 restore
 
 preserve
-
-keep if female == 1 & blackrelwhite == 1
 
 reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & blackrelwhite == 1, vce(cluster state)
 predict plwage3

@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-ptaplot.log
   log type:  text
- opened on:  24 Mar 2021, 15:06:53
+ opened on:  24 Mar 2021, 18:34:16
 
 . 
 . use cleaned_nber_morg, clear
@@ -288,6 +288,10 @@ end of do-file
 . preserve
 
 . 
+. keep if female == 0 & blackrelwhite == 0
+(1,798,911 observations deleted)
+
+. 
 . reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
 > == 0 & blackrelwhite == 0, vce(cluster state)
 (sum of wgt is 8,126,935,821)
@@ -449,13 +453,13 @@ Linear regression                               Number of obs     =    971,142
 
 . predict plwage3
 (option xb assumed; fitted values)
-(600,822 missing values generated)
+(258,078 missing values generated)
 
 . 
-. keep plwage3 year r2wstates
+. keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3, by(year r2wstates)
+. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -528,6 +532,10 @@ Linear regression                               Number of obs     =    971,142
 
 . 
 . preserve
+
+. 
+. keep if female == 0 & blackrelwhite == 1
+(2,913,530 observations deleted)
 
 . 
 . reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
@@ -691,13 +699,13 @@ Linear regression                               Number of obs     =     98,534
 
 . predict plwage3
 (option xb assumed; fitted values)
-(600,822 missing values generated)
+(16,067 missing values generated)
 
 . 
-. keep plwage3 year r2wstates
+. keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3, by(year r2wstates)
+. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -770,6 +778,10 @@ Linear regression                               Number of obs     =     98,534
 
 . 
 . preserve
+
+. 
+. keep if female == 1 & blackrelwhite == 0
+(1,820,094 observations deleted)
 
 . 
 . reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
@@ -933,13 +945,13 @@ Linear regression                               Number of obs     =    949,025
 
 . predict plwage3
 (option xb assumed; fitted values)
-(600,822 missing values generated)
+(259,012 missing values generated)
 
 . 
-. keep plwage3 year r2wstates
+. keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3, by(year r2wstates)
+. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -1012,6 +1024,10 @@ Linear regression                               Number of obs     =    949,025
 
 . 
 . preserve
+
+. 
+. keep if female == 1 & blackrelwhite == 1
+(2,875,996 observations deleted)
 
 . 
 . reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
@@ -1175,13 +1191,13 @@ Linear regression                               Number of obs     =    131,707
 
 . predict plwage3
 (option xb assumed; fitted values)
-(600,822 missing values generated)
+(20,428 missing values generated)
 
 . 
-. keep plwage3 year r2wstates
+. keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3, by(year r2wstates)
+. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -1257,5 +1273,5 @@ Linear regression                               Number of obs     =    131,707
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-ptaplot.log
   log type:  text
- closed on:  24 Mar 2021, 15:08:06
+ closed on:  24 Mar 2021, 18:35:22
 ---------------------------------------------------------------------------------------------------------------------------------------------------
