@@ -135,6 +135,9 @@ gen r2wstates = 0 if neverr2w == 1
 	replace r2wstates = 61 if state == 61
 
 ** gen panel data
+drop if year < 1996 // need without breaks
+
+drop if alwaysr2w == 1 // keep neverr2w and treatments from policy variation
 
 ** WHITE MEN
 ** preserve
@@ -153,8 +156,8 @@ collapse (mean) `r(varlist)' [aw = finalwt1], by(state year)
 tsset state year
 
 ** OK
-** construct synthetic OK
-synth lwage3 dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* lwage3[1989(1)2000], trunit[73] trperiod[2001] nested allopt fig
+** construct synthetic OK - allopt time consuming on laptop
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2000), trunit(73) trperiod(2001) nested allopt fig
 
 
 
