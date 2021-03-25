@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-ptaplot.log
   log type:  text
- opened on:  24 Mar 2021, 19:46:45
+ opened on:  25 Mar 2021, 11:39:04
 
 . 
 . use cleaned_nber_morg, clear
@@ -112,8 +112,8 @@ end of do-file
 . rename twage nwage1
 
 . 
-. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex citize
-> n eweight alloc1 covered umem
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hi
+> spracesex citizen eweight alloc1 covered umem
 
 . 
 . merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unemp.dta"
@@ -184,16 +184,16 @@ end of do-file
 . local newr2wstates "73 32 34 35 55 61"
 
 . 
-. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effective; signed Dec2012) Mar1,2015(Mar11,20
-> 15) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effective; signed Dec2012) Ma
+> r1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
 . local newr2wdate "500 625 638 662 678 684"
 
 . 
 . gen alwaysr2w = 0
 
 .         replace alwaysr2w = 1 if /// 
->                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82) //incl Idaho which changed in 1
-> 985 and Texas which had since 47 but bolstered in 93
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82) //incl Idaho wh
+> ich changed in 1985 and Texas which had since 47 but bolstered in 93
 (1,149,124 real changes made)
 
 . 
@@ -292,8 +292,8 @@ end of do-file
 (1,798,911 observations deleted)
 
 . 
-. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
-> == 0 & blackrelwhite == 0, vce(cluster state)
+. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = fina
+> lwt1] if female == 0 & blackrelwhite == 0, vce(cluster state)
 (sum of wgt is 8,126,935,821)
 
 Linear regression                               Number of obs     =    971,142
@@ -459,7 +459,7 @@ Linear regression                               Number of obs     =    971,142
 . keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+. collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -538,8 +538,8 @@ Linear regression                               Number of obs     =    971,142
 (2,913,530 observations deleted)
 
 . 
-. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
-> == 0 & blackrelwhite == 1, vce(cluster state)
+. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = fina
+> lwt1] if female == 0 & blackrelwhite == 1, vce(cluster state)
 (sum of wgt is 1,093,910,716)
 
 Linear regression                               Number of obs     =     98,534
@@ -705,7 +705,7 @@ Linear regression                               Number of obs     =     98,534
 . keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+. collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -784,8 +784,8 @@ Linear regression                               Number of obs     =     98,534
 (1,820,094 observations deleted)
 
 . 
-. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
-> == 1 & blackrelwhite == 0, vce(cluster state)
+. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = fina
+> lwt1] if female == 1 & blackrelwhite == 0, vce(cluster state)
 (sum of wgt is 7,702,889,487)
 
 Linear regression                               Number of obs     =    949,025
@@ -951,7 +951,7 @@ Linear regression                               Number of obs     =    949,025
 . keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+. collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -1030,8 +1030,8 @@ Linear regression                               Number of obs     =    949,025
 (2,875,996 observations deleted)
 
 . 
-. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female 
-> == 1 & blackrelwhite == 1, vce(cluster state)
+. reg lwage3 i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = fina
+> lwt1] if female == 1 & blackrelwhite == 1, vce(cluster state)
 (sum of wgt is 1,321,143,906)
 
 Linear regression                               Number of obs     =    131,707
@@ -1197,7 +1197,7 @@ Linear regression                               Number of obs     =    131,707
 . keep plwage3 year r2wstates finalwt1
 
 . 
-. collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+. collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 
 .         
 . twoway  (connected plwage3 year if r2wstates == 0) ///
@@ -1273,5 +1273,5 @@ Linear regression                               Number of obs     =    131,707
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-ptaplot.log
   log type:  text
- closed on:  24 Mar 2021, 19:47:46
----------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  25 Mar 2021, 11:40:04
+-----------------------------------------------------------------------------------------------------------------------------------

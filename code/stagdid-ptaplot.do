@@ -143,7 +143,7 @@ predict plwage3
 
 keep plwage3 year r2wstates finalwt1
 
-collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 	
 twoway 	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 73), ///
@@ -204,7 +204,7 @@ predict plwage3
 
 keep plwage3 year r2wstates finalwt1
 
-collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 	
 twoway 	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 73), ///
@@ -265,7 +265,7 @@ predict plwage3
 
 keep plwage3 year r2wstates finalwt1
 
-collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 	
 twoway 	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 73), ///
@@ -326,7 +326,7 @@ predict plwage3
 
 keep plwage3 year r2wstates finalwt1
 
-collapse (mean) plwage3 [aw = finalwt1], by(year r2wstates)
+collapse (sum) stweight = finalwt1 (mean) plwage3 [aw = finalwt1], by(year r2wstates)
 	
 twoway 	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 73), ///
