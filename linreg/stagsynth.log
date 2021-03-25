@@ -383,3 +383,5 @@ Starting nested optimization module
 Optimization done
 Allopt requested. This may take a while
 Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
