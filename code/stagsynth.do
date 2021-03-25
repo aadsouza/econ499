@@ -157,7 +157,7 @@ tsset state year
 
 ** OK
 ** construct synthetic OK
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2000), trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_wm_ok) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_wm_ok) replace
 
 graph export $figs/synth_wm_ok.png
 
@@ -166,27 +166,27 @@ graph export $figs/synth_wm_ok.png
 
 
 ** IN
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2011), trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_wm_in) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_wm_in) replace
 
 graph export $figs/synth_wm_in.png
 
 ** MI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2012), trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_wm_mi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_wm_mi) replace
 
 graph export $figs/synth_wm_mi.png
 
 ** WI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2014), trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_wm_wi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_wm_wi) replace
 
 graph export $figs/synth_wm_wi.png
 
 ** WV
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2015), trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_wm_wv) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_wm_wv) replace
 
 graph export $figs/synth_wm_wv.png
 
 ** KY
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 lwage3(1996(1)2016), trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_wm_ky) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_wm_ky) replace
 
 graph export $figs/synth_wm_ky.png
 
@@ -210,7 +210,7 @@ tsset state year
 
 ** OK
 ** construct synthetic OK - allopt time consuming on laptop
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_wf_ok) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_wf_ok) replace
 
 graph export $figs/synth_wf_ok.png
 
@@ -219,27 +219,27 @@ graph export $figs/synth_wf_ok.png
 
 
 ** IN
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_wf_in) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_wf_in) replace
 
 graph export $figs/synth_wf_in.png
 
 ** MI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_wf_mi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_wf_mi) replace
 
 graph export $figs/synth_wf_mi.png
 
 ** WI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_wf_wi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_wf_wi) replace
 
 graph export $figs/synth_wf_wi.png
 
 ** WV
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_wf_wv) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_wf_wv) replace
 
 graph export $figs/synth_wf_wv.png
 
 ** KY
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_wf_ky) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_wf_ky) replace
 
 graph export $figs/synth_wf_ky.png
 
@@ -263,7 +263,7 @@ tsset state year
 
 ** OK
 ** construct synthetic OK
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_bm_ok) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_bm_ok) replace
 
 graph export $figs/synth_bm_ok.png
 
@@ -272,27 +272,27 @@ graph export $figs/synth_bm_ok.png
 
 
 ** IN
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_bm_in) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_bm_in) replace
 
 graph export $figs/synth_bm_in.png
 
 ** MI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_bm_mi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_bm_mi) replace
 
 graph export $figs/synth_bm_mi.png
 
 ** WI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_bm_wi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_bm_wi) replace
 
 graph export $figs/synth_bm_wi.png
 
 ** WV
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_bm_wv) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_bm_wv) replace
 
 graph export $figs/synth_bm_wv.png
 
 ** KY
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_bm_ky) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_bm_ky) replace
 
 graph export $figs/synth_bm_ky.png
 
@@ -316,7 +316,7 @@ tsset state year
 
 ** OK
 ** construct synthetic OK
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_bf_ok) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linreg/synth_bf_ok) replace
 
 graph export $figs/synth_bf_ok.png
 
@@ -325,27 +325,27 @@ graph export $figs/synth_bf_ok.png
 
 
 ** IN
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_bf_in) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(32) trperiod(2012) nested allopt fig keep($linreg/synth_bf_in) replace
 
 graph export $figs/synth_bf_in.png
 
 ** MI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_bf_mi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(34) trperiod(2013) nested allopt fig keep($linreg/synth_bf_mi) replace
 
 graph export $figs/synth_bf_mi.png
 
 ** WI
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_bf_wi) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(35) trperiod(2015) nested allopt fig keep($linreg/synth_bf_wi) replace
 
 graph export $figs/synth_bf_wi.png
 
 ** WV
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_bf_wv) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2015), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(55) trperiod(2016) nested allopt fig keep($linreg/synth_bf_wv) replace
 
 graph export $figs/synth_bf_wv.png
 
 ** KY
-synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_bf_ky) replace
+synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), counit(11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(61) trperiod(2017) nested allopt fig keep($linreg/synth_bf_ky) replace
 
 graph export $figs/synth_bf_ky.png
 
