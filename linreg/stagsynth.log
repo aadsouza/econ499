@@ -1,0 +1,96 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/linreg/stagsynth.log
+  log type:  text
+ opened on:  24 Mar 2021, 19:46:11
+
+. 
+. use cleaned_nber_morg, clear
+
+. 
+. do "$code/pareto_topcoding.do"
+
+. ** In this do file we gen the top-code adjusted wage distribution using pareto 
+. ** parameters adapting codes generously provided to us by
+. ** Professor Nicole Fortin and Neil Lloyd
+. 
+. ** Generate topcode-adjusted wage distribution using Pareto parameter
+. ** Output: lwage2
+. 
+. ** OG Source: https://eml.berkeley.edu/~saez/TabFig2015prel.xls
+.         * Table A4 & Table B3
+. 
+. ** RE Source: https://eml.berkeley.edu/~saez/TabFig2018.xls
+.         * Table A4 & Table B3
+. 
+. ** Use Pareto parameter from Piketty and Saez (top 1%): average of 5 year windows (e.g. 2000-2004);
+. ** OG: Due to a lack of availability for post 2011 data, the average of 2010 & 2011 is extended to 2017.
+. 
+. set seed 486372893
+
+. 
+. gen ranuni = runiform() if topcode == 1
+--Break--
+r(1);
+
+end of do-file
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. do "/Users/amedeusdsouza/econ499/code/stagdid-ptaplot.do"
+
+. ** In this dofile we test parallel trends assumption with plots
+. 
+. clear *
+
+. 
+. ********************************************************************************
+. *********************************** PREAMBLE ***********************************
+. ********************************************************************************
+. 
+. ** ssc install grstyle, replace 
+. ** ssc install palettes, replace 
+. ** ssc install xtable, replace 
+. 
+. set scheme s2color 
+
+. grstyle init 
+
+. grstyle set compact 
+
+. grstyle set horizontal 
+
+. grstyle set legend 6, nobox 
+
+. grstyle color background white 
+
+. grstyle color major_grid black%10
+
+. 
+. cd /Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
+/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
+
+. 
+. global code "/Users/amedeusdsouza/econ499/code"
+
+. global tabs "/Users/amedeusdsouza/econ499/tabs"
+
+. global figs "/Users/amedeusdsouza/econ499/figures"
+
+. global estimation "/Users/amedeusdsouza/Desktop/econ499data/estimation"
+
+. global distreg "/Users/amedeusdsouza/econ499/distreg"
+
+. global mwagedata "/Users/amedeusdsouza/Desktop/econ499data/zipperer-min-wage"
+
+. global linreg "/Users/amedeusdsouza/econ499/linreg"
+
+. global dfl1 "/Users/amedeusdsouza/econ499/dfl1"
+
+. 
+. cap log close

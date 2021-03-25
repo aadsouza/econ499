@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-ptaplot.log
   log type:  text
- opened on:  24 Mar 2021, 18:34:16
+ opened on:  24 Mar 2021, 19:46:45
 
 . 
 . use cleaned_nber_morg, clear
@@ -1273,5 +1273,5 @@ Linear regression                               Number of obs     =    131,707
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-ptaplot.log
   log type:  text
- closed on:  24 Mar 2021, 18:35:22
+ closed on:  24 Mar 2021, 19:47:46
 ---------------------------------------------------------------------------------------------------------------------------------------------------
