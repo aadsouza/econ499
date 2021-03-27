@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/dfl1/dfl1.log
   log type:  text
- opened on:  22 Mar 2021, 14:53:21
+ opened on:  26 Mar 2021, 13:14:11
 
 . 
 . use cleaned_nber_morg, clear
@@ -155,40 +155,47 @@ end of do-file
 . ** lab wmestpt "non hisp white men estimation points"
 . ** lab wmde "non hisp white men density estimate"
 . 
-. graph twoway (connected wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
->                          (connected hmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(midgreen) lp(solid)), ///
+. graph twoway (connected wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(so
+> lid))  /// 
+>                          (connected bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(ma
+> genta) lp(solid))  ///
+>                          (connected hmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(mi
+> dgreen) lp(solid)), ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "Hispanic") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lc
-> olor(none))) ///
+>                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "Hispanic") c(1) pos(2) ring(0
+> ) symxsize(*.5) size(large) region(lcolor(none))) ///
 >                          subtitle("Men", size(vlarge))
 
 . graph export "$figs/kde1men/bhw_men.png", replace
 (file /Users/amedeusdsouza/econ499/figures/kde1men/bhw_men.png written in PNG format)
 
 . 
-. graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected u_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)),  ///
+. graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected u_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid)),  ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) 
-> ///
+>                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.
+> 5) size(large) region(lcolor(none))) ///
 >                          subtitle("Men Covered by Union", size(vlarge))
 
 . graph export "$figs/kde1men/u_bhw_men.png", replace
 (file /Users/amedeusdsouza/econ499/figures/kde1men/u_bhw_men.png written in PNG format)
 
 . 
-. graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected n_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)),  ///
+. graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected n_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid)),  ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) 
-> ///
+>                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.
+> 5) size(large) region(lcolor(none))) ///
 >                          subtitle("Men not Covered by Union", size(vlarge))
 
 . graph export "$figs/kde1men/n_bhw_men.png", replace
@@ -242,7 +249,8 @@ end of do-file
 . gen edex = educ*exper
 
 . 
-. probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.quarter i.year [w = finalwt1]
+. probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.
+> quarter i.year [w = finalwt1]
 (frequency weights assumed)
 
 Iteration 0:   log likelihood = -4.116e+09  
@@ -416,8 +424,8 @@ Log likelihood = -3.506e+09                     Pseudo R2         =     0.1481
 (376,290 missing values generated)
 
 . 
-. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.quarter i.year if nhblack == 1 [w = f
-> inalwt1]
+. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.
+> quarter i.year if nhblack == 1 [w = finalwt1]
 (frequency weights assumed)
 
 Iteration 0:   log likelihood = -7.209e+08  
@@ -589,8 +597,8 @@ Log likelihood = -5.483e+08                     Pseudo R2         =     0.2394
 (376,290 missing values generated)
 
 . 
-. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.quarter i.year if nhblack == 0 [w = f
-> inalwt1]
+. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.
+> quarter i.year if nhblack == 0 [w = finalwt1]
 (frequency weights assumed)
 
 Iteration 0:   log likelihood = -4.833e+09  
@@ -775,14 +783,17 @@ Log likelihood = -3.581e+09                     Pseudo R2         =     0.2591
 >         generate(cu_wmestpt cu_wmde) nograph
 
 . 
-. graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected u_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
->                          (connected cu_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(longdash)),  /// 
+. graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected u_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid))  ///
+>                          (connected cu_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc
+> (eltblue) lp(longdash)),  /// 
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(lar
-> ge) region(lcolor(none))) ///
+>                          legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5
+> ) size(large) region(lcolor(none))) ///
 >                          subtitle("Men Covered by Union - with Counterfactual", size(vlarge))
 
 . graph export "$figs/kde1men/cu_bhw_men.png", replace
@@ -801,14 +812,17 @@ Log likelihood = -3.581e+09                     Pseudo R2         =     0.2591
 >         generate(cn_wmestpt cn_wmde) nograph
 
 . 
-. graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected n_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
->                          (connected cn_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(longdash)),  ///
+. graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected n_bmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid))  ///
+>                          (connected cn_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc
+> (eltblue) lp(longdash)),  ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(lar
-> ge) region(lcolor(none))) ///
+>                          legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5
+> ) size(large) region(lcolor(none))) ///
 >                          subtitle("Men not Covered by Union - with Counterfactual", size(vlarge))
 
 . graph export "$figs/kde1men/cn_bhw_men.png", replace
@@ -868,40 +882,47 @@ Log likelihood = -3.581e+09                     Pseudo R2         =     0.2591
 . ** lab wmestpt "non hisp white men estimation points"
 . ** lab wmde "non hisp white men density estimate"
 . 
-. graph twoway (connected wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
->                          (connected hfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(midgreen) lp(solid)), ///
+. graph twoway (connected wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(so
+> lid))  /// 
+>                          (connected bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(ma
+> genta) lp(solid))  ///
+>                          (connected hfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(mi
+> dgreen) lp(solid)), ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "Hispanic") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lc
-> olor(none))) ///
+>                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "Hispanic") c(1) pos(2) ring(0
+> ) symxsize(*.5) size(large) region(lcolor(none))) ///
 >                          subtitle("Women", size(vlarge))
 
 . graph export "$figs/kde1wom/bhw_wom.png", replace
 (file /Users/amedeusdsouza/econ499/figures/kde1wom/bhw_wom.png written in PNG format)
 
 . 
-. graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected u_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)),  ///
+. graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected u_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid)),  ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) 
-> ///
+>                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.
+> 5) size(large) region(lcolor(none))) ///
 >                          subtitle("Women Covered by Union", size(vlarge))
 
 . graph export "$figs/kde1wom/u_bhw_wom.png", replace
 (file /Users/amedeusdsouza/econ499/figures/kde1wom/u_bhw_wom.png written in PNG format)
 
 . 
-. graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected n_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid)),  ///
+. graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected n_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid)),  ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) 
-> ///
+>                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black") c(1) pos(2) ring(0) symxsize(*.
+> 5) size(large) region(lcolor(none))) ///
 >                          subtitle("Women not Covered by Union", size(vlarge))
 
 . graph export "$figs/kde1wom/n_bhw_wom.png", replace
@@ -955,7 +976,8 @@ Log likelihood = -3.581e+09                     Pseudo R2         =     0.2591
 . gen edex = educ*exper
 
 . 
-. probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.quarter i.year [w = finalwt1]
+. probit nhblack educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.
+> quarter i.year [w = finalwt1]
 (frequency weights assumed)
 
 Iteration 0:   log likelihood = -4.508e+09  
@@ -1130,8 +1152,8 @@ Log likelihood = -3.707e+09                     Pseudo R2         =     0.1777
 (376,543 missing values generated)
 
 . 
-. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.quarter i.year if nhblack == 1 [w = f
-> inalwt1]
+. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.
+> quarter i.year if nhblack == 1 [w = finalwt1]
 (frequency weights assumed)
 
 note: 11.state != 0 predicts failure perfectly
@@ -1314,8 +1336,8 @@ Log likelihood = -5.612e+08                     Pseudo R2         =     0.2646
 (422,782 missing values generated)
 
 . 
-. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.quarter i.year if nhblack == 0 [w = f
-> inalwt1]
+. probit covered educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.state i.nind i.nocc2 i.
+> quarter i.year if nhblack == 0 [w = finalwt1]
 (frequency weights assumed)
 
 Iteration 0:   log likelihood = -3.788e+09  
@@ -1500,14 +1522,17 @@ Log likelihood = -2.592e+09                     Pseudo R2         =     0.3157
 >         generate(cu_wfestpt cu_wfde) nograph
 
 . 
-. graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected u_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
->                          (connected cu_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(longdash)),  /// 
+. graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected u_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid))  ///
+>                          (connected cu_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc
+> (eltblue) lp(longdash)),  /// 
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(lar
-> ge) region(lcolor(none))) ///
+>                          legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5
+> ) size(large) region(lcolor(none))) ///
 >                          subtitle("Women Covered by Union - with Counterfactual", size(vlarge))
 
 . graph export "$figs/kde1wom/cu_bhw_wom.png", replace
@@ -1526,14 +1551,17 @@ Log likelihood = -2.592e+09                     Pseudo R2         =     0.3157
 >         generate(cn_wfestpt cn_wfde) nograph
 
 . 
-. graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(solid))  /// 
->                          (connected n_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(magenta) lp(solid))  ///
->                          (connected cn_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(longdash)),  ///
+. graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(eltblue) lp(
+> solid))  /// 
+>                          (connected n_bfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc(
+> magenta) lp(solid))  ///
+>                          (connected cn_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwidth(medthick) lc
+> (eltblue) lp(longdash)),  ///
 >                          xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 >                          ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 >                          xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
->                          legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(lar
-> ge) region(lcolor(none))) ///
+>                          legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5
+> ) size(large) region(lcolor(none))) ///
 >                          subtitle("Women not Covered by Union - with Counterfactual", size(vlarge))
 
 . graph export "$figs/kde1wom/cn_bhw_wom.png", replace
@@ -1547,5 +1575,5 @@ Log likelihood = -2.592e+09                     Pseudo R2         =     0.3157
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/dfl1/dfl1.log
   log type:  text
- closed on:  22 Mar 2021, 14:59:28
----------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  26 Mar 2021, 13:26:50
+--------------------------------------------------------------------------------------------------------------

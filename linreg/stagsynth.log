@@ -369,3 +369,55 @@ end of do-file
 
 r(198);
 
+. do "/Users/amedeusdsouza/econ499/code/stagdid.do"
+
+. ** In this dofile we attempt staggered DiD analysis of RTW laws
+. 
+. clear *
+
+. 
+. ********************************************************************************
+. *********************************** PREAMBLE ***********************************
+. ********************************************************************************
+. 
+. ** ssc install grstyle, replace 
+. ** ssc install palettes, replace 
+. ** ssc install xtable, replace 
+. 
+. set scheme s2color 
+
+. grstyle init 
+
+. grstyle set compact 
+
+. grstyle set horizontal 
+
+. grstyle set legend 6, nobox 
+
+. grstyle color background white 
+
+. grstyle color major_grid black%10
+
+. 
+. cd /Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
+/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
+
+. 
+. global code "/Users/amedeusdsouza/econ499/code"
+
+. global tabs "/Users/amedeusdsouza/econ499/tabs"
+
+. global figs "/Users/amedeusdsouza/econ499/figures"
+
+. global estimation "/Users/amedeusdsouza/Desktop/econ499data/estimation"
+
+. global distreg "/Users/amedeusdsouza/econ499/distreg"
+
+. global mwagedata "/Users/amedeusdsouza/Desktop/econ499data/zipperer-min-wage"
+
+. global linreg "/Users/amedeusdsouza/econ499/linreg"
+
+. global dfl1 "/Users/amedeusdsouza/econ499/dfl1"
+
+. 
+. cap log close

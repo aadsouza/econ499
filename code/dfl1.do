@@ -167,7 +167,7 @@ graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 			 ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
-			 legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
+			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Men Covered by Union - with Counterfactual", size(vlarge))
 graph export "$figs/kde1men/cu_bhw_men.png", replace
 	
@@ -184,7 +184,7 @@ graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 			 ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
-			 legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
+			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Men not Covered by Union - with Counterfactual", size(vlarge))
 graph export "$figs/kde1men/cn_bhw_men.png", replace
 	
@@ -305,7 +305,7 @@ graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 			 ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
-			 legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
+			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Women Covered by Union - with Counterfactual", size(vlarge))
 graph export "$figs/kde1wom/cu_bhw_wom.png", replace
 	
@@ -322,7 +322,7 @@ graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xlabel(.69 "ln(2)" 1.61 "ln(5)" 2.3 "ln(10)" 3.22 "ln(25)", labsize(large)) ///
 			 ytitle("Density", size(large)) scheme(s1mono) plotregion(lwidth(none)) ///
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
-			 legend(order(1 "non-Hisp white" 2 "non-Hisp Black" 3 "non-Hisp white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
+			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Women not Covered by Union - with Counterfactual", size(vlarge))
 graph export "$figs/kde1wom/cn_bhw_wom.png", replace
 	

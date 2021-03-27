@@ -125,6 +125,9 @@ gen treat_sthisprelwhite = treat_st*hisprelwhite
 
 gen lyear = year - 1900
 
+** pta WV drop, common support MT
+drop if state == 55 | state == 81
+
 forval blk = 0(1)1{
 reg lwage3 treat_st i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & blackrelwhite == `blk', vce(cluster state)
 	

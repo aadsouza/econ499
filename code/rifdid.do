@@ -123,6 +123,9 @@ gen treat_stblackrelwhite = treat_st*blackrelwhite
 
 gen treat_sthisprelwhite = treat_st*hisprelwhite
 
+** pta WV drop, common support MT
+drop if state == 55 | state == 81
+
 ** mean with nocc3 with quarter fe
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
 	
