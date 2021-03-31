@@ -1,0 +1,1810 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/linreg/stagpta.log
+  log type:  text
+ opened on:  23 Mar 2021, 22:08:10
+
+. 
+. use cleaned_nber_morg, clear
+
+. 
+. do "$code/pareto_topcoding.do"
+
+. ** In this do file we gen the top-code adjusted wage distribution using pareto 
+. ** parameters adapting codes generously provided to us by
+. ** Professor Nicole Fortin and Neil Lloyd
+. 
+. ** Generate topcode-adjusted wage distribution using Pareto parameter
+. ** Output: lwage2
+. 
+. ** OG Source: https://eml.berkeley.edu/~saez/TabFig2015prel.xls
+.         * Table A4 & Table B3
+. 
+. ** RE Source: https://eml.berkeley.edu/~saez/TabFig2018.xls
+.         * Table A4 & Table B3
+. 
+. ** Use Pareto parameter from Piketty and Saez (top 1%): average of 5 year windows (e.g. 2000-2004);
+. ** OG: Due to a lack of availability for post 2011 data, the average of 2010 & 2011 is extended to 2017.
+. 
+. set seed 486372893
+
+. 
+. gen ranuni = runiform() if topcode == 1
+(10,848,910 missing values generated)
+
+. 
+. gen     pareto = 1/(ranuni^(1/2.68)) if inrange(year, 1975, 1979)
+(10,912,373 missing values generated)
+
+.         replace pareto = 1/(ranuni^(1/2.45)) if inrange(year, 1980, 1984) 
+(12,848 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/2.15)) if inrange(year, 1985, 1989) 
+(25,430 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/2.02)) if inrange(year, 1990, 1994) 
+(7,087 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.89)) if inrange(year, 1995, 1999) 
+(9,426 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.81)) if inrange(year, 2000, 2004) 
+(4,963 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.78)) if inrange(year, 2005, 2009)
+(878 real changes made)
+
+. 
+. ** FIXME revise parameters using Tables A4 and B3
+. **      replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
+.         replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2019) 
+(2,831 real changes made)
+
+. 
+. * lwage2 uses this imputation;
+. gen lwage2 = lwage if topcode == 0
+(4,507,850 missing values generated)
+
+.         replace lwage2 = lwage + log(pareto) if topcode == 1
+(62,792 real changes made)
+
+.         lab var lwage2 "log trimmed imputed nom wage 1-100"
+
+. 
+. gen lwage3 = log(exp(lwage2) * 100 / cpi)
+(4,445,058 missing values generated)
+
+.         lab var lwage3 "log trimmed imputed real wage 1-100 in 1979 dollars"
+
+. 
+end of do-file
+
+. 
+. ** drop if allocated hourly wage, weekly earnings, or usual hrs and missing wage
+. drop if alloc1 == 1
+(1,625,280 observations deleted)
+
+. drop if lwage3 ==.
+(4,303,609 observations deleted)
+
+. 
+. ** drop obs in 1994 1995 - allocation flag missing
+. drop if inrange(year, 1994, 1995)
+(296,195 observations deleted)
+
+. 
+. ** hours weighted
+. gen hweight = eweight * uhourse / 100.0
+
+. 
+. ** drop self employed and w/o pay
+. keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
+(813 observations deleted)
+
+. ********************************************************************************
+. 
+. ** keep if inrange(year, 2000, 2019)
+. 
+. keep if inrange(year, 1989, 2019)
+(1,450,785 observations deleted)
+
+. 
+. rename twage nwage1
+
+. 
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex citize
+> n eweight alloc1 covered umem
+
+. 
+. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unemp.dta"
+(note: variable year was int, now long to accommodate using data's values)
+(note: variable cmonth was byte, now long to accommodate using data's values)
+(note: variable state was byte, now long to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         7,344
+        from master                         0  (_merge==1)
+        from using                      7,344  (_merge==2)
+
+    matched                         3,236,632  (_merge==3)
+    -----------------------------------------
+
+. 
+. drop if _merge == 2 // <2000
+(7,344 observations deleted)
+
+. 
+. drop if hispracesex ==.
+(208,501 observations deleted)
+
+. 
+. gen finalwt1 = round(eweight)
+
+. 
+. rename nind2 nind // nind now is 11 ind categories
+
+. 
+. recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+>                 (12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
+(2472445 differences between nocc and nocc2)
+
+.                 
+. recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
+(2786572 differences between nocc2 and nocc3)
+
+. 
+. egen state_ind = group(state nind)
+(2,155 missing values generated)
+
+. 
+. gen edex = educ*exper
+
+. 
+. gen blackrelwhite = hisprace - 1
+
+.         replace blackrelwhite =. if hisprace > 2
+(324,138 real changes made, 324,138 to missing)
+
+. 
+. gen hisprelwhite = hisprace - 1
+
+.         replace hisprelwhite =. if hisprace == 2
+(266,736 real changes made, 266,736 to missing)
+
+.         replace hisprelwhite = 1 if hisprace == 3
+(324,138 real changes made)
+
+. 
+. gen date = ym(year, cmonth)
+
+. ** tab date year
+. 
+. ** construct variables lags and leads
+. local newr2wstates "73 32 34 35 55 61"
+
+. 
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effective; signed Dec2012) Mar1,2015(Mar11,20
+> 15) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. local newr2wdate "500 625 638 662 678 684"
+
+. 
+. gen alwaysr2w = 0
+
+.         replace alwaysr2w = 1 if /// 
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82) //incl Idaho which changed in 1
+> 985 and Texas which had since 47 but bolstered in 93
+(1,149,124 real changes made)
+
+. 
+. gen alwr2wcov = alwaysr2w*covered
+(4,216 missing values generated)
+
+. 
+. gen neverr2w = 1
+
+.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
+(1,149,124 real changes made)
+
+.         replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
+(314,813 real changes made)
+
+. 
+. gen stater2w = 0
+
+.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72, 82)
+(1,149,124 real changes made)
+
+.         replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
+(314,813 real changes made)
+
+.         lab def str2w 0 "no r2w" 1 "r2w before 2000" 2 "r2w after 2000"
+
+.         lab val stater2w str2w
+
+. 
+. gen treat_st = 0 if stater2w == 0 | stater2w == 2
+(1,149,124 missing values generated)
+
+.         replace treat_st = 1 if stater2w == 1
+(1,149,124 real changes made)
+
+.         replace treat_st = 1 if state == 73 & date >= 500
+(19,108 real changes made)
+
+.         replace treat_st = 1 if state == 32 & date >= 625
+(10,893 real changes made)
+
+.         replace treat_st = 1 if state == 34 & date >= 638
+(12,321 real changes made)
+
+.         replace treat_st = 1 if state == 35 & date >= 662
+(7,563 real changes made)
+
+.         replace treat_st = 1 if state == 55 & date >= 678
+(4,902 real changes made)
+
+.         replace treat_st = 1 if state == 61 & date >= 684
+(3,150 real changes made)
+
+. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change to treat_jst
+. 
+. ** no pretrends for before treatments before 2000
+. drop if alwaysr2w == 1
+(1,149,124 observations deleted)
+
+. 
+. ** gen event =.
+. **      replace event = 1989 if alwaysr2w == 1
+. **      replace event = 2001 if state == 73
+. **      replace event = 2012 if state == 32
+. **      replace event = 2013 if state == 34
+. **      replace event = 2015 if state == 35
+. **      replace event = 2016 if state == 55
+. **      replace event = 2017 if state == 61
+.         
+. ** gen postevent =.
+. **      replace postevent = 1 if (year >= event & inlist(state, 73, 32, 34, 35, 55, 61)) | alwaysr2w == 1
+. **      replace postevent = 0 if year < event & inlist(state, 73, 32, 34, 35, 55, 61)
+. **      replace postevent = 0 if neverr2w == 1
+. 
+. ** gen timetoevent = year - event
+. 
+. gen lag5 = 0
+
+.         replace lag5 = 1 if state == 73 & date <= (500 - (4*12))
+(11,025 real changes made)
+
+.         replace lag5 = 1 if state == 32 & date <= (625 - (4*12))
+(30,393 real changes made)
+
+.         replace lag5 = 1 if state == 34 & date <= (638 - (4*12))
+(74,515 real changes made)
+
+.         replace lag5 = 1 if state == 35 & date <= (662 - (4*12))
+(46,592 real changes made)
+
+.         replace lag5 = 1 if state == 55 & date <= (678 - (4*12))
+(26,873 real changes made)
+
+.         replace lag5 = 1 if state == 61 & date <= (684 - (4*12))
+(31,710 real changes made)
+
+.         
+. gen lag4 = 0
+
+.         replace lag4 = 1 if state == 73 & (500 - (4*12)) < date & date <= (500 - (3*12))
+(1,445 real changes made)
+
+.         replace lag4 = 1 if state == 32 & (625 - (4*12)) < date & date <= (625 - (3*12))
+(1,517 real changes made)
+
+.         replace lag4 = 1 if state == 34 & (638 - (4*12)) < date & date <= (638 - (3*12))
+(2,061 real changes made)
+
+.         replace lag4 = 1 if state == 35 & (662 - (4*12)) < date & date <= (662 - (3*12))
+(2,308 real changes made)
+
+.         replace lag4 = 1 if state == 55 & (678 - (4*12)) < date & date <= (678 - (3*12))
+(771 real changes made)
+
+.         replace lag4 = 1 if state == 61 & (684 - (4*12)) < date & date <= (684 - (3*12))
+(1,431 real changes made)
+
+.         
+. gen lag3 = 0
+
+.         replace lag3 = 1 if state == 73 & (500 - (3*12)) < date & date <= (500 - (2*12))
+(1,350 real changes made)
+
+.         replace lag3 = 1 if state == 32 & (625 - (3*12)) < date & date <= (625 - (2*12))
+(1,479 real changes made)
+
+.         replace lag3 = 1 if state == 34 & (638 - (3*12)) < date & date <= (638 - (2*12))
+(1,952 real changes made)
+
+.         replace lag3 = 1 if state == 35 & (662 - (3*12)) < date & date <= (662 - (2*12))
+(2,162 real changes made)
+
+.         replace lag3 = 1 if state == 55 & (678 - (3*12)) < date & date <= (678 - (2*12))
+(771 real changes made)
+
+.         replace lag3 = 1 if state == 61 & (684 - (3*12)) < date & date <= (684 - (2*12))
+(1,326 real changes made)
+
+.         
+. gen lag2 = 0
+
+.         replace lag2 = 1 if state == 73 & (500 - (2*12)) < date & date <= (500 - (1*12))
+(1,296 real changes made)
+
+.         replace lag2 = 1 if state == 32 & (625 - (2*12)) < date & date <= (625 - (1*12))
+(1,308 real changes made)
+
+.         replace lag2 = 1 if state == 34 & (638 - (2*12)) < date & date <= (638 - (1*12))
+(1,850 real changes made)
+
+.         replace lag2 = 1 if state == 35 & (662 - (2*12)) < date & date <= (662 - (1*12))
+(2,240 real changes made)
+
+.         replace lag2 = 1 if state == 55 & (678 - (2*12)) < date & date <= (678 - (1*12))
+(1,214 real changes made)
+
+.         replace lag2 = 1 if state == 61 & (684 - (2*12)) < date & date <= (684 - (1*12))
+(1,078 real changes made)
+
+. 
+. gen lead0 = 0
+
+.         replace lead0 = 1 if state == 73 & (500 + (0*12)) < date & date <= (500 + (1*12))
+(1,250 real changes made)
+
+.         replace lead0 = 1 if state == 32 & (625 + (0*12)) < date & date <= (625 + (1*12))
+(1,376 real changes made)
+
+.         replace lead0 = 1 if state == 34 & (638 + (0*12)) < date & date <= (638 + (1*12))
+(1,917 real changes made)
+
+.         replace lead0 = 1 if state == 35 & (662 + (0*12)) < date & date <= (662 + (1*12))
+(1,664 real changes made)
+
+.         replace lead0 = 1 if state == 55 & (678 + (0*12)) < date & date <= (678 + (1*12))
+(1,453 real changes made)
+
+.         replace lead0 = 1 if state == 61 & (684 + (0*12)) < date & date <= (684 + (1*12))
+(1,156 real changes made)
+
+.         
+. gen lead1 = 0
+
+.         replace lead1 = 1 if state == 73 & (500 + (1*12)) < date & date <= (500 + (2*12))
+(1,249 real changes made)
+
+.         replace lead1 = 1 if state == 32 & (625 + (1*12)) < date & date <= (625 + (2*12))
+(1,309 real changes made)
+
+.         replace lead1 = 1 if state == 34 & (638 + (1*12)) < date & date <= (638 + (2*12))
+(1,839 real changes made)
+
+.         replace lead1 = 1 if state == 35 & (662 + (1*12)) < date & date <= (662 + (2*12))
+(1,620 real changes made)
+
+.         replace lead1 = 1 if state == 55 & (678 + (1*12)) < date & date <= (678 + (2*12))
+(1,331 real changes made)
+
+.         replace lead1 = 1 if state == 61 & (684 + (1*12)) < date & date <= (684 + (2*12))
+(1,111 real changes made)
+
+. 
+. gen lead2 = 0
+
+.         replace lead2 = 1 if state == 73 & (500 + (2*12)) < date 
+(16,515 real changes made)
+
+.         replace lead2 = 1 if state == 32 & (625 + (2*12)) < date 
+(8,074 real changes made)
+
+.         replace lead2 = 1 if state == 34 & (638 + (2*12)) < date 
+(8,386 real changes made)
+
+.         replace lead2 = 1 if state == 35 & (662 + (2*12)) < date 
+(4,145 real changes made)
+
+.         replace lead2 = 1 if state == 55 & (678 + (2*12)) < date
+(2,007 real changes made)
+
+.         replace lead2 = 1 if state == 61 & (684 + (2*12)) < date
+(815 real changes made)
+
+.         
+. gen lag5black = lag5*blackrelwhite
+(190,962 missing values generated)
+
+. gen lag4black = lag4*blackrelwhite
+(190,962 missing values generated)
+
+. gen lag3black = lag3*blackrelwhite
+(190,962 missing values generated)
+
+. gen lag2black = lag2*blackrelwhite
+(190,962 missing values generated)
+
+. gen lead0black = lead0*blackrelwhite
+(190,962 missing values generated)
+
+. gen lead1black = lead1*blackrelwhite
+(190,962 missing values generated)
+
+. gen lead2black = lead2*blackrelwhite
+(190,962 missing values generated)
+
+. 
+. ** label variable lag5 "-5"
+. ** label variable lag4 "-4"
+. ** label variable lag3 "-3"
+. ** label variable lag2 "-2"
+. ** label variable lead0 "0"
+. ** label variable lead1 "1"
+. ** label variable lead2 "2"
+. 
+. 
+. reg covered lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state 
+> i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(clu
+> ster state)
+(sum of wgt is 5,857,928,429)
+
+Linear regression                               Number of obs     =    675,883
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.2540
+                                                Root MSE          =     .35735
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+      covered |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0145013   .0168483     0.86   0.396    -.0199573    .0489599
+         lag4 |    .004512   .0077396     0.58   0.564    -.0113172    .0203412
+         lag3 |  -.0056375   .0076915    -0.73   0.469    -.0213684    .0100935
+         lag2 |  -.0018383   .0046028    -0.40   0.693    -.0112521    .0075754
+        lead0 |  -.0114793   .0083407    -1.38   0.179     -.028538    .0055794
+        lead1 |  -.0134207   .0106127    -1.26   0.216     -.035126    .0082846
+        lead2 |  -.0137846   .0128153    -1.08   0.291    -.0399949    .0124257
+    lag5black |   .0413472   .0216648     1.91   0.066    -.0029624    .0856567
+    lag4black |   .0127389   .0411133     0.31   0.759    -.0713472    .0968251
+    lag3black |  -.0089035   .0158544    -0.56   0.579    -.0413294    .0235224
+    lag2black |   .0786799   .0339473     2.32   0.028     .0092499    .1481099
+   lead0black |  -.0501312   .0161587    -3.10   0.004    -.0831795    -.017083
+   lead1black |   .0197352    .036883     0.54   0.597    -.0556989    .0951693
+   lead2black |  -.0226373   .0139752    -1.62   0.116    -.0512197    .0059452
+blackrelwhite |   .0465176   .0070639     6.59   0.000     .0320702    .0609649
+              |
+        state |
+          NH  |  -.0390641   .0036342   -10.75   0.000    -.0464969   -.0316312
+          VT  |  -.0458484   .0012936   -35.44   0.000     -.048494   -.0432027
+          MA  |    .007557   .0072666     1.04   0.307    -.0073048    .0224188
+          RI  |   .0119432   .0078631     1.52   0.140    -.0041385     .028025
+          CT  |   .0083704   .0071688     1.17   0.252    -.0062915    .0230323
+          NY  |   .0930983   .0070008    13.30   0.000       .07878    .1074167
+          NJ  |   .0450031   .0081181     5.54   0.000     .0283996    .0616066
+          PA  |   .0207258    .005947     3.49   0.002     .0085629    .0328888
+          OH  |   .0104846   .0059798     1.75   0.090    -.0017454    .0227145
+          IN  |  -.0232092   .0139056    -1.67   0.106    -.0516495     .005231
+          IL  |   .0441744   .0067277     6.57   0.000     .0304146    .0579342
+          MI  |   .0417507   .0153278     2.72   0.011     .0104019    .0730995
+          WI  |   -.016225   .0139404    -1.16   0.254    -.0447363    .0122863
+          MN  |   .0215843   .0054246     3.98   0.000     .0104898    .0326788
+          MO  |   -.011408   .0058073    -1.96   0.059    -.0232852    .0004693
+          DE  |  -.0591975   .0029046   -20.38   0.000     -.065138    -.053257
+          MD  |  -.0533235   .0082772    -6.44   0.000    -.0702524   -.0363947
+          DC  |  -.0459424   .0104518    -4.40   0.000    -.0673188   -.0245661
+          WV  |  -.0323077   .0157979    -2.05   0.050    -.0646181    2.69e-06
+          KY  |  -.0607607   .0151257    -4.02   0.000    -.0916962   -.0298252
+          OK  |  -.1028384   .0117472    -8.75   0.000    -.1268642   -.0788126
+          MT  |  -.0046029   .0028313    -1.63   0.115    -.0103935    .0011877
+          CO  |  -.0541829   .0071625    -7.56   0.000    -.0688318   -.0395341
+          NM  |  -.1048587   .0061407   -17.08   0.000    -.1174178   -.0922997
+          WA  |    .051491   .0070472     7.31   0.000     .0370779    .0659041
+          OR  |   .0156389   .0066152     2.36   0.025     .0021094    .0291684
+          CA  |    .034785   .0084863     4.10   0.000     .0174286    .0521414
+          AK  |   .0314051   .0070852     4.43   0.000     .0169143     .045896
+          HI  |   .0151428   .0051566     2.94   0.006     .0045964    .0256893
+              |
+         year |
+        1990  |   -.004897   .0035618    -1.37   0.180    -.0121817    .0023878
+        1991  |  -.0032815   .0049904    -0.66   0.516     -.013488     .006925
+        1992  |  -.0078775   .0047972    -1.64   0.111    -.0176888    .0019338
+        1993  |  -.0142928   .0056629    -2.52   0.017    -.0258746    -.002711
+        1996  |  -.0279778   .0051757    -5.41   0.000    -.0385633   -.0173924
+        1997  |   -.032527   .0050462    -6.45   0.000    -.0428478   -.0222063
+        1998  |  -.0381287   .0050978    -7.48   0.000    -.0485548   -.0277025
+        1999  |  -.0407749   .0042604    -9.57   0.000    -.0494884   -.0320613
+        2000  |  -.0458636   .0043629   -10.51   0.000    -.0547867   -.0369405
+        2001  |  -.0444255   .0059838    -7.42   0.000    -.0566638   -.0321873
+        2002  |  -.0448814   .0067141    -6.68   0.000    -.0586132   -.0311496
+        2003  |  -.0507834   .0058938    -8.62   0.000    -.0628376   -.0387292
+        2004  |  -.0546322   .0065063    -8.40   0.000     -.067939   -.0413253
+        2005  |  -.0651787   .0069442    -9.39   0.000    -.0793811   -.0509763
+        2006  |  -.0691147   .0076771    -9.00   0.000    -.0848162   -.0534132
+        2007  |  -.0647398   .0079323    -8.16   0.000    -.0809632   -.0485164
+        2008  |  -.0531644    .007844    -6.78   0.000    -.0692072   -.0371215
+        2009  |  -.0452643   .0065491    -6.91   0.000    -.0586586   -.0318699
+        2010  |  -.0495543   .0084654    -5.85   0.000    -.0668679   -.0322407
+        2011  |  -.0551812   .0066805    -8.26   0.000    -.0688444    -.041518
+        2012  |  -.0577797   .0061601    -9.38   0.000    -.0703785   -.0451809
+        2013  |  -.0575359   .0069176    -8.32   0.000     -.071684   -.0433878
+        2014  |  -.0642692   .0062208   -10.33   0.000     -.076992   -.0515463
+        2015  |  -.0700648   .0071874    -9.75   0.000    -.0847646    -.055365
+        2016  |  -.0685677   .0079678    -8.61   0.000    -.0848636   -.0522718
+        2017  |  -.0603556    .007416    -8.14   0.000    -.0755231   -.0451881
+        2018  |  -.0620564   .0059328   -10.46   0.000    -.0741904   -.0499224
+        2019  |  -.0703488   .0075681    -9.30   0.000    -.0858272   -.0548703
+              |
+         nind |
+           2  |   .1490522   .0166031     8.98   0.000      .115095    .1830094
+           3  |    .114138   .0147249     7.75   0.000     .0840223    .1442537
+           4  |   .0284154   .0131073     2.17   0.039      .001608    .0552228
+           5  |   .1976141   .0140323    14.08   0.000     .1689148    .2263133
+           6  |   .0202411   .0134805     1.50   0.144    -.0073297     .047812
+           7  |   .0085443   .0126352     0.68   0.504    -.0172976    .0343861
+           8  |   .0392212   .0178206     2.20   0.036      .002774    .0756684
+           9  |   .1599781   .0146088    10.95   0.000     .1300997    .1898564
+          10  |   .0170045   .0221529     0.77   0.449    -.0283032    .0623121
+          11  |    .116055   .0214618     5.41   0.000     .0721606    .1599494
+              |
+         educ |   .0098122   .0017777     5.52   0.000     .0061764    .0134479
+        exper |   .0092887   .0013852     6.71   0.000     .0064556    .0121218
+       exper2 |  -.0000844   .0000876    -0.96   0.343    -.0002635    .0000947
+       exper3 |   3.08e-06   2.68e-06     1.15   0.260    -2.40e-06    8.56e-06
+       exper4 |  -7.05e-08   2.75e-08    -2.56   0.016    -1.27e-07   -1.43e-08
+         edex |  -.0002944   .0000539    -5.47   0.000    -.0004046   -.0001843
+              |
+        ee_cl |
+           2  |  -.0233146    .007229    -3.23   0.003    -.0380996   -.0085296
+           3  |  -.0168956   .0079924    -2.11   0.043     -.033242   -.0005492
+           4  |  -.0340528   .0099464    -3.42   0.002    -.0543955   -.0137101
+           5  |  -.0887431   .0089725    -9.89   0.000     -.107094   -.0703922
+           6  |  -.0062154   .0067246    -0.92   0.363    -.0199687     .007538
+           7  |   .0067979   .0080873     0.84   0.407    -.0097424    .0233383
+           8  |  -.0476274    .012211    -3.90   0.001    -.0726017    -.022653
+           9  |  -.0672513   .0091976    -7.31   0.000    -.0860624   -.0484402
+          10  |   .0120512   .0079474     1.52   0.140    -.0042032    .0283055
+          11  |   .0060442   .0097646     0.62   0.541    -.0139267     .026015
+          12  |  -.0644508   .0145478    -4.43   0.000    -.0942045   -.0346972
+          13  |   .0139034   .0090719     1.53   0.136    -.0046507    .0324575
+          14  |   .0238882   .0082105     2.91   0.007     .0070957    .0406806
+          15  |   -.003189   .0101416    -0.31   0.755     -.023931    .0175529
+          16  |  -.0713529   .0156846    -4.55   0.000    -.1034316   -.0392742
+              |
+         marr |   .0195661   .0016743    11.69   0.000     .0161417    .0229905
+        partt |  -.0759136   .0043014   -17.65   0.000    -.0847109   -.0671162
+       public |   .3361407   .0215757    15.58   0.000     .2920134     .380268
+         cmsa |   .0491187   .0072599     6.77   0.000     .0342706    .0639669
+              |
+        nocc2 |
+           2  |   .0575273    .003425    16.80   0.000     .0505225    .0645322
+           3  |   .0415452   .0056484     7.36   0.000     .0299931    .0530974
+           4  |   .1956952    .005124    38.19   0.000     .1852154    .2061749
+           5  |   .1880852   .0168804    11.14   0.000     .1535608    .2226096
+           6  |   .1542368   .0059058    26.12   0.000     .1421581    .1663154
+           7  |   .0831558   .0029648    28.05   0.000      .077092    .0892195
+           8  |   .0710029   .0091628     7.75   0.000     .0522629    .0897429
+           9  |   .1978205   .0065473    30.21   0.000     .1844297    .2112113
+          10  |   .2329601   .0081896    28.45   0.000     .2162105    .2497096
+          11  |   .2538973   .0095362    26.62   0.000     .2343937     .273401
+          12  |   .2581539   .0086579    29.82   0.000     .2404465    .2758612
+              |
+      quarter |
+           2  |  -.0017422   .0020226    -0.86   0.396    -.0058788    .0023944
+           3  |  -.0036349   .0016733    -2.17   0.038    -.0070572   -.0002126
+           4  |  -.0045649   .0013069    -3.49   0.002    -.0072378    -.001892
+              |
+        unemp |  -.0030098   .0012629    -2.38   0.024    -.0055928   -.0004268
+        _cons |   -.259597   .0295938    -8.77   0.000    -.3201231    -.199071
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on Coverage for Men - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_covstag_mal.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_covstag_mal.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on Coverage for Men - Coefs
+>  on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_covstag_mal_blk.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_covstag_mal_blk.png written in PNG format)
+
+. 
+. reg covered lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state 
+> i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(clu
+> ster state)
+(sum of wgt is 5,726,442,181)
+
+Linear regression                               Number of obs     =    682,696
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.3162
+                                                Root MSE          =     .31646
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+      covered |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0139266   .0163972     0.85   0.403    -.0196094    .0474627
+         lag4 |   .0010602   .0122634     0.09   0.932    -.0240213    .0261417
+         lag3 |  -.0005172   .0118178    -0.04   0.965    -.0246872    .0236529
+         lag2 |   .0011046   .0061114     0.18   0.858    -.0113946    .0136038
+        lead0 |  -.0107901   .0056519    -1.91   0.066    -.0223496    .0007693
+        lead1 |  -.0076617   .0063513    -1.21   0.237    -.0206515     .005328
+        lead2 |  -.0183635   .0088984    -2.06   0.048    -.0365627   -.0001642
+    lag5black |   .0041397     .02428     0.17   0.866    -.0455184    .0537978
+    lag4black |  -.0477073    .025409    -1.88   0.071    -.0996745      .00426
+    lag3black |  -.0279049   .0265472    -1.05   0.302    -.0822001    .0263903
+    lag2black |   -.049434   .0282599    -1.75   0.091    -.1072319     .008364
+   lead0black |  -.0226727    .016705    -1.36   0.185    -.0568382    .0114928
+   lead1black |  -.0130126   .0315329    -0.41   0.683    -.0775046    .0514795
+   lead2black |  -.0304802   .0247885    -1.23   0.229    -.0811784    .0202181
+blackrelwhite |   .0723284   .0128294     5.64   0.000     .0460894    .0985674
+              |
+        state |
+          NH  |  -.0144801   .0022008    -6.58   0.000    -.0189812    -.009979
+          VT  |  -.0070814   .0014319    -4.95   0.000    -.0100099   -.0041528
+          MA  |   .0210524   .0043499     4.84   0.000     .0121558    .0299489
+          RI  |   .0374772   .0043963     8.52   0.000     .0284858    .0464687
+          CT  |   .0294528   .0043225     6.81   0.000     .0206123    .0382933
+          NY  |   .0953976   .0043684    21.84   0.000     .0864632     .104332
+          NJ  |   .0367369   .0045827     8.02   0.000     .0273643    .0461095
+          PA  |   .0143372   .0038238     3.75   0.001     .0065167    .0221577
+          OH  |  -.0020659   .0036124    -0.57   0.572    -.0094541    .0053223
+          IN  |  -.0519021   .0117546    -4.42   0.000    -.0759429   -.0278613
+          IL  |   .0063492   .0041911     1.51   0.141    -.0022226     .014921
+          MI  |   .0370281   .0120762     3.07   0.005     .0123294    .0617268
+          WI  |  -.0121514   .0130309    -0.93   0.359    -.0388026    .0144999
+          MN  |   .0393296   .0033273    11.82   0.000     .0325245    .0461347
+          MO  |  -.0482661   .0036732   -13.14   0.000    -.0557786   -.0407535
+          DE  |  -.0318397   .0035859    -8.88   0.000    -.0391737   -.0245057
+          MD  |  -.0463957   .0074794    -6.20   0.000    -.0616929   -.0310986
+          DC  |  -.0614837   .0088141    -6.98   0.000    -.0795107   -.0434568
+          WV  |  -.0433741   .0142806    -3.04   0.005    -.0725812   -.0141669
+          KY  |  -.0713665   .0130461    -5.47   0.000    -.0980486   -.0446843
+          OK  |  -.0802422   .0093027    -8.63   0.000    -.0992683   -.0612161
+          MT  |   .0037164   .0020395     1.82   0.079    -.0004549    .0078877
+          CO  |  -.0424258   .0040486   -10.48   0.000     -.050706   -.0341456
+          NM  |  -.0829993   .0032709   -25.37   0.000    -.0896891   -.0763095
+          WA  |   .0641926   .0037853    16.96   0.000     .0564508    .0719345
+          OR  |   .0477748   .0036742    13.00   0.000     .0402602    .0552894
+          CA  |   .0478181   .0044147    10.83   0.000     .0387889    .0568473
+          AK  |   .0603144   .0043961    13.72   0.000     .0513235    .0693054
+          HI  |   .0500935   .0030184    16.60   0.000     .0439201    .0562669
+              |
+         year |
+        1990  |  -.0003099   .0023471    -0.13   0.896    -.0051102    .0044904
+        1991  |  -.0001443   .0034972    -0.04   0.967    -.0072969    .0070083
+        1992  |   .0022445   .0030686     0.73   0.470    -.0040315    .0085205
+        1993  |   .0016913   .0035119     0.48   0.634    -.0054912    .0088739
+        1996  |  -.0000326   .0031473    -0.01   0.992    -.0064695    .0064042
+        1997  |  -.0038154   .0031098    -1.23   0.230    -.0101756    .0025449
+        1998  |  -.0101962   .0039595    -2.58   0.015    -.0182944   -.0020981
+        1999  |  -.0118422   .0036658    -3.23   0.003    -.0193396   -.0043448
+        2000  |  -.0085858   .0029564    -2.90   0.007    -.0146322   -.0025393
+        2001  |  -.0075068   .0025457    -2.95   0.006    -.0127134   -.0023002
+        2002  |   -.006351   .0047148    -1.35   0.188     -.015994    .0032919
+        2003  |  -.0130215   .0037718    -3.45   0.002    -.0207356   -.0053074
+        2004  |  -.0161904   .0044095    -3.67   0.001    -.0252089   -.0071719
+        2005  |  -.0198476   .0047328    -4.19   0.000    -.0295273   -.0101678
+        2006  |  -.0217651   .0045472    -4.79   0.000    -.0310652   -.0124649
+        2007  |  -.0180067     .00597    -3.02   0.005    -.0302167   -.0057967
+        2008  |  -.0153233   .0055109    -2.78   0.009    -.0265943   -.0040523
+        2009  |  -.0065225   .0067961    -0.96   0.345     -.020422    .0073771
+        2010  |  -.0096881   .0067994    -1.42   0.165    -.0235944    .0042182
+        2011  |  -.0082402   .0066001    -1.25   0.222     -.021739    .0052586
+        2012  |  -.0167472   .0066575    -2.52   0.018    -.0303633   -.0031311
+        2013  |  -.0157435   .0071173    -2.21   0.035    -.0303001   -.0011869
+        2014  |  -.0187526   .0063679    -2.94   0.006    -.0317765   -.0057287
+        2015  |  -.0248921   .0071146    -3.50   0.002    -.0394431    -.010341
+        2016  |   -.017999   .0060749    -2.96   0.006    -.0304235   -.0055745
+        2017  |  -.0231557   .0070523    -3.28   0.003    -.0375793   -.0087321
+        2018  |   -.029771   .0050821    -5.86   0.000    -.0401651    -.019377
+        2019  |   -.026926   .0077243    -3.49   0.002     -.042724    -.011128
+              |
+         nind |
+           2  |   .0609043    .011513     5.29   0.000     .0373576     .084451
+           3  |   .0744387    .011819     6.30   0.000     .0502662    .0986112
+           4  |   .0660695   .0078279     8.44   0.000     .0500597    .0820793
+           5  |   .1983105   .0097998    20.24   0.000     .1782677    .2183533
+           6  |   .0346734   .0087849     3.95   0.000     .0167061    .0526406
+           7  |    .023816   .0086791     2.74   0.010     .0060652    .0415668
+           8  |   .0545635   .0103712     5.26   0.000      .033352    .0757749
+           9  |   .1942154   .0128213    15.15   0.000     .1679929    .2204379
+          10  |   .0197214    .008515     2.32   0.028     .0023062    .0371365
+          11  |     .04096   .0217018     1.89   0.069    -.0034251    .0853452
+              |
+         educ |   .0153319   .0023701     6.47   0.000     .0104845    .0201793
+        exper |   .0111012   .0014842     7.48   0.000     .0080657    .0141367
+       exper2 |  -.0004289   .0000908    -4.72   0.000    -.0006147   -.0002431
+       exper3 |   .0000107   2.99e-06     3.57   0.001     4.55e-06    .0000168
+       exper4 |  -1.03e-07   3.20e-08    -3.23   0.003    -1.69e-07   -3.78e-08
+         edex |  -.0001897   .0000534    -3.55   0.001    -.0002989   -.0000804
+              |
+        ee_cl |
+           2  |  -.0363103   .0056559    -6.42   0.000     -.047878   -.0247427
+           3  |  -.0693844   .0066869   -10.38   0.000    -.0830607   -.0557081
+           4  |  -.0998021   .0137284    -7.27   0.000    -.1278798   -.0717245
+           5  |   -.047635   .0081661    -5.83   0.000    -.0643365   -.0309335
+           6  |  -.0422845   .0062159    -6.80   0.000    -.0549974   -.0295717
+           7  |  -.0637201    .008622    -7.39   0.000    -.0813542    -.046086
+           8  |  -.0916965   .0130779    -7.01   0.000    -.1184437   -.0649493
+           9  |  -.0284075   .0091565    -3.10   0.004    -.0471347   -.0096804
+          10  |  -.0427791   .0077362    -5.53   0.000    -.0586014   -.0269567
+          11  |  -.0635468   .0094793    -6.70   0.000    -.0829341   -.0441594
+          12  |  -.0840349    .012237    -6.87   0.000    -.1090623   -.0590075
+          13  |  -.0011038   .0087754    -0.13   0.901    -.0190515    .0168439
+          14  |  -.0380454   .0087823    -4.33   0.000    -.0560072   -.0200837
+          15  |  -.0605883   .0103248    -5.87   0.000    -.0817049   -.0394718
+          16  |  -.0782705   .0138683    -5.64   0.000    -.1066343   -.0499066
+              |
+         marr |  -.0003168   .0011692    -0.27   0.788     -.002708    .0020744
+        partt |  -.0670178   .0054229   -12.36   0.000    -.0781088   -.0559268
+       public |   .3661865   .0227754    16.08   0.000     .3196057    .4127674
+         cmsa |   .0260955   .0041178     6.34   0.000     .0176736    .0345174
+              |
+        nocc2 |
+           2  |   .0236238   .0022966    10.29   0.000     .0189267    .0283208
+           3  |    .042256   .0068901     6.13   0.000     .0281641    .0563479
+           4  |   .1701069   .0041935    40.56   0.000     .1615303    .1786836
+           5  |   .1760397   .0144486    12.18   0.000      .146489    .2055904
+           6  |   .0760121   .0036495    20.83   0.000     .0685481    .0834761
+           7  |   .1051229     .00572    18.38   0.000     .0934243    .1168216
+           8  |   .0581173   .0046765    12.43   0.000     .0485529    .0676817
+           9  |   .1196106   .0082642    14.47   0.000     .1027085    .1365127
+          10  |   .2248007   .0091929    24.45   0.000     .2059991    .2436023
+          11  |   .2575921   .0094106    27.37   0.000     .2383453     .276839
+          12  |   .2236671   .0118183    18.93   0.000      .199496    .2478381
+              |
+      quarter |
+           2  |  -.0021378    .001239    -1.73   0.095    -.0046719    .0003963
+           3  |  -.0003044   .0011345    -0.27   0.790    -.0026247     .002016
+           4  |  -.0036746   .0015573    -2.36   0.025    -.0068597   -.0004895
+              |
+        unemp |  -.0017041   .0012049    -1.41   0.168    -.0041684    .0007602
+        _cons |  -.2924706    .032281    -9.06   0.000    -.3584928   -.2264485
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on Coverage for Women - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_covstag_fem.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_covstag_fem.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on Coverage for Women - Coe
+> fs on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_covstag_fem_blk.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_covstag_fem_blk.png written in PNG format)
+
+. 
+. reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i
+> .year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(clus
+> ter state)
+(sum of wgt is 5,866,086,925)
+
+Linear regression                               Number of obs     =    677,009
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.5103
+                                                Root MSE          =     .41705
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+       lwage3 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |    .055506   .0172732     3.21   0.003     .0201782    .0908337
+         lag4 |    .008206   .0069169     1.19   0.245    -.0059407    .0223526
+         lag3 |   .0074161   .0041247     1.80   0.083    -.0010197     .015852
+         lag2 |   .0131253   .0169142     0.78   0.444     -.021468    .0477187
+        lead0 |   .0028226    .009246     0.31   0.762    -.0160875    .0217328
+        lead1 |   .0266359   .0074288     3.59   0.001     .0114422    .0418296
+        lead2 |   .0133657   .0147794     0.90   0.373    -.0168617     .043593
+    lag5black |   .0501714   .0153242     3.27   0.003     .0188299    .0815128
+    lag4black |   .0219164   .0241811     0.91   0.372    -.0275395    .0713722
+    lag3black |   .0258609   .0256353     1.01   0.321    -.0265692    .0782909
+    lag2black |   .0555597   .0192159     2.89   0.007     .0162587    .0948607
+   lead0black |   .0107154   .0182352     0.59   0.561    -.0265797    .0480106
+   lead1black |  -.0515238   .0342076    -1.51   0.143    -.1214861    .0184386
+   lead2black |  -.0045021   .0104805    -0.43   0.671    -.0259372    .0169329
+blackrelwhite |   -.149566    .005832   -25.65   0.000    -.1614938   -.1376381
+              |
+        state |
+          NH  |   .0863552    .004998    17.28   0.000     .0761332    .0965771
+          VT  |   .0223613   .0018985    11.78   0.000     .0184784    .0262443
+          MA  |   .1204582   .0119713    10.06   0.000     .0959742    .1449422
+          RI  |   .0351386   .0129843     2.71   0.011     .0085827    .0616946
+          CT  |   .1335905   .0118792    11.25   0.000     .1092948    .1578861
+          NY  |   .1012498   .0119449     8.48   0.000     .0768197    .1256798
+          NJ  |    .173437   .0130884    13.25   0.000     .1466683    .2002057
+          PA  |   .0129368   .0094866     1.36   0.183    -.0064655     .032339
+          OH  |  -.0142382   .0092958    -1.53   0.136    -.0332503    .0047739
+          IN  |   -.043475   .0163862    -2.65   0.013    -.0769886   -.0099615
+          IL  |   .0857386   .0106834     8.03   0.000     .0638886    .1075885
+          MI  |  -.0008248    .018612    -0.04   0.965    -.0388906     .037241
+          WI  |  -.0295221   .0173165    -1.70   0.099    -.0649383    .0058941
+          MN  |   .0675166   .0083687     8.07   0.000     .0504007    .0846324
+          MO  |    -.01867   .0088133    -2.12   0.043    -.0366952   -.0006448
+          DE  |   .0511749   .0024879    20.57   0.000     .0460866    .0562632
+          MD  |   .1248805   .0124253    10.05   0.000     .0994679    .1502932
+          DC  |   .1792469   .0169221    10.59   0.000     .1446373    .2138565
+          WV  |  -.0908241   .0137336    -6.61   0.000    -.1189124   -.0627357
+          KY  |  -.0913597     .01665    -5.49   0.000    -.1254128   -.0573065
+          OK  |  -.1042361    .014305    -7.29   0.000    -.1334931   -.0749791
+          MT  |  -.0343246   .0019374   -17.72   0.000     -.038287   -.0303622
+          CO  |   .0351332   .0110973     3.17   0.004     .0124366    .0578298
+          NM  |  -.0328919   .0079893    -4.12   0.000    -.0492319   -.0165519
+          WA  |   .1014202   .0110112     9.21   0.000     .0788997    .1239408
+          OR  |   .0300712   .0102085     2.95   0.006     .0091925    .0509499
+          CA  |   .1651749   .0136402    12.11   0.000     .1372775    .1930723
+          AK  |   .2423806   .0090388    26.82   0.000     .2238943    .2608669
+          HI  |   .1097606   .0089761    12.23   0.000     .0914023    .1281189
+              |
+         year |
+        1990  |  -.0072704   .0034746    -2.09   0.045    -.0143768   -.0001639
+        1991  |  -.0160349    .004912    -3.26   0.003    -.0260812   -.0059887
+        1992  |  -.0148162   .0061971    -2.39   0.024    -.0274907   -.0021418
+        1993  |  -.0264545   .0046068    -5.74   0.000    -.0358764   -.0170325
+        1996  |  -.0285897   .0064124    -4.46   0.000    -.0417045    -.015475
+        1997  |  -.0191466   .0063394    -3.02   0.005    -.0321121    -.006181
+        1998  |   .0002055   .0046111     0.04   0.965    -.0092253    .0096362
+        1999  |   .0213176   .0067711     3.15   0.004     .0074692     .035166
+        2000  |   .0309052   .0067826     4.56   0.000     .0170333    .0447771
+        2001  |   .0479341   .0073059     6.56   0.000     .0329919    .0628763
+        2002  |   .0576521   .0071426     8.07   0.000     .0430439    .0722604
+        2003  |   .0441251   .0076695     5.75   0.000     .0284393    .0598109
+        2004  |   .0379191   .0077454     4.90   0.000     .0220779    .0537603
+        2005  |   .0206394   .0075129     2.75   0.010     .0052737    .0360051
+        2006  |   .0145099   .0084933     1.71   0.098    -.0028609    .0318806
+        2007  |   .0153545   .0098445     1.56   0.130    -.0047797    .0354887
+        2008  |   .0108075   .0100749     1.07   0.292    -.0097979     .031413
+        2009  |   .0365028   .0119526     3.05   0.005     .0120569    .0609487
+        2010  |   .0315572   .0099703     3.17   0.004     .0111656    .0519487
+        2011  |   .0121475   .0098972     1.23   0.230    -.0080946    .0323895
+        2012  |   .0022238   .0115111     0.19   0.848    -.0213191    .0257667
+        2013  |    .001608   .0093207     0.17   0.864     -.017455    .0206711
+        2014  |  -.0035699   .0075272    -0.47   0.639    -.0189648    .0118251
+        2015  |   .0162517   .0078418     2.07   0.047     .0002135      .03229
+        2016  |   .0218243   .0094617     2.31   0.028     .0024731    .0411756
+        2017  |   .0333389   .0105333     3.17   0.004     .0117958     .054882
+        2018  |   .0386515   .0104412     3.70   0.001     .0172969     .060006
+        2019  |     .05891   .0096981     6.07   0.000     .0390751     .078745
+              |
+         nind |
+           2  |   .1261493   .0316657     3.98   0.000     .0613856     .190913
+           3  |    .116948   .0283834     4.12   0.000     .0588974    .1749987
+           4  |  -.0704243    .029084    -2.42   0.022    -.1299077    -.010941
+           5  |   .1470091    .027887     5.27   0.000     .0899738    .2040443
+           6  |   .1198587    .032633     3.67   0.001     .0531168    .1866007
+           7  |   .0161901   .0305993     0.53   0.601    -.0463923    .0787726
+           8  |  -.0493053    .028921    -1.70   0.099    -.1084555    .0098449
+           9  |  -.0388126   .0297859    -1.30   0.203    -.0997317    .0221064
+          10  |  -.0825922   .0318727    -2.59   0.015    -.1477791   -.0174052
+          11  |   .1338979    .030336     4.41   0.000     .0718539    .1959419
+              |
+         educ |   .0670849   .0025244    26.57   0.000     .0619219    .0722478
+        exper |   .0452528   .0024602    18.39   0.000     .0402212    .0502845
+       exper2 |    -.00101   .0001139    -8.87   0.000     -.001243    -.000777
+       exper3 |   6.48e-06   2.72e-06     2.39   0.024     9.28e-07     .000012
+       exper4 |   1.42e-08   2.58e-08     0.55   0.585    -3.85e-08    6.69e-08
+         edex |  -.0003413   .0000717    -4.76   0.000    -.0004879   -.0001946
+              |
+        ee_cl |
+           2  |   -.063505   .0056449   -11.25   0.000    -.0750502   -.0519598
+           3  |  -.0743032   .0069699   -10.66   0.000    -.0885582   -.0600481
+           4  |  -.0362237    .011395    -3.18   0.004    -.0595292   -.0129182
+           5  |  -.1380612   .0090984   -15.17   0.000    -.1566696   -.1194528
+           6  |  -.0836479   .0069699   -12.00   0.000     -.097903   -.0693929
+           7  |  -.0662026   .0079731    -8.30   0.000    -.0825095   -.0498958
+           8  |   .0138816   .0110923     1.25   0.221    -.0088047    .0365678
+           9  |  -.1420935    .010691   -13.29   0.000    -.1639591   -.1202278
+          10  |  -.0904599   .0096523    -9.37   0.000     -.110201   -.0707188
+          11  |  -.0603136   .0096271    -6.27   0.000    -.0800032    -.040624
+          12  |   .0130527   .0120305     1.08   0.287    -.0115525    .0376579
+          13  |  -.0517236   .0118781    -4.35   0.000     -.076017   -.0274303
+          14  |  -.0700289    .011424    -6.13   0.000    -.0933936   -.0466642
+          15  |  -.0521527   .0103447    -5.04   0.000    -.0733101   -.0309953
+          16  |   .0058265   .0127141     0.46   0.650    -.0201768    .0318297
+              |
+         marr |   .1207649   .0032256    37.44   0.000     .1141678    .1273621
+        partt |  -.2244245   .0058494   -38.37   0.000    -.2363879    -.212461
+       public |   .0323687   .0072634     4.46   0.000     .0175134     .047224
+         cmsa |    .145144   .0126251    11.50   0.000     .1193228    .1709653
+              |
+        nocc2 |
+           2  |  -.1432639   .0044185   -32.42   0.000    -.1523008    -.134227
+           3  |  -.0442727    .007932    -5.58   0.000    -.0604955   -.0280499
+           4  |    -.28203   .0124172   -22.71   0.000    -.3074261    -.256634
+           5  |  -.0719928   .0094187    -7.64   0.000    -.0912563   -.0527293
+           6  |  -.3731957   .0078536   -47.52   0.000    -.3892582   -.3571332
+           7  |  -.2314175   .0066801   -34.64   0.000    -.2450798   -.2177551
+           8  |  -.0944412   .0146851    -6.43   0.000    -.1244756   -.0644068
+           9  |  -.3860422   .0051131   -75.50   0.000    -.3964998   -.3755846
+          10  |  -.3285833   .0066001   -49.78   0.000    -.3420819   -.3150847
+          11  |  -.2145867   .0060148   -35.68   0.000    -.2268883    -.202285
+          12  |  -.3789381   .0076472   -49.55   0.000    -.3945783   -.3632979
+              |
+      quarter |
+           2  |    .001252    .002172     0.58   0.569    -.0031902    .0056943
+           3  |   .0027299   .0026811     1.02   0.317    -.0027536    .0082134
+           4  |    .013085   .0020036     6.53   0.000     .0089872    .0171829
+              |
+        unemp |  -.0030682   .0018664    -1.64   0.111    -.0068855    .0007491
+        _cons |   .6323659   .0487417    12.97   0.000     .5326779    .7320539
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Men - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_wagstag_mal.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_wagstag_mal.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Men - Coefs o
+> n Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_wagstag_mal_blk.png", replace  
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_wagstag_mal_blk.png written in PNG format)
+
+. 
+. reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i
+> .year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(clus
+> ter state)
+(sum of wgt is 5,734,824,966)
+
+Linear regression                               Number of obs     =    683,919
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.5061
+                                                Root MSE          =     .39553
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+       lwage3 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0322874   .0135197     2.39   0.024     .0046365    .0599384
+         lag4 |   .0120952   .0096267     1.26   0.219    -.0075935    .0317839
+         lag3 |   .0153689    .009753     1.58   0.126    -.0045781     .035316
+         lag2 |  -.0010672   .0061266    -0.17   0.863    -.0135975    .0114631
+        lead0 |   .0024293    .012516     0.19   0.847    -.0231688    .0280273
+        lead1 |  -.0003118   .0058292    -0.05   0.958    -.0122339    .0116102
+        lead2 |  -.0125178    .009198    -1.36   0.184    -.0313298    .0062942
+    lag5black |   .0204702   .0144232     1.42   0.166    -.0090285     .049969
+    lag4black |   -.003931   .0274482    -0.14   0.887    -.0600688    .0522069
+    lag3black |   -.038886   .0302246    -1.29   0.208    -.1007021    .0229302
+    lag2black |  -.0000406   .0255157    -0.00   0.999    -.0522262     .052145
+   lead0black |  -.0382632   .0145297    -2.63   0.013    -.0679797   -.0085466
+   lead1black |  -.0273901   .0191382    -1.43   0.163    -.0665321     .011752
+   lead2black |   -.010338   .0088746    -1.16   0.254    -.0284886    .0078126
+blackrelwhite |   -.068873    .007193    -9.58   0.000    -.0835842   -.0541617
+              |
+        state |
+          NH  |   .0572402   .0045157    12.68   0.000     .0480045    .0664758
+          VT  |   .0361707   .0019995    18.09   0.000     .0320812    .0402602
+          MA  |   .1011566   .0114623     8.83   0.000     .0777135    .1245998
+          RI  |   .0244897   .0120317     2.04   0.051    -.0001178    .0490973
+          CT  |   .1114833   .0114418     9.74   0.000     .0880821    .1348844
+          NY  |   .0645595   .0110593     5.84   0.000     .0419407    .0871784
+          NJ  |   .1282899   .0124384    10.31   0.000     .1028505    .1537293
+          PA  |  -.0298599   .0092559    -3.23   0.003    -.0487903   -.0109295
+          OH  |  -.0619952   .0090727    -6.83   0.000    -.0805511   -.0434394
+          IN  |  -.0928305   .0137496    -6.75   0.000    -.1209516   -.0647093
+          IL  |   .0031891   .0103758     0.31   0.761    -.0180318      .02441
+          MI  |  -.0458672   .0156961    -2.92   0.007    -.0779695    -.013765
+          WI  |  -.0400069   .0143184    -2.79   0.009    -.0692912   -.0107226
+          MN  |   .0490658   .0078553     6.25   0.000     .0329999    .0651316
+          MO  |  -.0816213   .0084894    -9.61   0.000     -.098984   -.0642586
+          DE  |   .0509016   .0031779    16.02   0.000      .044402    .0574012
+          MD  |   .0961424   .0121981     7.88   0.000     .0711945    .1210904
+          DC  |   .1508185   .0162386     9.29   0.000     .1176069    .1840302
+          WV  |  -.1780145   .0117331   -15.17   0.000    -.2020113   -.1540177
+          KY  |   -.121711   .0137522    -8.85   0.000    -.1498375   -.0935845
+          OK  |  -.1587081   .0124903   -12.71   0.000    -.1842537   -.1331625
+          MT  |  -.0771413   .0010071   -76.60   0.000    -.0792011   -.0750816
+          CO  |  -.0042662   .0107454    -0.40   0.694     -.026243    .0177106
+          NM  |  -.0983774   .0071763   -13.71   0.000    -.1130545   -.0837003
+          WA  |   .0586057   .0104874     5.59   0.000     .0371567    .0800548
+          OR  |  -.0050605   .0098301    -0.51   0.611    -.0251654    .0150444
+          CA  |   .1249478   .0129531     9.65   0.000     .0984558    .1514397
+          AK  |   .1802203     .00748    24.09   0.000      .164922    .1955185
+          HI  |   .0733213   .0078711     9.32   0.000      .057223    .0894196
+              |
+         year |
+        1990  |  -.0047169   .0039665    -1.19   0.244    -.0128294    .0033955
+        1991  |   -.001803   .0043043    -0.42   0.678    -.0106064    .0070004
+        1992  |   .0171304   .0058182     2.94   0.006     .0052309      .02903
+        1993  |    .013803   .0061234     2.25   0.032     .0012791    .0263268
+        1996  |   .0086109   .0048749     1.77   0.088    -.0013593    .0185812
+        1997  |   .0149174   .0049062     3.04   0.005     .0048831    .0249517
+        1998  |   .0481342    .004129    11.66   0.000     .0396893     .056579
+        1999  |   .0614021   .0055248    11.11   0.000     .0501026    .0727016
+        2000  |    .073054   .0059467    12.28   0.000     .0608915    .0852164
+        2001  |   .0885188   .0055764    15.87   0.000     .0771138    .0999239
+        2002  |   .0977586   .0062069    15.75   0.000      .085064    .1104532
+        2003  |   .1048577   .0061593    17.02   0.000     .0922605     .117455
+        2004  |   .0971435   .0068933    14.09   0.000     .0830452    .1112419
+        2005  |   .0908383   .0062158    14.61   0.000     .0781256     .103551
+        2006  |    .080874   .0059631    13.56   0.000      .068678    .0930699
+        2007  |   .0791762    .007496    10.56   0.000     .0638452    .0945072
+        2008  |   .0727511   .0086162     8.44   0.000     .0551289    .0903733
+        2009  |   .0934169   .0103209     9.05   0.000     .0723084    .1145255
+        2010  |   .0925993   .0094137     9.84   0.000      .073346    .1118525
+        2011  |   .0733495   .0081086     9.05   0.000     .0567656    .0899334
+        2012  |   .0574883   .0072804     7.90   0.000     .0425982    .0723784
+        2013  |   .0605922   .0075631     8.01   0.000     .0451239    .0760604
+        2014  |   .0581062   .0072961     7.96   0.000      .043184    .0730285
+        2015  |   .0713673   .0069759    10.23   0.000     .0570999    .0856347
+        2016  |     .08331    .008908     9.35   0.000      .065091     .101529
+        2017  |   .0954907   .0090534    10.55   0.000     .0769743     .114007
+        2018  |   .1013595   .0093107    10.89   0.000      .082317     .120402
+        2019  |   .1105584   .0072553    15.24   0.000     .0957196    .1253971
+              |
+         nind |
+           2  |   .1109011   .0230117     4.82   0.000     .0638368    .1579653
+           3  |   .1796123   .0217325     8.26   0.000     .1351643    .2240603
+           4  |  -.0425855   .0229653    -1.85   0.074    -.0895549    .0043838
+           5  |   .1957692   .0213865     9.15   0.000     .1520289    .2395095
+           6  |   .1360389   .0236826     5.74   0.000     .0876025    .1844752
+           7  |   .0807443   .0237952     3.39   0.002     .0320776    .1294109
+           8  |   .0282037    .021773     1.30   0.205    -.0163271    .0727346
+           9  |  -.0096128   .0230508    -0.42   0.680     -.056757    .0375314
+          10  |  -.0414845   .0218931    -1.89   0.068    -.0862609    .0032919
+          11  |   .1149369   .0234173     4.91   0.000     .0670433    .1628306
+              |
+         educ |   .0899232   .0029105    30.90   0.000     .0839705    .0958759
+        exper |   .0485298   .0030841    15.74   0.000     .0422222    .0548375
+       exper2 |  -.0016877   .0001255   -13.45   0.000    -.0019443    -.001431
+       exper3 |   .0000267   3.63e-06     7.35   0.000     .0000193    .0000341
+       exper4 |  -1.41e-07   3.78e-08    -3.73   0.001    -2.18e-07   -6.36e-08
+         edex |  -.0004079    .000109    -3.74   0.001    -.0006307   -.0001851
+              |
+        ee_cl |
+           2  |  -.1248529   .0070095   -17.81   0.000     -.139189   -.1105168
+           3  |  -.1659492   .0104513   -15.88   0.000    -.1873245   -.1445739
+           4  |  -.1750922   .0168876   -10.37   0.000    -.2096311   -.1405533
+           5  |  -.1637767    .012487   -13.12   0.000    -.1893155   -.1382378
+           6  |  -.1664563     .01291   -12.89   0.000    -.1928603   -.1400524
+           7  |  -.1779852   .0144185   -12.34   0.000    -.2074743   -.1484961
+           8  |  -.1149312   .0183589    -6.26   0.000    -.1524794   -.0773831
+           9  |  -.1530151   .0134637   -11.37   0.000    -.1805514   -.1254788
+          10  |   -.172913   .0160895   -10.75   0.000    -.2058198   -.1400061
+          11  |  -.1728033   .0158717   -10.89   0.000    -.2052646   -.1403419
+          12  |   -.130941    .014737    -8.89   0.000    -.1610814   -.1008005
+          13  |  -.0938163   .0202152    -4.64   0.000    -.1351611   -.0524716
+          14  |   -.154254   .0169825    -9.08   0.000    -.1889871   -.1195208
+          15  |  -.1415928    .016854    -8.40   0.000    -.1760631   -.1071225
+          16  |  -.1227211   .0145532    -8.43   0.000    -.1524857   -.0929565
+              |
+         marr |   .0352581   .0032875    10.72   0.000     .0285344    .0419819
+        partt |  -.1455664     .00372   -39.13   0.000    -.1531747    -.137958
+       public |   .0703556   .0079845     8.81   0.000     .0540255    .0866857
+         cmsa |      .1527   .0117516    12.99   0.000     .1286653    .1767346
+              |
+        nocc2 |
+           2  |   -.127208   .0044493   -28.59   0.000    -.1363079   -.1181081
+           3  |   -.046746    .008788    -5.32   0.000    -.0647195   -.0287725
+           4  |  -.2711614    .007938   -34.16   0.000    -.2873964   -.2549263
+           5  |   .0604286   .0074446     8.12   0.000     .0452028    .0756545
+           6  |  -.3251457   .0056447   -57.60   0.000    -.3366904    -.313601
+           7  |  -.3481823    .005396   -64.53   0.000    -.3592183   -.3371462
+           8  |   -.160208   .0093013   -17.22   0.000    -.1792312   -.1411848
+           9  |  -.4050088   .0069661   -58.14   0.000    -.4192561   -.3907615
+          10  |  -.4074143    .013711   -29.71   0.000    -.4354564   -.3793721
+          11  |  -.1464026   .0104543   -14.00   0.000    -.1677839   -.1250212
+          12  |   -.381562   .0113574   -33.60   0.000    -.4047905   -.3583335
+              |
+      quarter |
+           2  |   .0088962   .0019228     4.63   0.000     .0049636    .0128288
+           3  |   .0159854   .0020513     7.79   0.000       .01179    .0201809
+           4  |   .0209318   .0014273    14.67   0.000     .0180127    .0238508
+              |
+        unemp |   .0004137   .0013571     0.30   0.763    -.0023619    .0031893
+        _cons |   .2879076    .041875     6.88   0.000     .2022637    .3735516
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Women - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_wagstag_fem.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_wagstag_fem.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Women - Coefs
+>  on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_wagstag_fem_blk.png", replace  
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_wagstag_fem_blk.png written in PNG format)
+
+. 
+. reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i
+> .year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered
+>  == 0, vce(cluster state)
+(sum of wgt is 4,573,856,658)
+
+Linear regression                               Number of obs     =    528,582
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.5476
+                                                Root MSE          =     .42207
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+       lwage3 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0501324   .0133912     3.74   0.001     .0227444    .0775204
+         lag4 |   .0042639   .0068385     0.62   0.538    -.0097225    .0182503
+         lag3 |   .0075797   .0069032     1.10   0.281    -.0065389    .0216984
+         lag2 |   .0090004   .0191019     0.47   0.641    -.0300675    .0480682
+        lead0 |   .0038776   .0077603     0.50   0.621    -.0119939    .0197491
+        lead1 |   .0269879   .0065964     4.09   0.000     .0134968     .040479
+        lead2 |   .0161492   .0142399     1.13   0.266    -.0129748    .0452731
+    lag5black |   .0172398   .0096193     1.79   0.084    -.0024339    .0369136
+    lag4black |  -.0039217   .0354515    -0.11   0.913     -.076428    .0685847
+    lag3black |   .0264552   .0244604     1.08   0.288     -.023572    .0764824
+    lag2black |   .0505478   .0151329     3.34   0.002     .0195975    .0814982
+   lead0black |   .0241225   .0261792     0.92   0.364    -.0294199     .077665
+   lead1black |  -.0618962   .0412386    -1.50   0.144    -.1462385    .0224462
+   lead2black |   .0067337   .0103317     0.65   0.520     -.014397    .0278645
+blackrelwhite |  -.1584865    .005445   -29.11   0.000    -.1696227   -.1473503
+              |
+        state |
+          NH  |   .0911611   .0050709    17.98   0.000     .0807898    .1015323
+          VT  |   .0351785   .0022521    15.62   0.000     .0305725    .0397846
+          MA  |   .1162386   .0120261     9.67   0.000     .0916424    .1408349
+          RI  |   .0287058   .0126238     2.27   0.031     .0028872    .0545244
+          CT  |   .1232479    .011977    10.29   0.000     .0987521    .1477436
+          NY  |   .0721317   .0120226     6.00   0.000     .0475427    .0967207
+          NJ  |   .1528161   .0131185    11.65   0.000     .1259858    .1796465
+          PA  |    .002812    .009393     0.30   0.767    -.0163989    .0220228
+          OH  |  -.0296029   .0093444    -3.17   0.004    -.0487143   -.0104914
+          IN  |  -.0476643   .0133413    -3.57   0.001    -.0749503   -.0203783
+          IL  |   .0616522   .0111082     5.55   0.000     .0389333    .0843711
+          MI  |  -.0233205   .0156455    -1.49   0.147    -.0553193    .0086782
+          WI  |    -.03129   .0140314    -2.23   0.034    -.0599875   -.0025925
+          MN  |   .0542541    .008381     6.47   0.000     .0371129    .0713952
+          MO  |  -.0353085   .0084755    -4.17   0.000    -.0526427   -.0179742
+          DE  |   .0576752   .0022824    25.27   0.000     .0530071    .0623434
+          MD  |   .1293152    .012051    10.73   0.000     .1046682    .1539623
+          DC  |    .191176   .0175137    10.92   0.000     .1553565    .2269955
+          WV  |  -.0986826   .0109339    -9.03   0.000    -.1210449   -.0763203
+          KY  |  -.0839539   .0131271    -6.40   0.000    -.1108018   -.0571059
+          OK  |  -.0896895   .0133498    -6.72   0.000     -.116993    -.062386
+          MT  |  -.0379175   .0017149   -22.11   0.000    -.0414249   -.0344101
+          CO  |   .0424972   .0107256     3.96   0.000     .0205609    .0644335
+          NM  |  -.0200087   .0073097    -2.74   0.010    -.0349587   -.0050587
+          WA  |   .0891503   .0109609     8.13   0.000     .0667328    .1115678
+          OR  |   .0212776   .0100602     2.12   0.043     .0007022     .041853
+          CA  |   .1503336   .0137004    10.97   0.000     .1223132    .1783541
+          AK  |   .2365493   .0085077    27.80   0.000     .2191492    .2539495
+          HI  |   .1109008    .008399    13.20   0.000     .0937229    .1280787
+              |
+         year |
+        1990  |  -.0025976   .0037764    -0.69   0.497    -.0103212    .0051261
+        1991  |  -.0105185   .0076798    -1.37   0.181    -.0262255    .0051885
+        1992  |  -.0091728   .0075204    -1.22   0.232    -.0245538    .0062081
+        1993  |  -.0228304   .0055686    -4.10   0.000    -.0342194   -.0114413
+        1996  |  -.0262999   .0083719    -3.14   0.004    -.0434225   -.0091774
+        1997  |  -.0167454   .0076103    -2.20   0.036    -.0323103   -.0011806
+        1998  |   .0082486   .0064822     1.27   0.213    -.0050091    .0215062
+        1999  |   .0329722   .0086568     3.81   0.001     .0152671    .0506773
+        2000  |   .0466499   .0079132     5.90   0.000     .0304655    .0628343
+        2001  |    .066865   .0087871     7.61   0.000     .0488932    .0848367
+        2002  |   .0766576   .0069733    10.99   0.000     .0623956    .0909196
+        2003  |   .0580096    .010042     5.78   0.000     .0374713    .0785479
+        2004  |   .0546028   .0087787     6.22   0.000     .0366483    .0725573
+        2005  |   .0370814   .0094104     3.94   0.000      .017835    .0563278
+        2006  |   .0307569    .008619     3.57   0.001      .013129    .0483848
+        2007  |   .0307132   .0097641     3.15   0.004     .0107434     .050683
+        2008  |   .0270398   .0099458     2.72   0.011     .0066983    .0473813
+        2009  |   .0543849   .0158718     3.43   0.002     .0219234    .0868464
+        2010  |   .0448185   .0136445     3.28   0.003     .0169124    .0727246
+        2011  |   .0259264   .0136004     1.91   0.067    -.0018895    .0537423
+        2012  |   .0183605   .0146638     1.25   0.221    -.0116303    .0483512
+        2013  |   .0179366   .0112329     1.60   0.121    -.0050372    .0409104
+        2014  |   .0114651   .0092915     1.23   0.227    -.0075381    .0304682
+        2015  |   .0353861   .0083685     4.23   0.000     .0182706    .0525016
+        2016  |   .0426991   .0099793     4.28   0.000     .0222892     .063109
+        2017  |   .0502104   .0110253     4.55   0.000     .0276611    .0727597
+        2018  |   .0570316   .0114666     4.97   0.000     .0335797    .0804835
+        2019  |   .0800279   .0104871     7.63   0.000     .0585793    .1014765
+              |
+         nind |
+           2  |   .0718817   .0296836     2.42   0.022     .0111719    .1325915
+           3  |   .1141871   .0271798     4.20   0.000     .0585981     .169776
+           4  |  -.0554017    .028413    -1.95   0.061    -.1135127    .0027094
+           5  |   .1025838   .0271084     3.78   0.001     .0471408    .1580268
+           6  |    .123412    .032386     3.81   0.001     .0571753    .1896488
+           7  |   .0230247   .0298015     0.77   0.446    -.0379262    .0839757
+           8  |  -.0350078   .0294136    -1.19   0.244    -.0951653    .0251498
+           9  |  -.0642307   .0273882    -2.35   0.026    -.1202458   -.0082156
+          10  |  -.0761086    .029441    -2.59   0.015    -.1363223    -.015895
+          11  |   .0836818   .0286535     2.92   0.007     .0250789    .1422847
+              |
+         educ |   .0624487   .0026223    23.81   0.000     .0570855    .0678119
+        exper |   .0380774   .0022977    16.57   0.000     .0333781    .0427766
+       exper2 |     -.0007   .0000941    -7.44   0.000    -.0008925   -.0005074
+       exper3 |  -3.46e-06   2.67e-06    -1.30   0.205    -8.93e-06    2.00e-06
+       exper4 |   1.25e-07   3.15e-08     3.97   0.000     6.06e-08    1.90e-07
+         edex |    -.00015   .0000821    -1.83   0.078    -.0003179     .000018
+              |
+        ee_cl |
+           2  |  -.0669599   .0058343   -11.48   0.000    -.0788925   -.0550274
+           3  |  -.0807937   .0068252   -11.84   0.000    -.0947528   -.0668347
+           4  |  -.0304719   .0111431    -2.73   0.011     -.053262   -.0076818
+           5  |  -.1290103   .0087969   -14.67   0.000     -.147002   -.1110186
+           6  |  -.0987798   .0070389   -14.03   0.000     -.113176   -.0843836
+           7  |  -.0857264   .0085788    -9.99   0.000    -.1032721   -.0681807
+           8  |   .0311734   .0116423     2.68   0.012     .0073622    .0549845
+           9  |  -.1479564   .0099792   -14.83   0.000    -.1683662   -.1275467
+          10  |  -.1099913   .0094421   -11.65   0.000    -.1293025   -.0906801
+          11  |  -.0710339   .0091288    -7.78   0.000    -.0897043   -.0523635
+          12  |   .0287901    .013118     2.19   0.036     .0019607    .0556195
+          13  |  -.0718801   .0129337    -5.56   0.000    -.0983326   -.0454277
+          14  |  -.0792055   .0117044    -6.77   0.000    -.1031438   -.0552673
+          15  |  -.0524805   .0104037    -5.04   0.000    -.0737585   -.0312025
+          16  |   .0197037   .0140904     1.40   0.173    -.0091143    .0485217
+              |
+         marr |   .1281382   .0038861    32.97   0.000     .1201902    .1360861
+        partt |  -.2189908   .0043147   -50.75   0.000    -.2278153   -.2101663
+       public |   .0059115   .0057951     1.02   0.316    -.0059409    .0177639
+         cmsa |   .1375612   .0115574    11.90   0.000     .1139236    .1611987
+              |
+        nocc2 |
+           2  |  -.1530878   .0045062   -33.97   0.000     -.162304   -.1438717
+           3  |  -.0446901   .0083485    -5.35   0.000    -.0617647   -.0276155
+           4  |  -.3315926   .0115224   -28.78   0.000    -.3551586   -.3080266
+           5  |   -.095524   .0118935    -8.03   0.000    -.1198488   -.0711991
+           6  |   -.398928   .0074083   -53.85   0.000    -.4140797   -.3837763
+           7  |  -.2521434   .0083437   -30.22   0.000    -.2692083   -.2350786
+           8  |  -.1052102   .0137234    -7.67   0.000    -.1332778   -.0771426
+           9  |  -.4446995   .0074788   -59.46   0.000    -.4599953   -.4294037
+          10  |  -.3822878   .0077619   -49.25   0.000    -.3981626   -.3664131
+          11  |  -.2761705   .0084421   -32.71   0.000    -.2934366   -.2589043
+          12  |  -.4516447   .0112821   -40.03   0.000    -.4747191   -.4285703
+              |
+      quarter |
+           2  |   .0015332   .0021898     0.70   0.489    -.0029453    .0060118
+           3  |   .0021654   .0025894     0.84   0.410    -.0031305    .0074613
+           4  |   .0141379   .0025561     5.53   0.000       .00891    .0193657
+              |
+        unemp |  -.0031303   .0020396    -1.53   0.136    -.0073017    .0010411
+        _cons |   .7386122    .043735    16.89   0.000     .6491641    .8280603
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for NonUnion Men - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_nwagstag_mal.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_nwagstag_mal.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for NonUnion Men 
+> - Coefs on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_nwagstag_mal_blk.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_nwagstag_mal_blk.png written in PNG format)
+
+.         
+. reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i
+> .year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered
+>  == 0, vce(cluster state)
+(sum of wgt is 4,706,063,449)
+
+Linear regression                               Number of obs     =    561,535
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.5113
+                                                Root MSE          =     .39643
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+       lwage3 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0266161   .0141071     1.89   0.069    -.0022362    .0554683
+         lag4 |   .0047374   .0082249     0.58   0.569    -.0120844    .0215591
+         lag3 |   .0156259   .0118008     1.32   0.196    -.0085095    .0397613
+         lag2 |  -.0094318   .0076939    -1.23   0.230    -.0251676     .006304
+        lead0 |    .000043   .0131241     0.00   0.997    -.0267988    .0268848
+        lead1 |  -.0005576   .0069096    -0.08   0.936    -.0146893    .0135741
+        lead2 |  -.0134732   .0099395    -1.36   0.186    -.0338018    .0068554
+    lag5black |    .012259   .0089329     1.37   0.180    -.0060108    .0305288
+    lag4black |   .0057407    .042903     0.13   0.894    -.0820058    .0934871
+    lag3black |  -.0196093   .0295638    -0.66   0.512    -.0800741    .0408554
+    lag2black |   .0257881   .0232763     1.11   0.277    -.0218173    .0733935
+   lead0black |  -.0508044   .0135318    -3.75   0.001      -.07848   -.0231287
+   lead1black |  -.0387387   .0161531    -2.40   0.023    -.0717755   -.0057019
+   lead2black |  -.0076144   .0088063    -0.86   0.394    -.0256254    .0103966
+blackrelwhite |  -.0860627   .0078477   -10.97   0.000     -.102113   -.0700124
+              |
+        state |
+          NH  |   .0587223   .0045849    12.81   0.000     .0493452    .0680994
+          VT  |   .0455471   .0021145    21.54   0.000     .0412225    .0498717
+          MA  |   .0935852   .0116877     8.01   0.000     .0696813    .1174892
+          RI  |  -.0024315   .0123415    -0.20   0.845    -.0276728    .0228098
+          CT  |     .09786   .0115791     8.45   0.000     .0741782    .1215418
+          NY  |   .0406668   .0113463     3.58   0.001      .017461    .0638725
+          NJ  |    .106878    .012657     8.44   0.000     .0809916    .1327644
+          PA  |  -.0448568   .0094269    -4.76   0.000    -.0641369   -.0255766
+          OH  |  -.0758922   .0091691    -8.28   0.000    -.0946451   -.0571394
+          IN  |  -.0922344   .0143271    -6.44   0.000    -.1215366   -.0629323
+          IL  |  -.0039062   .0106319    -0.37   0.716    -.0256509    .0178386
+          MI  |  -.0678867   .0162327    -4.18   0.000    -.1010863   -.0346871
+          WI  |  -.0433836   .0149374    -2.90   0.007     -.073934   -.0128332
+          MN  |   .0375062   .0081409     4.61   0.000     .0208562    .0541562
+          MO  |  -.0830282   .0084341    -9.84   0.000     -.100278   -.0657785
+          DE  |   .0398729   .0031806    12.54   0.000     .0333677     .046378
+          MD  |   .0928788   .0119962     7.74   0.000     .0683438    .1174138
+          DC  |   .1576219   .0164056     9.61   0.000     .1240687     .191175
+          WV  |  -.1819031     .01212   -15.01   0.000    -.2066914   -.1571148
+          KY  |  -.1149698   .0140948    -8.16   0.000    -.1437969   -.0861427
+          OK  |  -.1486687    .013431   -11.07   0.000    -.1761381   -.1211992
+          MT  |  -.0733407   .0010954   -66.96   0.000     -.075581   -.0711004
+          CO  |  -.0007928   .0107791    -0.07   0.942    -.0228386    .0212529
+          NM  |  -.0888562   .0069249   -12.83   0.000    -.1030191   -.0746932
+          WA  |   .0501942   .0109668     4.58   0.000     .0277647    .0726237
+          OR  |  -.0115511   .0102827    -1.12   0.270    -.0325815    .0094792
+          CA  |   .1085034   .0134883     8.04   0.000     .0809167    .1360901
+          AK  |   .1679573    .007939    21.16   0.000     .1517202    .1841944
+          HI  |   .0723092   .0081863     8.83   0.000     .0555664     .089052
+              |
+         year |
+        1990  |  -.0054412   .0036104    -1.51   0.143    -.0128253    .0019428
+        1991  |  -.0008742    .004609    -0.19   0.851    -.0103005    .0085522
+        1992  |   .0200987   .0065835     3.05   0.005      .006634    .0335635
+        1993  |   .0135228   .0068345     1.98   0.057    -.0004553    .0275009
+        1996  |   .0049792   .0047138     1.06   0.300    -.0046616      .01462
+        1997  |   .0122213   .0058063     2.10   0.044      .000346    .0240966
+        1998  |   .0506199   .0051893     9.75   0.000     .0400065    .0612332
+        1999  |    .067583   .0069911     9.67   0.000     .0532847    .0818813
+        2000  |   .0818851   .0070214    11.66   0.000     .0675247    .0962455
+        2001  |    .097203   .0074447    13.06   0.000      .081977    .1124291
+        2002  |   .1062463   .0072429    14.67   0.000     .0914328    .1210598
+        2003  |   .1184804   .0079299    14.94   0.000     .1022619     .134699
+        2004  |   .1095248   .0089007    12.31   0.000      .091321    .1277287
+        2005  |   .1044736   .0074166    14.09   0.000      .089305    .1196422
+        2006  |   .0932888   .0069766    13.37   0.000     .0790201    .1075574
+        2007  |   .0929703    .008094    11.49   0.000     .0764163    .1095243
+        2008  |   .0854848   .0097014     8.81   0.000     .0656431    .1053265
+        2009  |   .1040704   .0128293     8.11   0.000     .0778314    .1303093
+        2010  |   .1020467   .0114717     8.90   0.000     .0785845    .1255089
+        2011  |   .0846427   .0106913     7.92   0.000     .0627765    .1065088
+        2012  |   .0713175   .0088676     8.04   0.000     .0531813    .0894538
+        2013  |   .0726541   .0093287     7.79   0.000     .0535748    .0917335
+        2014  |   .0737675   .0091161     8.09   0.000      .055123     .092412
+        2015  |   .0869836   .0076474    11.37   0.000     .0713429    .1026243
+        2016  |   .0992037   .0101196     9.80   0.000     .0785069    .1199005
+        2017  |   .1162072     .00992    11.71   0.000     .0959184    .1364959
+        2018  |   .1238069   .0102896    12.03   0.000     .1027623    .1448514
+        2019  |   .1336483   .0086413    15.47   0.000     .1159749    .1513216
+              |
+         nind |
+           2  |     .09508   .0222892     4.27   0.000     .0494934    .1406666
+           3  |   .1683996   .0212765     7.91   0.000     .1248842     .211915
+           4  |  -.0454795   .0225755    -2.01   0.053    -.0916516    .0006926
+           5  |   .1465827   .0217674     6.73   0.000     .1020633     .191102
+           6  |   .1321931   .0239077     5.53   0.000     .0832963    .1810898
+           7  |   .0813211    .023912     3.40   0.002     .0324155    .1302267
+           8  |   .0304163    .021389     1.42   0.166    -.0133292    .0741618
+           9  |  -.0366013   .0222456    -1.65   0.111    -.0820987     .008896
+          10  |  -.0400261   .0214866    -1.86   0.073    -.0839712     .003919
+          11  |   .1387757   .0271516     5.11   0.000     .0832444     .194307
+              |
+         educ |   .0842081   .0021341    39.46   0.000     .0798434    .0885729
+        exper |   .0474682   .0032304    14.69   0.000     .0408613    .0540751
+       exper2 |  -.0016126   .0001253   -12.87   0.000    -.0018689   -.0013563
+       exper3 |   .0000247   3.69e-06     6.71   0.000     .0000172    .0000323
+       exper4 |  -1.20e-07   3.81e-08    -3.14   0.004    -1.97e-07   -4.18e-08
+         edex |  -.0004693   .0001213    -3.87   0.001    -.0007173   -.0002213
+              |
+        ee_cl |
+           2  |  -.1176546   .0065061   -18.08   0.000    -.1309611   -.1043481
+           3  |   -.150027   .0088083   -17.03   0.000     -.168042    -.132012
+           4  |  -.1451476   .0148892    -9.75   0.000    -.1755994   -.1146957
+           5  |  -.1613573    .012583   -12.82   0.000    -.1870923   -.1356222
+           6  |  -.1587349   .0122107   -13.00   0.000    -.1837086   -.1337611
+           7  |  -.1600729   .0126326   -12.67   0.000    -.1859095   -.1342363
+           8  |  -.0697887    .015051    -4.64   0.000    -.1005714    -.039006
+           9  |  -.1608912   .0154569   -10.41   0.000    -.1925042   -.1292783
+          10  |  -.1640955    .015694   -10.46   0.000    -.1961933   -.1319976
+          11  |  -.1501176   .0137494   -10.92   0.000    -.1782382    -.121997
+          12  |  -.0974123   .0121019    -8.05   0.000    -.1221635   -.0726611
+          13  |  -.1151825   .0236326    -4.87   0.000    -.1635166   -.0668483
+          14  |  -.1459036   .0176356    -8.27   0.000    -.1819724   -.1098348
+          15  |  -.1195344   .0156536    -7.64   0.000    -.1515497   -.0875191
+          16  |  -.0950313    .015049    -6.31   0.000    -.1258099   -.0642527
+              |
+         marr |   .0412818   .0035995    11.47   0.000       .03392    .0486436
+        partt |  -.1424231   .0030226   -47.12   0.000    -.1486051   -.1362411
+       public |   .0089943   .0077506     1.16   0.255    -.0068574     .024846
+         cmsa |   .1536735   .0116367    13.21   0.000     .1298738    .1774733
+              |
+        nocc2 |
+           2  |  -.1346094   .0047132   -28.56   0.000    -.1442491   -.1249698
+           3  |  -.0453701   .0091369    -4.97   0.000    -.0640572   -.0266829
+           4  |   -.330321   .0066439   -49.72   0.000    -.3439092   -.3167328
+           5  |   .0348493   .0084542     4.12   0.000     .0175585    .0521401
+           6  |  -.3411488    .005923   -57.60   0.000    -.3532627    -.329035
+           7  |  -.3694256   .0058696   -62.94   0.000    -.3814302    -.357421
+           8  |  -.1725414   .0095063   -18.15   0.000    -.1919838   -.1530989
+           9  |  -.4321289   .0075917   -56.92   0.000    -.4476556   -.4166022
+          10  |   -.459873   .0121117   -37.97   0.000    -.4846442   -.4351017
+          11  |  -.2338759   .0110081   -21.25   0.000    -.2563899   -.2113618
+          12  |  -.4400734   .0139375   -31.57   0.000    -.4685788   -.4115681
+              |
+      quarter |
+           2  |   .0102856   .0021614     4.76   0.000     .0058651    .0147061
+           3  |    .016208   .0023691     6.84   0.000     .0113626    .0210535
+           4  |   .0221283   .0014066    15.73   0.000     .0192516     .025005
+              |
+        unemp |   .0005107   .0016488     0.31   0.759    -.0028615    .0038829
+        _cons |   .3806033   .0375239    10.14   0.000     .3038583    .4573482
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for NonUnion Women - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_nwagstag_fem.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_nwagstag_fem.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for NonUnion Wome
+> n - Coefs on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_nwagstag_fem_blk.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_nwagstag_fem_blk.png written in PNG format)
+
+. 
+. reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i
+> .year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered
+>  == 0, vce(cluster state)
+(sum of wgt is 4,573,856,658)
+
+Linear regression                               Number of obs     =    528,582
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.5476
+                                                Root MSE          =     .42207
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+       lwage3 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0501324   .0133912     3.74   0.001     .0227444    .0775204
+         lag4 |   .0042639   .0068385     0.62   0.538    -.0097225    .0182503
+         lag3 |   .0075797   .0069032     1.10   0.281    -.0065389    .0216984
+         lag2 |   .0090004   .0191019     0.47   0.641    -.0300675    .0480682
+        lead0 |   .0038776   .0077603     0.50   0.621    -.0119939    .0197491
+        lead1 |   .0269879   .0065964     4.09   0.000     .0134968     .040479
+        lead2 |   .0161492   .0142399     1.13   0.266    -.0129748    .0452731
+    lag5black |   .0172398   .0096193     1.79   0.084    -.0024339    .0369136
+    lag4black |  -.0039217   .0354515    -0.11   0.913     -.076428    .0685847
+    lag3black |   .0264552   .0244604     1.08   0.288     -.023572    .0764824
+    lag2black |   .0505478   .0151329     3.34   0.002     .0195975    .0814982
+   lead0black |   .0241225   .0261792     0.92   0.364    -.0294199     .077665
+   lead1black |  -.0618962   .0412386    -1.50   0.144    -.1462385    .0224462
+   lead2black |   .0067337   .0103317     0.65   0.520     -.014397    .0278645
+blackrelwhite |  -.1584865    .005445   -29.11   0.000    -.1696227   -.1473503
+              |
+        state |
+          NH  |   .0911611   .0050709    17.98   0.000     .0807898    .1015323
+          VT  |   .0351785   .0022521    15.62   0.000     .0305725    .0397846
+          MA  |   .1162386   .0120261     9.67   0.000     .0916424    .1408349
+          RI  |   .0287058   .0126238     2.27   0.031     .0028872    .0545244
+          CT  |   .1232479    .011977    10.29   0.000     .0987521    .1477436
+          NY  |   .0721317   .0120226     6.00   0.000     .0475427    .0967207
+          NJ  |   .1528161   .0131185    11.65   0.000     .1259858    .1796465
+          PA  |    .002812    .009393     0.30   0.767    -.0163989    .0220228
+          OH  |  -.0296029   .0093444    -3.17   0.004    -.0487143   -.0104914
+          IN  |  -.0476643   .0133413    -3.57   0.001    -.0749503   -.0203783
+          IL  |   .0616522   .0111082     5.55   0.000     .0389333    .0843711
+          MI  |  -.0233205   .0156455    -1.49   0.147    -.0553193    .0086782
+          WI  |    -.03129   .0140314    -2.23   0.034    -.0599875   -.0025925
+          MN  |   .0542541    .008381     6.47   0.000     .0371129    .0713952
+          MO  |  -.0353085   .0084755    -4.17   0.000    -.0526427   -.0179742
+          DE  |   .0576752   .0022824    25.27   0.000     .0530071    .0623434
+          MD  |   .1293152    .012051    10.73   0.000     .1046682    .1539623
+          DC  |    .191176   .0175137    10.92   0.000     .1553565    .2269955
+          WV  |  -.0986826   .0109339    -9.03   0.000    -.1210449   -.0763203
+          KY  |  -.0839539   .0131271    -6.40   0.000    -.1108018   -.0571059
+          OK  |  -.0896895   .0133498    -6.72   0.000     -.116993    -.062386
+          MT  |  -.0379175   .0017149   -22.11   0.000    -.0414249   -.0344101
+          CO  |   .0424972   .0107256     3.96   0.000     .0205609    .0644335
+          NM  |  -.0200087   .0073097    -2.74   0.010    -.0349587   -.0050587
+          WA  |   .0891503   .0109609     8.13   0.000     .0667328    .1115678
+          OR  |   .0212776   .0100602     2.12   0.043     .0007022     .041853
+          CA  |   .1503336   .0137004    10.97   0.000     .1223132    .1783541
+          AK  |   .2365493   .0085077    27.80   0.000     .2191492    .2539495
+          HI  |   .1109008    .008399    13.20   0.000     .0937229    .1280787
+              |
+         year |
+        1990  |  -.0025976   .0037764    -0.69   0.497    -.0103212    .0051261
+        1991  |  -.0105185   .0076798    -1.37   0.181    -.0262255    .0051885
+        1992  |  -.0091728   .0075204    -1.22   0.232    -.0245538    .0062081
+        1993  |  -.0228304   .0055686    -4.10   0.000    -.0342194   -.0114413
+        1996  |  -.0262999   .0083719    -3.14   0.004    -.0434225   -.0091774
+        1997  |  -.0167454   .0076103    -2.20   0.036    -.0323103   -.0011806
+        1998  |   .0082486   .0064822     1.27   0.213    -.0050091    .0215062
+        1999  |   .0329722   .0086568     3.81   0.001     .0152671    .0506773
+        2000  |   .0466499   .0079132     5.90   0.000     .0304655    .0628343
+        2001  |    .066865   .0087871     7.61   0.000     .0488932    .0848367
+        2002  |   .0766576   .0069733    10.99   0.000     .0623956    .0909196
+        2003  |   .0580096    .010042     5.78   0.000     .0374713    .0785479
+        2004  |   .0546028   .0087787     6.22   0.000     .0366483    .0725573
+        2005  |   .0370814   .0094104     3.94   0.000      .017835    .0563278
+        2006  |   .0307569    .008619     3.57   0.001      .013129    .0483848
+        2007  |   .0307132   .0097641     3.15   0.004     .0107434     .050683
+        2008  |   .0270398   .0099458     2.72   0.011     .0066983    .0473813
+        2009  |   .0543849   .0158718     3.43   0.002     .0219234    .0868464
+        2010  |   .0448185   .0136445     3.28   0.003     .0169124    .0727246
+        2011  |   .0259264   .0136004     1.91   0.067    -.0018895    .0537423
+        2012  |   .0183605   .0146638     1.25   0.221    -.0116303    .0483512
+        2013  |   .0179366   .0112329     1.60   0.121    -.0050372    .0409104
+        2014  |   .0114651   .0092915     1.23   0.227    -.0075381    .0304682
+        2015  |   .0353861   .0083685     4.23   0.000     .0182706    .0525016
+        2016  |   .0426991   .0099793     4.28   0.000     .0222892     .063109
+        2017  |   .0502104   .0110253     4.55   0.000     .0276611    .0727597
+        2018  |   .0570316   .0114666     4.97   0.000     .0335797    .0804835
+        2019  |   .0800279   .0104871     7.63   0.000     .0585793    .1014765
+              |
+         nind |
+           2  |   .0718817   .0296836     2.42   0.022     .0111719    .1325915
+           3  |   .1141871   .0271798     4.20   0.000     .0585981     .169776
+           4  |  -.0554017    .028413    -1.95   0.061    -.1135127    .0027094
+           5  |   .1025838   .0271084     3.78   0.001     .0471408    .1580268
+           6  |    .123412    .032386     3.81   0.001     .0571753    .1896488
+           7  |   .0230247   .0298015     0.77   0.446    -.0379262    .0839757
+           8  |  -.0350078   .0294136    -1.19   0.244    -.0951653    .0251498
+           9  |  -.0642307   .0273882    -2.35   0.026    -.1202458   -.0082156
+          10  |  -.0761086    .029441    -2.59   0.015    -.1363223    -.015895
+          11  |   .0836818   .0286535     2.92   0.007     .0250789    .1422847
+              |
+         educ |   .0624487   .0026223    23.81   0.000     .0570855    .0678119
+        exper |   .0380774   .0022977    16.57   0.000     .0333781    .0427766
+       exper2 |     -.0007   .0000941    -7.44   0.000    -.0008925   -.0005074
+       exper3 |  -3.46e-06   2.67e-06    -1.30   0.205    -8.93e-06    2.00e-06
+       exper4 |   1.25e-07   3.15e-08     3.97   0.000     6.06e-08    1.90e-07
+         edex |    -.00015   .0000821    -1.83   0.078    -.0003179     .000018
+              |
+        ee_cl |
+           2  |  -.0669599   .0058343   -11.48   0.000    -.0788925   -.0550274
+           3  |  -.0807937   .0068252   -11.84   0.000    -.0947528   -.0668347
+           4  |  -.0304719   .0111431    -2.73   0.011     -.053262   -.0076818
+           5  |  -.1290103   .0087969   -14.67   0.000     -.147002   -.1110186
+           6  |  -.0987798   .0070389   -14.03   0.000     -.113176   -.0843836
+           7  |  -.0857264   .0085788    -9.99   0.000    -.1032721   -.0681807
+           8  |   .0311734   .0116423     2.68   0.012     .0073622    .0549845
+           9  |  -.1479564   .0099792   -14.83   0.000    -.1683662   -.1275467
+          10  |  -.1099913   .0094421   -11.65   0.000    -.1293025   -.0906801
+          11  |  -.0710339   .0091288    -7.78   0.000    -.0897043   -.0523635
+          12  |   .0287901    .013118     2.19   0.036     .0019607    .0556195
+          13  |  -.0718801   .0129337    -5.56   0.000    -.0983326   -.0454277
+          14  |  -.0792055   .0117044    -6.77   0.000    -.1031438   -.0552673
+          15  |  -.0524805   .0104037    -5.04   0.000    -.0737585   -.0312025
+          16  |   .0197037   .0140904     1.40   0.173    -.0091143    .0485217
+              |
+         marr |   .1281382   .0038861    32.97   0.000     .1201902    .1360861
+        partt |  -.2189908   .0043147   -50.75   0.000    -.2278153   -.2101663
+       public |   .0059115   .0057951     1.02   0.316    -.0059409    .0177639
+         cmsa |   .1375612   .0115574    11.90   0.000     .1139236    .1611987
+              |
+        nocc2 |
+           2  |  -.1530878   .0045062   -33.97   0.000     -.162304   -.1438717
+           3  |  -.0446901   .0083485    -5.35   0.000    -.0617647   -.0276155
+           4  |  -.3315926   .0115224   -28.78   0.000    -.3551586   -.3080266
+           5  |   -.095524   .0118935    -8.03   0.000    -.1198488   -.0711991
+           6  |   -.398928   .0074083   -53.85   0.000    -.4140797   -.3837763
+           7  |  -.2521434   .0083437   -30.22   0.000    -.2692083   -.2350786
+           8  |  -.1052102   .0137234    -7.67   0.000    -.1332778   -.0771426
+           9  |  -.4446995   .0074788   -59.46   0.000    -.4599953   -.4294037
+          10  |  -.3822878   .0077619   -49.25   0.000    -.3981626   -.3664131
+          11  |  -.2761705   .0084421   -32.71   0.000    -.2934366   -.2589043
+          12  |  -.4516447   .0112821   -40.03   0.000    -.4747191   -.4285703
+              |
+      quarter |
+           2  |   .0015332   .0021898     0.70   0.489    -.0029453    .0060118
+           3  |   .0021654   .0025894     0.84   0.410    -.0031305    .0074613
+           4  |   .0141379   .0025561     5.53   0.000       .00891    .0193657
+              |
+        unemp |  -.0031303   .0020396    -1.53   0.136    -.0073017    .0010411
+        _cons |   .7386122    .043735    16.89   0.000     .6491641    .8280603
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Union Men - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_uwagstag_mal.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_uwagstag_mal.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Union Men - C
+> oefs on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_uwagstag_mal_blk.png", replace 
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_uwagstag_mal_blk.png written in PNG format)
+
+. 
+. reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i
+> .year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered
+>  == 0, vce(cluster state)
+(sum of wgt is 4,706,063,449)
+
+Linear regression                               Number of obs     =    561,535
+                                                F(28, 29)         =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.5113
+                                                Root MSE          =     .39643
+
+                                  (Std. Err. adjusted for 30 clusters in state)
+-------------------------------------------------------------------------------
+              |               Robust
+       lwage3 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         lag5 |   .0266161   .0141071     1.89   0.069    -.0022362    .0554683
+         lag4 |   .0047374   .0082249     0.58   0.569    -.0120844    .0215591
+         lag3 |   .0156259   .0118008     1.32   0.196    -.0085095    .0397613
+         lag2 |  -.0094318   .0076939    -1.23   0.230    -.0251676     .006304
+        lead0 |    .000043   .0131241     0.00   0.997    -.0267988    .0268848
+        lead1 |  -.0005576   .0069096    -0.08   0.936    -.0146893    .0135741
+        lead2 |  -.0134732   .0099395    -1.36   0.186    -.0338018    .0068554
+    lag5black |    .012259   .0089329     1.37   0.180    -.0060108    .0305288
+    lag4black |   .0057407    .042903     0.13   0.894    -.0820058    .0934871
+    lag3black |  -.0196093   .0295638    -0.66   0.512    -.0800741    .0408554
+    lag2black |   .0257881   .0232763     1.11   0.277    -.0218173    .0733935
+   lead0black |  -.0508044   .0135318    -3.75   0.001      -.07848   -.0231287
+   lead1black |  -.0387387   .0161531    -2.40   0.023    -.0717755   -.0057019
+   lead2black |  -.0076144   .0088063    -0.86   0.394    -.0256254    .0103966
+blackrelwhite |  -.0860627   .0078477   -10.97   0.000     -.102113   -.0700124
+              |
+        state |
+          NH  |   .0587223   .0045849    12.81   0.000     .0493452    .0680994
+          VT  |   .0455471   .0021145    21.54   0.000     .0412225    .0498717
+          MA  |   .0935852   .0116877     8.01   0.000     .0696813    .1174892
+          RI  |  -.0024315   .0123415    -0.20   0.845    -.0276728    .0228098
+          CT  |     .09786   .0115791     8.45   0.000     .0741782    .1215418
+          NY  |   .0406668   .0113463     3.58   0.001      .017461    .0638725
+          NJ  |    .106878    .012657     8.44   0.000     .0809916    .1327644
+          PA  |  -.0448568   .0094269    -4.76   0.000    -.0641369   -.0255766
+          OH  |  -.0758922   .0091691    -8.28   0.000    -.0946451   -.0571394
+          IN  |  -.0922344   .0143271    -6.44   0.000    -.1215366   -.0629323
+          IL  |  -.0039062   .0106319    -0.37   0.716    -.0256509    .0178386
+          MI  |  -.0678867   .0162327    -4.18   0.000    -.1010863   -.0346871
+          WI  |  -.0433836   .0149374    -2.90   0.007     -.073934   -.0128332
+          MN  |   .0375062   .0081409     4.61   0.000     .0208562    .0541562
+          MO  |  -.0830282   .0084341    -9.84   0.000     -.100278   -.0657785
+          DE  |   .0398729   .0031806    12.54   0.000     .0333677     .046378
+          MD  |   .0928788   .0119962     7.74   0.000     .0683438    .1174138
+          DC  |   .1576219   .0164056     9.61   0.000     .1240687     .191175
+          WV  |  -.1819031     .01212   -15.01   0.000    -.2066914   -.1571148
+          KY  |  -.1149698   .0140948    -8.16   0.000    -.1437969   -.0861427
+          OK  |  -.1486687    .013431   -11.07   0.000    -.1761381   -.1211992
+          MT  |  -.0733407   .0010954   -66.96   0.000     -.075581   -.0711004
+          CO  |  -.0007928   .0107791    -0.07   0.942    -.0228386    .0212529
+          NM  |  -.0888562   .0069249   -12.83   0.000    -.1030191   -.0746932
+          WA  |   .0501942   .0109668     4.58   0.000     .0277647    .0726237
+          OR  |  -.0115511   .0102827    -1.12   0.270    -.0325815    .0094792
+          CA  |   .1085034   .0134883     8.04   0.000     .0809167    .1360901
+          AK  |   .1679573    .007939    21.16   0.000     .1517202    .1841944
+          HI  |   .0723092   .0081863     8.83   0.000     .0555664     .089052
+              |
+         year |
+        1990  |  -.0054412   .0036104    -1.51   0.143    -.0128253    .0019428
+        1991  |  -.0008742    .004609    -0.19   0.851    -.0103005    .0085522
+        1992  |   .0200987   .0065835     3.05   0.005      .006634    .0335635
+        1993  |   .0135228   .0068345     1.98   0.057    -.0004553    .0275009
+        1996  |   .0049792   .0047138     1.06   0.300    -.0046616      .01462
+        1997  |   .0122213   .0058063     2.10   0.044      .000346    .0240966
+        1998  |   .0506199   .0051893     9.75   0.000     .0400065    .0612332
+        1999  |    .067583   .0069911     9.67   0.000     .0532847    .0818813
+        2000  |   .0818851   .0070214    11.66   0.000     .0675247    .0962455
+        2001  |    .097203   .0074447    13.06   0.000      .081977    .1124291
+        2002  |   .1062463   .0072429    14.67   0.000     .0914328    .1210598
+        2003  |   .1184804   .0079299    14.94   0.000     .1022619     .134699
+        2004  |   .1095248   .0089007    12.31   0.000      .091321    .1277287
+        2005  |   .1044736   .0074166    14.09   0.000      .089305    .1196422
+        2006  |   .0932888   .0069766    13.37   0.000     .0790201    .1075574
+        2007  |   .0929703    .008094    11.49   0.000     .0764163    .1095243
+        2008  |   .0854848   .0097014     8.81   0.000     .0656431    .1053265
+        2009  |   .1040704   .0128293     8.11   0.000     .0778314    .1303093
+        2010  |   .1020467   .0114717     8.90   0.000     .0785845    .1255089
+        2011  |   .0846427   .0106913     7.92   0.000     .0627765    .1065088
+        2012  |   .0713175   .0088676     8.04   0.000     .0531813    .0894538
+        2013  |   .0726541   .0093287     7.79   0.000     .0535748    .0917335
+        2014  |   .0737675   .0091161     8.09   0.000      .055123     .092412
+        2015  |   .0869836   .0076474    11.37   0.000     .0713429    .1026243
+        2016  |   .0992037   .0101196     9.80   0.000     .0785069    .1199005
+        2017  |   .1162072     .00992    11.71   0.000     .0959184    .1364959
+        2018  |   .1238069   .0102896    12.03   0.000     .1027623    .1448514
+        2019  |   .1336483   .0086413    15.47   0.000     .1159749    .1513216
+              |
+         nind |
+           2  |     .09508   .0222892     4.27   0.000     .0494934    .1406666
+           3  |   .1683996   .0212765     7.91   0.000     .1248842     .211915
+           4  |  -.0454795   .0225755    -2.01   0.053    -.0916516    .0006926
+           5  |   .1465827   .0217674     6.73   0.000     .1020633     .191102
+           6  |   .1321931   .0239077     5.53   0.000     .0832963    .1810898
+           7  |   .0813211    .023912     3.40   0.002     .0324155    .1302267
+           8  |   .0304163    .021389     1.42   0.166    -.0133292    .0741618
+           9  |  -.0366013   .0222456    -1.65   0.111    -.0820987     .008896
+          10  |  -.0400261   .0214866    -1.86   0.073    -.0839712     .003919
+          11  |   .1387757   .0271516     5.11   0.000     .0832444     .194307
+              |
+         educ |   .0842081   .0021341    39.46   0.000     .0798434    .0885729
+        exper |   .0474682   .0032304    14.69   0.000     .0408613    .0540751
+       exper2 |  -.0016126   .0001253   -12.87   0.000    -.0018689   -.0013563
+       exper3 |   .0000247   3.69e-06     6.71   0.000     .0000172    .0000323
+       exper4 |  -1.20e-07   3.81e-08    -3.14   0.004    -1.97e-07   -4.18e-08
+         edex |  -.0004693   .0001213    -3.87   0.001    -.0007173   -.0002213
+              |
+        ee_cl |
+           2  |  -.1176546   .0065061   -18.08   0.000    -.1309611   -.1043481
+           3  |   -.150027   .0088083   -17.03   0.000     -.168042    -.132012
+           4  |  -.1451476   .0148892    -9.75   0.000    -.1755994   -.1146957
+           5  |  -.1613573    .012583   -12.82   0.000    -.1870923   -.1356222
+           6  |  -.1587349   .0122107   -13.00   0.000    -.1837086   -.1337611
+           7  |  -.1600729   .0126326   -12.67   0.000    -.1859095   -.1342363
+           8  |  -.0697887    .015051    -4.64   0.000    -.1005714    -.039006
+           9  |  -.1608912   .0154569   -10.41   0.000    -.1925042   -.1292783
+          10  |  -.1640955    .015694   -10.46   0.000    -.1961933   -.1319976
+          11  |  -.1501176   .0137494   -10.92   0.000    -.1782382    -.121997
+          12  |  -.0974123   .0121019    -8.05   0.000    -.1221635   -.0726611
+          13  |  -.1151825   .0236326    -4.87   0.000    -.1635166   -.0668483
+          14  |  -.1459036   .0176356    -8.27   0.000    -.1819724   -.1098348
+          15  |  -.1195344   .0156536    -7.64   0.000    -.1515497   -.0875191
+          16  |  -.0950313    .015049    -6.31   0.000    -.1258099   -.0642527
+              |
+         marr |   .0412818   .0035995    11.47   0.000       .03392    .0486436
+        partt |  -.1424231   .0030226   -47.12   0.000    -.1486051   -.1362411
+       public |   .0089943   .0077506     1.16   0.255    -.0068574     .024846
+         cmsa |   .1536735   .0116367    13.21   0.000     .1298738    .1774733
+              |
+        nocc2 |
+           2  |  -.1346094   .0047132   -28.56   0.000    -.1442491   -.1249698
+           3  |  -.0453701   .0091369    -4.97   0.000    -.0640572   -.0266829
+           4  |   -.330321   .0066439   -49.72   0.000    -.3439092   -.3167328
+           5  |   .0348493   .0084542     4.12   0.000     .0175585    .0521401
+           6  |  -.3411488    .005923   -57.60   0.000    -.3532627    -.329035
+           7  |  -.3694256   .0058696   -62.94   0.000    -.3814302    -.357421
+           8  |  -.1725414   .0095063   -18.15   0.000    -.1919838   -.1530989
+           9  |  -.4321289   .0075917   -56.92   0.000    -.4476556   -.4166022
+          10  |   -.459873   .0121117   -37.97   0.000    -.4846442   -.4351017
+          11  |  -.2338759   .0110081   -21.25   0.000    -.2563899   -.2113618
+          12  |  -.4400734   .0139375   -31.57   0.000    -.4685788   -.4115681
+              |
+      quarter |
+           2  |   .0102856   .0021614     4.76   0.000     .0058651    .0147061
+           3  |    .016208   .0023691     6.84   0.000     .0113626    .0210535
+           4  |   .0221283   .0014066    15.73   0.000     .0192516     .025005
+              |
+        unemp |   .0005107   .0016488     0.31   0.759    -.0028615    .0038829
+        _cons |   .3806033   .0375239    10.14   0.000     .3038583    .4573482
+-------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Union Women - Coefs on Leads and Lags")
+
+. graph export "$figs/eventstd/evs_uwagstag_fem.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_uwagstag_fem.png written in PNG format)
+
+. coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Union Women -
+>  Coefs on Leads and Lags with Interaction")
+
+. graph export "$figs/eventstd/evs_uwagstag_fem_blk.png", replace
+(file /Users/amedeusdsouza/econ499/figures/eventstd/evs_uwagstag_fem_blk.png written in PNG format)
+
+. 
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/linreg/stagpta.log
+  log type:  text
+ closed on:  23 Mar 2021, 22:09:26
+---------------------------------------------------------------------------------------------------------------------------------------------------

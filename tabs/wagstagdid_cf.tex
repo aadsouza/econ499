@@ -1,0 +1,22 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Difference in Differences of Real Log Trimmed Imputed Wages on Right to Work Laws Treatment in State and Time}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{men}&\multicolumn{1}{c}{women}&\multicolumn{1}{c}{men covered by union}&\multicolumn{1}{c}{women covered by union}&\multicolumn{1}{c}{men not covered by union}&\multicolumn{1}{c}{women not covered by union}\\
+\hline
+blackrelwhite&      -0.144\sym{***}&     -0.0668\sym{***}&      -0.157\sym{***}&     -0.0847\sym{***}&      -0.137\sym{***}&     -0.0496\sym{***}\\
+            &   (0.00670)         &   (0.00658)         &   (0.00504)         &   (0.00704)         &    (0.0124)         &   (0.00998)         \\
+[1em]
+treat\_st    &     -0.0361         &     -0.0368\sym{***}&     -0.0272         &     -0.0321\sym{***}&     -0.0546         &     -0.0696\sym{***}\\
+            &    (0.0191)         &   (0.00885)         &    (0.0148)         &   (0.00745)         &    (0.0317)         &    (0.0177)         \\
+[1em]
+treat\_stblackrelwhite&     -0.0121         &     -0.0171\sym{*}  &     0.00229         &     -0.0170         &     -0.0256         &      0.0400         \\
+            &   (0.00763)         &   (0.00756)         &   (0.00688)         &   (0.00879)         &    (0.0185)         &    (0.0278)         \\
+\hline
+\(N\)       &      677009         &      683919         &      528582         &      561535         &      147301         &      121161         \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

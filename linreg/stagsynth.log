@@ -1,0 +1,423 @@
+--------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/linreg/stagsynth.log
+  log type:  text
+ opened on:  25 Mar 2021, 12:04:04
+
+. 
+. use cleaned_nber_morg, clear
+
+. 
+. do "$code/pareto_topcoding.do"
+
+. ** In this do file we gen the top-code adjusted wage distribution using pareto 
+. ** parameters adapting codes generously provided to us by
+. ** Professor Nicole Fortin and Neil Lloyd
+. 
+. ** Generate topcode-adjusted wage distribution using Pareto parameter
+. ** Output: lwage2
+. 
+. ** OG Source: https://eml.berkeley.edu/~saez/TabFig2015prel.xls
+.         * Table A4 & Table B3
+. 
+. ** RE Source: https://eml.berkeley.edu/~saez/TabFig2018.xls
+.         * Table A4 & Table B3
+. 
+. ** Use Pareto parameter from Piketty and Saez (top 1%): average of 5 year windows (e.g. 2000-2004);
+. ** OG: Due to a lack of availability for post 2011 data, the average of 2010 & 2011 is extended to 2017.
+. 
+. set seed 486372893
+
+. 
+. gen ranuni = runiform() if topcode == 1
+(10,848,910 missing values generated)
+
+. 
+. gen     pareto = 1/(ranuni^(1/2.68)) if inrange(year, 1975, 1979)
+(10,912,373 missing values generated)
+
+.         replace pareto = 1/(ranuni^(1/2.45)) if inrange(year, 1980, 1984) 
+(12,848 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/2.15)) if inrange(year, 1985, 1989) 
+(25,430 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/2.02)) if inrange(year, 1990, 1994) 
+(7,087 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.89)) if inrange(year, 1995, 1999) 
+(9,426 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.81)) if inrange(year, 2000, 2004) 
+(4,963 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.78)) if inrange(year, 2005, 2009)
+(878 real changes made)
+
+. 
+. ** FIXME revise parameters using Tables A4 and B3
+. **      replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
+.         replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2019) 
+(2,831 real changes made)
+
+. 
+. * lwage2 uses this imputation;
+. gen lwage2 = lwage if topcode == 0
+(4,507,850 missing values generated)
+
+.         replace lwage2 = lwage + log(pareto) if topcode == 1
+(62,792 real changes made)
+
+.         lab var lwage2 "log trimmed imputed nom wage 1-100"
+
+. 
+. gen lwage3 = log(exp(lwage2) * 100 / cpi)
+(4,445,058 missing values generated)
+
+.         lab var lwage3 "log trimmed imputed real wage 1-100 in 1979 dollars"
+
+. 
+end of do-file
+
+. 
+. ** drop if allocated hourly wage, weekly earnings, or usual hrs and missing wage
+. drop if alloc1 == 1
+(1,625,280 observations deleted)
+
+. drop if lwage3 ==.
+(4,303,609 observations deleted)
+
+. 
+. ** drop obs in 1994 1995 - allocation flag missing
+. drop if inrange(year, 1994, 1995)
+(296,195 observations deleted)
+
+. 
+. ** hours weighted
+. gen hweight = eweight * uhourse / 100.0
+
+. 
+. ** drop self employed and w/o pay
+. keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
+(813 observations deleted)
+
+. ********************************************************************************
+. 
+. ** keep if inrange(year, 2000, 2019)
+. 
+. keep if inrange(year, 1989, 2019)
+(1,450,785 observations deleted)
+
+. 
+. rename twage nwage1
+
+. 
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt pu
+> blic marr hisprace hispracesex citizen eweight alloc1 covered umem
+
+. 
+. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unem
+> p.dta"
+(note: variable year was int, now long to accommodate using data's values)
+(note: variable cmonth was byte, now long to accommodate using data's values)
+(note: variable state was byte, now long to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         7,344
+        from master                         0  (_merge==1)
+        from using                      7,344  (_merge==2)
+
+    matched                         3,236,632  (_merge==3)
+    -----------------------------------------
+
+. 
+. drop if _merge == 2 // <2000
+(7,344 observations deleted)
+
+. 
+. drop if hispracesex ==.
+(208,501 observations deleted)
+
+. 
+. gen finalwt1 = round(eweight)
+
+. 
+. rename nind2 nind // nind now is 11 ind categories
+
+. 
+. recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+>                 (12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
+(2472445 differences between nocc and nocc2)
+
+.                 
+. recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
+(2786572 differences between nocc2 and nocc3)
+
+. 
+. egen state_ind = group(state nind)
+(2,155 missing values generated)
+
+. 
+. gen edex = educ*exper
+
+. 
+. gen blackrelwhite = hisprace - 1
+
+.         replace blackrelwhite =. if hisprace > 2
+(324,138 real changes made, 324,138 to missing)
+
+. 
+. gen hisprelwhite = hisprace - 1
+
+.         replace hisprelwhite =. if hisprace == 2
+(266,736 real changes made, 266,736 to missing)
+
+.         replace hisprelwhite = 1 if hisprace == 3
+(324,138 real changes made)
+
+. 
+. gen date = ym(year, cmonth)
+
+. ** tab date year
+. 
+. ** construct variables lags and leads
+. local newr2wstates "73 32 34 35 55 61"
+
+. 
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effectiv
+> e; signed Dec2012) Mar1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. local newr2wdate "500 625 638 662 678 684"
+
+. 
+. gen alwaysr2w = 0
+
+.         replace alwaysr2w = 1 if /// 
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72
+> , 82) //incl Idaho which changed in 1985 and Texas which had since 47 but bolstered in 93
+(1,149,124 real changes made)
+
+. 
+. gen alwr2wcov = alwaysr2w*covered
+(4,216 missing values generated)
+
+. 
+. gen neverr2w = 1
+
+.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
+> , 87, 47, 83, 72, 82)
+(1,149,124 real changes made)
+
+.         replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
+(314,813 real changes made)
+
+. 
+. gen stater2w = 0
+
+.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
+> , 87, 47, 83, 72, 82)
+(1,149,124 real changes made)
+
+.         replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
+(314,813 real changes made)
+
+.         lab def str2w 0 "no r2w" 1 "r2w before 2000" 2 "r2w after 2000"
+
+.         lab val stater2w str2w
+
+. 
+. gen treat_st = 0 if stater2w == 0 | stater2w == 2
+(1,149,124 missing values generated)
+
+.         replace treat_st = 1 if stater2w == 1
+(1,149,124 real changes made)
+
+.         replace treat_st = 1 if state == 73 & date >= 500
+(19,108 real changes made)
+
+.         replace treat_st = 1 if state == 32 & date >= 625
+(10,893 real changes made)
+
+.         replace treat_st = 1 if state == 34 & date >= 638
+(12,321 real changes made)
+
+.         replace treat_st = 1 if state == 35 & date >= 662
+(7,563 real changes made)
+
+.         replace treat_st = 1 if state == 55 & date >= 678
+(4,902 real changes made)
+
+.         replace treat_st = 1 if state == 61 & date >= 684
+(3,150 real changes made)
+
+. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change t
+> o treat_jst
+.         
+. gen treat_stblackrelwhite = treat_st*blackrelwhite
+(324,138 missing values generated)
+
+. 
+. gen treat_sthisprelwhite = treat_st*hisprelwhite
+(266,736 missing values generated)
+
+. 
+. gen lyear = year - 1900
+
+. 
+. gen r2wstates = 0 if neverr2w == 1
+(1,463,937 missing values generated)
+
+.         replace r2wstates = 1 if alwaysr2w == 1
+(1,149,124 real changes made)
+
+.         replace r2wstates = 73 if state == 73
+(35,302 real changes made)
+
+.         replace r2wstates = 32 if state == 32
+(46,817 real changes made)
+
+.         replace r2wstates = 34 if state == 34
+(94,533 real changes made)
+
+.         replace r2wstates = 35 if state == 35
+(62,707 real changes made)
+
+.         replace r2wstates = 55 if state == 55
+(35,853 real changes made)
+
+.         replace r2wstates = 61 if state == 61
+(39,601 real changes made)
+
+. 
+. ** gen panel data
+. drop if year < 1996 // need without breaks
+(787,460 observations deleted)
+
+. 
+. drop if alwaysr2w == 1 // keep neverr2w and treatments from policy variation
+(864,454 observations deleted)
+
+. 
+end of do-file
+
+. do "/var/folders/t3/ft505ml15dv86tdc6g6v2ymh0000gn/T//SD50397.000000"
+
+. ** BLACK WOMEN
+. preserve
+
+. 
+. keep if female == 1 & blackrelwhite == 1
+(1,320,523 observations deleted)
+
+. 
+. qui tab nind,    gen(dumnind)
+
+. qui tab ee_cl,   gen(dumee_cl)
+
+. qui tab nocc2,   gen(dumnocc2)
+
+. qui tab quarter, gen(dumquarter)
+
+. 
+. ds state year nind ee_cl nocc2 quarter, not 
+cmonth        exper         finalwt1      treat_sthi~e  dumnind11     dumee_cl13    dumnocc210
+eweight       marr          nocc3         lyear         dumee_cl1     dumee_cl14    dumnocc211
+hourly        lwage1        state_ind     r2wstates     dumee_cl2     dumee_cl15    dumnocc212
+umem          public        edex          dumnind1      dumee_cl3     dumee_cl16    dumquarter1
+citizen       exper2        blackrelwh~e  dumnind2      dumee_cl4     dumnocc21     dumquarter2
+female        exper3        hisprelwhite  dumnind3      dumee_cl5     dumnocc22     dumquarter3
+hisprace      exper4        date          dumnind4      dumee_cl6     dumnocc23     dumquarter4
+hispracesex   cmsa          alwaysr2w     dumnind5      dumee_cl7     dumnocc24
+nocc          partt         alwr2wcov     dumnind6      dumee_cl8     dumnocc25
+covered       lwage3        neverr2w      dumnind7      dumee_cl9     dumnocc26
+educ          index         stater2w      dumnind8      dumee_cl10    dumnocc27
+alloc1        unemp         treat_st      dumnind9      dumee_cl11    dumnocc28
+nwage1        _merge        treat_stbl~e  dumnind10     dumee_cl12    dumnocc29
+
+. 
+. collapse (mean) `r(varlist)' [aw = finalwt1], by(state year)
+
+. 
+. tsset state year
+       panel variable:  state (unbalanced)
+        time variable:  year, 1996 to 2019, but with gaps
+                delta:  1 unit
+
+. 
+. ** OK
+. ** construct synthetic OK
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(
+> 11(1)16 21(1)23 31 33 41 43 51(1)53 81 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linr
+> eg/synth_bf_ok) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 2 of out 24 units missing obs for predictor cmsa in period 1996 -ignored for averaging
+control units: for 1 of out 24 units missing obs for predictor cmsa in period 1997 -ignored for averaging
+control units: for 2 of out 24 units missing obs for predictor cmsa in period 1998 -ignored for averaging
+control units: for at least one unit predictor cmsa is missing for ALL periods specified
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "/Users/amedeusdsouza/econ499/code/stagdid.do"
+
+. ** In this dofile we attempt staggered DiD analysis of RTW laws
+. 
+. clear *
+
+. 
+. ********************************************************************************
+. *********************************** PREAMBLE ***********************************
+. ********************************************************************************
+. 
+. ** ssc install grstyle, replace 
+. ** ssc install palettes, replace 
+. ** ssc install xtable, replace 
+. 
+. set scheme s2color 
+
+. grstyle init 
+
+. grstyle set compact 
+
+. grstyle set horizontal 
+
+. grstyle set legend 6, nobox 
+
+. grstyle color background white 
+
+. grstyle color major_grid black%10
+
+. 
+. cd /Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
+/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output
+
+. 
+. global code "/Users/amedeusdsouza/econ499/code"
+
+. global tabs "/Users/amedeusdsouza/econ499/tabs"
+
+. global figs "/Users/amedeusdsouza/econ499/figures"
+
+. global estimation "/Users/amedeusdsouza/Desktop/econ499data/estimation"
+
+. global distreg "/Users/amedeusdsouza/econ499/distreg"
+
+. global mwagedata "/Users/amedeusdsouza/Desktop/econ499data/zipperer-min-wage"
+
+. global linreg "/Users/amedeusdsouza/econ499/linreg"
+
+. global dfl1 "/Users/amedeusdsouza/econ499/dfl1"
+
+. 
+. cap log close
