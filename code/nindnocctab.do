@@ -44,7 +44,8 @@ drop if inrange(year, 1994, 1995)
 ** hours weighted
 gen hweight = eweight * uhourse / 100.0
 
-** NOTE in current draft we have not dropped <83, self empl + w/o pay
+** drop self employed and w/o pay
+keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 ********************************************************************************
 
 ** keep if inrange(year, 2000, 2019)
@@ -131,6 +132,6 @@ label define hrslab 1 "White Men" 2 "Black Men" 3 "Hispanic Men" 4 "White Women"
 	label values hispracesex hrslab
 	label var hispracesex ""
 
-tabout nind hispracesex [aw = finalwt1] using $tabs/nindtab.tex, cells(col) format(3) style(tex) replace
+tabout nind hispracesex [aw = finalwt1] using $tabs/fin_nindtab.tex, cells(col) format(3) style(tex) replace
 
-tabout nind hispracesex [aw = finalwt1] using $tabs/unindtab.tex, sum cells(mean covered) format(3) style(tex) replace
+tabout nind hispracesex [aw = finalwt1] using $tabs/fin_unindtab.tex, sum cells(mean covered) format(3) style(tex) replace
