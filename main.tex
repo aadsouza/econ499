@@ -1,4 +1,4 @@
-\documentclass[11pt, notitlepage]{article}
+\documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{relsize}
@@ -17,11 +17,13 @@
 \usepackage{pdflscape}
 \usepackage{tabularx}
 \usepackage{longtable}
-\usepackage{breakurl}
+% \usepackage{breakurl}
 \usepackage{enumitem}
 \usepackage[normalem]{ulem}
 \usepackage{blindtext}
 \usepackage{fancyhdr}
+
+% \setlength{\headheight}{13.6pt}
 
 \usepackage{newpxtext}
 
@@ -62,19 +64,19 @@
 \usepackage[colorlinks=true,linkcolor=myblue, allcolors=myblue]{hyperref}
 \usepackage{soul}
 
-\pagestyle{fancy}
-\fancyhf{}
-\rhead{\textsc{Amedeus Akira Dsouza} \textsc{(}\textit{he}\textsc{/}\textit{him}\textsc{/}\textit{his}\textsc{)} \textsc{42975961}}
-\lhead{\textsc{ECON 499 003}}
+% \pagestyle{fancy}
+% \fancyhf{}
+% \rhead{\textsc{Amedeus Akira Dsouza} \textsc{(}\textit{he}\textsc{/}\textit{him}\textsc{/}\textit{his}\textsc{)} \textsc{42975961}}
+% \lhead{ECON 499 003}
 
 \cfoot{\thepage}
 
-\title{\textsc{ECON 499 003: Honours Thesis}}
-\author{\textsc{\href{https://sites.google.com/view/aadsouza}{Amedeus Akira Dsouza}}\thanks{Amedeus Akira Dsouza: \href{mailto:aa_dsouza@alumni.ubc.ca}{aa\_dsouza@alumni.ubc.ca}. I am extremely grateful to Professor Nicole Fortin and Professor Marit Rehavi for their continued guidance and support. I would like to thank Professor Nicole Fortin and Neil Lloyd for providing Stata codes that expedited the data cleaning process. I would also like to thank Sheldon Birkett, Elisabeth Hatting, Wenxin Ma, Javier Cort\'{e}s Orihuela, and Sarah Kirker Wappel for helpful discussions and comments. Codes, tables, figures, and working drafts can be found \href{https://github.com/aadsouza/econ499}{here} on GitHub. Please note that I have been forced to temporarily reduce the font size to 10pt to accommodate the poorly formatted regression tables.} \textsc{ (}\textit{he}\textsc{/}\textit{him}\textsc{/}\textit{his}\textsc{)} \textsc{42975961}\\\textsc{\href{https://economics.ubc.ca}{Vancouver School of Economics}, \href{https://www.ubc.ca}{University of British Columbia}}}
-\date{\textsc{Sunday, April 11, 2021}}
+\title{Labor Unions and Racial Inequality}
+\author{Amedeus Akira Dsouza\thanks{Amedeus Akira Dsouza: \href{mailto:aa_dsouza@alumni.ubc.ca}{aa\_dsouza@alumni.ubc.ca}. I am extremely grateful to Professor Nicole Fortin and Professor Marit Rehavi for their continued guidance and support. I would like to thank Professor Nicole Fortin and Neil Lloyd for providing Stata codes that expedited the data cleaning process. I would also like to thank Sheldon Birkett, Elisabeth Hatting, Wenxin Ma, Javier Cort\'{e}s Orihuela, and Sarah Kirker Wappel for helpful discussions and comments. Codes, tables, figures, and working drafts can be found \href{https://github.com/aadsouza/econ499}{here} on GitHub. Please note that I have been forced to temporarily reduce the font size to 10pt to accommodate the poorly formatted regression tables.} \textsc{ (}\textit{he}\textsc{/}\textit{him}\textsc{/}\textit{his}\textsc{)}}
+ \affil{University of British Columbia}
+\date{Sunday, April 11, 2021}
 
 \begin{document}
-\doublespacing
 \maketitle
 \thispagestyle{empty}
 \begin{abstract}
@@ -84,7 +86,7 @@ Lorem ipsum dolor sit amet.
 \clearpage
 \pagenumbering{arabic}
 \section{Introduction}
-Lorem ipsum dolor sit amet. 
+Lorem ipsum dolor sit amet.
 % The broader question we seek to contribute towards answering is what is the effect of changes to labor market institutions on racial inequality. We expect to narrow this question down in multiple ways. First, we ask what are the effects of the decline of labor unions and changes to minimum wages on Black-white earnings inequality along the wage distribution taking into account spillover effects. We also ask how changes to the state-level minimum wage after 1970 affect the racial earnings gap.
 
 % We observe that emerging literature shines a spotlight on the efficacy of \textit{prima facie} race-neutral changes to labor market institutions on the outcomes of underrepresented workers \citep[see, for example,][]{derenoncourtmontialoux2020}. We note that this is not exclusive to labor markets. These analyses are a subset of the broader literature that looks at the disproportionate impacts of \textit{prima facie} race-neutral policies \citep[see, for example,][]{ahs2011}.  Strengthening labor market institutions -  by for example, increasing the minimum wage or encouraging and buttressing labor unions - could therefore potentially contribute towards reducing racial inequality. While targeted policies that seek to address these inequalities are indeed important, they are often limited in scope and susceptible to legal challenges.
@@ -114,7 +116,7 @@ Lorem ipsum dolor sit amet.
 % Our analysis indeed builds on the work put in by \citet{derenoncourtmontialoux2020} studying the effects of the minimum wage on racial inequality and is distinct in terms of the time period being studied, the better data available for the period being studied, the different dynamics of the racial earnings gap in the period being studied - in particular, the stagnation of the gap, and in the level of the policy changes being studied - federal vs. state-level changes to the minimum wage. We expect to further build on the topic in the coming weeks towards a more fruitful analysis in order to make a more significant contribution to the literature on labor market institutions and racial inequality.
 
 \section{Data}
-Lorem ipsum dolor sit amet.
+Lorem ipsum dolor sit amet. 
 % We shall use the Current Population Survey (CPS) Merged Outgoing Rotation Group as our primary dataset which is available from 1979 to 2019. In order to extend our analysis on labor unions, we shall extend our data using the CPS May back to 1973. We would like to consider supplementing our analysis with values imputed from the CPS Annual Social and Economic Supplement (ASEC). We expect our data to be the transpose of the following outline
 % \begin{itemize}
 %     \item $n$ is the number of observations we have in our sample after cleaning the data.
@@ -149,7 +151,7 @@ Lorem ipsum dolor sit amet.
 % We also intend on exploring in the coming weeks supplementing our analysis using the data from the decennial census and the American Community Survey (ACS) following \citet{bayercharles2018} which would allow for us to include these "non workers" in our analysis. Should this be possible, we could then incorporate the effect of the minimum wage on recidivism captured by \citet{aganmakowsky2018} using data from the National Corrections Reporting Program which we expect would increase the effect of the minimum wage on Black white earnings inequality.
 
 \section{Estimation Strategy}
-Lorem ipsum dolor sit amet.
+Lorem ipsum dolor sit amet. 
 % We break down our estimation strategy into two parts. First, we will follow the \citet{heywoodparent2012} implementation of the decomposition method developed by \citet{dfl1996} (here forth referred to as the DFL decomposition) and recentered influence function (RIF) regressions with spillover effects as found in \citet{fll2019}. Next, we shall leverage variation in state-level minimum wage increases to understand the effect of the minimum wage on the racial earnings gap after 1979 in a design similar to \citet{cdlz2019}.
 % \subsection{DFL Decomposition and RIF Regression}
 % \subsubsection{Labor Unions and Racial Earnings Inequality}
@@ -234,11 +236,16 @@ Lorem ipsum dolor sit amet.
 %no \citex*{}
 %in bib: two authors fortinlemieuxXXXX; three authors dflXXXX.
 
-{\footnotesize\bibliography{495preliminaryprospectus}}
+% {\footnotesize\bibliography{495preliminaryprospectus}}
 
 \pagebreak
 \appendix
+\begin{landscape}
 \section*{Tables}
+\small{\input{tabs/fin_bhw_sumstats}}
+\end{landscape}
+\pagebreak
+
 \section*{Figures}
 % \section{Figures}
 % \subsection{Figure 1 - Black-white Earnings Gap at Mean - \citet{derenoncourtmontialoux2020}}\label{fig1}
