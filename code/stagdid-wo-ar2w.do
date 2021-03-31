@@ -129,6 +129,8 @@ drop if alwaysr2w == 1
 
 eststo clear
 
+drop if state == 55 | state == 81
+
 ** BLACK-WHITE
 reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster state)
 
