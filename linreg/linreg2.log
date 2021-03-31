@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/linreg2.log
   log type:  text
- opened on:  21 Mar 2021, 18:46:53
+ opened on:  31 Mar 2021, 16:39:14
 
 . 
 . use cleaned_nber_morg, clear
@@ -116,8 +116,8 @@ end of do-file
 . 
 . ** keep needed variables
 . ** FIXME add partt to list once defined in clean_nber_morg
-. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc
-> 1 covered
+. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispraces
+> ex eweight alloc1 covered
 
 . 
 . drop if hispracesex ==.
@@ -173,8 +173,8 @@ end of do-file
 . eststo clear
 
 . 
-.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.n
-> occ2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
+.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt
+>  public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 2,167,259,754)
 
@@ -318,8 +318,8 @@ coveredhisprace |   .0440587    .009789     4.50   0.000     .0248311    .063286
 .         eststo naive_mal_1
 
 . 
-.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.n
-> occ2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
+.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt
+>  public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1983, 1988) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 1,917,831,567)
 
@@ -463,13 +463,13 @@ coveredhisprace |   .0160247   .0092096     1.74   0.082     -.002065    .034114
 .         eststo naive_fem_1
 
 .         
-.         esttab naive_mal_1 naive_fem_1 using $tabs/naive1.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mt
-> itles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+.         esttab naive_mal_1 naive_fem_1 using $tabs/naive1.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Ra
+> ce) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/naive1.tex)
 
 .         
-.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.n
-> occ2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
+.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt
+>  public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 4,153,338,354)
 
@@ -618,8 +618,8 @@ coveredhisprace |    .030419   .0090029     3.38   0.001     .0127354    .048102
 .         eststo naive_mal_2
 
 . 
-.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.n
-> occ2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
+.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt
+>  public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 1988, 2000) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 3,920,689,798)
 
@@ -768,13 +768,13 @@ coveredhisprace |   .0335624   .0090527     3.71   0.000      .015781    .051343
 .         eststo naive_fem_2
 
 .         
-.         esttab naive_mal_2 naive_fem_2 using $tabs/naive2.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Race) nonumbers mt
-> itles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+.         esttab naive_mal_2 naive_fem_2 using $tabs/naive2.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Ra
+> ce) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/naive2.tex)
 
 .         
-.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.n
-> occ2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
+.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt
+>  public cmsa i.nocc2 i.quarter if female == 0 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 5,739,708,710)
 
@@ -932,8 +932,8 @@ coveredhisprace |   .0262197   .0077013     3.40   0.001     .0110926    .041346
 .         eststo naive_mal_3
 
 . 
-.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.n
-> occ2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
+.         reg lwage3 hisprace covered coveredhisprace i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt
+>  public cmsa i.nocc2 i.quarter if female == 1 & inrange(year, 2000, 2019) [w = finalwt1], vce(cluster state_ind)
 (analytic weights assumed)
 (sum of wgt is 5,740,898,485)
 
@@ -1091,18 +1091,18 @@ coveredhisprace |    .040467   .0080647     5.02   0.000     .0246263    .056307
 .         eststo naive_fem_3
 
 .         
-.         esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wage on Union Coverage and Race) nonumbers mti
-> tles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+.         esttab naive_mal_3 naive_fem_3 using $tabs/naive3.tex, se title(OLS Regression of Real Log Wages on Union Coverage and Ra
+> ce) nonumbers mtitles("Men" "Women") keep(covered hisprace coveredhisprace) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/naive3.tex)
 
 . 
 . 
-. panelcombine, use($tabs/naive1.tex $tabs/naive2.tex $tabs/naive3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/
-> naive.tex) 
+. panelcombine, use($tabs/naive1.tex $tabs/naive2.tex $tabs/naive3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncoun
+> t(3) save($tabs/fin_naive.tex) 
 
 . log close
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/linreg2.log
   log type:  text
- closed on:  21 Mar 2021, 18:47:45
----------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  31 Mar 2021, 16:40:12
+-----------------------------------------------------------------------------------------------------------------------------------
