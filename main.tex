@@ -245,7 +245,30 @@ Lorem ipsum dolor sit amet.
 \small{\input{tabs/fin_bhw_sumstats}}
 \end{landscape}
 \pagebreak
-
+\begin{landscape}
+\small{\begin{table}[h!]
+    \centering
+    \caption{Percentage in each Industry by Hispanicity, Race, and Sex.}\label{tab:nindtab}
+\begin{tabular}{l*{8}{c}}
+\input{tabs/fin_nindtab.tex}
+\hline\hline
+\multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
+\end{tabular}
+\end{table}}
+\end{landscape}
+\pagebreak
+\begin{landscape}
+\small{\begin{table}[h!]
+    \centering
+    \caption{Union Coverage Proportion in each Industry by Hispanicity, Race, and Sex.}\label{tab:unindtab}
+\begin{tabular}{l*{8}{c}}
+\input{tabs/fin_unindtab.tex}
+\hline\hline
+\multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
+\end{tabular}
+\end{table}}
+\end{landscape}
+\pagebreak
 \section*{Figures}
 % \section{Figures}
 % \subsection{Figure 1 - Black-white Earnings Gap at Mean - \citet{derenoncourtmontialoux2020}}\label{fig1}
