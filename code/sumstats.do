@@ -53,7 +53,7 @@ estpost sum covered umem lwage3 educ exper public [aw = eweight] if hispracesex 
 eststo hrs`i'
 }
 
-esttab using bhw_sumstats.tex, cell(mean(fmt(3)) sd(par)) mti collabels(none) nonum mtitles("White Men" "Black Men" "Hispanic Men" "White Women" "Black Women" "Hispanic Women") label replace addnote("Sample includes years 1983-2019 excluding 1994 and 1995.") title(Summary Statistics by Hispanicity, Race, and Sex)
+esttab using fin_bhw_sumstats.tex, cell(mean(fmt(3)) sd(par)) mti collabels(none) nonum mtitles("White Men" "Black Men" "Hispanic Men" "White Women" "Black Women" "Hispanic Women") label replace addnote("Sample includes years 1983-2019 excluding 1994 and 1995.") title(Summary Statistics by Hispanicity, Race, and Sex)
 
 
 
