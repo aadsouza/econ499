@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/linreg.log
   log type:  text
- opened on:  22 Mar 2021, 00:36:04
+ opened on:  31 Mar 2021, 16:59:07
 
 . 
 . use cleaned_nber_morg, clear
@@ -131,8 +131,8 @@ end of do-file
 . 
 . ** keep needed variables
 . ** FIXME add partt to list once defined in clean_nber_morg
-. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc
-> 1 covered
+. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispraces
+> ex eweight alloc1 covered
 
 . 
 . drop if hispracesex ==.
@@ -625,8 +625,8 @@ file /Users/amedeusdsouza/Desktop/econ499data/estimation/est_dat.dta saved
 . 
 . forvalues j = 0(1)1{
   2.         forvalues k = 1(1)6{
-  3.                 reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.qu
-> arter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+  3.                 reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public c
+> msa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
   4.         
 .                 eststo re1_`j'_`k'
   5.         }
@@ -1176,8 +1176,8 @@ coveragerate |   .0193466   .0322221     0.60   0.548    -.0439443    .0826376
 (sum of wgt is 186,757,691)
 
 Linear regression                               Number of obs     =     26,249
-                                                F(105, 446)       =     212.09
-                                                Prob > F          =     0.0000
+                                                F(104, 446)       =          .
+                                                Prob > F          =          .
                                                 R-squared         =     0.5160
                                                 Root MSE          =      .3135
 
@@ -1214,7 +1214,7 @@ coveragerate |   .0460277   .0607692     0.76   0.449    -.0734018    .1654572
          DC  |    .179425   .0266216     6.74   0.000     .1271056    .2317444
          VA  |  -.0102125    .029802    -0.34   0.732    -.0687823    .0483573
          WV  |   .0473287   .0717156     0.66   0.510    -.0936138    .1882712
-         NC  |  -.0305131   .0198646    -1.54   0.125    -.0695529    .0085267
+         NC  |  -.0305131   .0198646    -1.54   0.125    -.0695528    .0085267
          SC  |  -.0573337   .0237292    -2.42   0.016    -.1039686   -.0106988
          GA  |  -.0181943   .0264794    -0.69   0.492    -.0702341    .0338455
          FL  |  -.0161777   .0241384    -0.67   0.503    -.0636167    .0312614
@@ -1312,7 +1312,7 @@ coveragerate |   .0460277   .0607692     0.76   0.449    -.0734018    .1654572
 (sum of wgt is 111,539,602)
 
 Linear regression                               Number of obs     =     13,499
-                                                F(103, 400)       =          .
+                                                F(104, 400)       =          .
                                                 Prob > F          =          .
                                                 R-squared         =     0.4556
                                                 Root MSE          =     .32307
@@ -1584,7 +1584,7 @@ coveragerate |   .3191951    .040285     7.92   0.000     .2400624    .3983277
 (sum of wgt is 77,656,625)
 
 Linear regression                               Number of obs     =      9,666
-                                                F(96, 368)        =          .
+                                                F(97, 368)        =          .
                                                 Prob > F          =          .
                                                 R-squared         =     0.3480
                                                 Root MSE          =     .31909
@@ -2111,7 +2111,7 @@ coveragerate |   .4200823   .0918713     4.57   0.000     .2393893    .6007752
 (sum of wgt is 23,180,002)
 
 Linear regression                               Number of obs     =      2,950
-                                                F(91, 221)        =          .
+                                                F(90, 221)        =          .
                                                 Prob > F          =          .
                                                 R-squared         =     0.4545
                                                 Root MSE          =     .32685
@@ -2237,15 +2237,17 @@ coveragerate |    .417879   .1604875     2.60   0.010     .1015973    .7341607
 ------------------------------------------------------------------------------
 
 . 
-. esttab re1_0_1 re1_0_2 re1_0_3 re1_0_4 re1_0_5 re1_0_6 using $tabs/nlincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for Peop
-> le Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(l
-> r){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+. esttab re1_0_1 re1_0_2 re1_0_3 re1_0_4 re1_0_5 re1_0_6 using $tabs/nlincovrate1.tex, se title(OLS of Real Log Wages on Unionizati
+> on Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) su
+> ffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) rep
+> lace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/nlincovrate1.tex)
 
 . 
-. esttab re1_1_1 re1_1_2 re1_1_3 re1_1_4 re1_1_5 re1_1_6 using $tabs/ulincovrate1.tex, se title(OLS of Real Log Wages on Unionization Rate for Peop
-> le Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@
-> span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+. esttab re1_1_1 re1_1_2 re1_1_3 re1_1_4 re1_1_5 re1_1_6 using $tabs/ulincovrate1.tex, se title(OLS of Real Log Wages on Unionizati
+> on Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix
+> (}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace
+>  label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/ulincovrate1.tex)
 
 . 
@@ -2261,8 +2263,8 @@ coveragerate |    .417879   .1604875     2.60   0.010     .1015973    .7341607
 . 
 . ** keep needed variables
 . ** FIXME add partt to list once defined in clean_nber_morg
-. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc
-> 1 covered
+. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispraces
+> ex eweight alloc1 covered
 
 . 
 . drop if hispracesex ==.
@@ -3060,8 +3062,8 @@ file /Users/amedeusdsouza/Desktop/econ499data/estimation/est_dat.dta saved
 . 
 . forvalues j = 0(1)1{
   2.         forvalues k = 1(1)6{
-  3.                 reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.qu
-> arter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+  3.                 reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public c
+> msa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
   4.         
 .                 eststo re2_`j'_`k'
   5.         }
@@ -4494,7 +4496,7 @@ coveragerate |   .3579055   .0625565     5.72   0.000     .2349083    .4809026
        state |
          MA  |  -.2709321   .0439258    -6.17   0.000     -.357298   -.1845662
          RI  |  -.3184104   .0660128    -4.82   0.000    -.4482033   -.1886175
-         CT  |  -.2105396   .0543345    -3.87   0.000    -.3173708   -.1037084
+         CT  |  -.2105396   .0543345    -3.87   0.000    -.3173708   -.1037083
          NY  |  -.3145238   .0492255    -6.39   0.000    -.4113099   -.2177376
          NJ  |   -.272475   .0532575    -5.12   0.000    -.3771886   -.1677613
          PA  |  -.3020611   .0442418    -6.83   0.000    -.3890483   -.2150739
@@ -4529,7 +4531,7 @@ coveragerate |   .3579055   .0625565     5.72   0.000     .2349083    .4809026
          TX  |  -.3113722    .045745    -6.81   0.000     -.401315   -.2214293
          WY  |  -.7682147   .0476742   -16.11   0.000    -.8619507   -.6744788
          CO  |  -.1607609   .0652052    -2.47   0.014     -.288966   -.0325559
-         NM  |  -.2318884   .0660136    -3.51   0.000    -.3616829   -.1020939
+         NM  |  -.2318884   .0660136    -3.51   0.000    -.3616829   -.1020938
          AZ  |  -.3664422   .0644462    -5.69   0.000    -.4931548   -.2397296
          UT  |  -.4625022    .135572    -3.41   0.001    -.7290608   -.1959437
          NV  |  -.2969077     .05616    -5.29   0.000    -.4073281   -.1864873
@@ -4632,7 +4634,7 @@ coveragerate |   .5145218   .1521664     3.38   0.001     .2150399    .8140037
          NH  |   .3217419   .4254042     0.76   0.450    -.5155052    1.158989
          VT  |   .2686366   .1184153     2.27   0.024     .0355808    .5016924
          MA  |   .0987344   .0654016     1.51   0.132    -.0299839    .2274527
-         RI  |   .0020001   .0887783     0.02   0.982    -.1727264    .1767265
+         RI  |   .0020001   .0887783     0.02   0.982    -.1727263    .1767265
          CT  |    .147219   .0700977     2.10   0.037     .0092582    .2851799
          NY  |   .0267039   .0630843     0.42   0.672    -.0974538    .1508615
          NJ  |   -.004511     .06656    -0.07   0.946    -.1355092    .1264872
@@ -4753,16 +4755,18 @@ coveragerate |   .5145218   .1521664     3.38   0.001     .2150399    .8140037
 ------------------------------------------------------------------------------
 
 . 
-. esttab re2_0_1 re2_0_2 re2_0_3 re2_0_4 re2_0_5 re2_0_6 using $tabs/nlincovrate2.tex, se title(OLS of Real Log Wages on Unionization Rate for Peop
-> le Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(l
-> r){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+. esttab re2_0_1 re2_0_2 re2_0_3 re2_0_4 re2_0_5 re2_0_6 using $tabs/nlincovrate2.tex, se title(OLS of Real Log Wages on Unionizati
+> on Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) su
+> ffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) rep
+> lace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/nlincovrate2.tex)
 
 . 
-. esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for Pe
-> ople Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr)
-> {@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
-(output written to /Users/amedeusdsouza/econ499/tabs/ulincovrate.tex)
+. esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate2.tex, se title(OLS of Real Log Wages on Unionizati
+> on Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix
+> (}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace
+>  label starlevels(* 0.1 ** 0.05 *** 0.01)
+(output written to /Users/amedeusdsouza/econ499/tabs/ulincovrate2.tex)
 
 . 
 . restore
@@ -4777,8 +4781,8 @@ coveragerate |   .5145218   .1521664     3.38   0.001     .2150399    .8140037
 . 
 . ** keep needed variables
 . ** FIXME add partt to list once defined in clean_nber_morg
-. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispracesex eweight alloc
-> 1 covered
+. keep state year quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt public marr hisprace hispraces
+> ex eweight alloc1 covered
 
 . 
 . drop if hispracesex ==.
@@ -6127,8 +6131,8 @@ file /Users/amedeusdsouza/Desktop/econ499data/estimation/est_dat.dta saved
 . 
 . forvalues j = 0(1)1{
   2.         forvalues k = 1(1)6{
-  3.                 reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.qu
-> arter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
+  3.                 reg lwage3 coveragerate i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public c
+> msa i.nocc2 i.quarter if covered == `j' & hispracesex == `k' [w = finalwt1], vce(cluster state_ind)
   4.         
 .                 eststo re3_`j'_`k'
   5.         }
@@ -7816,7 +7820,7 @@ coveragerate |   .3211091   .1209397     2.66   0.008     .0833182    .5588999
          SD  |   .4222263   .0497257     8.49   0.000     .3244559    .5199967
          NE  |   .4610175   .0738549     6.24   0.000     .3158045    .6062306
          KS  |    .404523   .0791555     5.11   0.000     .2488881     .560158
-         DE  |   .3063862   .0455089     6.73   0.000     .2169068    .3958656
+         DE  |   .3063862   .0455089     6.73   0.000     .2169068    .3958655
          MD  |   .4961957   .0621692     7.98   0.000      .373959    .6184325
          DC  |   .5369927   .0624894     8.59   0.000     .4141264    .6598591
          VA  |   .6234149   .0573102    10.88   0.000      .510732    .7360977
@@ -7931,32 +7935,34 @@ coveragerate |   .3211091   .1209397     2.66   0.008     .0833182    .5588999
 ------------------------------------------------------------------------------
 
 . 
-. esttab re3_0_1 re3_0_2 re3_0_3 re3_0_4 re3_0_5 re3_0_6 using $tabs/nlincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for Peop
-> le Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(l
-> r){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+. esttab re3_0_1 re3_0_2 re3_0_3 re3_0_4 re3_0_5 re3_0_6 using $tabs/nlincovrate3.tex, se title(OLS of Real Log Wages on Unionizati
+> on Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) su
+> ffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) rep
+> lace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/nlincovrate3.tex)
 
 . 
-. esttab re3_1_1 re3_1_2 re3_1_3 re3_1_4 re3_1_5 re3_1_6 using $tabs/ulincovrate3.tex, se title(OLS of Real Log Wages on Unionization Rate for Peop
-> le Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@
-> span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+. esttab re3_1_1 re3_1_2 re3_1_3 re3_1_4 re3_1_5 re3_1_6 using $tabs/ulincovrate3.tex, se title(OLS of Real Log Wages on Unionizati
+> on Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix
+> (}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace
+>  label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/ulincovrate3.tex)
 
 . 
 . restore
 
 . 
-. panelcombine, use($tabs/nlincovrate1.tex $tabs/nlincovrate2.tex $tabs/nlincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columnco
-> unt(3) save($tabs/nlincovrate.tex)
+. panelcombine, use($tabs/nlincovrate1.tex $tabs/nlincovrate2.tex $tabs/nlincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000
+> -2019") columncount(3) save($tabs/fin_nlincovrate.tex)
 
 . 
-. panelcombine, use($tabs/ulincovrate1.tex $tabs/ulincovrate2.tex $tabs/ulincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columnco
-> unt(3) save($tabs/ulincovrate.tex)
+. panelcombine, use($tabs/ulincovrate1.tex $tabs/ulincovrate2.tex $tabs/ulincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000
+> -2019") columncount(3) save($tabs/fin_ulincovrate.tex)
 
 . 
 . log close
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/linreg.log
   log type:  text
- closed on:  22 Mar 2021, 00:51:55
----------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  31 Mar 2021, 17:15:48
+-----------------------------------------------------------------------------------------------------------------------------------

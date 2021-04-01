@@ -195,7 +195,7 @@ forvalues j = 0(1)1{
 
 esttab re2_0_1 re2_0_2 re2_0_3 re2_0_4 re2_0_5 re2_0_6 using $tabs/nlincovrate2.tex, se title(OLS of Real Log Wages on Unionization Rate for People Not Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
-esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate`i'.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
+esttab re2_1_1 re2_1_2 re2_1_3 re2_1_4 re2_1_5 re2_1_6 using $tabs/ulincovrate2.tex, se title(OLS of Real Log Wages on Unionization Rate for People Covered by Union) nonumbers mgroups("Men" "Women", pattern(1 0 0 1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) mtitles("white" "Black" "Hispanic" "White" "Black" "Hispanic") keep(coveragerate) replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 
 restore
 
@@ -265,8 +265,8 @@ esttab re3_1_1 re3_1_2 re3_1_3 re3_1_4 re3_1_5 re3_1_6 using $tabs/ulincovrate3.
 
 restore
 
-panelcombine, use($tabs/nlincovrate1.tex $tabs/nlincovrate2.tex $tabs/nlincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/nlincovrate.tex)
+panelcombine, use($tabs/nlincovrate1.tex $tabs/nlincovrate2.tex $tabs/nlincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/fin_nlincovrate.tex)
 
-panelcombine, use($tabs/ulincovrate1.tex $tabs/ulincovrate2.tex $tabs/ulincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/ulincovrate.tex)
+panelcombine, use($tabs/ulincovrate1.tex $tabs/ulincovrate2.tex $tabs/ulincovrate3.tex) paneltitles("1983-1988" "1988-2000" "2000-2019") columncount(3) save($tabs/fin_ulincovrate.tex)
 
 log close
