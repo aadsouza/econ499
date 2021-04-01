@@ -1,0 +1,26 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Difference in Differences of Real Log Wages on Right to Work Laws Treatment in State and Time}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{3}{c}{Men}                        &\multicolumn{3}{c}{Women}                      \\\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+                    &\multicolumn{1}{c}{(1)}   &\multicolumn{1}{c}{(2)}   &\multicolumn{1}{c}{(3)}   &\multicolumn{1}{c}{(4)}   &\multicolumn{1}{c}{(5)}   &\multicolumn{1}{c}{(6)}   \\
+\hline
+$ Hispanic $        &      -0.128***&      -0.128***&      -0.128***&     -0.0887***&     -0.0887***&     -0.0887***\\
+                    &   (0.00985)   &   (0.00983)   &   (0.00988)   &    (0.0111)   &    (0.0111)   &    (0.0109)   \\
+[1em]
+$ Treat\_{st} $      &     -0.0537*  &     -0.0543*  &     -0.0400** &     -0.0713***&     -0.0716***&     -0.0573** \\
+                    &    (0.0302)   &    (0.0309)   &    (0.0167)   &    (0.0155)   &    (0.0158)   &    (0.0219)   \\
+[1em]
+$ Treat\_{st} \times Hispanic $&     0.00589   &     0.00572   &     0.00499   &      0.0550** &      0.0550** &      0.0557** \\
+                    &    (0.0204)   &    (0.0206)   &    (0.0205)   &    (0.0207)   &    (0.0207)   &    (0.0210)   \\
+\hline
+Observations        &      183210   &      183210   &      183210   &      142046   &      142046   &      142046   \\
+State Monthly Unemployment Rate&          No   &         Yes   &         Yes   &          No   &         Yes   &         Yes   \\
+Year Fixed Effect   &         Yes   &         Yes   &          No   &         Yes   &         Yes   &          No   \\
+State Linear Time Trends&          No   &          No   &         Yes   &          No   &          No   &         Yes   \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize * p<0.1, ** p<0.05, *** p<0.01}\\
+\end{tabular}
+\end{table}
