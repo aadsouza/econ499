@@ -130,7 +130,7 @@ qui tab quarter, gen(dumquarter)
 	
 	forval qt = 10(10)90{
 		di "men at `qt' quantile in period 1"
-		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -156,7 +156,7 @@ qui tab quarter, gen(dumquarter)
 		local row = `row' + 1
 		
 		di "women at `qt' quantile in period 1"
-		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -210,7 +210,7 @@ qui tab quarter, gen(dumquarter)
 	
 	forval qt = 10(10)90{
 		di "men at `qt' quantile in period 2"
-		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -236,7 +236,7 @@ qui tab quarter, gen(dumquarter)
 		local row = `row' + 1
 		
 		di "women at `qt' quantile in period 2"
-		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -290,7 +290,7 @@ qui tab quarter, gen(dumquarter)
 	
 	forval qt = 10(10)90{
 		di "men at `qt' quantile in period 3"
-		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]
@@ -316,7 +316,7 @@ qui tab quarter, gen(dumquarter)
 		local row = `row' + 1
 		
 		di "women at `qt' quantile in period 3"
-		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered blackrelwhite coveredblackrelwhite dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_blackrelwhite`qt'"
 		putexcel B`row' = _b[blackrelwhite]
 		putexcel C`row' = _se[blackrelwhite]

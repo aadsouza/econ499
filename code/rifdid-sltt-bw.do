@@ -172,7 +172,7 @@ local row = 2
 
 forvalues qt = 10(10)90{
 	di "men at `qt' quantile who are black = `blk'"
-	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_treat_st`qt'"
 		putexcel B`row' = _b[treat_st]
 		putexcel C`row' = _se[treat_st]
@@ -182,7 +182,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1
 	
 	di "women at `qt' quantile who are black = `blk'"
-	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_treat_st`qt'"
 		putexcel B`row' = _b[treat_st]
 		putexcel C`row' = _se[treat_st]
@@ -192,7 +192,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1
 	
 	di "men not covered by union at `qt' quantile who are black = `blk'"
-	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "nm_treat_st`qt'"
 		putexcel B`row' = _b[treat_st]
 		putexcel C`row' = _se[treat_st]
@@ -202,7 +202,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1	
 	
 	di "women not covered by union at `qt' quantile who are black = `blk'"
-	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "nf_treat_st`qt'"
 		putexcel B`row' = _b[treat_st]
 		putexcel C`row' = _se[treat_st]
@@ -212,7 +212,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1
 	
 	di "men covered by union at `qt' quantile who are black = `blk'"
-	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 0 & covered == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "um_treat_st`qt'"
 		putexcel B`row' = _b[treat_st]
 		putexcel C`row' = _se[treat_st]
@@ -222,7 +222,7 @@ forvalues qt = 10(10)90{
 		local row = `row' + 1	
 
 	di "women covered by union at `qt' quantile who are black = `blk'"
-	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+	rifreg lwage3 treat_st dumstate* statetrend* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* unemp if female == 1 & covered == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "uf_treat_st`qt'"
 		putexcel B`row' = _b[treat_st]
 		putexcel C`row' = _se[treat_st]

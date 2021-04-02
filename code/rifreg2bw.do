@@ -140,7 +140,7 @@ qui tab quarter, gen(dumquarter)
 	
 	forval qt = 10(10)90{
 		di "men at `qt' quantile in period 1 who are black = `blk'"
-		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_covered`qt'"
 		putexcel B`row' = _b[covered]
 		putexcel C`row' = _se[covered]
@@ -150,7 +150,7 @@ qui tab quarter, gen(dumquarter)
 		local row = `row' + 1
 		
 		di "women at `qt' quantile in period 1 who are black = `blk'"
-		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_covered`qt'"
 		putexcel B`row' = _b[covered]
 		putexcel C`row' = _se[covered]
@@ -187,7 +187,7 @@ qui tab quarter, gen(dumquarter)
 	
 	forval qt = 10(10)90{
 		di "men at `qt' quantile in period 2 who are black = `blk'"
-		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_covered`qt'"
 		putexcel B`row' = _b[covered]
 		putexcel C`row' = _se[covered]
@@ -197,7 +197,7 @@ qui tab quarter, gen(dumquarter)
 		local row = `row' + 1
 		
 		di "women at `qt' quantile in period 2 who are black = `blk'"
-		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_covered`qt'"
 		putexcel B`row' = _b[covered]
 		putexcel C`row' = _se[covered]
@@ -235,7 +235,7 @@ qui tab quarter, gen(dumquarter)
 	
 	forval qt = 10(10)90{
 		di "men at `qt' quantile in period 3 who are black = `blk'"
-		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 0 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "m_covered`qt'"
 		putexcel B`row' = _b[covered]
 		putexcel C`row' = _se[covered]
@@ -245,7 +245,7 @@ qui tab quarter, gen(dumquarter)
 		local row = `row' + 1
 		
 		di "women at `qt' quantile in period 3 who are black = `blk'"
-		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') //bootstrap reps(200)
+		rifreg lwage3 covered dumstate* dumyear* dumnind* educ exper exper2 exper3 exper4 edex dumee_cl* marr partt public cmsa dumnocc2* dumquarter* if female == 1 & blackrelwhite == `blk' [w = finalwt1], q(`qt') bootstrap reps(100)
 		putexcel A`row' = "f_covered`qt'"
 		putexcel B`row' = _b[covered]
 		putexcel C`row' = _se[covered]
