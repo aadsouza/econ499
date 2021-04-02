@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[10pt, notitlepage]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{relsize}
@@ -47,8 +47,8 @@
 \bibpunct{(}{)}{;}{a}{,}{;}
 \setcounter{MaxMatrixCols}{10}
 
-\topmargin=-1.8cm \textheight=23.8cm \oddsidemargin=-0.3cm
-\evensidemargin=-0.5cm \textwidth=17.1cm
+\topmargin=-1.8cm \textheight=23.8cm \oddsidemargin=-1cm
+\evensidemargin=-1cm \textwidth=18.5cm
 \newtheorem{ass}{Assumption}
 \newtheorem{definit}{Definition}
 \newtheorem{prop}{Proposition}
@@ -79,6 +79,7 @@
 \begin{document}
 \maketitle
 \thispagestyle{empty}
+\doublespacing
 \begin{abstract}
 Lorem ipsum dolor sit amet.
 % We seek to understand the effect of labor market institutions - in particular, the minimum wage and labor unions - on racial wage inequality along the wage distribution, taking into account spillover effects -  including minimum wage ripples and labor union threat effects. We expect to use an estimation strategy involving DFL decompositions, RIF regression analyses, distribution regressions, and a difference-in-differences research design leveraging variation in state-level minimum wage increases and state-industry unionization rates. Therefore, we expect to contribute towards the literature on the disproportionate impacts of \textit{prima facie} race-neutral policies.
@@ -97,7 +98,7 @@ Lorem ipsum dolor sit amet.
 % We expect to use the cleaned CPS dataset from \citet{fll2019} as a starting point or to follow closely the cleaning procedure that gets the CPS May and MORG datasets to match \citet{fll2019}. We will closely follow the implementation of RIF on DFL in \citet{heywoodparent2012} who studied the effect of performance pay on racial inequality along the earnings distribution. We expect to manipulate the RIF regression following \citet{fll2019} to account for spillover effects. We will run a difference-in-differences regression leveraging state-level variation following \citet{cdlz2019} and \citet{derenoncourtmontialoux2020}. Our analysis would follow the same period as \citet{cdlz2019} but would look specifically at racial inequality, not just racial demographic heterogeneity. 
 \section{Literature Review}
 Lorem ipsum dolor sit amet.
-% The relationship between labor unions and racial wage inequality has long piqued cross disciplinary interest across the social sciences, including sociology \citep[see, for example,][]{rosenfeldkleykamp2012, mccall2001} and economics \citep[see, for example,][]{ashenfelter1972, boundfreeman1992}, and the racial aspect of unions and their members has been studied in the political sciences as well \citep[see, for example,][]{frymergrumbach2020}. We have noticed that it has been a while since this question has been thoroughly studied in published economics research. In this paper, we seek to revisit this relationship - we are interested in studying the effect of labor unions on the Black-white wage gap along the wage distribution taking into account spillover effects.
+% The relationship between labor unions and racial wage inequality has long piqued cross disciplinary interest across the social sciences, including sociology \citep[see, for example,][]{rosenfeldkleykamp2012, mccall2001} and economics \citep[see, for example,][]{ashenfelter1972, boundfreeman1992}, and the racial aspect of unions and their members has been studied in the political sciences as well \citep[see, for example,][]{frymergrumbach2020}. It has been a while since this question has been thoroughly explored in published economics research. In this paper, I seek to revisit this relationship - I interested in studying the effect of labor unions on the Black-white wage gap along the wage distribution taking into account spillover effects.
 
 % \citet{donohueheckman1991} explain that "the story of Black economic progress is not one of uniform secular advance, but rather of episodic change". Several policies and institutions have been evaluated for their potency and the mechanisms by which they reduce racial inequality, including the minimum wage \citep[see, for example,][]{derenoncourtmontialoux2020}, the Civil Rights Act of 1964 \citep[see, for example,][]{heckmanpayner1989, fgbh1973}, government transfer programs \citep[see, for example,][]{butlerheckman1977}. Factors that have been implicated as determinants of the Black-white gap include a focus on characteristics prior to labor market entry such as a skills gap \citep[see, for example,][]{nealjohnson1996}, parenting differences \citep[see, for example,][]{abhs2015}, and a college education \citep[see, for example,][]{abh2010}. The literature also alludes to under-representations of Black-white earnings inequality due to the growing absence of Black men in the workforce, in particular, due to incarceration \citep[see, for example][]{bayercharles2018, nealrick2014, chandra2003}. \citet{muellersmith2015} documents the persistent negative effects of incarceration on employment outcomes and on earnings. We certainly do not suggest that all targeted policy interventions are unfruitful. \citet{miller2017} show that federal affirmative action programs had a significant effect on the percent of Black employees which persisted after the program was rendered moot.
 
@@ -116,7 +117,13 @@ Lorem ipsum dolor sit amet.
 % Our analysis indeed builds on the work put in by \citet{derenoncourtmontialoux2020} studying the effects of the minimum wage on racial inequality and is distinct in terms of the time period being studied, the better data available for the period being studied, the different dynamics of the racial earnings gap in the period being studied - in particular, the stagnation of the gap, and in the level of the policy changes being studied - federal vs. state-level changes to the minimum wage. We expect to further build on the topic in the coming weeks towards a more fruitful analysis in order to make a more significant contribution to the literature on labor market institutions and racial inequality.
 
 \section{Data}
-Lorem ipsum dolor sit amet. 
+I use National Bureau of Economic Research extracts of the Current Population Survey Merged Outgoing Rotation Groups for the years 1983 to 2019. Throughout the data cleaning process, I closely follow the process outlined in \citet{fll2021}. The race variable used by \citet{fll2021} only identifies white and non-white people. I have recovered a much richer race variable and am able to identify non-Hispanic white people, non-Hispanic Black people, and people of other races. I am also able to identify ethnicity and hispanicity. Through the rest of the paper, I define white people to be non-Hispanic white people, Black people to be non-Hispanic Black people, and Hispanic people to be Hispanic people of all races unless specified otherwise. Each observation in my dataset represents an individual.
+
+Data on labor union membership and labor union coverage is available in the CPS MORG for the years following 1983. I define a binary variable for union coverage that takes a value of one for non self employed people who are eligible for pay who are labor union members or covered by a union contract. I use the NBER's recommended hourly wage definition, that is, weekly earnings including overtime, tips, and commissions divided by usual hours per week - a notable divergence from \citet{fll2021} who do not include overtime, tips, and commissions. The weekly earnings variable also includes hourly workers which have been computed as earnings per hour multiplied by usual hours per week. I am unable to identify observations that work in multiple jobs. 
+
+I drop all observations with allocated hourly wage, weekly earnings, or usual hours and am therefore forced to drop observations from 1994 and 1995 due to the absence of an allocation flag. I drop observations that are self employed and those without pay. I follow \citet{fll2021} in imputing top-coded wages with a stochastic Pareto distribution. I use Pareto parameters for 2010 and 2011 for all years after 2010. I deflate wages to 1979 dollars using the consumer price index for all urban consumers provided by the Federal Reserve of St. Louis. I drop all observations with real wages less than \$1 and greater than \$100. I drop observations with missing real log wages. I generate a uniform one digit industry variable across all years in my sample following the definitions outlined in \citet{fll2021} which I adapt to create using NBER's two digit industry variable. I use earnings weights through the analysis and use earnings weights weighed by usual hours per week for kernel density estimates. I keep observation of ages 16 to 64.
+
+I present summary statistics for relevant variables in \autoref{tab:bhw_sumstats}. Experience is defined as age less education less six as is standard in the literature.
 % We shall use the Current Population Survey (CPS) Merged Outgoing Rotation Group as our primary dataset which is available from 1979 to 2019. In order to extend our analysis on labor unions, we shall extend our data using the CPS May back to 1973. We would like to consider supplementing our analysis with values imputed from the CPS Annual Social and Economic Supplement (ASEC). We expect our data to be the transpose of the following outline
 % \begin{itemize}
 %     \item $n$ is the number of observations we have in our sample after cleaning the data.
@@ -236,7 +243,7 @@ Lorem ipsum dolor sit amet.
 %no \citex*{}
 %in bib: two authors fortinlemieuxXXXX; three authors dflXXXX.
 
-% {\footnotesize\bibliography{495preliminaryprospectus}}
+{\footnotesize\bibliography{499data.bib}}
 
 \pagebreak
 \appendix
@@ -256,10 +263,10 @@ Lorem ipsum dolor sit amet.
 \multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
 \end{tabular}
 \end{table}}
-\end{landscape}
+% \end{landscape}
 
-\pagebreak
-\begin{landscape}
+% \pagebreak
+% \begin{landscape}
 \small{\begin{table}[h!]
     \centering
     \caption{Union Coverage Proportion in each Industry by Hispanicity, Race, and Sex.}\label{tab:unindtab}
@@ -282,6 +289,12 @@ Lorem ipsum dolor sit amet.
 % \pagebreak
 % \small{\input{tabs/fin_ulincovrate}}
 % \footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
+
+\pagebreak
+\begin{landscape}
+% \small{\input{tabs/fin_wagstagdid}}
+\footnotesize{I define $Treat_{st} = 1$ if state $s$ has a right to work law in time $t$. I use a sample of years from 1989 to 2019. Policy variation comes from Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). I do not include variation from Texas (1993) as Texas has had some form of a right to work law in place since 1947 and my sample has dropped 1994 and 1995 due to missing allocation flags. All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors are clustered at the state level. Real log wages is the dependent variable throughout. All regressions include covariates and fixed effects as outlined.}
+\end{landscape}
 
 \pagebreak
 \section*{Figures}
