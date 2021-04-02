@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-wo-ar2w.log
   log type:  text
- opened on:   2 Apr 2021, 13:36:04
+ opened on:   2 Apr 2021, 14:51:07
 
 . 
 . use cleaned_nber_morg, clear
@@ -3971,7 +3971,7 @@ added macro:
 . 
 . panelcombine, use($tabs/wagstagdid1-wo-ar2w.tex $tabs/wagstagdid2-wo-ar2w.tex $tabs/wagstagdid3-wo-ar2w.tex) paneltitles("All (Bl
 > ack and White) People" "People Not Covered by Union - Spillover Effect" "People Covered by Union - Direct Effect") columncount(3)
->  save($tabs/wagstagdid-wo-ar2w.tex)
+>  save($tabs/fin_wagstagdid-wo-ar2w.tex)
 
 . 
 . *** esttab wagstagdid_mal_all wagstagdid_fem_all nwagstagdid_mal_all nwagstagdid_fem_all uwagstagdid_mal_all uwagstagdid_fem_all 
@@ -3991,5 +3991,5 @@ added macro:
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-wo-ar2w.log
   log type:  text
- closed on:   2 Apr 2021, 13:38:03
+ closed on:   2 Apr 2021, 14:52:40
 -----------------------------------------------------------------------------------------------------------------------------------
