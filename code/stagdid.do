@@ -125,8 +125,8 @@ gen treat_sthisprelwhite = treat_st*hisprelwhite
 
 gen lyear = year - 1900
 
-** pta WV drop, common support MT
-drop if state == 55 | state == 81
+** pta WV drop, common support MT, ME, NH, VT
+drop if inlist(state, 55, 81, 11, 12, 13)
 
 eststo clear
 
