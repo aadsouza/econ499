@@ -24,6 +24,9 @@ drop if lwage3 ==.
 drop if inrange(year, 1994, 1995)
 
 drop if year < 1983
+
+** drop self employed and w/o pay
+keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
 ********************************************************************************
 
 cd $figs
@@ -44,12 +47,14 @@ collapse (p50) lwage3 [aweight = eweight], by(hispracesex year)
 		
 twoway	(connected lwage3 year if hispracesex == 1, msymbol(x))  ///
 		(connected lwage3 year if hispracesex == 2, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 3, msymbol(x))  ///
 		(connected lwage3 year if hispracesex == 4, msymbol(x))  ///
-		(connected lwage3 year if hispracesex == 5, msymbol(x)),  ///
-		legend(order(1 "white men" 2 "Black men" 3 "white women" 4 "Black women") cols(4)) ///
+		(connected lwage3 year if hispracesex == 5, msymbol(x))  ///
+		(connected lwage3 year if hispracesex == 6, msymbol(x)),  ///
+		legend(order(1 "white men" 2 "Black men" 3 "Hispanic men" 4 "white women" 5 "Black women" 6 "Hispanic women") cols(3)) ///
 		ytitle("real log wages") ///
 		xtitle("year") title("Median Real Log Wages Time Trends")
 
-graph export "$figs/5med_wage_time.png", replace
+graph export "$figs/fin_med_wage_time.png", replace
 
 
