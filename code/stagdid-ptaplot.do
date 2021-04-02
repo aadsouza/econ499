@@ -134,6 +134,9 @@ gen r2wstates = 0 if neverr2w == 1
 	replace r2wstates = 55 if state == 55
 	replace r2wstates = 61 if state == 61
 
+** pta - wv dropped in did, common support MT, ME, NH, VT
+drop if inlist(state, 81, 11, 12, 13)
+
 preserve
 
 keep if female == 0 & blackrelwhite == 0

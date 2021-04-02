@@ -125,8 +125,8 @@ gen treat_sthisprelwhite = treat_st*hisprelwhite
 
 gen lyear = year - 1900
 
-** pta WV drop, common support MT
-drop if state == 55 | state == 81
+** pta WV drop, common support MT, ME, NH, VT
+drop if inlist(state, 55, 81, 11, 12, 13)
 
 ** mean with nocc3 with quarter fe
 reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
