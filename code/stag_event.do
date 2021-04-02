@@ -210,6 +210,8 @@ gen lead2black = lead2*blackrelwhite
 ** label variable lead1 "1"
 ** label variable lead2 "2"
 
+** pta WV drop, common support MT, ME, NH, VT
+drop if inlist(state, 55, 81, 11, 12, 13)
 
 reg covered lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
 
@@ -227,45 +229,45 @@ graph export "$figs/eventstd/evs_covstag_fem_blk.png", replace
 
 reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0, vce(cluster state)
 
-coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Men - Coefs on Leads and Lags")
-graph export "$figs/eventstd/evs_wagstag_mal.png", replace
-coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Men - Coefs on Leads and Lags with Interaction")
-graph export "$figs/eventstd/evs_wagstag_mal_blk.png", replace	
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("Effect of RTW on Real Log Wages for Men" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_wagstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("Surplus Effect of RTW on Real Log Wages for Black Men" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_wagstag_mal_blk.png", replace	
 
 reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1, vce(cluster state)
 
-coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Women - Coefs on Leads and Lags")
-graph export "$figs/eventstd/evs_wagstag_fem.png", replace
-coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Women - Coefs on Leads and Lags with Interaction")
-graph export "$figs/eventstd/evs_wagstag_fem_blk.png", replace	
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("Effect of RTW on Real Log Wages for Women" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_wagstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("Surplus Effect of RTW on Real Log Wages for Black Women" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_wagstag_fem_blk.png", replace	
 
 reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 
-coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for NonUnion Men - Coefs on Leads and Lags")
-graph export "$figs/eventstd/evs_nwagstag_mal.png", replace
-coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for NonUnion Men - Coefs on Leads and Lags with Interaction")
-graph export "$figs/eventstd/evs_nwagstag_mal_blk.png", replace
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("Effect of RTW on Real Log Wages for Non-Union Men"  "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_nwagstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("Surplus Effect of RTW on Real Log Wages for Non-Union Black Men" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_nwagstag_mal_blk.png", replace
 	
 reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for NonUnion Women - Coefs on Leads and Lags")
-graph export "$figs/eventstd/evs_nwagstag_fem.png", replace
-coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for NonUnion Women - Coefs on Leads and Lags with Interaction")
-graph export "$figs/eventstd/evs_nwagstag_fem_blk.png", replace
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("Effect of RTW on Real Log Wages for Non-Union Women" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_nwagstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("Surplus Effect of RTW on Real Log Wages for Non-Union Black Women" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_nwagstag_fem_blk.png", replace
 
 reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 0 & covered == 0, vce(cluster state)
 
-coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Union Men - Coefs on Leads and Lags")
-graph export "$figs/eventstd/evs_uwagstag_mal.png", replace
-coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Union Men - Coefs on Leads and Lags with Interaction")
-graph export "$figs/eventstd/evs_uwagstag_mal_blk.png", replace	
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("Effect of RTW on Real Log Wages for Union Men" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_uwagstag_mal.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("Surplus Effect of RTW on Real Log Wages for Black Union Men" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_uwagstag_mal_blk.png", replace	
 
 reg lwage3 lag5 lag4 lag3 lag2 lead0 lead1 lead2 lag5black lag4black lag3black lag2black lead0black lead1black lead2black blackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter unemp [aw = finalwt1] if female == 1 & covered == 0, vce(cluster state)
 
-coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("RTW on LWages for Union Women - Coefs on Leads and Lags")
-graph export "$figs/eventstd/evs_uwagstag_fem.png", replace
-coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("RTW on LWages for Union Women - Coefs on Leads and Lags with Interaction")
-graph export "$figs/eventstd/evs_uwagstag_fem_blk.png", replace
+coefplot, vertical yline(0) keep(lag5 lag4 lag3 lag2 lead0 lead1 lead2) title("Effect of RTW on Real Log Wages for Union Women" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_uwagstag_fem.png", replace
+coefplot, vertical yline(0) keep(lag5black lag4black lag3black lag2black lead0black lead1black lead2black) title("Surplus Effect of RTW on Real Log Wages for Black Union Women" "Coefficients on Leads and Lags")
+graph export "$figs/eventstd/fin_evs_uwagstag_fem_blk.png", replace
 
 
 
