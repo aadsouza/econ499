@@ -154,7 +154,7 @@ twoway 	(connected plwage3 year if r2wstates == 0) ///
 		title("Oklahoma (2001) - All White Men") ytitle("Mean Predicted Real Log Wages of White Men") ///
 		xline(2001, lcolor(red)) xlabel(1989(2)2019)
 		
-graph export "$figs/pta/wm_ok.png", replace
+graph export "$figs/pta/fin_wm_ok.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 32), ///
@@ -162,7 +162,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Indiana (2012) - All White Men") ytitle("Mean Predicted Real Log Wages of White Men") ///
 		xline(2012, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/wm_in.png", replace
+graph export "$figs/pta/fin_wm_in.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 34), ///
@@ -170,7 +170,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Michigan (2013) - All White Men") ytitle("Mean Predicted Real Log Wages of White Men") ///
 		xline(2013, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/wm_mi.png", replace
+graph export "$figs/pta/fin_wm_mi.png", replace
 
 twoway	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 35), ///
@@ -178,7 +178,7 @@ twoway	(connected plwage3 year if r2wstates == 0) ///
 		title("Wisconsin (2015) - All White Men") ytitle("Mean Predicted Real Log Wages of White Men") ///
 		xline(2015, lcolor(red)) xlabel(1989(2)2019)				
 
-graph export "$figs/pta/wm_wi.png", replace
+graph export "$figs/pta/fin_wm_wi.png", replace
 		
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 55), ///
@@ -186,7 +186,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("West Virginia (2016) - All White Men") ytitle("Mean Predicted Real Log Wages of White Men") ///
 		xline(2016, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/wm_wv.png", replace
+graph export "$figs/pta/fin_wm_wv.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 61), ///
@@ -194,7 +194,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Kentucky (2017) - All White Men") ytitle("Mean Predicted Real Log Wages of White Men") ///
 		xline(2017, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/wm_ky.png", replace
+graph export "$figs/pta/fin_wm_ky.png", replace
 
 restore
 
@@ -215,7 +215,7 @@ twoway 	(connected plwage3 year if r2wstates == 0) ///
 		title("Oklahoma (2001) - All Black Men") ytitle("Mean Predicted Real Log Wages of Black Men") ///
 		xline(2001, lcolor(red)) xlabel(1989(2)2019)
 		
-graph export "$figs/pta/bm_ok.png", replace
+graph export "$figs/pta/fin_bm_ok.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 32), ///
@@ -223,7 +223,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Indiana (2012) - All Black Men") ytitle("Mean Predicted Real Log Wages of Black Men") ///
 		xline(2012, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/bm_in.png", replace
+graph export "$figs/pta/fin_bm_in.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 34), ///
@@ -231,7 +231,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Michigan (2013) - All Black Men") ytitle("Mean Predicted Real Log Wages of Black Men") ///
 		xline(2013, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/bm_mi.png", replace
+graph export "$figs/pta/fin_bm_mi.png", replace
 
 twoway	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 35), ///
@@ -239,7 +239,7 @@ twoway	(connected plwage3 year if r2wstates == 0) ///
 		title("Wisconsin (2015) - All Black Men") ytitle("Mean Predicted Real Log Wages of Black Men") ///
 		xline(2015, lcolor(red)) xlabel(1989(2)2019)				
 
-graph export "$figs/pta/bm_wi.png", replace
+graph export "$figs/pta/fin_bm_wi.png", replace
 		
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 55), ///
@@ -247,7 +247,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("West Virginia (2016) - All Black Men") ytitle("Mean Predicted Real Log Wages of Black Men") ///
 		xline(2016, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/bm_wv.png", replace
+graph export "$figs/pta/fin_bm_wv.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 61), ///
@@ -255,7 +255,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Kentucky (2017) - All Black Men") ytitle("Mean Predicted Real Log Wages of Black Men") ///
 		xline(2017, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/bm_ky.png", replace
+graph export "$figs/pta/fin_bm_ky.png", replace
 
 restore
 
@@ -276,7 +276,7 @@ twoway 	(connected plwage3 year if r2wstates == 0) ///
 		title("Oklahoma (2001) - All White Women") ytitle("Mean Predicted Real Log Wages of White Women") ///
 		xline(2001, lcolor(red)) xlabel(1989(2)2019)
 		
-graph export "$figs/pta/wf_ok.png", replace
+graph export "$figs/pta/fin_wf_ok.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 32), ///
@@ -284,7 +284,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Indiana (2012) - All White Women") ytitle("Mean Predicted Real Log Wages of White Women") ///
 		xline(2012, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/wf_in.png", replace
+graph export "$figs/pta/fin_wf_in.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 34), ///
@@ -292,7 +292,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Michigan (2013) - All White Women") ytitle("Mean Predicted Real Log Wages of White Women") ///
 		xline(2013, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/wf_mi.png", replace
+graph export "$figs/pta/fin_wf_mi.png", replace
 
 twoway	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 35), ///
@@ -300,7 +300,7 @@ twoway	(connected plwage3 year if r2wstates == 0) ///
 		title("Wisconsin (2015) - All White Women") ytitle("Mean Predicted Real Log Wages of White Women") ///
 		xline(2015, lcolor(red)) xlabel(1989(2)2019)				
 
-graph export "$figs/pta/wf_wi.png", replace
+graph export "$figs/pta/fin_wf_wi.png", replace
 		
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 55), ///
@@ -308,7 +308,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("West Virginia (2016) - All White Women") ytitle("Mean Predicted Real Log Wages of White Women") ///
 		xline(2016, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/wf_wv.png", replace
+graph export "$figs/pta/fin_wf_wv.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 61), ///
@@ -316,7 +316,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Kentucky (2017) - All White Women") ytitle("Mean Predicted Real Log Wages of White Women") ///
 		xline(2017, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/wf_ky.png", replace
+graph export "$figs/pta/fin_wf_ky.png", replace
 
 restore
 
@@ -337,7 +337,7 @@ twoway 	(connected plwage3 year if r2wstates == 0) ///
 		title("Oklahoma (2001) - All Black Women") ytitle("Mean Predicted Real Log Wages of Black Women") ///
 		xline(2001, lcolor(red)) xlabel(1989(2)2019)
 		
-graph export "$figs/pta/bf_ok.png", replace
+graph export "$figs/pta/fin_bf_ok.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 32), ///
@@ -345,7 +345,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Indiana (2012) - All Black Women") ytitle("Mean Predicted Real Log Wages of Black Women") ///
 		xline(2012, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/bf_in.png", replace
+graph export "$figs/pta/fin_bf_in.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 34), ///
@@ -353,7 +353,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Michigan (2013) - All Black Women") ytitle("Mean Predicted Real Log Wages of Black Women") ///
 		xline(2013, lcolor(red)) xlabel(1989(2)2019)
 
-graph export "$figs/pta/bf_mi.png", replace
+graph export "$figs/pta/fin_bf_mi.png", replace
 
 twoway	(connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 35), ///
@@ -361,7 +361,7 @@ twoway	(connected plwage3 year if r2wstates == 0) ///
 		title("Wisconsin (2015) - All Black Women") ytitle("Mean Predicted Real Log Wages of Black Women") ///
 		xline(2015, lcolor(red)) xlabel(1989(2)2019)				
 
-graph export "$figs/pta/bf_wi.png", replace
+graph export "$figs/pta/fin_bf_wi.png", replace
 		
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 55), ///
@@ -369,7 +369,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("West Virginia (2016) - All Black Women") ytitle("Mean Predicted Real Log Wages of Black Women") ///
 		xline(2016, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/bf_wv.png", replace
+graph export "$figs/pta/fin_bf_wv.png", replace
 
 twoway  (connected plwage3 year if r2wstates == 0) ///
 		(connected plwage3 year if r2wstates == 61), ///
@@ -377,7 +377,7 @@ twoway  (connected plwage3 year if r2wstates == 0) ///
 		title("Kentucky (2017) - All Black Women") ytitle("Mean Predicted Real Log Wages of Black Women") ///
 		xline(2017, lcolor(red)) xlabel(1989(2)2019)	
 
-graph export "$figs/pta/bf_ky.png", replace
+graph export "$figs/pta/fin_bf_ky.png", replace
 
 restore
 			
