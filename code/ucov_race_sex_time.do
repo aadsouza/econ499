@@ -68,13 +68,15 @@ collapse (mean) covered [aweight = eweight], by(hispracesex year)
 
 twoway	(connected covered year if hispracesex == 1, msymbol(x))  ///
 		(connected covered year if hispracesex == 2, msymbol(x))  ///
+		(connected covered year if hispracesex == 3, msymbol(x))  ///
 		(connected covered year if hispracesex == 4, msymbol(x))  ///
-		(connected covered year if hispracesex == 5, msymbol(x)),  ///
-		legend(order(1 "white men" 2 "Black men" 3 "white women" 4 "Black women") cols(4)) ///
+		(connected covered year if hispracesex == 5, msymbol(x))  ///
+		(connected covered year if hispracesex == 6, msymbol(x)),  ///
+		legend(order(1 "white men" 2 "Black men" 3 "Hispanic men" 4 "white women" 5 "Black women" 6 "Hispanic women") cols(3)) ///
 		ytitle("proportion covered by union or members") ///
 		xtitle("year") title("Union Coverage Time Trends")
 
-graph export "$figs/1ucov_hrs_time.png", replace
+graph export "$figs/fin_ucov_hrs_time.png", replace
 restore
 
 ** preserve
@@ -120,10 +122,10 @@ twoway	(connected covered year if hispracesex == 1, msymbol(x))  ///
 		(connected covered year if hispracesex == 4, msymbol(x))  ///
 		(connected covered year if hispracesex == 5, msymbol(x))  ///
 		(connected covered year if hispracesex == 6, msymbol(x)), ///
-		legend(order(1 "non-Hisp white men" 2 "non-Hisp Black men" 3 "Hispanic men" 4 "non-Hisp white women" 5 "non-Hisp Black women" 6 "Hispanic women") cols(3)) ///
+		legend(order(1 "white men" 2 "Black men" 3 "Hispanic men" 4 "white women" 5 "Black women" 6 "Hispanic women") cols(3)) ///
 		by(public, title("Private and Public Sector Union Coverage Time Trends") note("")) ///
-		ytitle("proportion of elig covered by union or members")
+		ytitle("proportion covered by union or members")
 		
-graph export "$figs/2pub_ucov_hrs_time.png", replace
+graph export "$figs/fin_pub_ucov_hrs_time.png", replace
 restore
 

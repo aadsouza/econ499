@@ -169,7 +169,7 @@ graph twoway (connected u_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
 			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Men Covered by Union - with Counterfactual", size(vlarge))
-graph export "$figs/kde1men/cu_bhw_men.png", replace
+graph export "$figs/kde1men/fin_cu_bhw_men.png", replace
 	
 gen theta3m = (pb1m/(1-pb1m)) * ((1-pu1b1m)/(1-pu1b1m)) if nhblack == 0 & covered == 0
 
@@ -186,7 +186,7 @@ graph twoway (connected n_wmde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
 			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Men not Covered by Union - with Counterfactual", size(vlarge))
-graph export "$figs/kde1men/cn_bhw_men.png", replace
+graph export "$figs/kde1men/fin_cn_bhw_men.png", replace
 	
 restore
 ********************************************************************************
@@ -307,7 +307,7 @@ graph twoway (connected u_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
 			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Women Covered by Union - with Counterfactual", size(vlarge))
-graph export "$figs/kde1wom/cu_bhw_wom.png", replace
+graph export "$figs/kde1wom/fin_cu_bhw_wom.png", replace
 	
 gen theta3f = (pb1f/(1-pb1f)) * ((1-pu1b1f)/(1-pu1b1f)) if nhblack == 0 & covered == 0
 
@@ -324,7 +324,7 @@ graph twoway (connected n_wfde kwage if kwage>=0 & kwage<=5.01, msymbol(i) clwid
 			 xtitle("") ylabel("0(.25)1.25", labsize(large)) ///
 			 legend(order(1 "white" 2 "Black" 3 "white - c.f.") c(1) pos(2) ring(0) symxsize(*.5) size(large) region(lcolor(none))) ///
 			 subtitle("Women not Covered by Union - with Counterfactual", size(vlarge))
-graph export "$figs/kde1wom/cn_bhw_wom.png", replace
+graph export "$figs/kde1wom/fin_cn_bhw_wom.png", replace
 	
 restore
 
