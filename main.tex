@@ -1,4 +1,4 @@
-\documentclass[10pt, notitlepage]{article}
+\documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{relsize}
@@ -47,8 +47,9 @@
 \bibpunct{(}{)}{;}{a}{,}{;}
 \setcounter{MaxMatrixCols}{10}
 
-\topmargin=-1.8cm \textheight=23.8cm \oddsidemargin=-1cm
-\evensidemargin=-1cm \textwidth=18.5cm
+% \topmargin=-1.8cm \textheight=23.8cm \oddsidemargin=-1cm
+% \evensidemargin=-1cm \textwidth=18.5cm
+\usepackage[margin=1in]{geometry}
 \newtheorem{ass}{Assumption}
 \newtheorem{definit}{Definition}
 \newtheorem{prop}{Proposition}
@@ -72,12 +73,18 @@
 \cfoot{\thepage}
 
 \title{Labor Unions and Racial Inequality}
-\author{Amedeus Akira Dsouza\thanks{Amedeus Akira Dsouza: \href{mailto:aa_dsouza@alumni.ubc.ca}{aa\_dsouza@alumni.ubc.ca}. I am extremely grateful to Professor Nicole Fortin and Professor Marit Rehavi for their continued guidance and support. I would like to thank Professor Nicole Fortin and Neil Lloyd for providing Stata codes that expedited the data cleaning process. I would also like to thank Sheldon Birkett, Elisabeth Hatting, Wenxin Ma, Javier Cort\'{e}s Orihuela, and Sarah Kirker Wappel for helpful discussions and comments. Codes, tables, figures, and working drafts can be found \href{https://github.com/aadsouza/econ499}{here} on GitHub. Please note that I have been forced to temporarily reduce the font size to 10pt to accommodate the poorly formatted regression tables.} \textsc{ (}\textit{he}\textsc{/}\textit{him}\textsc{/}\textit{his}\textsc{)}}
- \affil{University of British Columbia}
+\author{By: Amedeus Akira Dsouza\thanks{Amedeus Akira Dsouza: \href{mailto:aa_dsouza@alumni.ubc.ca}{aa\_dsouza@alumni.ubc.ca}. I am extremely grateful to Professor Nicole Fortin and Professor Marit Rehavi for their continued guidance and support. I would like to thank Professor Nicole Fortin and Neil Lloyd for providing Stata codes that expedited the data cleaning process. I would also like to thank Sheldon Birkett, Felipe Grosso, Elisabeth Hatting, Wenxin Ma, Evan Mauro, Javier Cort\'{e}s Orihuela, and Sarah Kirker Wappel for helpful discussions and comments. Codes, tables, figures, and working drafts can be found \href{https://github.com/aadsouza/econ499}{here} on GitHub.} \textsc{ (}\textit{he}\textsc{/}\textit{him}\textsc{/}\textit{his}\textsc{)}}
+\affil{University of British Columbia}
+\affil{Supervised by: Nicole Fortin and Marit Rehavi}
 \date{Sunday, April 11, 2021}
 
 \begin{document}
+\begin{titlepage}
 \maketitle
+\centering
+\vspace{2cm}
+Submitted to the Vancouver School of Economics in partial fulfillment of the requirements for a Bachelor of Arts, Honours in Economics.
+\end{titlepage}
 \thispagestyle{empty}
 \doublespacing
 \begin{abstract}
@@ -116,14 +123,60 @@ Lorem ipsum dolor sit amet.
 
 % Our analysis indeed builds on the work put in by \citet{derenoncourtmontialoux2020} studying the effects of the minimum wage on racial inequality and is distinct in terms of the time period being studied, the better data available for the period being studied, the different dynamics of the racial earnings gap in the period being studied - in particular, the stagnation of the gap, and in the level of the policy changes being studied - federal vs. state-level changes to the minimum wage. We expect to further build on the topic in the coming weeks towards a more fruitful analysis in order to make a more significant contribution to the literature on labor market institutions and racial inequality.
 
-\section{Data}
-I use National Bureau of Economic Research extracts of the Current Population Survey Merged Outgoing Rotation Groups for the years 1983 to 2019. Throughout the data cleaning process, I closely follow the process outlined in \citet{fll2021}. The race variable used by \citet{fll2021} only identifies white and non-white people. I have recovered a much richer race variable and am able to identify non-Hispanic white people, non-Hispanic Black people, and people of other races. I am also able to identify ethnicity and hispanicity. Through the rest of the paper, I define white people to be non-Hispanic white people, Black people to be non-Hispanic Black people, and Hispanic people to be Hispanic people of all races unless specified otherwise. Each observation in my dataset represents an individual.
+\section{Data Description, Summary Statistics, and Descriptive Analysis}
+I use the National Bureau of Economic Research extracts of the Current Population Survey Merged Outgoing Rotation Groups for the years 1983 to 2019. I closely follow the data cleaning process outlined in \citet{fll2021}. The race variable used by \citet{fll2021} only identifies white people and non-white people. I have recovered a much richer race variable and am able to identify non-Hispanic white people, non-Hispanic Black people, and people of other races. I am also able to identify ethnicity and hispanicity. Through the rest of the paper for the sake of brevity, I define white people to be non-Hispanic white people, Black people to be non-Hispanic Black people, and Hispanic people to be Hispanic people of all races unless specified otherwise. Each observation in my dataset represents an individual.
 
 Data on labor union membership and labor union coverage is available in the CPS MORG for the years following 1983. I define a binary variable for union coverage that takes a value of one for non self employed people who are eligible for pay who are labor union members or covered by a union contract. I use the NBER's recommended hourly wage definition, that is, weekly earnings including overtime, tips, and commissions divided by usual hours per week - a notable divergence from \citet{fll2021} who do not include overtime, tips, and commissions. The weekly earnings variable also includes hourly workers which have been computed as earnings per hour multiplied by usual hours per week. I am unable to identify observations that work in multiple jobs. 
 
-I drop all observations with allocated hourly wage, weekly earnings, or usual hours and am therefore forced to drop observations from 1994 and 1995 due to the absence of an allocation flag. I drop observations that are self employed and those without pay. I follow \citet{fll2021} in imputing top-coded wages with a stochastic Pareto distribution. I use Pareto parameters for 2010 and 2011 for all years after 2010. I deflate wages to 1979 dollars using the consumer price index for all urban consumers provided by the Federal Reserve of St. Louis. I drop all observations with real wages less than \$1 and greater than \$100. I drop observations with missing real log wages. I generate a uniform one digit industry variable across all years in my sample following the definitions outlined in \citet{fll2021} which I adapt to create using NBER's two digit industry variable. I use earnings weights through the analysis and use earnings weights weighed by usual hours per week for kernel density estimates. I keep observation of ages 16 to 64.
+I drop all observations with allocated hourly wage, weekly earnings, or usual hours and am therefore forced to drop observations from 1994 and 1995 due to the absence of an allocation flag. I drop observations that are self employed and those without pay. I follow \citet{fll2021} in imputing top-coded wages with a stochastic Pareto distribution. I use Pareto parameters for 2010 and 2011 for all years after 2010. I deflate wages to 1979 dollars using the consumer price index for all urban consumers provided by the Federal Reserve of St. Louis [INSERT CPIAUCSL CITATION]. I drop all observations with real wages less than \$1 and greater than \$100. I drop observations with missing real log wages. I generate a uniform one digit industry variable across all years in my sample following the definitions outlined in \citet{fll2021} which I adapt to create using NBER's two digit industry variable. I use earnings weights through the analysis and use earnings weights weighed by usual hours per week for kernel density estimates. I keep observation of ages 16 to 64.
 
-I present summary statistics for relevant variables in \autoref{tab:bhw_sumstats}. Experience is defined as age less education less six as is standard in the literature.
+I present summary statistics for relevant variables in \autoref{tab:bhw_sumstats}. Experience is defined as age less education less six as is standard in the literature. Therefore after cleaning, I am left with over 1.5 million observations for white men and white women, over 150,000 observations for Black men, and around 195,000 observations for Black women. In addition, the sample includes around 210,000 observations for Hispanic men and around 165,000 observations for Hispanic women. By definition, union coverage is marginally higher than union membership - the difference of which is attributed to those covered by a union contract but not union members. As expected, mean real log wages are indeed higher for white people than Black people and education levels are indeed higher for women than men of the respective races. Black women, white women, Black men, and Hispanic women are over-represented in public sector jobs relative to white men and Hispanic men. 
+
+In \autoref{fig:ucov_hrs_time}, I present union coverage time trends by hispanicity, race, and sex. In addition to the well documented fact that unionization rates in the United States have fallen over time, there exists a consistent over-representation of Black people across time relative to their white counterparts. Unionization rates also appear to decline at a much higher rate for Black people relative to white people, with the contrast more striking for Black women relative to white women. Over 36.28\% of Black men and 27.8\% of Black women were covered by a union in 1983 compared to 27.39\% of white men and 16.78\% of white women at the same time. As of 2019, these union coverage rates have dropped to 13.28\% for Black men and 11.67\% for Black women which still remain greater than the percent of white people that were unionized, specifically, 12.71\% for white men and 11.4\% for white women. 
+
+\autoref{fig:pub_ucov_hrs_time} shows union coverage time trends specific to the private and public sectors. Looking beyond the disparities in unionization rates between the private and public sectors, the aforementioned consistent over-representation of Black people covered by a union appears to be largely driven by the private sector relative to the public sector. For instance, in 1983, 32.1\% of Black men in the private sector, 21.08\% of Black women, 23.45\% of white men, and 10.47\% of white women were unionized - figures which drop to 9.74\%, 7.31\%, 8.8\%, and, 5.05\% respectively in 2019. For the public sector, on the other hand, in 1983, 50.94\% of Black men, 44.73\% of Black women, 48.77\% of white men, and 44.35\% of white women were unionized. Relative to the private sector, there is more intertemporal volatility in public sector unionization rates for Black people even though long run public sector unionization rates hover around a relatively stable range. There is nevertheless, a sharper decline for Black people in the public sector relative to white people. The year 2019 saw public sector unionization rates at 31.99\% and 29.58\% for Black men and Black women, whereas unionization rates for white men and white women only dropped to at 39.06\% and 38.98\%.
+
+I further break down observations by industry in \autoref{tab:nindtab} along with associated union coverage rates in \autoref{tab:unindtab}. Educational services are among the top three industries where white women and Black women are concentrated in with 15.45\% of white women and 11.81\% of Black women in the industry. Notably, 42.9\% of white women and 38.3\% of Black women in educational services are unionized. Black women and white women are also over-represented in health and welfare services where 26.63\% of Black women and 20.54\% of white women are and 14.8\% of Black women and 8.8\% of white women are unionized. While 6.1\% of Black women and 4.4\% of white women are in transportation and utilities, 36.1\% of Black women in the industry are unionized compared to 23.4\% of white women. 13.54\% of Black men and 9.89\% of white men are in transportation and utilities where 36.6\% of Black men and 32.2\% of white men are unionized. Manufacturing sees 20.34\% of white men and 18.04\% of Black men in the industry with 18.4\% of white men and 25.2\% of Black men unionized. Around 6\% of white men and Black men are in educational services where over 35\% of white men and Black men are unionized. 
+
+Median real log wage time trends are plotted in \autoref{fig:med_wage_time}. Throughout the period being studied, that is 1983 to 2019, any convergence in the Black-white wage gap that took place in previous periods has stalled. In 1979 dollars, the difference between log wages for white men and Black men in 1983 was 0.336 and in 2019 remained 0.334. It is important to reiterate here, particularly within the context of the discussion in \citet{bayercharles2018}, that my wage specification drops observations with zero earnings. For women, the Black-white wage gap at the median has, in fact, exacerbated over time. The difference between log wages for white women and Black women in 1983 was 0.118, increasing to 0.178 in 2019. 
+
+\subsection{Wage Distributions and Counterfactual}
+In addition to presenting the wage distributions for white people and Black people, I ask what the wage distribution for white people who are covered by a union would look like if they had the same covariates as Black people who are covered by a union - with a corresponding question for those not covered by a union. Covariates include education, a quartic in experience, education-experience interaction, marital status, part-time status, public sector, CMSA, 11 industry categories, 12 occupation categories, and state, quarter, and year fixed effects. I follow the \citet{heywoodparent2012} implementation of the DFL decomposition for it's added dimension allowing for selection into unions. For the wage distributions for Black people $B = 1$ and white people $B = 0$ which are given as 
+\begin{equation}
+    g(w\mid B = 1) = \int f(w\mid x, B = 1) h(x \mid B = 1) dx
+\end{equation}
+\begin{equation}
+    g(w\mid B = 0) = \int f(w\mid x, B = 0) h(x \mid B = 0) dx,
+\end{equation}
+\citet{heywoodparent2012} show that the counterfactual wage distribution for white people covered by a union with the same distribution of covariates $x$ as Black people covered by a union $u = 1$ is given by
+\begin{equation}
+g^c_{B=1, u = 1}(w\mid B = 0) = \int \Theta_2 f(w\mid x, B = 0, u = 1)h(x\mid B = 0, u = 1)dx
+\end{equation}
+where $\Theta_2 = \frac{Prob(B = 1\mid x) Prob(u = 1\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 1\mid x, B = 0)}$. 
+Similarly, the counterfactual wage distribution for white people not covered by a union with the same distribution of covariates as Black people who are not covered by a union is given by
+\begin{equation}
+g^c_{B=1, u = 0}(w\mid B = 0) = \int \Theta_3 f(w\mid x, B = 0, u = 0)h(x\mid B = 0, u = 0)dx
+\end{equation}
+where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 0\mid x, B = 0)}$. In order to estimate this reweighting parameter, I run probit regressions of race and union coverage on the covariates as defined. I show these wage distributions for Black people, white people, and the counterfactual white wage distribution in \hyperref[fig:dfl_men]{Figure~\ref*{fig:dfl_men}} and \hyperref[fig:dfl_women]{Figure~\ref*{fig:dfl_women}} for men and women respectively. Indeed the wage distributions for Black people are more heavily right skewed. Note that the wage distributions at the top end will be affected by the Pareto imputation procedure which does not take race into account. The difference in the skews of the distribution is much more striking for people not covered by a union. As well, the counterfactual wage distribution for white people covered by a union closely follows the actual wage distribution for white people covered by a union. For people not covered by a union, there persists a significant difference in the wage distributions when comparing the distributions for Black people to the counterfactual white distributions.   
+
+\subsection{OLS and RIF-OLS Regressions}
+Recall that I seek to understand the effect of labor unions on racial wage inequality along the wage distribution. I first proceed with the following baseline OLS regression specification that characterizes the association between log wages and union coverage for Black people and white people
+\begin{equation}
+    \ln(w_{ijqst}) = \beta_0 + \beta_1 covered_i + \beta_2 Black_i + \beta_3 (covered_i \times Black_i)+ X'_i\Gamma + \zeta_j + \psi_q + \lambda_s  + \delta_t + \epsilon_{ijqst}
+\end{equation}
+where the dependent variable $\ln(w_{ijqst})$ represents the real log wages of worker $i$ in industry $j$, quarter $q$, state $s$, and at time $t$, $covered_i$ is a binary variable which represents being covered by a union, $Black_i$ is a binary variable which takes a value of $1$ for Black people and a value of $0$ for white people. I include $X_i$ in the regression specification which captures the following covariates: education, a quartic in experience, education-experience interaction, marital status, part-time status, public sector, CMSA, and 12 occupation categories, in addition to $\zeta_j$, $\psi_q$, $\lambda_s$, and $\delta_t$ which are industry, quarter, state, and time fixed effects. I run this regression separately for men and women and separately for the periods 1983-1988, 1988-2000, and 2000-2019. Breaking down the period of study into three periods allows me to observe trends in the coefficients over time. The coefficient $\beta_1$ captures the wage premium associated with union coverage for white people and Black people, $\beta_2$ captures the Black wage penalty in the period relative to white people. The coefficient of interest, $\beta_3$, captures the additional wage premium associated with union coverage for Black people. 
+
+I present the results of the OLS regression of real log wages on union coverage and race in \autoref{tab:naive}. After controlling for human capital controls, other covariates, and fixed effects, for Black men there exists an associated 15.6\% wage penalty relative to white men in the 1983-1988 and the 1989-2000 periods and an associated 15.04\% wage penalty in the 2000-2019 period. For men, the wage premium associated with being covered by a union appears to be weakening over time. For white men, being covered by a union is associated with a 20.92\% increase in wages in the 1983-1988 period, a 19.6\% increase in the 1988-2000 period, and a 18.65\% increase in the 2000-2019 period. Some of this weakening can be attributed to the aforementioned downward trend in union coverage rates. In addition to the increase in wages associated with union coverage for white men, being a Black man covered by a union is associated with a surplus 4.51\% increase in wages in the 1983-1988 period, a surplus 3.09\% increase in the 1988-2000 period, and a surplus 2.65\% increase in the 2000-2019 period. The Black wage penalty appears to be exacerbating over time for women even after adding in covariates and fixed effects. Being a Black woman is associated with 6.7\% lower wages than white women in the 1983-1988 period, 8.72\% lower wages in the 1989-2000 periods, and 9.79\% lower wages in the 2000-2019 period. The baseline association between union coverage and wages weaken over time for women as well. Being covered by a union is associated with a 18.89\% increase in wages in the 1983-1988 period, a 16.3\% increase in the 1988-2000 period, and a 12.75\% increase in the 2000-2019 period. Interestingly, the surplus associaton between union coverage and real log wages for Black women increases over the three periods. Being a Black person covered by a union is associated with an additional 1.61\% increase in wages in the 1983-1989 period, an additional 3.42\% increase in the 1989-2000 period, and an additional 4.13\% increase in the 2000-2019 period. Union coverage appears to mitigate the racial wage penalty. However, this is indeed a presentation of correlation, not causation. I expect endogeneity to be inherently present in the model as unions may organize more among less educated labor or Black people may select into unions in order to seek protection from discriminatory compensation.
+
+In order to characterize the association along the wage distribution, I estimate RIF-OLS regressions...
+
+In light of the exposition by \citet{fll2021} on the importance of unionization spillover effects in getting a fuller understanding of the effect of unionization on wages - that non-union firms in state-industries with a high unionization rate may, for example, emulate the wage structures of union firms to mitigate potential unionization threats, I sought to understand the differential effects of unionization by race capturing these spillovers. In order to do so, I follow \citet{fll2021} in using union coverage rate at a state-industry-year level as an instrument for the unionization rate. Notice that no individual person here can significantly affect the unionization rate in a state-industry by merely selecting into or dropping out. This, therefore, assuages some of my earlier endogeneity concerns. I first present results from an OLS regression specification of log wages on this unionization rate, running the model separately for white men, Black men, and Hispanic men of all races who are not covered by a union, with corresponding estimates for women who are not covered by a union. Thus, the regression I run is given by
+\begin{equation}
+   \ln(w_{ijqst}) = \beta_0 + \beta_1 coveragerate_{jst} + X_i'\Gamma + \zeta_j + \psi_q + \lambda_s + \delta_t + \epsilon_{ijqst} 
+\end{equation}
+where the dependent variable, the covariates, and the fixed effects remain as defined before. The coefficient of interest $\beta_1$ is captures the effect of a one percent increase in unionization coverage rate in a state-industry-year on real log wages.
+
+\autoref{tab:nlincovrate} shows the estimates of these union "threat" effects.
 % We shall use the Current Population Survey (CPS) Merged Outgoing Rotation Group as our primary dataset which is available from 1979 to 2019. In order to extend our analysis on labor unions, we shall extend our data using the CPS May back to 1973. We would like to consider supplementing our analysis with values imputed from the CPS Annual Social and Economic Supplement (ASEC). We expect our data to be the transpose of the following outline
 % \begin{itemize}
 %     \item $n$ is the number of observations we have in our sample after cleaning the data.
@@ -206,7 +259,7 @@ Lorem ipsum dolor sit amet.
 \section{Results}
 Lorem ipsum dolor sit amet.
 
-\section{Robustness}
+\section{Robustness and Caveats}
 Lorem ipsum dolor sit amet.
 
 \section{Conclusion}
@@ -247,56 +300,7 @@ Lorem ipsum dolor sit amet.
 
 \pagebreak
 \appendix
-\begin{landscape}
-\section*{Tables}
-\small{\input{tabs/fin_bhw_sumstats}}
-\end{landscape}
-
-\pagebreak
-\begin{landscape}
-\small{\begin{table}[h!]
-    \centering
-    \caption{Percentage in each Industry by Hispanicity, Race, and Sex.}\label{tab:nindtab}
-\begin{tabular}{l*{8}{c}}
-\input{tabs/fin_nindtab.tex}
-\hline\hline
-\multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
-\end{tabular}
-\end{table}}
-% \end{landscape}
-
-% \pagebreak
-% \begin{landscape}
-\small{\begin{table}[h!]
-    \centering
-    \caption{Union Coverage Proportion in each Industry by Hispanicity, Race, and Sex.}\label{tab:unindtab}
-\begin{tabular}{l*{8}{c}}
-\input{tabs/fin_unindtab.tex}
-\hline\hline
-\multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
-\end{tabular}
-\end{table}}
-\end{landscape}
-
-\pagebreak
-\small{\input{tabs/fin_naive}}
-\footnotesize{Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. Having the property of the coefficient in each panel is associated with a $ 100(e^\beta - 1) $ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
-
-\pagebreak
-\small{\input{tabs/fin_nlincovrate}}
-\footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
-
-% \pagebreak
-% \small{\input{tabs/fin_ulincovrate}}
-% \footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
-
-\pagebreak
-\begin{landscape}
-\small{\input{tabs/fin_wagstagdid}}
-\footnotesize{I define $Treat_{st} = 1$ if state $s$ has a right to work law in time $t$. I use a sample of years from 1989 to 2019. Policy variation comes from Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). I do not include variation from Texas (1993) as Texas has had some form of a right to work law in place since 1947 and my sample has dropped 1994 and 1995 due to missing allocation flags. All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors are clustered at the state level. Real log wages is the dependent variable throughout. All regressions include covariates and fixed effects as outlined.}
-\end{landscape}
-
-\pagebreak
+\newgeometry{top=0.75in,bottom=0.75in,left=0.5in,right=0.5in}
 \section*{Figures}
 \begin{figure}[h!]
 \centering
@@ -312,9 +316,81 @@ Lorem ipsum dolor sit amet.
 \pagebreak
 \begin{figure}[h!]
 \centering
-    \caption{Median Real Log Wages Time Trends}
-    \includegraphics[width=\textwidth, height = 0.8\textheight, keepaspectratio]{fin_med_wage_time.png}
+    \caption{Median Real Log Wages Time Trends}\label{fig:med_wage_time}
+    \includegraphics[width=\textwidth, height = 0.8\textheight, keepaspectratio]{figures/fin_med_wage_time.png}
 \end{figure}
+\pagebreak
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Wage Distributions - Men}\label{fig:dfl_men}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cu_bhw_men.png} \\
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cn_bhw_men.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\pagebreak
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Wage Distributions - Women}\label{fig:dfl_women}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cu_bhw_wom.png} \\
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cn_bhw_wom.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\pagebreak
+\begin{landscape}
+\section*{Tables}
+\small{\input{tabs/fin_bhw_sumstats}}
+\end{landscape}
+
+\pagebreak
+\begin{landscape}
+\small{\begin{table}[h!]
+    \centering
+    \caption{Percentage in each Industry by Hispanicity, Race, and Sex.}\label{tab:nindtab}
+    \fontsize{10}{11}\selectfont
+\begin{tabular}{l*{8}{c}}
+\input{tabs/fin_nindtab.tex}
+\hline\hline
+\multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
+\end{tabular}
+\end{table}}
+% \end{landscape}
+
+% \pagebreak
+% \begin{landscape}
+\small{\begin{table}[h!]
+    \centering
+    \caption{Union Coverage Proportion in each Industry by Hispanicity, Race, and Sex.}\label{tab:unindtab}
+    \fontsize{10}{11}\selectfont
+\begin{tabular}{l*{8}{c}}
+\input{tabs/fin_unindtab.tex}
+\hline\hline
+\multicolumn{8}{l}{\footnotesize Sample includes years 1983-2019 excluding 1994 and 1995.}\\
+\end{tabular}
+\end{table}}
+\end{landscape}
+
+\pagebreak
+\small{\input{tabs/fin_naive}}
+\footnotesize{Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. Having the property of the coefficient in each panel is associated with a $ 100(e^\beta - 1) $ percent change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
+
+\pagebreak
+\small{\input{tabs/fin_nlincovrate}}
+\footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
+
+% \pagebreak
+% \small{\input{tabs/fin_ulincovrate}}
+% \footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
+
+\pagebreak
+\begin{landscape}
+\small{\input{tabs/fin_wagstagdid}}
+\footnotesize{I define $Treat_{st} = 1$ if state $s$ has a right to work law in time $t$. I use a sample of years from 1989 to 2019. Policy variation comes from Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). I do not include variation from Texas (1993) as Texas has had some form of a right to work law in place since 1947 and my sample has dropped 1994 and 1995 due to missing allocation flags. All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors are clustered at the state level. Real log wages is the dependent variable throughout. All regressions include covariates and fixed effects as outlined.}
+\end{landscape}
+
 \pagebreak
 \section{Appendix - Tables and Figures}
 \pagebreak
