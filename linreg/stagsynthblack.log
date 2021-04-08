@@ -1,0 +1,1979 @@
+--------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/linreg/stagsynthblack.log
+  log type:  text
+ opened on:   6 Apr 2021, 23:49:44
+
+. 
+. use cleaned_nber_morg, clear
+
+. 
+. do "$code/pareto_topcoding.do"
+
+. ** In this do file we gen the top-code adjusted wage distribution using pareto 
+. ** parameters adapting codes generously provided to us by
+. ** Professor Nicole Fortin and Neil Lloyd
+. 
+. ** Generate topcode-adjusted wage distribution using Pareto parameter
+. ** Output: lwage2
+. 
+. ** OG Source: https://eml.berkeley.edu/~saez/TabFig2015prel.xls
+.         * Table A4 & Table B3
+. 
+. ** RE Source: https://eml.berkeley.edu/~saez/TabFig2018.xls
+.         * Table A4 & Table B3
+. 
+. ** Use Pareto parameter from Piketty and Saez (top 1%): average of 5 year windows (e.g. 2000-2004);
+. ** OG: Due to a lack of availability for post 2011 data, the average of 2010 & 2011 is extended to 2017.
+. 
+. set seed 486372893
+
+. 
+. gen ranuni = runiform() if topcode == 1
+(10,848,910 missing values generated)
+
+. 
+. gen     pareto = 1/(ranuni^(1/2.68)) if inrange(year, 1975, 1979)
+(10,912,373 missing values generated)
+
+.         replace pareto = 1/(ranuni^(1/2.45)) if inrange(year, 1980, 1984) 
+(12,848 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/2.15)) if inrange(year, 1985, 1989) 
+(25,430 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/2.02)) if inrange(year, 1990, 1994) 
+(7,087 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.89)) if inrange(year, 1995, 1999) 
+(9,426 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.81)) if inrange(year, 2000, 2004) 
+(4,963 real changes made)
+
+.         replace pareto = 1/(ranuni^(1/1.78)) if inrange(year, 2005, 2009)
+(878 real changes made)
+
+. 
+. ** FIXME revise parameters using Tables A4 and B3
+. **      replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2017) 
+.         replace pareto = 1/(ranuni^(1/1.86)) if inrange(year, 2010, 2019) 
+(2,831 real changes made)
+
+. 
+. * lwage2 uses this imputation;
+. gen lwage2 = lwage if topcode == 0
+(4,507,850 missing values generated)
+
+.         replace lwage2 = lwage + log(pareto) if topcode == 1
+(62,792 real changes made)
+
+.         lab var lwage2 "log trimmed imputed nom wage 1-100"
+
+. 
+. gen lwage3 = log(exp(lwage2) * 100 / cpi)
+(4,445,058 missing values generated)
+
+.         lab var lwage3 "log trimmed imputed real wage 1-100 in 1979 dollars"
+
+. 
+end of do-file
+
+. 
+. ** drop if allocated hourly wage, weekly earnings, or usual hrs and missing wage
+. drop if alloc1 == 1
+(1,625,280 observations deleted)
+
+. drop if lwage3 ==.
+(4,303,609 observations deleted)
+
+. 
+. ** drop obs in 1994 1995 - allocation flag missing
+. drop if inrange(year, 1994, 1995)
+(296,195 observations deleted)
+
+. 
+. ** hours weighted
+. gen hweight = eweight * uhourse / 100.0
+
+. 
+. ** drop self employed and w/o pay
+. keep if (classx < 5 & year < 1994) | (class94 < 6 & year >= 1994)
+(813 observations deleted)
+
+. ********************************************************************************
+. 
+. ** keep if inrange(year, 2000, 2019)
+. 
+. keep if inrange(year, 1989, 2019)
+(1,450,785 observations deleted)
+
+. 
+. rename twage nwage1
+
+. 
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt pu
+> blic marr hisprace hispracesex citizen eweight alloc1 covered umem
+
+. 
+. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unem
+> p.dta"
+(note: variable year was int, now long to accommodate using data's values)
+(note: variable cmonth was byte, now long to accommodate using data's values)
+(note: variable state was byte, now long to accommodate using data's values)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                         7,344
+        from master                         0  (_merge==1)
+        from using                      7,344  (_merge==2)
+
+    matched                         3,236,632  (_merge==3)
+    -----------------------------------------
+
+. 
+. drop if _merge == 2 // <2000
+(7,344 observations deleted)
+
+. 
+. drop if hispracesex ==.
+(208,501 observations deleted)
+
+. 
+. gen finalwt1 = round(eweight)
+
+. 
+. rename nind2 nind // nind now is 11 ind categories
+
+. 
+. recode nocc (1 6 = 1) (2 = 2) (3 4 = 3) (5 = 4) (7 = 5) (8 = 6) (9 = 7) (10 11 = 8) ///
+>                 (12 = 9) (13 15 = 10) (14 = 11) (16 = 12), gen(nocc2)
+(2472445 differences between nocc and nocc2)
+
+.                 
+. recode nocc2 (1 2 3 4 5 = 1) (6 7 8 = 2) (9 = 3) (10 11 12 = 4), gen(nocc3)
+(2786572 differences between nocc2 and nocc3)
+
+. 
+. egen state_ind = group(state nind)
+(2,155 missing values generated)
+
+. 
+. gen edex = educ*exper
+
+. 
+. gen blackrelwhite = hisprace - 1
+
+.         replace blackrelwhite =. if hisprace > 2
+(324,138 real changes made, 324,138 to missing)
+
+. 
+. gen hisprelwhite = hisprace - 1
+
+.         replace hisprelwhite =. if hisprace == 2
+(266,736 real changes made, 266,736 to missing)
+
+.         replace hisprelwhite = 1 if hisprace == 3
+(324,138 real changes made)
+
+. 
+. gen date = ym(year, cmonth)
+
+. ** tab date year
+. 
+. ** construct variables lags and leads
+. local newr2wstates "73 32 34 35 55 61"
+
+. 
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effectiv
+> e; signed Dec2012) Mar1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. local newr2wdate "500 625 638 662 678 684"
+
+. 
+. gen alwaysr2w = 0
+
+.         replace alwaysr2w = 1 if /// 
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72
+> , 82) //incl Idaho which changed in 1985 and Texas which had since 47 but bolstered in 93
+(1,149,124 real changes made)
+
+. 
+. gen alwr2wcov = alwaysr2w*covered
+(4,216 missing values generated)
+
+. 
+. gen neverr2w = 1
+
+.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
+> , 87, 47, 83, 72, 82)
+(1,149,124 real changes made)
+
+.         replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
+(314,813 real changes made)
+
+. 
+. gen stater2w = 0
+
+.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
+> , 87, 47, 83, 72, 82)
+(1,149,124 real changes made)
+
+.         replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
+(314,813 real changes made)
+
+.         lab def str2w 0 "no r2w" 1 "r2w before 2000" 2 "r2w after 2000"
+
+.         lab val stater2w str2w
+
+. 
+. gen treat_st = 0 if stater2w == 0 | stater2w == 2
+(1,149,124 missing values generated)
+
+.         replace treat_st = 1 if stater2w == 1
+(1,149,124 real changes made)
+
+.         replace treat_st = 1 if state == 73 & date >= 500
+(19,108 real changes made)
+
+.         replace treat_st = 1 if state == 32 & date >= 625
+(10,893 real changes made)
+
+.         replace treat_st = 1 if state == 34 & date >= 638
+(12,321 real changes made)
+
+.         replace treat_st = 1 if state == 35 & date >= 662
+(7,563 real changes made)
+
+.         replace treat_st = 1 if state == 55 & date >= 678
+(4,902 real changes made)
+
+.         replace treat_st = 1 if state == 61 & date >= 684
+(3,150 real changes made)
+
+. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change t
+> o treat_jst
+.         
+. gen treat_stblackrelwhite = treat_st*blackrelwhite
+(324,138 missing values generated)
+
+. 
+. gen treat_sthisprelwhite = treat_st*hisprelwhite
+(266,736 missing values generated)
+
+. 
+. gen lyear = year - 1900
+
+. 
+. gen r2wstates = 0 if neverr2w == 1
+(1,463,937 missing values generated)
+
+.         replace r2wstates = 1 if alwaysr2w == 1
+(1,149,124 real changes made)
+
+.         replace r2wstates = 73 if state == 73
+(35,302 real changes made)
+
+.         replace r2wstates = 32 if state == 32
+(46,817 real changes made)
+
+.         replace r2wstates = 34 if state == 34
+(94,533 real changes made)
+
+.         replace r2wstates = 35 if state == 35
+(62,707 real changes made)
+
+.         replace r2wstates = 55 if state == 55
+(35,853 real changes made)
+
+.         replace r2wstates = 61 if state == 61
+(39,601 real changes made)
+
+. 
+. ** gen panel data
+. drop if year < 1996 // need without breaks
+(787,460 observations deleted)
+
+. 
+. drop if alwaysr2w == 1 // keep neverr2w and treatments from policy variation
+(864,454 observations deleted)
+
+. 
+. ** drop if inlist(state, 55, 81, 11, 12, 13) // wv, mt, me, nh, vt
+. drop if state == 55
+(27,314 observations deleted)
+
+. 
+. ************************************************************************************
+. drop if inlist(state, 55, 81, 11, 12, 13)
+(146,593 observations deleted)
+
+. ************************************************************************************
+. 
+. ** BLACK MEN - no observations in state == 81 year == 2001, default drop WV, MT, ME, NH, VT
+. preserve
+
+. 
+. keep if female == 0 & blackrelwhite == 1
+(1,161,654 observations deleted)
+
+. 
+. qui tab nind,    gen(dumnind)
+
+. qui tab ee_cl,   gen(dumee_cl)
+
+. qui tab nocc2,   gen(dumnocc2)
+
+. qui tab quarter, gen(dumquarter)
+
+. 
+. ds state year nind ee_cl nocc2 quarter, not 
+cmonth        exper         finalwt1      treat_sthi~e  dumnind11     dumee_cl13    dumnocc210
+eweight       marr          nocc3         lyear         dumee_cl1     dumee_cl14    dumnocc211
+hourly        lwage1        state_ind     r2wstates     dumee_cl2     dumee_cl15    dumnocc212
+umem          public        edex          dumnind1      dumee_cl3     dumee_cl16    dumquarter1
+citizen       exper2        blackrelwh~e  dumnind2      dumee_cl4     dumnocc21     dumquarter2
+female        exper3        hisprelwhite  dumnind3      dumee_cl5     dumnocc22     dumquarter3
+hisprace      exper4        date          dumnind4      dumee_cl6     dumnocc23     dumquarter4
+hispracesex   cmsa          alwaysr2w     dumnind5      dumee_cl7     dumnocc24
+nocc          partt         alwr2wcov     dumnind6      dumee_cl8     dumnocc25
+covered       lwage3        neverr2w      dumnind7      dumee_cl9     dumnocc26
+educ          index         stater2w      dumnind8      dumee_cl10    dumnocc27
+alloc1        unemp         treat_st      dumnind9      dumee_cl11    dumnocc28
+nwage1        _merge        treat_stbl~e  dumnind10     dumee_cl12    dumnocc29
+
+. 
+. collapse (mean) `r(varlist)' [aw = finalwt1], by(state year)
+
+. 
+. tsset state year
+       panel variable:  state (strongly balanced)
+        time variable:  year, 1996 to 2019
+                delta:  1 unit
+
+. 
+. ** OK
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linreg/
+> fin_synth_bm_ok) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: OK
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .1802664 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |           0
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |           0
+       OH |        .709
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |        .291
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0114435   .0184488 
+                      dumnind2 |  .0596033   .0468166 
+                      dumnind3 |  .2241351   .1808189 
+                      dumnind4 |  .2637588    .239493 
+                      dumnind5 |  .0846289   .1134247 
+                      dumnind6 |   .024732   .0336571 
+                      dumnind7 |  .0767378   .1190163 
+                      dumnind8 |  .0978458   .0737334 
+                      dumnind9 |  .0436653   .0387184 
+                     dumnind10 |  .0390609   .0770481 
+                     dumnind11 |  .0743887   .0588248 
+                          educ |  12.93543   12.98519 
+                         exper |  16.82278   16.29364 
+                        exper2 |  411.8518    390.329 
+                        exper3 |  11911.57   11054.32 
+                        exper4 |  384891.8     347894 
+                          edex |  220.2757   211.8079 
+                     dumee_cl1 |  .0601712   .0513988 
+                     dumee_cl2 |  .1150729   .1057254 
+                     dumee_cl3 |  .1313316    .124655 
+                     dumee_cl4 |  .0221691   .0544473 
+                     dumee_cl5 |  .0266865   .0108281 
+                     dumee_cl6 |  .0945486   .1349486 
+                     dumee_cl7 |  .0730552   .0915942 
+                     dumee_cl8 |  .0462499   .0421356 
+                     dumee_cl9 |  .0269651   .0083583 
+                    dumee_cl10 |  .1197918   .0886151 
+                    dumee_cl11 |  .1054086   .1082211 
+                    dumee_cl12 |  .0629754   .0405613 
+                    dumee_cl13 |  .0085555   .0134019 
+                    dumee_cl14 |  .0371816   .0674191 
+                    dumee_cl15 |  .0598646   .0400739 
+                    dumee_cl16 |  .0099724   .0176163 
+                          marr |  .4378397    .435689 
+                         partt |  .1092246   .1371659 
+                        public |  .1642991   .1673002 
+                          cmsa |  .7862082   .8538023 
+                     dumnocc21 |  .0247809   .0371969 
+                     dumnocc22 |  .0642338    .064067 
+                     dumnocc23 |  .0610055   .0469032 
+                     dumnocc24 |  .0349526   .0538787 
+                     dumnocc25 |  .0116545   .0226858 
+                     dumnocc26 |  .0749888   .0814636 
+                     dumnocc27 |  .0821949    .065558 
+                     dumnocc28 |         0   .0042149 
+                     dumnocc29 |  .2169822     .19002 
+                    dumnocc210 |  .1304255   .1384521 
+                    dumnocc211 |  .1046586    .102875 
+                    dumnocc212 |  .1941228   .1926847 
+                   dumquarter1 |  .3142799   .2531196 
+                   dumquarter2 |  .2091924   .2579267 
+                   dumquarter3 |  .2326864   .2448968 
+                   dumquarter4 |  .2438414   .2440569 
+           lwage3(1996(1)2000) |  1.411205   1.576397 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bm_ok.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bm_ok.png written in PNG format)
+
+. 
+. ** IN
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(32) trperiod(2012) nested allopt fig keep($linreg/
+> fin_synth_bm_in) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: IN
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .0821069 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |        .043
+       RI |        .109
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |           0
+       OH |         .43
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |        .224
+       NM |           0
+       WA |           0
+       OR |        .194
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0057467   .0056569 
+                      dumnind2 |  .0403181   .0490448 
+                      dumnind3 |   .267348   .2000971 
+                      dumnind4 |  .1846394   .2186431 
+                      dumnind5 |  .1093039   .1364045 
+                      dumnind6 |  .0310754   .0440494 
+                      dumnind7 |   .107623   .1084328 
+                      dumnind8 |  .1015252   .0845955 
+                      dumnind9 |  .0560919    .063385 
+                     dumnind10 |   .050836   .0333452 
+                     dumnind11 |  .0454923   .0563458 
+                          educ |  13.12431   13.22338 
+                         exper |  18.07044    18.0717 
+                        exper2 |  450.7236   454.7778 
+                        exper3 |  13263.87   13302.92 
+                        exper4 |  433779.7   427447.8 
+                          edex |  234.6962   238.6216 
+                     dumee_cl1 |  .0212668   .0299585 
+                     dumee_cl2 |  .1059478   .1013601 
+                     dumee_cl3 |  .0868819    .090073 
+                     dumee_cl4 |  .0413304    .048132 
+                     dumee_cl5 |  .0218301   .0115828 
+                     dumee_cl6 |   .110778   .1195948 
+                     dumee_cl7 |  .1115927   .0982036 
+                     dumee_cl8 |  .0839283   .0682117 
+                     dumee_cl9 |  .0047273   .0089443 
+                    dumee_cl10 |  .1017926   .0804604 
+                    dumee_cl11 |  .0866497    .084095 
+                    dumee_cl12 |  .0390456    .064321 
+                    dumee_cl13 |  .0326727    .022769 
+                    dumee_cl14 |  .0791521   .0739975 
+                    dumee_cl15 |  .0531342   .0613885 
+                    dumee_cl16 |  .0192698   .0369078 
+                          marr |  .4879111   .4849927 
+                         partt |   .083797   .1372596 
+                        public |  .1218791   .1602546 
+                          cmsa |  .9338619   .9614551 
+                     dumnocc21 |  .0317247   .0559679 
+                     dumnocc22 |  .0622372    .048701 
+                     dumnocc23 |  .0322602   .0626029 
+                     dumnocc24 |  .0684165   .0736904 
+                     dumnocc25 |  .0178327   .0169657 
+                     dumnocc26 |  .0723773   .1077302 
+                     dumnocc27 |   .039273   .0603266 
+                     dumnocc28 |  .0048804   .0050581 
+                     dumnocc29 |  .2197437    .198901 
+                    dumnocc210 |  .2031489   .1281446 
+                    dumnocc211 |  .0931053   .0893566 
+                    dumnocc212 |  .1550001    .152555 
+                   dumquarter1 |  .2725431   .2650043 
+                   dumquarter2 |  .2186857   .2429508 
+                   dumquarter3 |  .2082783   .2442915 
+                   dumquarter4 |  .3004929   .2477535 
+           lwage3(1996(1)2011) |    1.6466   1.653373 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bm_in.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bm_in.png written in PNG format)
+
+. 
+. ** MI
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(34) trperiod(2013) nested allopt fig keep($linreg/
+> fin_synth_bm_mi) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2012 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: MI
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .0503973 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |        .034
+       RI |        .354
+       CT |           0
+       NY |           0
+       NJ |         .04
+       PA |           0
+       OH |        .002
+       IL |           0
+       MN |           0
+       MO |        .147
+       DE |           0
+       MD |           0
+       DC |         .15
+       CO |        .082
+       NM |           0
+       WA |           0
+       OR |        .126
+       CA |        .064
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0019153   .0061627 
+                      dumnind2 |    .02618   .0475555 
+                      dumnind3 |  .3019382   .1521356 
+                      dumnind4 |  .1926308   .2062312 
+                      dumnind5 |  .0959428   .1207434 
+                      dumnind6 |  .0296245   .0563872 
+                      dumnind7 |  .1216866   .1256409 
+                      dumnind8 |  .0856048   .1037536 
+                      dumnind9 |  .0593121   .0740071 
+                     dumnind10 |  .0333998   .0368539 
+                     dumnind11 |  .0517651   .0695289 
+                          educ |  13.14031   13.16241 
+                         exper |  18.39895    18.2814 
+                        exper2 |  469.4049    474.836 
+                        exper3 |  13820.41   14406.57 
+                        exper4 |  444921.8   480931.2 
+                          edex |  242.2515   237.3027 
+                     dumee_cl1 |   .037009    .032595 
+                     dumee_cl2 |  .0950411   .0945468 
+                     dumee_cl3 |  .0900795   .0927799 
+                     dumee_cl4 |  .0368109   .0641126 
+                     dumee_cl5 |  .0218875   .0148376 
+                     dumee_cl6 |  .0945757   .1102004 
+                     dumee_cl7 |  .1003048   .0775745 
+                     dumee_cl8 |  .0684695   .0719303 
+                     dumee_cl9 |   .015302   .0153018 
+                    dumee_cl10 |  .0978406   .0724854 
+                    dumee_cl11 |  .0927866   .0790127 
+                    dumee_cl12 |  .0529714   .0632462 
+                    dumee_cl13 |  .0217999   .0340062 
+                    dumee_cl14 |   .076541   .0748385 
+                    dumee_cl15 |  .0604727   .0611762 
+                    dumee_cl16 |  .0381078   .0403558 
+                          marr |  .4512333   .4488455 
+                         partt |  .1492516   .1308691 
+                        public |  .1595571   .1768678 
+                          cmsa |  .9882122   .9810548 
+                     dumnocc21 |  .0433306   .0592679 
+                     dumnocc22 |  .0423869   .0571997 
+                     dumnocc23 |  .0604228   .0612136 
+                     dumnocc24 |  .0620331   .0824493 
+                     dumnocc25 |  .0121227   .0164417 
+                     dumnocc26 |  .0949335   .1123923 
+                     dumnocc27 |  .0588868   .0624589 
+                     dumnocc28 |  .0052584   .0072804 
+                     dumnocc29 |  .2142336   .2145943 
+                    dumnocc210 |  .2027354   .1093255 
+                    dumnocc211 |  .0819705   .0840679 
+                    dumnocc212 |  .1216857   .1323084 
+                   dumquarter1 |  .2344905   .2626383 
+                   dumquarter2 |  .2517802   .2435015 
+                   dumquarter3 |  .2624606   .2416609 
+                   dumquarter4 |  .2512687   .2511993 
+           lwage3(1996(1)2012) |  1.689956     1.6796 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bm_mi.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bm_mi.png written in PNG format)
+
+. 
+. ** WI
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(35) trperiod(2015) nested allopt fig keep($linreg/
+> fin_synth_bm_wi) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2012 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2013 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: WI
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |    .11627 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |        .167
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |        .065
+       OH |        .768
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |           0
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0043932   .0038565 
+                      dumnind2 |  .0266901   .0367369 
+                      dumnind3 |  .2650365    .202933 
+                      dumnind4 |  .1789477   .2215392 
+                      dumnind5 |  .0912937   .1160093 
+                      dumnind6 |  .0439141    .045559 
+                      dumnind7 |    .12951   .1232351 
+                      dumnind8 |    .09915   .1033752 
+                      dumnind9 |  .0633639   .0601928 
+                     dumnind10 |  .0323115   .0299869 
+                     dumnind11 |  .0653894   .0565761 
+                          educ |  12.88491   12.97188 
+                         exper |  18.26908   18.39214 
+                        exper2 |  463.3379   483.6927 
+                        exper3 |  13681.42   14785.73 
+                        exper4 |  445026.1   494682.7 
+                          edex |  236.4711   236.7195 
+                     dumee_cl1 |  .0566125   .0377521 
+                     dumee_cl2 |   .101731   .1031213 
+                     dumee_cl3 |  .0700025   .0987266 
+                     dumee_cl4 |  .0346068    .047075 
+                     dumee_cl5 |  .0286645   .0142721 
+                     dumee_cl6 |  .1305503   .1181885 
+                     dumee_cl7 |  .0925274   .0817056 
+                     dumee_cl8 |  .0627911    .048859 
+                     dumee_cl9 |  .0243898   .0127019 
+                    dumee_cl10 |  .1125405   .0972561 
+                    dumee_cl11 |  .0660573   .0779182 
+                    dumee_cl12 |  .0492918    .051452 
+                    dumee_cl13 |  .0220861   .0271447 
+                    dumee_cl14 |  .0813693   .0937709 
+                    dumee_cl15 |  .0507146   .0646291 
+                    dumee_cl16 |  .0160644   .0254269 
+                          marr |  .4157417   .4207554 
+                         partt |  .1518198   .1540311 
+                        public |  .1694308   .1529984 
+                          cmsa |  .9550639   .9575344 
+                     dumnocc21 |  .0401273   .0367842 
+                     dumnocc22 |  .0431909   .0481577 
+                     dumnocc23 |  .0214373   .0450963 
+                     dumnocc24 |  .0520433   .0659714 
+                     dumnocc25 |  .0110563   .0154541 
+                     dumnocc26 |  .0660195   .1120322 
+                     dumnocc27 |  .0339221   .0564611 
+                     dumnocc28 |         0   .0036786 
+                     dumnocc29 |  .2665271   .2352585 
+                    dumnocc210 |  .2392366   .1509906 
+                    dumnocc211 |  .0712031   .0792099 
+                    dumnocc212 |  .1552365   .1509055 
+                   dumquarter1 |  .3018964   .2512486 
+                   dumquarter2 |  .2526981   .2454512 
+                   dumquarter3 |  .2615834   .2405936 
+                   dumquarter4 |  .1838221   .2627066 
+           lwage3(1996(1)2014) |  1.536127   1.572365 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bm_wi.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bm_wi.png written in PNG format)
+
+. 
+. ** KY
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(61) trperiod(2017) nested allopt fig keep($linreg/
+> fin_synth_bm_ky) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2012 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2013 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2016 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: KY
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .0653395 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |           0
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |        .151
+       OH |        .774
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |        .075
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0084389   .0087835 
+                      dumnind2 |  .0356706   .0382691 
+                      dumnind3 |  .2476717   .1870696 
+                      dumnind4 |  .2335672   .2270793 
+                      dumnind5 |  .1257323   .1224178 
+                      dumnind6 |  .0230352   .0419538 
+                      dumnind7 |  .1138191   .1301146 
+                      dumnind8 |  .0791256   .0939214 
+                      dumnind9 |  .0587153   .0572858 
+                     dumnind10 |  .0213335   .0310968 
+                     dumnind11 |  .0528906   .0620082 
+                          educ |  12.99207   13.10944 
+                         exper |  18.80929    18.2988 
+                        exper2 |  485.1869   476.1853 
+                        exper3 |  14333.81   14380.47 
+                        exper4 |  460563.4   474596.1 
+                          edex |  242.1283   239.1902 
+                     dumee_cl1 |  .0313866    .033957 
+                     dumee_cl2 |  .0875404   .1004899 
+                     dumee_cl3 |  .0840775    .097372 
+                     dumee_cl4 |  .0601911   .0480481 
+                     dumee_cl5 |  .0119439   .0121492 
+                     dumee_cl6 |  .1099794   .1164478 
+                     dumee_cl7 |  .0955229   .0888966 
+                     dumee_cl8 |  .0445524   .0561229 
+                     dumee_cl9 |  .0094452   .0086306 
+                    dumee_cl10 |  .1380464   .0996784 
+                    dumee_cl11 |  .0798937   .0807324 
+                    dumee_cl12 |  .0430225   .0522853 
+                    dumee_cl13 |  .0229485    .021548 
+                    dumee_cl14 |   .093838   .0972179 
+                    dumee_cl15 |  .0598205   .0598198 
+                    dumee_cl16 |  .0277909    .026604 
+                          marr |  .4446152   .4219139 
+                         partt |  .1274903   .1522499 
+                        public |  .1546442   .1603275 
+                          cmsa |  .7263478   .9257222 
+                     dumnocc21 |  .0298503    .041304 
+                     dumnocc22 |  .0524962   .0480904 
+                     dumnocc23 |  .0396934   .0473512 
+                     dumnocc24 |  .0507333   .0641553 
+                     dumnocc25 |  .0119324   .0170511 
+                     dumnocc26 |  .0908249   .1119582 
+                     dumnocc27 |  .0653575   .0572076 
+                     dumnocc28 |  .0024153   .0032007 
+                     dumnocc29 |  .2084291   .2262236 
+                    dumnocc210 |  .1867331   .1343843 
+                    dumnocc211 |  .0780126   .0897928 
+                    dumnocc212 |  .1835219   .1592807 
+                   dumquarter1 |  .2664632   .2605706 
+                   dumquarter2 |  .2086241   .2443622 
+                   dumquarter3 |  .2676053   .2423977 
+                   dumquarter4 |  .2573075   .2526695 
+           lwage3(1996(1)2016) |  1.549202   1.575601 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bm_ky.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bm_ky.png written in PNG format)
+
+. 
+. restore
+
+. 
+. ** BLACK WOMEN - no obs for certain years for me, nh, vt, default drop WV, MT, ME, NH, VT
+. preserve
+
+. 
+. keep if female == 1 & blackrelwhite == 1
+(1,147,364 observations deleted)
+
+. 
+. qui tab nind,    gen(dumnind)
+
+. qui tab ee_cl,   gen(dumee_cl)
+
+. qui tab nocc2,   gen(dumnocc2)
+
+. qui tab quarter, gen(dumquarter)
+
+. 
+. ds state year nind ee_cl nocc2 quarter, not 
+cmonth        exper         finalwt1      treat_sthi~e  dumnind11     dumee_cl13    dumnocc210
+eweight       marr          nocc3         lyear         dumee_cl1     dumee_cl14    dumnocc211
+hourly        lwage1        state_ind     r2wstates     dumee_cl2     dumee_cl15    dumnocc212
+umem          public        edex          dumnind1      dumee_cl3     dumee_cl16    dumquarter1
+citizen       exper2        blackrelwh~e  dumnind2      dumee_cl4     dumnocc21     dumquarter2
+female        exper3        hisprelwhite  dumnind3      dumee_cl5     dumnocc22     dumquarter3
+hisprace      exper4        date          dumnind4      dumee_cl6     dumnocc23     dumquarter4
+hispracesex   cmsa          alwaysr2w     dumnind5      dumee_cl7     dumnocc24
+nocc          partt         alwr2wcov     dumnind6      dumee_cl8     dumnocc25
+covered       lwage3        neverr2w      dumnind7      dumee_cl9     dumnocc26
+educ          index         stater2w      dumnind8      dumee_cl10    dumnocc27
+alloc1        unemp         treat_st      dumnind9      dumee_cl11    dumnocc28
+nwage1        _merge        treat_stbl~e  dumnind10     dumee_cl12    dumnocc29
+
+. 
+. collapse (mean) `r(varlist)' [aw = finalwt1], by(state year)
+
+. 
+. tsset state year
+       panel variable:  state (strongly balanced)
+        time variable:  year, 1996 to 2019
+                delta:  1 unit
+
+. 
+. ** OK
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(73) trperiod(2001) nested allopt fig keep($linreg/
+> fin_synth_bf_ok) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: OK
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2000)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .1332952 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |           0
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |           0
+       OH |         .87
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |           0
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |         .13
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |   .005038          0 
+                      dumnind2 |         0   .0107555 
+                      dumnind3 |   .087114    .099084 
+                      dumnind4 |  .2222209   .1896783 
+                      dumnind5 |  .0496922   .0510907 
+                      dumnind6 |  .0430627   .0746247 
+                      dumnind7 |  .0724835    .102632 
+                      dumnind8 |  .2499438   .2513338 
+                      dumnind9 |  .1350082   .1039392 
+                     dumnind10 |  .0546385    .053289 
+                     dumnind11 |  .0807981   .0635731 
+                          educ |  13.06671   13.00901 
+                         exper |  18.31805   16.83045 
+                        exper2 |  488.4607   416.7402 
+                        exper3 |  15315.85   12278.58 
+                        exper4 |  527741.6   402740.7 
+                          edex |  237.8773   218.1954 
+                     dumee_cl1 |  .0200786   .0549796 
+                     dumee_cl2 |  .1245768   .1073703 
+                     dumee_cl3 |   .125098   .1191614 
+                     dumee_cl4 |  .0305793   .0391907 
+                     dumee_cl5 |  .0180539   .0165672 
+                     dumee_cl6 |   .089846   .0829422 
+                     dumee_cl7 |   .120024   .1267048 
+                     dumee_cl8 |  .0543562   .0770502 
+                     dumee_cl9 |  .0072293   .0215707 
+                    dumee_cl10 |  .0640001   .0872395 
+                    dumee_cl11 |  .0655464   .0699366 
+                    dumee_cl12 |  .0549541   .0416705 
+                    dumee_cl13 |  .0367981   .0270089 
+                    dumee_cl14 |  .1008559   .0660507 
+                    dumee_cl15 |  .0597193   .0516239 
+                    dumee_cl16 |  .0282842    .010933 
+                          marr |  .3646128   .3457282 
+                         partt |  .2131815   .2114727 
+                        public |  .2723305   .2140669 
+                          cmsa |  .8375965   .9372853 
+                     dumnocc21 |   .041117   .0515313 
+                     dumnocc22 |  .0736938   .0698376 
+                     dumnocc23 |  .0150029   .0194447 
+                     dumnocc24 |  .1119855   .0997636 
+                     dumnocc25 |  .0421558   .0377714 
+                     dumnocc26 |  .2331145   .2461602 
+                     dumnocc27 |  .1391591   .1146582 
+                     dumnocc28 |         0   .0074642 
+                     dumnocc29 |  .2300237   .2310629 
+                    dumnocc210 |  .0819737   .0800203 
+                    dumnocc211 |  .0105533   .0007801 
+                    dumnocc212 |  .0212208   .0415053 
+                   dumquarter1 |  .3756566   .2676724 
+                   dumquarter2 |  .2753479   .2208895 
+                   dumquarter3 |  .1895298    .234858 
+                   dumquarter4 |  .1594657   .2765801 
+           lwage3(1996(1)2000) |  1.338262   1.463408 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bf_ok.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bf_ok.png written in PNG format)
+
+. 
+. ** IN
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(32) trperiod(2012) nested allopt fig keep($linreg/
+> fin_synth_bf_in) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2008 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2009 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2010 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2011 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: IN
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2011)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .0628243 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |           0
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |           0
+       OH |        .906
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |        .094
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |         0          0 
+                      dumnind2 |  .0022149   .0032526 
+                      dumnind3 |   .119486   .0815457 
+                      dumnind4 |  .1821924   .1870007 
+                      dumnind5 |  .0913828   .0593034 
+                      dumnind6 |  .0715992   .0741791 
+                      dumnind7 |    .07271   .0836424 
+                      dumnind8 |  .2600901   .3044529 
+                      dumnind9 |  .0927101   .0990567 
+                     dumnind10 |  .0274969   .0340442 
+                     dumnind11 |  .0801175   .0735224 
+                          educ |  13.05353   13.18316 
+                         exper |  18.36278   18.04421 
+                        exper2 |  481.1533   470.2869 
+                        exper3 |  14684.07   14234.42 
+                        exper4 |  490226.9   469722.8 
+                          edex |  238.0756   237.2024 
+                     dumee_cl1 |  .0299394   .0349494 
+                     dumee_cl2 |  .0955138    .097895 
+                     dumee_cl3 |  .1070778   .1150634 
+                     dumee_cl4 |  .0479553   .0546459 
+                     dumee_cl5 |  .0141165   .0162109 
+                     dumee_cl6 |  .1159128   .0804654 
+                     dumee_cl7 |  .0964786   .1047603 
+                     dumee_cl8 |  .0548724   .0560889 
+                     dumee_cl9 |  .0033959   .0120753 
+                    dumee_cl10 |  .0997114   .0890651 
+                    dumee_cl11 |  .0922079   .0827581 
+                    dumee_cl12 |  .0344838   .0498224 
+                    dumee_cl13 |  .0198839   .0222114 
+                    dumee_cl14 |  .1037819   .0822665 
+                    dumee_cl15 |  .0680949   .0752069 
+                    dumee_cl16 |  .0165737    .026515 
+                          marr |  .3116102   .3048538 
+                         partt |  .1877891   .2197843 
+                        public |  .2015152   .2203255 
+                          cmsa |  .9358665   .9324046 
+                     dumnocc21 |  .0255761   .0309512 
+                     dumnocc22 |  .0852073   .0718844 
+                     dumnocc23 |  .0112309   .0177952 
+                     dumnocc24 |  .0944411   .1168051 
+                     dumnocc25 |  .0465153   .0522604 
+                     dumnocc26 |  .2355678   .2489437 
+                     dumnocc27 |  .1074696   .0942634 
+                     dumnocc28 |  .0021311   .0052288 
+                     dumnocc29 |  .2338977   .2546357 
+                    dumnocc210 |  .1022739   .0656543 
+                    dumnocc211 |  .0030004    .005048 
+                    dumnocc212 |  .0526888   .0365298 
+                   dumquarter1 |  .2918679    .253929 
+                   dumquarter2 |  .2417065   .2557582 
+                   dumquarter3 |  .2158305   .2339137 
+                   dumquarter4 |  .2505951   .2563991 
+           lwage3(1996(1)2011) |   1.46344   1.487864 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bf_in.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bf_in.png written in PNG format)
+
+. 
+. ** MI
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(34) trperiod(2013) nested allopt fig keep($linreg/
+> fin_synth_bf_mi) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2008 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2009 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2010 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2011 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2012 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: MI
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2012)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .0458877 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |           0
+       CT |           0
+       NY |           0
+       NJ |        .198
+       PA |           0
+       OH |        .276
+       IL |           0
+       MN |        .402
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |        .091
+       WA |        .033
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0013011   .0006864 
+                      dumnind2 |  .0023606   .0031674 
+                      dumnind3 |  .1223613   .0677528 
+                      dumnind4 |  .1702123   .2054776 
+                      dumnind5 |  .0578777   .0608943 
+                      dumnind6 |  .0670043   .0772969 
+                      dumnind7 |  .0921865   .1040028 
+                      dumnind8 |  .2525871   .2903592 
+                      dumnind9 |  .1252176    .092002 
+                     dumnind10 |  .0433685    .037552 
+                     dumnind11 |  .0655229   .0608087 
+                          educ |   13.4566   13.21386 
+                         exper |  18.26845   16.77162 
+                        exper2 |  468.9988   418.2136 
+                        exper3 |  13943.38   12341.22 
+                        exper4 |  452952.1   402136.6 
+                          edex |  245.7175   219.7069 
+                     dumee_cl1 |  .0338598   .0348861 
+                     dumee_cl2 |  .0667084   .0928794 
+                     dumee_cl3 |  .1120327   .1348651 
+                     dumee_cl4 |   .057133   .0680535 
+                     dumee_cl5 |  .0160039   .0153888 
+                     dumee_cl6 |   .085856   .0868037 
+                     dumee_cl7 |  .1096987   .1134294 
+                     dumee_cl8 |  .0737958   .0675244 
+                     dumee_cl9 |  .0128042   .0161702 
+                    dumee_cl10 |   .067166   .0801226 
+                    dumee_cl11 |  .1027908   .0753606 
+                    dumee_cl12 |  .0660987   .0480981 
+                    dumee_cl13 |  .0181108   .0219648 
+                    dumee_cl14 |  .0699538   .0595825 
+                    dumee_cl15 |  .0735033   .0583658 
+                    dumee_cl16 |   .034484   .0265051 
+                          marr |  .2945184   .3173885 
+                         partt |  .2350486   .2483534 
+                        public |  .2152605   .1925238 
+                          cmsa |   .989013   .9469339 
+                     dumnocc21 |  .0424512   .0445028 
+                     dumnocc22 |  .0760411    .069871 
+                     dumnocc23 |   .020559   .0208231 
+                     dumnocc24 |  .1070008   .1144636 
+                     dumnocc25 |  .0542534   .0460144 
+                     dumnocc26 |   .211701   .2490761 
+                     dumnocc27 |   .098714   .0930076 
+                     dumnocc28 |   .003105   .0038773 
+                     dumnocc29 |  .2525936   .2672891 
+                    dumnocc210 |  .0964953   .0542819 
+                    dumnocc211 |  .0052215    .004819 
+                    dumnocc212 |   .031864   .0319743 
+                   dumquarter1 |  .2362971   .2450428 
+                   dumquarter2 |  .2293866   .2516546 
+                   dumquarter3 |  .2772989   .2706418 
+                   dumquarter4 |  .2570175   .2326607 
+           lwage3(1996(1)2012) |  1.561922   1.560615 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bf_mi.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bf_mi.png written in PNG format)
+
+. 
+. ** WI
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(35) trperiod(2015) nested allopt fig keep($linreg/
+> fin_synth_bf_wi) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2008 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2009 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2010 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2011 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2012 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2013 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: WI
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2014)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .0776096 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |        .348
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |           0
+       OH |         .51
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |        .143
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |  .0010451    .000661 
+                      dumnind2 |   .005728   .0050566 
+                      dumnind3 |  .0794563   .0728632 
+                      dumnind4 |  .1812244   .1850505 
+                      dumnind5 |  .0618592   .0461992 
+                      dumnind6 |  .0714237   .0770411 
+                      dumnind7 |   .092729   .0944873 
+                      dumnind8 |  .3311176   .3173278 
+                      dumnind9 |  .1154821   .0987663 
+                     dumnind10 |  .0169786   .0335048 
+                     dumnind11 |  .0429561   .0700422 
+                          educ |  12.89329   13.12835 
+                         exper |  17.84017   18.04017 
+                        exper2 |  460.4433   474.4067 
+                        exper3 |  13946.73   14575.12 
+                        exper4 |  467140.4   490271.9 
+                          edex |  227.1203   232.8355 
+                     dumee_cl1 |  .0649641   .0331982 
+                     dumee_cl2 |  .0767483   .0884318 
+                     dumee_cl3 |  .1038047   .1224432 
+                     dumee_cl4 |  .0429755   .0634145 
+                     dumee_cl5 |  .0311042   .0143835 
+                     dumee_cl6 |  .0936865   .0867729 
+                     dumee_cl7 |   .101447   .0991362 
+                     dumee_cl8 |   .063574   .0589263 
+                     dumee_cl9 |  .0200895   .0132516 
+                    dumee_cl10 |  .0922477   .0800215 
+                    dumee_cl11 |  .0930578   .0815888 
+                    dumee_cl12 |  .0291049   .0479196 
+                    dumee_cl13 |  .0342947   .0325351 
+                    dumee_cl14 |  .0814001   .0833704 
+                    dumee_cl15 |  .0536811   .0660579 
+                    dumee_cl16 |  .0178199   .0295486 
+                          marr |  .2140201   .3356783 
+                         partt |  .2645299   .2427817 
+                        public |  .1814678   .1952509 
+                          cmsa |  .9850327   .9301752 
+                     dumnocc21 |  .0226158   .0333072 
+                     dumnocc22 |  .0539711   .0683625 
+                     dumnocc23 |   .008395    .016068 
+                     dumnocc24 |   .093138   .1195114 
+                     dumnocc25 |  .0487484   .0584535 
+                     dumnocc26 |  .2389536   .2270409 
+                     dumnocc27 |  .0809454   .0884799 
+                     dumnocc28 |  .0023433   .0027044 
+                     dumnocc29 |  .3272711   .2884938 
+                    dumnocc210 |  .0676411   .0631284 
+                    dumnocc211 |  .0076828   .0064676 
+                    dumnocc212 |  .0482944   .0289823 
+                   dumquarter1 |  .2667302   .2544554 
+                   dumquarter2 |  .2546869   .2503757 
+                   dumquarter3 |  .2450898    .233931 
+                   dumquarter4 |  .2334932   .2622379 
+           lwage3(1996(1)2014) |  1.460037   1.492607 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bf_wi.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bf_wi.png written in PNG format)
+
+. 
+. ** KY
+. synth lwage3 dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9 dumnind10 dumn
+> ind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2 dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee
+> _cl7 dumee_cl8 dumee_cl9 dumee_cl10 dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr p
+> artt public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26 dumnocc27 dumnocc28 dumnocc29 d
+> umnocc210 dumnocc211 dumnocc212 dumquarter1 dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016), counit(
+> 14(1)16 21(1)23 31 33 41 43 51(1)53 84 85 91(1)95) trunit(61) trperiod(2017) nested allopt fig keep($linreg/
+> fin_synth_bf_ky) replace
+--------------------------------------------------------------------------------------------------------------
+Synthetic Control Method for Comparative Case Studies
+--------------------------------------------------------------------------------------------------------------
+
+First Step: Data Setup
+--------------------------------------------------------------------------------------------------------------
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2008 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2009 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2010 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2011 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2012 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2013 -ignored for averaging
+control units: for 1 of out 20 units missing obs for predictor cmsa in period 2016 -ignored for averaging
+--------------------------------------------------------------------------------------------------------------
+Data Setup successful
+--------------------------------------------------------------------------------------------------------------
+                Treated Unit: KY
+               Control Units: MA, RI, CT, NY, NJ, PA, OH, IL, MN, MO, DE, MD, DC, CO, NM, WA, OR, CA, AK, HI
+--------------------------------------------------------------------------------------------------------------
+          Dependent Variable: lwage3
+  MSPE minimized for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016
+Results obtained for periods: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016 2017 2018 2019
+--------------------------------------------------------------------------------------------------------------
+                  Predictors: dumnind1 dumnind2 dumnind3 dumnind4 dumnind5 dumnind6 dumnind7 dumnind8 dumnind9
+                              dumnind10 dumnind11 educ exper exper2 exper3 exper4 edex dumee_cl1 dumee_cl2
+                              dumee_cl3 dumee_cl4 dumee_cl5 dumee_cl6 dumee_cl7 dumee_cl8 dumee_cl9 dumee_cl10
+                              dumee_cl11 dumee_cl12 dumee_cl13 dumee_cl14 dumee_cl15 dumee_cl16 marr partt
+                              public cmsa dumnocc21 dumnocc22 dumnocc23 dumnocc24 dumnocc25 dumnocc26
+                              dumnocc27 dumnocc28 dumnocc29 dumnocc210 dumnocc211 dumnocc212 dumquarter1
+                              dumquarter2 dumquarter3 dumquarter4 lwage3(1996(1)2016)
+--------------------------------------------------------------------------------------------------------------
+Unless period is specified
+predictors are averaged over: 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+                              2012 2013 2014 2015 2016
+--------------------------------------------------------------------------------------------------------------
+
+Second Step: Run Optimization
+--------------------------------------------------------------------------------------------------------------
+Nested optimization requested
+Starting nested optimization module
+Optimization done
+Allopt requested. This may take a while
+Restarting nested optimization module (search method)
+done
+Restarting nested optimization module (equal method)
+done
+--------------------------------------------------------------------------------------------------------------
+Optimization done
+--------------------------------------------------------------------------------------------------------------
+
+Third Step: Obtain Results
+--------------------------------------------------------------------------------------------------------------
+Loss: Root Mean Squared Prediction Error
+
+---------------------
+   RMSPE |  .1008438 
+---------------------
+--------------------------------------------------------------------------------------------------------------
+Unit Weights:
+
+-----------------------
+    Co_No | Unit_Weight
+----------+------------
+       MA |           0
+       RI |        .103
+       CT |           0
+       NY |           0
+       NJ |           0
+       PA |           0
+       OH |        .711
+       IL |           0
+       MN |           0
+       MO |           0
+       DE |           0
+       MD |           0
+       DC |           0
+       CO |           0
+       NM |        .185
+       WA |           0
+       OR |           0
+       CA |           0
+       AK |           0
+       HI |           0
+-----------------------
+--------------------------------------------------------------------------------------------------------------
+Predictor Balance:
+
+------------------------------------------------------
+                               |   Treated  Synthetic 
+-------------------------------+----------------------
+                      dumnind1 |         0   .0007737 
+                      dumnind2 |  .0060766   .0034609 
+                      dumnind3 |   .139045   .0668825 
+                      dumnind4 |  .2074631   .1974948 
+                      dumnind5 |  .0553147   .0536006 
+                      dumnind6 |  .0591642   .0731212 
+                      dumnind7 |  .0713315   .0918304 
+                      dumnind8 |  .2827988   .3052509 
+                      dumnind9 |  .1040885   .1008641 
+                     dumnind10 |  .0228037   .0312164 
+                     dumnind11 |   .051914   .0745046 
+                          educ |  13.10185   13.26118 
+                         exper |  17.97156   18.01355 
+                        exper2 |  462.2617   471.7966 
+                        exper3 |  13720.98   14369.84 
+                        exper4 |    442455   477480.6 
+                          edex |  233.9359   237.6047 
+                     dumee_cl1 |  .0327786   .0306274 
+                     dumee_cl2 |  .0894025   .0921339 
+                     dumee_cl3 |  .1299618   .1233234 
+                     dumee_cl4 |  .0431839   .0601845 
+                     dumee_cl5 |   .017615   .0139784 
+                     dumee_cl6 |  .0828273   .0788097 
+                     dumee_cl7 |  .1048554   .1019989 
+                     dumee_cl8 |  .0545608   .0621847 
+                     dumee_cl9 |  .0118027   .0134052 
+                    dumee_cl10 |  .0942391   .0823103 
+                    dumee_cl11 |  .1016729   .0785517 
+                    dumee_cl12 |  .0391713   .0514222 
+                    dumee_cl13 |  .0218539   .0217012 
+                    dumee_cl14 |  .0860494    .080535 
+                    dumee_cl15 |  .0726048    .076193 
+                    dumee_cl16 |  .0174206   .0316404 
+                          marr |  .3158044   .3137099 
+                         partt |  .2082659   .2347825 
+                        public |  .1992813   .2111255 
+                          cmsa |  .7473786   .9097362 
+                     dumnocc21 |  .0208629   .0312241 
+                     dumnocc22 |  .0524875   .0704817 
+                     dumnocc23 |  .0153638   .0180086 
+                     dumnocc24 |  .1007295   .1272851 
+                     dumnocc25 |  .0683924   .0551689 
+                     dumnocc26 |   .208232   .2364353 
+                     dumnocc27 |  .1022861   .0935955 
+                     dumnocc28 |  .0036202   .0041908 
+                     dumnocc29 |  .2628225   .2653541 
+                    dumnocc210 |  .1231608   .0563993 
+                    dumnocc211 |  .0050826   .0068328 
+                    dumnocc212 |  .0369596   .0340237 
+                   dumquarter1 |  .2450234   .2514224 
+                   dumquarter2 |  .2370144   .2577536 
+                   dumquarter3 |  .2671243   .2310346 
+                   dumquarter4 |   .250838   .2587894 
+           lwage3(1996(1)2016) |  1.421678   1.478725 
+------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+. 
+. graph export $figs/fin_synth_bf_ky.png, replace
+(file /Users/amedeusdsouza/econ499/figures/fin_synth_bf_ky.png written in PNG format)
+
+. 
+. restore
+
+. 
+. 
+.                         
+. log close 
+      name:  <unnamed>
+       log:  /Users/amedeusdsouza/econ499/linreg/stagsynthblack.log
+  log type:  text
+ closed on:   7 Apr 2021, 02:32:35
+--------------------------------------------------------------------------------------------------------------
