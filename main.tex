@@ -81,14 +81,15 @@
 \begin{document}
 \begin{titlepage}
 \maketitle
+\thispagestyle{empty}
 \centering
 \vspace{2cm}
 Submitted to the Vancouver School of Economics in partial fulfillment of the requirements for a Bachelor of Arts, Honours in Economics.
 \end{titlepage}
-\thispagestyle{empty}
 \doublespacing
+\thispagestyle{empty}
 \begin{abstract}
-Lorem ipsum dolor sit amet.
+The stalling of convergence in racial wage inequality among men and the exacerbating Black-white wage gap among women coupled with higher deunionization rates for Black people provokes an inquiry into the effects of labor unions on racial inequality. Exploiting variation from recent right to work legislation, I find evidence that laws that weaken unions increase Black-white wage inequality with the effects concentrated at the bottom of the wage distribution and among women. In addition to a baseline decrease in wages of over 3\%, right to work laws lead to a disproportionate 3.88\% decline in wages for Black women. These effects are largely driven by spillovers which are harshest around the twentieth centile of the wage distirbution where the associated surplus union premium for Black women is the strongest.
 % We seek to understand the effect of labor market institutions - in particular, the minimum wage and labor unions - on racial wage inequality along the wage distribution, taking into account spillover effects -  including minimum wage ripples and labor union threat effects. We expect to use an estimation strategy involving DFL decompositions, RIF regression analyses, distribution regressions, and a difference-in-differences research design leveraging variation in state-level minimum wage increases and state-industry unionization rates. Therefore, we expect to contribute towards the literature on the disproportionate impacts of \textit{prima facie} race-neutral policies.
 \end{abstract}
 \clearpage
@@ -317,7 +318,7 @@ With the RIF-regression analysis, I do not consider heaping of wages at \$10 and
 \section{Conclusion}\label{sec:conc}
 I sought to understand whether the Black-white wage gap has exacerbated as a consequence of right to work laws, where in the wage distirbution are the effects are strongest and how much of the effect is driven by spillovers. I find that \textit{ceteris paribus} the laws indeed appear to increase racial wage inequality with the effects concentrated at the bottom of the wage distribution and among women. These disproportionate effects are largely driven by spillovers. Interestingly, the legislation does not disproportionately effect Black people in labor unions as the effects are borne equally by Black people and white peole who are covered by unions. I therefore provide evidence that \textit{prima facie} race-neutral changes to labor market institutions including right to work laws that weaken labor unions have disparate impacts on outcomes of people of color.  
 
-Indeed, future work certainly needs to build on this study analysing the relationship between labor unions and racial inequality and more generally the heterogeneous effects of changes to labor market institutions. As a start, decomposing the difference in difference specification of the effect of right to work laws on racial inequality following an extended version of the decomposition method outlined by \citet{goodmanbacon2018} or an exploration of the surplus effects of the legislation using the synthetic control method with data that better represents the Black population would be fruitful avenues for further research. Future research, as recommended by \citet{fll2021} would also benefit from the use of matched employer-employee datasets to better understand underlying mechanisms. Future work may also turn to other labor market institutions including the disparate impacts of shared corporate governance relationships building on work by 
+Indeed, future work certainly needs to build on this study analysing the relationship between labor unions and racial inequality and more generally the heterogeneous effects of changes to labor market institutions. As a start, decomposing the difference in difference specification of the effect of right to work laws on racial inequality following an extended version of the decomposition method outlined by \citet{goodmanbacon2018} or an exploration of the surplus effects of the legislation using the synthetic control method with data that better represents the Black population would be fruitful avenues for further research. Future research, as recommended by \citet{fll2021} would also benefit from the use of matched employer-employee datasets to better understand underlying mechanisms. Future work may also turn to other labor market institutions including the disparate impacts of shared corporate governance relationships building on work by \citet{jsh2020}.
 
 % \section{To-Do List}
 % Please note that our list takes the format: Task - Approximate Duration - Anticipated Completion Date.
@@ -384,6 +385,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \caption{Right to Work States}\label{fig:rtwmap}
     \includegraphics[width=\textwidth, height = 0.8\textheight, keepaspectratio]{figures/rtwmap.png}
 \end{figure}
+\footnotesize{Always RTW states defined as states that have had RTW laws before 1989.}
 
 \pagebreak
 \begin{table}[h!]
@@ -497,7 +499,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
           \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_wf_ok.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_bf_ok.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Predicted real log wages obtained from regression of real log wages on covariates and fixed effects separately for each subgroup.}
 \end{landscape}
 
 \pagebreak
@@ -510,7 +512,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
           \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_wf_in.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_bf_in.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Predicted real log wages obtained from regression of real log wages on covariates and fixed effects separately for each subgroup.}
 \end{landscape}
 
 \pagebreak
@@ -523,7 +525,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
           \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_wf_mi.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_bf_mi.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Predicted real log wages obtained from regression of real log wages on covariates and fixed effects separately for each subgroup.}
 \end{landscape}
 
 \pagebreak
@@ -536,7 +538,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
           \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_wf_wi.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_bf_wi.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Predicted real log wages obtained from regression of real log wages on covariates and fixed effects separately for each subgroup.}
 \end{landscape}
 
 \pagebreak
@@ -549,7 +551,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
           \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_wf_ky.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_bf_ky.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Predicted real log wages obtained from regression of real log wages on covariates and fixed effects separately for each subgroup.}
 \end{landscape}
 
 \pagebreak
@@ -559,12 +561,12 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \captionof{figure}{Synthetic Control Method - Oklahoma (2001)}\label{fig:synth_ok}
     \begin{tabular}{c c}
           \textbf{White Men} & \textbf{Black Men} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wm_ok.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bm_ok.png} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_ok.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_ok.png} \\
           \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wf_ok.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bf_ok.png}
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_ok.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_ok.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 \end{landscape}
 
 \pagebreak
@@ -574,12 +576,12 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \captionof{figure}{Synthetic Control Method - Indiana (2012)}\label{fig:synth_in}
     \begin{tabular}{c c}
           \textbf{White Men} & \textbf{Black Men} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wm_in.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bm_in.png} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_in.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_in.png} \\
           \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wf_in.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bf_in.png}
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_in.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_in.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression. Nested optimization not used for white women due to unstable or asymmetric Hessian.}
 \end{landscape}
 
 \pagebreak
@@ -589,12 +591,12 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \captionof{figure}{Synthetic Control Method - Michigan (2013)}\label{fig:synth_mi}
     \begin{tabular}{c c}
           \textbf{White Men} & \textbf{Black Men} \\    
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wm_mi.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bm_mi.png} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_mi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_mi.png} \\
           \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wf_mi.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bf_mi.png}
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_mi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_mi.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 \end{landscape}
 
 \pagebreak
@@ -604,12 +606,12 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \captionof{figure}{Synthetic Control Method - Wisconsin (2015)}\label{fig:synth_wi}
     \begin{tabular}{c c}
           \textbf{White Men} & \textbf{Black Men} \\    
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wm_wi.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bm_wi.png} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_wi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_wi.png} \\
           \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wf_wi.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bf_wi.png}
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_wi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_wi.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 \end{landscape}
 
 \pagebreak
@@ -619,12 +621,12 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \captionof{figure}{Synthetic Control Method - Kentucky (2017)}\label{fig:synth_ky}
     \begin{tabular}{c c}
           \textbf{White Men} & \textbf{Black Men} \\    
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wm_ky.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bm_ky.png} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_ky.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_ky.png} \\
           \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_wf_ky.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/fin_synth_bf_ky.png}
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_ky.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_ky.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 \end{landscape}
 
 \pagebreak
@@ -703,7 +705,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \caption{RIF-DID Regression of Real Log Wages on Right to Work Laws Treatment in State and Time - All (Black and White) People - W/O Always RTW States}\label{fig:rifdid-sltt-wo-ar2w-A}
     \includegraphics[width=1.25\textwidth, height = \textheight, keepaspectratio]{figures/fin_rifdid-sltt-wo-ar2w-A.png}
 \end{figure}
-\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors for the DID regression are clustered at the state level. Standard errors for the RIF-DID regression are bootstrapped with 100 replicates. Real log wages is the dependent variable throughout. Each column corresponds to a regression and associated set of RIF-DID regressions. 95\% confidence intervals presented. All regressions include covariates and fixed effects as outlined. State monthly unemployment rate and state linear time trends included. Year fixed effects not included.}
+\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, Vermont, and always right to work states are in the sample. Standard errors for the DID regression are clustered at the state level. Standard errors for the RIF-DID regression are bootstrapped with 100 replicates. Real log wages is the dependent variable throughout. Each column corresponds to a regression and associated set of RIF-DID regressions. 95\% confidence intervals presented. All regressions include covariates and fixed effects as outlined. State monthly unemployment rate and state linear time trends included. Year fixed effects not included.}
 \end{landscape}
 
 \pagebreak
@@ -713,7 +715,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \caption{RIF-DID Regression of Real Log Wages on Right to Work Laws Treatment in State and Time - People Not Covered by Union - Spillover Effect - W/O Always RTW States}\label{fig:rifdid-sltt-wo-ar2w-B}
     \includegraphics[width=1.25\textwidth, height = \textheight, keepaspectratio]{figures/fin_rifdid-sltt-wo-ar2w-B.png}
 \end{figure}
-\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors for the DID regression are clustered at the state level. Standard errors for the RIF-DID regression are bootstrapped with 100 replicates. Real log wages is the dependent variable throughout. Each column corresponds to a regression and associated set of RIF-DID regressions. 95\% confidence intervals presented. All regressions include covariates and fixed effects as outlined. State monthly unemployment rate and state linear time trends included. Year fixed effects not included.}
+\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont, and always right to work states are in the sample. Standard errors for the DID regression are clustered at the state level. Standard errors for the RIF-DID regression are bootstrapped with 100 replicates. Real log wages is the dependent variable throughout. Each column corresponds to a regression and associated set of RIF-DID regressions. 95\% confidence intervals presented. All regressions include covariates and fixed effects as outlined. State monthly unemployment rate and state linear time trends included. Year fixed effects not included.}
 \end{landscape}
 
 \pagebreak
@@ -723,7 +725,7 @@ Indeed, future work certainly needs to build on this study analysing the relatio
     \caption{RIF-DID Regression of Real Log Wages on Right to Work Laws Treatment in State and Time - People Covered by Union - Direct Effect - W/O Always RTW States}\label{fig:rifdid-sltt-wo-ar2w-C}
     \includegraphics[width=1.25\textwidth, height = \textheight, keepaspectratio]{figures/fin_rifdid-sltt-wo-ar2w-C.png}
 \end{figure}
-\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors for the DID regression are clustered at the state level. Standard errors for the RIF-DID regression are bootstrapped with 100 replicates. Real log wages is the dependent variable throughout. Each column corresponds to a regression and associated set of RIF-DID regressions. 95\% confidence intervals presented. All regressions include covariates and fixed effects as outlined. State monthly unemployment rate and state linear time trends included. Year fixed effects not included.}
+\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, Vermont, and always right to work states are in the sample. Standard errors for the DID regression are clustered at the state level. Standard errors for the RIF-DID regression are bootstrapped with 100 replicates. Real log wages is the dependent variable throughout. Each column corresponds to a regression and associated set of RIF-DID regressions. 95\% confidence intervals presented. All regressions include covariates and fixed effects as outlined. State monthly unemployment rate and state linear time trends included. Year fixed effects not included.}
 \end{landscape}
 
 \pagebreak
@@ -736,20 +738,24 @@ Indeed, future work certainly needs to build on this study analysing the relatio
           \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_wf_wv.png} & \includegraphics[width = 0.6\textwidth, keepaspectratio]{figures/pta/fin_bf_wv.png}
     \end{tabular}
 \end{table}
-% \footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+\footnotesize{Predicted real log wages obtained form regression of real log wage on covariates and fixed effects separately for each subgroup.}
 \end{landscape}
 
 \pagebreak
 \small{\input{tabs/donor_weights_wm}}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 
 \pagebreak
 \small{\input{tabs/donor_weights_bm}}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 
 \pagebreak
 \small{\input{tabs/donor_weights_wf}}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression. Nested optimization not used for Indiana (2012) due to unstable or asymmetric Hessian.}
 
 \pagebreak
 \small{\input{tabs/donor_weights_bf}}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 
 % \section{Figures}
 % \subsection{Figure 1 - Black-white Earnings Gap at Mean - \citet{derenoncourtmontialoux2020}}\label{fig1}
