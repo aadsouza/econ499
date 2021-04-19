@@ -30,6 +30,7 @@ jobs:
 #         run: echo Hello, world!
       - name: build pdf
         uses: xu-cheng/latex-action@v2
+        pre_compile: "bibtex main.tex"
         with:
           root_file: main.tex
 
