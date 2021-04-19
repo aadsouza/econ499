@@ -1,0 +1,27 @@
+name: main.tex
+
+on: 
+  push:
+    branches:
+    - master
+    paths:
+    - 'main.tex'
+    
+jobs:
+  latex-job:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    steps:
+      - name: download paper repo
+        uses: actions/checkout@v2
+      - name: setup latex
+        run: | 
+         sudo apt-get update
+         sudo apt-get install texlive texlive-xetex -y
+         sudo apt-get install texlive-latex-extra texlive-fonts-recommended dvipng cm-super    
+      - name: build pdf  
+        uses: xu-cheng/latex-action@v2
+        with: 
+        rootfile: main.tex
