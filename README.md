@@ -119,8 +119,8 @@ Pending revisions requested by defense committee.
 - 499data.bib
   - bibtex file for literature cited in thesis.
 ## NBER extracts of CPS MORG
-- Cleaned version of data etc. found here (`econ499data` directory): https://www.dropbox.com/sh/fveewbp3c82h6fw/AAA8vwEASsThsv_Ww3HxKzrja?dl=0 
-- Data found here: https://data.nber.org/morg/annual/
-- Documentation for data found here: https://data.nber.org/morg//docs/cpsx.pdf
+- [`econ499data` directory with cleaned data etc.](https://www.dropbox.com/sh/fveewbp3c82h6fw/AAA8vwEASsThsv_Ww3HxKzrja?dl=0) - used in `.do` files.
+- [NBER extracts of CPS MORG found here](https://data.nber.org/morg/annual/).
+- [NBER CPS MORG Documentation found here](https://data.nber.org/morg//docs/cpsx.pdf).
 ## Acknowledgements
 I am extremely grateful to Professor Nicole Fortin and Professor Marit Rehavi for their continued guidance and support. I thank Professor Thomas Lemieux for extensive feedback and insights. I am indebted to Professor Nicole Fortin and Neil Lloyd for generously providing Stata codes that expedited the data cleaning process. I also thank Sheldon Birkett, Felipe Grosso, Elisabeth Hatting, Wenxin Ma, Evan Mauro, Javier Cort&eacute;s Orihuela, and Sarah Kirker Wappel for helpful discussions and comments. All errors are my own.
