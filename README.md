@@ -119,6 +119,7 @@ Pending revisions requested by defense committee.
 - 499data.bib
   - bibtex file for literature cited in thesis.
 ## NBER extracts of CPS MORG
+- Cleaned version of data etc. found here (`econ499data` directory): https://www.dropbox.com/sh/fveewbp3c82h6fw/AAA8vwEASsThsv_Ww3HxKzrja?dl=0 
 - Data found here: https://data.nber.org/morg/annual/
 - Documentation for data found here: https://data.nber.org/morg//docs/cpsx.pdf
 ## Acknowledgements
