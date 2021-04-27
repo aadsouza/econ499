@@ -1,4 +1,4 @@
-# ECON 499 - Honours Thesis
+# ECON 499: Labor Unions and Racial Wage Inequality
 Pending revisions requested by defense committee.
 ## Contents
 - /code
