@@ -102,6 +102,8 @@ Pending revisions requested by defense committee.
       - compare alwaysr2w to neverr2w - so treat_st = treat_s (not DiD, post treat and post cont comparison)?
     - staghisp.do
       - run did - effect of rtw on Hispanic-white inequality.
+    - dfl-3per.do
+      - heywood parent extended dfl decomposition, only 8388 period.
 - /dfl1
   - dfl1.log
 - /distreg
