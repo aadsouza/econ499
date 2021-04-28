@@ -152,24 +152,24 @@ I further break down observations by industry in \autoref{tab:nindtab} along wit
 
 Median real log wage time trends are plotted in \autoref{fig:med_wage_time}. Throughout the period being studied, that is, 1983 to 2019, any convergence in the Black-white wage gap that took place in previous periods has stalled for men and is even diverging for women. In 1979 dollars, the difference between log wages for white men and Black men in 1983 was 0.336 and in 2019 remained 0.334. It is important to reiterate here, particularly within the context of the discussion in \citet{bayercharles2018}, that my wage specification drops observations with zero earnings. For women, the Black-white wage gap at the median has, in fact, exacerbated over time. The difference between log wages for white women and Black women in 1983 was 0.118, increasing to 0.178 in 2019. 
 
-\subsection{Wage Distributions and Counterfactual}
-In addition to presenting the wage distributions for white people and Black people, I ask what the wage distribution for white people who are covered by a union would look like if they had the same covariates as Black people who are covered by a union - with a corresponding question for those not covered by a union. Covariates include education, a quartic in experience, education-experience interaction, marital status, part-time status, public sector, CMSA, 11 industry categories, 12 occupation categories, and state, quarter, and year fixed effects. I follow the \citet{heywoodparent2012} implementation of the DFL decomposition for its added dimension allowing for selection into unions. For the wage distributions for Black people $B = 1$ and white people $B = 0$ which are given as 
-\begin{equation}
-    g(w\mid B = 1) = \int f(w\mid x, B = 1) h(x \mid B = 1) dx
-\end{equation}
-\begin{equation}
-    g(w\mid B = 0) = \int f(w\mid x, B = 0) h(x \mid B = 0) dx,
-\end{equation}
-\citet{heywoodparent2012} show that the counterfactual wage distribution for white people covered by a union with the same distribution of covariates $x$ as Black people covered by a union $u = 1$ is given by
-\begin{equation}
-g^c_{B=1, u = 1}(w\mid B = 0) = \int \Theta_2 f(w\mid x, B = 0, u = 1)h(x\mid B = 0, u = 1)dx,
-\end{equation}
-where $\Theta_2 = \frac{Prob(B = 1\mid x) Prob(u = 1\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 1\mid x, B = 0)}$. 
-Similarly, the counterfactual wage distribution for white people not covered by a union with the same distribution of covariates as Black people who are not covered by a union is given by
-\begin{equation}
-g^c_{B=1, u = 0}(w\mid B = 0) = \int \Theta_3 f(w\mid x, B = 0, u = 0)h(x\mid B = 0, u = 0)dx,
-\end{equation}
-where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 0\mid x, B = 0)}$. In order to estimate this reweighting parameter, I run probit regressions of race and union coverage on the covariates as defined. I show these wage distributions for Black people, white people, and the counterfactual white wage distribution in \hyperref[fig:dfl_men]{Figure~\ref*{fig:dfl_men}} and \hyperref[fig:dfl_women]{Figure~\ref*{fig:dfl_women}} for men and women respectively. Indeed the wage distributions for Black people are more heavily right-skewed. Note that the wage distributions at the top end will be affected by the Pareto imputation procedure which does not take race into account. The difference in the skews of the distribution is much more striking for people not covered by a union. As well, the counterfactual wage distribution for white people covered by a union closely follows the actual wage distribution for white people covered by a union. For people not covered by a union, there persists a significant difference in the wage distributions when comparing the distributions for Black people to the counterfactual white distributions.   
+% \subsection{Wage Distributions and Counterfactual}
+% In addition to presenting the wage distributions for white people and Black people, I ask what the wage distribution for white people who are covered by a union would look like if they had the same covariates as Black people who are covered by a union - with a corresponding question for those not covered by a union. Covariates include education, a quartic in experience, education-experience interaction, marital status, part-time status, public sector, CMSA, 11 industry categories, 12 occupation categories, and state, quarter, and year fixed effects. I follow the \citet{heywoodparent2012} implementation of the DFL decomposition for its added dimension allowing for selection into unions. For the wage distributions for Black people $B = 1$ and white people $B = 0$ which are given as 
+% \begin{equation}
+%     g(w\mid B = 1) = \int f(w\mid x, B = 1) h(x \mid B = 1) dx
+% \end{equation}
+% \begin{equation}
+%     g(w\mid B = 0) = \int f(w\mid x, B = 0) h(x \mid B = 0) dx,
+% \end{equation}
+% \citet{heywoodparent2012} show that the counterfactual wage distribution for white people covered by a union with the same distribution of covariates $x$ as Black people covered by a union $u = 1$ is given by
+% \begin{equation}
+% g^c_{B=1, u = 1}(w\mid B = 0) = \int \Theta_2 f(w\mid x, B = 0, u = 1)h(x\mid B = 0, u = 1)dx,
+% \end{equation}
+% where $\Theta_2 = \frac{Prob(B = 1\mid x) Prob(u = 1\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 1\mid x, B = 0)}$. 
+% Similarly, the counterfactual wage distribution for white people not covered by a union with the same distribution of covariates as Black people who are not covered by a union is given by
+% \begin{equation}
+% g^c_{B=1, u = 0}(w\mid B = 0) = \int \Theta_3 f(w\mid x, B = 0, u = 0)h(x\mid B = 0, u = 0)dx,
+% \end{equation}
+% where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 0\mid x, B = 0)}$. In order to estimate this reweighting parameter, I run probit regressions of race and union coverage on the covariates as defined. I show these wage distributions for Black people, white people, and the counterfactual white wage distribution in \hyperref[fig:dfl_men]{Figure~\ref*{fig:dfl_men}} and \hyperref[fig:dfl_women]{Figure~\ref*{fig:dfl_women}} for men and women respectively. Indeed the wage distributions for Black people are more heavily right-skewed. Note that the wage distributions at the top end will be affected by the Pareto imputation procedure which does not take race into account. The difference in the skews of the distribution is much more striking for people not covered by a union. As well, the counterfactual wage distribution for white people covered by a union closely follows the actual wage distribution for white people covered by a union. For people not covered by a union, there persists a significant difference in the wage distributions when comparing the distributions for Black people to the counterfactual white distributions.   
 
 \subsection{OLS and RIF-OLS Regressions}
 Recall that I seek to understand the effect of labor unions on racial wage inequality along the wage distribution. I first proceed with the following baseline OLS regression specification that characterizes the association between log wages and union coverage for Black people and white people
@@ -188,11 +188,11 @@ I am interested in characterizing the association between real log wages and uni
 \end{equation}
 where $\mathbb{1}\{w_i \leq q_\tau\}$ indicates if the observed wage is less than the quantile in question and $f(q_\tau)$ is the density of the marginal wage distribution. \citet{ffl2009} show that this yields a consistent estimate of the association between the independent variable - in this case, union coverage - and the unconditional quantile $\tau$ of the wage distribution. I estimate this specification for all $\tau \in [10,90]\subseteq \mathbb{10N}$. I refrain from testing the association at higher quantiles as they may be affected by the Pareto imputation procedure which does not take race into account. 
 
-The RIF-OLS results corresponding to the OLS regression estimates found in \autoref{tab:naive} are presented in \autoref{fig:rifols-men} for men and \autoref{fig:rifols-wom} for women. The associated Black wage penalty for men appears to peak at the twentieth percentile of the overall male wage distribution. I expect that the reduction in the Black wage penalty for men at the tenth centile over time can largely be attributed to increases in the minimum wage. However, the stagnant associated Black wage penalty for men at the mean as discussed in \autoref{tab:naive} and at the median as discussed in \autoref{fig:med_wage_time} obscures an apparent increasing Black wage penalty in the upper echelons of the overall wage distribution, thereby offsetting the reduction at the lower percentiles. \citet{fll2021} and \citet{ffl2009} find that unions have their strongest impact at and just below the median. I find that the shape of the baseline association with union coverage for men largely follows the same pattern, that the association is largest at and just below the median. The peak baseline association for men appears to move towards the median over the three periods indicating an increase in wage inequality in non-union positions over time. Interestingly, I find that for Black men relative to white men, the surplus association of union coverage is largest towards the bottom end of the overall wage distribution. The surplus association for men appears to decline as one moves along the overall wage distribution and is even negative beyond the median of the overall wage distribution. A part of the story here indeed appears to be that the Black wage distribution is more heavily skewed to the right as shown in \autoref{fig:dfl_men}. The other, more fascinating part of the story appears to be that union coverage appears to have its largest surplus association for Black men in parts of the wage distribution where the associated Black wage penalty is the strongest. I expect that the decline in the surplus association for Black men over the three periods can be attributed to the sharper de-unionization rates for Black men relative to white men as presented in \autoref{fig:ucov_hrs_time} and in part to increases in the minimum wage.
+The RIF-OLS results corresponding to the OLS regression estimates found in \autoref{tab:naive} are presented in \autoref{fig:rifols-men} for men and \autoref{fig:rifols-wom} for women. The associated Black wage penalty for men appears to peak at the twentieth percentile of the overall male wage distribution. I expect that the reduction in the Black wage penalty for men at the tenth centile over time can largely be attributed to increases in the minimum wage. However, the stagnant associated Black wage penalty for men at the mean as discussed in \autoref{tab:naive} and at the median as discussed in \autoref{fig:med_wage_time} obscures an apparent increasing Black wage penalty in the upper echelons of the overall wage distribution, thereby offsetting the reduction at the lower percentiles. \citet{fll2021} and \citet{ffl2009} find that unions have their strongest impact at and just below the median. I find that the shape of the baseline association with union coverage for men largely follows the same pattern, that the association is largest at and just below the median. The peak baseline association for men appears to move towards the median over the three periods indicating an increase in wage inequality in non-union positions over time. Interestingly, I find that for Black men relative to white men, the surplus association of union coverage is largest towards the bottom end of the overall wage distribution. The surplus association for men appears to decline as one moves along the overall wage distribution and is even negative beyond the median of the overall wage distribution. A part of the story here indeed appears to be that the Black wage distribution is more heavily skewed to the right as shown in \hyperref[fig:dfl_men]{Figure~\ref*{fig:dfl_men}}. The other, more fascinating part of the story appears to be that union coverage appears to have its largest surplus association for Black men in parts of the wage distribution where the associated Black wage penalty is the strongest. I expect that the decline in the surplus association for Black men over the three periods can be attributed to the sharper de-unionization rates for Black men relative to white men as presented in \autoref{fig:ucov_hrs_time} and in part to increases in the minimum wage.
 
 For women, as seen in \autoref{fig:rifols-wom}, I find the associated Black wage penalty to peak at the twentieth centile of the overall female wage distribution in the 1983-1988 period. As the periods progress, in addition to the finding that the associated Black wage penalty at the mean increases for women, it appears to be that the peak Black wage penalty moves to the fortieth centile of the overall female wage distribution. The peak baseline association for women is at the seventieth percentile of the overall wage distribution and shifts to the median through the periods. The surplus association of union coverage for Black women relative to white women appears to mirror and therefore offsets, the Black wage penalty for women. In the 1983-1988 period, when Black-white wage inequality among women is at its peak around the twentieth centile, the surplus associated benefit from union coverage appears to be at the twentieth centile of the overall female wage distribution as well. Similarly, in the 2000-2019 period, it appears that the surplus association of wages and union coverage takes on a much smoother hump-like shape between the tenth and sixtieth quantiles, in the same period when the shape of the Black wage penalty over the distribution for women appears to be smoother. 
 
-I also run the same RIF-OLS regressions separately for each subgroup for the three periods, with results depicted in \autoref{fig:rifols-bw-men} for white men and Black men and \autoref{fig:rifols-bw-wom} for white women and Black women. For white men, the peak association between real log wages and union coverage is indeed at and just below the median of the overall white male wage distribution, with the peak association moving closer to the median as one moves to more recent periods. For Black men, the peak association is at the seventieth quantile of the Black male wage distribution. For white women, the peak association, is at the seventieth percentile of the white female wage distribution in the 1983-1988 period, moving towards the median in later periods. For Black women, the peak association fluctuates between the sixtieth and seventieth centiles of the Black female wage distribution. This analysis underscores two things. First, the surplus associations found in \autoref{fig:rifols-men} and \autoref{fig:rifols-wom} is partly driven by the inherent differences in the wage distributions for Black people and white people as documented in \autoref{fig:dfl_men} and \autoref{fig:dfl_women}. Second, and more interestingly, in analyzing Black people and white people separately, one crucially loses information about the Black-white wage gap, that is, the Black wage penalty relative to white people and the association between wages and union coverage that appears to offset the Black wage penalty as described earlier. 
+I also run the same RIF-OLS regressions separately for each subgroup for the three periods, with results depicted in \autoref{fig:rifols-bw-men} for white men and Black men and \autoref{fig:rifols-bw-wom} for white women and Black women. For white men, the peak association between real log wages and union coverage is indeed at and just below the median of the overall white male wage distribution, with the peak association moving closer to the median as one moves to more recent periods. For Black men, the peak association is at the seventieth quantile of the Black male wage distribution. For white women, the peak association, is at the seventieth percentile of the white female wage distribution in the 1983-1988 period, moving towards the median in later periods. For Black women, the peak association fluctuates between the sixtieth and seventieth centiles of the Black female wage distribution. This analysis underscores two things. First, the surplus associations found in \autoref{fig:rifols-men} and \autoref{fig:rifols-wom} is partly driven by the inherent differences in the wage distributions for Black people and white people as documented in \hyperref[fig:dfl_men]{Figure~\ref*{fig:dfl_men}} and \hyperref[fig:dfl_women]{Figure~\ref*{fig:dfl_women}}. Second, and more interestingly, in analyzing Black people and white people separately, one crucially loses information about the Black-white wage gap, that is, the Black wage penalty relative to white people and the association between wages and union coverage that appears to offset the Black wage penalty as described earlier. 
 
 In light of the exposition by \citet{fll2021} on the importance of unionization spillover effects in getting a fuller understanding of the effect of unionization on wages - that non-union firms in state-industries with a high unionization rate may, for example, emulate the wage structures of union firms to mitigate potential unionization threats, I sought to understand the differential effects of unionization by race, capturing these spillovers. In order to do so, I follow \citet{fll2021} in using union coverage rate at a state-industry-year level as an instrument for the unionization rate. I use all 50 states, the 11 industry categories outlined in \autoref{tab:nindtab}, and the years 1983 to 2019 as part of my definition of unionization rate. Notice that no individual person here can significantly affect the unionization rate in a state-industry by merely selecting into or dropping out. This, therefore, assuages some of my earlier endogeneity concerns. I first present results from an OLS regression specification of log wages on this unionization rate, running the model separately for white men, Black men, and Hispanic men of all races who are not covered by a union, with corresponding estimates for women who are not covered by a union. Thus, the regression I run is given by
 \begin{equation}
@@ -320,28 +320,6 @@ I sought to understand whether the Black-white wage gap has exacerbated as a con
 
 Indeed, future work certainly needs to build on this study analyzing the relationship between labor unions and racial inequality and more generally the heterogeneous effects of changes to labor market institutions. As a start, decomposing the difference in difference specification of the effect of right-to-work laws on racial inequality following an extended version of the decomposition method outlined by \citet{goodmanbacon2018} or an exploration of the surplus effects of the legislation using the synthetic control method with data that better represents the Black population would be fruitful avenues for further research. Future research, as recommended by \citet{fll2021} would also benefit from the use of matched employer-employee datasets to better understand underlying mechanisms. Future work may also turn to other labor market institutions including the disparate impacts of shared corporate governance relationships building on work by \citet{jsh2020}.
 
-% \section{To-Do List}
-% Please note that our list takes the format: Task - Approximate Duration - Anticipated Completion Date.
-% \begin{itemize}
-%     \item Create GitHub repository for version control - 1 day - November 30, 2020.
-%     \item Complete THOROUGH review of minimum wage literature and racial inequality literature; build literature annotation table - 1 month - December 22, 2020.
-%     \item Pin down major changes to independent and dependent variables and focus analysis - 2 weeks - December 18, 2020.
-%     \item Adjust and enrich analysis building off \citet{derenoncourtmontialoux2020} - 1 month - December 22, 2020.
-%     \item Holiday break for mental health - 1 week - December 31, 2020.
-%     \item Practice running DFL and RIF regressions using assignments from ECON 561 - 1.5 weeks - December 31, 2020.
-%     \item Download and clean CPS May and MORG datasets (if possible using cleaned data from \citet{fll2019} which would reduce duration to 1 week) - 3 weeks - January 10, 2021.
-%     \item Load and merge supplementary datasets including minimum wage data, census data, ACS data, ASEC data as necessary - 3 weeks - January 20, 2021.
-%     \item Prepare document with summary statistics - 1 week - January 25, 2021.
-%     \item Pin down regression equations to be run - 2 weeks - Feb 14, 2021.
-%     \item DFL and RIF analysis with necessary adjustments - 3 weeks - Feb 20, 2021.
-%     \item State minimum wage regression analysis with necessary adjustments - 1 month - March 6 2021.
-%     \item Robustness checks, falsification tests, subsampling, adding controls to model - 2 weeks, March 10, 2021.
-%     \item Writing rough draft of thesis - 1 month - March 24, 2021.
-%     \item Develop and implement palette and template for consistent plots - 1 week - April 3, 2021.
-%     \item Final edits on thesis - 1.5 weeks - April 5, 2021. (4 day buffer to submission)
-%     \item Thesis revision - 2 weeks - April 30, 2021.
-% \end{itemize}
-
 \singlespacing
 \pagebreak
 \bibliographystyle{apalike}
@@ -386,28 +364,6 @@ Indeed, future work certainly needs to build on this study analyzing the relatio
     \includegraphics[width=\textwidth, height = 0.8\textheight, keepaspectratio]{figures/rtwmap.png}
 \end{figure}
 \footnotesize{Always RTW states defined as states that have had RTW laws before 1989.}
-
-\pagebreak
-\begin{table}[h!]
-    \centering
-    \captionof{figure}{Wage Distributions - Men}\label{fig:dfl_men}
-    \begin{tabular}{c}
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cu_bhw_men.png} \\
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cn_bhw_men.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
-
-\pagebreak
-\begin{table}[h!]
-    \centering
-    \captionof{figure}{Wage Distributions - Women}\label{fig:dfl_women}
-    \begin{tabular}{c}
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cu_bhw_wom.png} \\
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cn_bhw_wom.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
 
 \pagebreak
 \begin{landscape}
@@ -676,9 +632,35 @@ Indeed, future work certainly needs to build on this study analyzing the relatio
 \small{\input{tabs/fin_wagstagdid}}
 \footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors are clustered at the state-level. Real log wages is the dependent variable throughout. All regressions include covariates and fixed effects as outlined.}
 \end{landscape}
+}
+\pagebreak
+\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
+\doublespacing
+\section{Appendix}
+\subsection{Appendix - Wage Distributions and Counterfactual}
+In addition to presenting the wage distributions for white people and Black people, I ask what the wage distribution for white people who are covered by a union would look like if they had the same covariates as Black people who are covered by a union - with a corresponding question for those not covered by a union. Covariates include education, a quartic in experience, education-experience interaction, marital status, part-time status, public sector, CMSA, 11 industry categories, 12 occupation categories, and state, quarter, and year fixed effects. I follow the \citet{heywoodparent2012} implementation of the DFL decomposition for its added dimension allowing for selection into unions. For the wage distributions for Black people $B = 1$ and white people $B = 0$ which are given as 
+\begin{equation}
+    g(w\mid B = 1) = \int f(w\mid x, B = 1) h(x \mid B = 1) dx
+\end{equation}
+\begin{equation}
+    g(w\mid B = 0) = \int f(w\mid x, B = 0) h(x \mid B = 0) dx,
+\end{equation}
+\citet{heywoodparent2012} show that the counterfactual wage distribution for white people covered by a union with the same distribution of covariates $x$ as Black people covered by a union $u = 1$ is given by
+\begin{equation}
+g^c_{B=1, u = 1}(w\mid B = 0) = \int \Theta_2 f(w\mid x, B = 0, u = 1)h(x\mid B = 0, u = 1)dx,
+\end{equation}
+where $\Theta_2 = \frac{Prob(B = 1\mid x) Prob(u = 1\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 1\mid x, B = 0)}$. 
+Similarly, the counterfactual wage distribution for white people not covered by a union with the same distribution of covariates as Black people who are not covered by a union is given by
+\begin{equation}
+g^c_{B=1, u = 0}(w\mid B = 0) = \int \Theta_3 f(w\mid x, B = 0, u = 0)h(x\mid B = 0, u = 0)dx,
+\end{equation}
+where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\mid x)Prob(u = 0\mid x, B = 0)}$. In order to estimate this reweighting parameter, I run probit regressions of race and union coverage on the covariates as defined. I show these wage distributions for Black people, white people, and the counterfactual white wage distribution in \hyperref[fig:dfl_men]{Figure~\ref*{fig:dfl_men}} and \hyperref[fig:dfl_women]{Figure~\ref*{fig:dfl_women}} for men and women respectively. Indeed the wage distributions for Black people are more heavily right-skewed. Note that the wage distributions at the top end will be affected by the Pareto imputation procedure which does not take race into account. The difference in the skews of the distribution is much more striking for people not covered by a union. As well, the counterfactual wage distribution for white people covered by a union closely follows the actual wage distribution for white people covered by a union. For people not covered by a union, there persists a significant difference in the wage distributions when comparing the distributions for Black people to the counterfactual white distributions.   
 
 \pagebreak
-\section{Appendix - Tables and Figures}
+\singlespacing
+\newgeometry{top=0.75in,bottom=0.75in,left=0.5in,right=0.5in}
+\fontsize{10}{12}\selectfont{
+\subsection{Appendix - Tables and Figures}
 \small{\input{tabs/fin_ulincovrate}}
 \footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
 
@@ -757,6 +739,27 @@ Indeed, future work certainly needs to build on this study analyzing the relatio
 \small{\input{tabs/donor_weights_bf}}
 \footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 
+\pagebreak
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Wage Distributions - Men}\label{fig:dfl_men}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cu_bhw_men.png} \\
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cn_bhw_men.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+
+\pagebreak
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Wage Distributions - Women}\label{fig:dfl_women}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cu_bhw_wom.png} \\
+          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cn_bhw_wom.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
 % \section{Figures}
 % \subsection{Figure 1 - Black-white Earnings Gap at Mean - \citet{derenoncourtmontialoux2020}}\label{fig1}
 % \begin{figure}[h!]
