@@ -71,6 +71,8 @@ Pending revisions requested by defense committee.
       - gen sumstats table.
     - ucov_race_sex_time.do
       - gen coverage rate time trends by race and sex >= 1983.
+    - stagdid-fe-sltt.do
+      - run did - effect of rtw on B/w wage inequality w/ year fe and state linear time trends.
   - miscellaneous stuff + graveyard (attempts and analyses that may not have made it into the paper)
     - restructure_mwage.do (in: mw_state_quarterly.dta ; out: qmwage7919.dta)
       - restructure Zipperer's quarterly state minimum wages. 
