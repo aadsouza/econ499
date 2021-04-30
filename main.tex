@@ -357,6 +357,16 @@ Indeed, future work certainly needs to build on this study analyzing the relatio
     \includegraphics[width=\textwidth, height = 0.8\textheight, keepaspectratio]{figures/fin_med_wage_time.png}
 \end{figure}
 
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Position of Median Person on Wage Distribution of White Person}\label{fig:med_centile_time}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.75\textwidth, keepaspectratio]{figures/fin_med_centile_time_men.png} \\
+          \includegraphics[width = 0.75\textwidth, keepaspectratio]{figures/fin_med_centile_time_women.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
+
 \pagebreak
 \begin{figure}[h!]
 \centering
@@ -514,72 +524,12 @@ Indeed, future work certainly needs to build on this study analyzing the relatio
 \begin{landscape}
 \begin{table}[ht!]
     \centering
-    \captionof{figure}{Synthetic Control Method - Oklahoma (2001)}\label{fig:synth_ok}
-    \begin{tabular}{c c}
-          \textbf{White Men} & \textbf{Black Men} \\
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_ok.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_ok.png} \\
-          \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_ok.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_ok.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
-\end{landscape}
-
-\pagebreak
-\begin{landscape}
-\begin{table}[ht!]
-    \centering
-    \captionof{figure}{Synthetic Control Method - Indiana (2012)}\label{fig:synth_in}
-    \begin{tabular}{c c}
-          \textbf{White Men} & \textbf{Black Men} \\
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_in.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_in.png} \\
-          \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_in.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_in.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression. Nested optimization not used for white women due to unstable or asymmetric Hessian.}
-\end{landscape}
-
-\pagebreak
-\begin{landscape}
-\begin{table}[ht!]
-    \centering
     \captionof{figure}{Synthetic Control Method - Michigan (2013)}\label{fig:synth_mi}
     \begin{tabular}{c c}
           \textbf{White Men} & \textbf{Black Men} \\    
           \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_mi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_mi.png} \\
           \textbf{White Women} & \textbf{Black Women} \\
           \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_mi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_mi.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
-\end{landscape}
-
-\pagebreak
-\begin{landscape}
-\begin{table}[ht!]
-    \centering
-    \captionof{figure}{Synthetic Control Method - Wisconsin (2015)}\label{fig:synth_wi}
-    \begin{tabular}{c c}
-          \textbf{White Men} & \textbf{Black Men} \\    
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_wi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_wi.png} \\
-          \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_wi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_wi.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
-\end{landscape}
-
-\pagebreak
-\begin{landscape}
-\begin{table}[ht!]
-    \centering
-    \captionof{figure}{Synthetic Control Method - Kentucky (2017)}\label{fig:synth_ky}
-    \begin{tabular}{c c}
-          \textbf{White Men} & \textbf{Black Men} \\    
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_ky.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_ky.png} \\
-          \textbf{White Women} & \textbf{Black Women} \\
-          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_ky.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_ky.png}
     \end{tabular}
 \end{table}
 \footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
@@ -636,6 +586,7 @@ Indeed, future work certainly needs to build on this study analyzing the relatio
 \pagebreak
 \newgeometry{top=1in,bottom=1in,left=1in,right=1in}
 \doublespacing
+\appendix
 \section{Appendix}
 \subsection{Appendix - Wage Distributions and Counterfactual}
 In addition to presenting the wage distributions for white people and Black people, I ask what the wage distribution for white people who are covered by a union would look like if they had the same covariates as Black people who are covered by a union - with a corresponding question for those not covered by a union. Covariates include education, a quartic in experience, education-experience interaction, marital status, part-time status, public sector, CMSA, 11 industry categories, 12 occupation categories, and state, quarter, and year fixed effects. I follow the \citet{heywoodparent2012} implementation of the DFL decomposition for its added dimension allowing for selection into unions. For the wage distributions for Black people $B = 1$ and white people $B = 0$ which are given as 
@@ -660,15 +611,27 @@ where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\m
 \singlespacing
 \newgeometry{top=0.75in,bottom=0.75in,left=0.5in,right=0.5in}
 \fontsize{10}{12}\selectfont{
-\subsection{Appendix - Tables and Figures}
-\small{\input{tabs/fin_ulincovrate}}
-\footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
+\subsection{Appendix - Figures and Tables}
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Wage Distributions - Men}\label{fig:dfl_men}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.75\textwidth, keepaspectratio]{figures/kde1men/fin_cu_bhw_men.png} \\
+          \includegraphics[width = 0.75\textwidth, keepaspectratio]{figures/kde1men/fin_cn_bhw_men.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
 
 \pagebreak
-\begin{landscape}
-\small{\input{tabs/fin_wagstagdid-wo-ar2w}}
-\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors are clustered at the state-level. Real log wages is the dependent variable throughout. All regressions include covariates and fixed effects as outlined.}
-\end{landscape}
+\begin{table}[h!]
+    \centering
+    \captionof{figure}{Wage Distributions - Women}\label{fig:dfl_women}
+    \begin{tabular}{c}
+          \includegraphics[width = 0.75\textwidth, keepaspectratio]{figures/kde1wom/fin_cu_bhw_wom.png} \\
+          \includegraphics[width = 0.75\textwidth, keepaspectratio]{figures/kde1wom/fin_cn_bhw_wom.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
 
 \pagebreak
 \begin{landscape}
@@ -724,6 +687,76 @@ where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\m
 \end{landscape}
 
 \pagebreak
+\begin{landscape}
+\begin{table}[ht!]
+    \centering
+    \captionof{figure}{Synthetic Control Method - Oklahoma (2001)}\label{fig:synth_ok}
+    \begin{tabular}{c c}
+          \textbf{White Men} & \textbf{Black Men} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_ok.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_ok.png} \\
+          \textbf{White Women} & \textbf{Black Women} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_ok.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_ok.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
+\end{landscape}
+
+\pagebreak
+\begin{landscape}
+\begin{table}[ht!]
+    \centering
+    \captionof{figure}{Synthetic Control Method - Indiana (2012)}\label{fig:synth_in}
+    \begin{tabular}{c c}
+          \textbf{White Men} & \textbf{Black Men} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_in.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_in.png} \\
+          \textbf{White Women} & \textbf{Black Women} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_in.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_in.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression. Nested optimization not used for white women due to unstable or asymmetric Hessian.}
+\end{landscape}
+
+\pagebreak
+\begin{landscape}
+\begin{table}[ht!]
+    \centering
+    \captionof{figure}{Synthetic Control Method - Wisconsin (2015)}\label{fig:synth_wi}
+    \begin{tabular}{c c}
+          \textbf{White Men} & \textbf{Black Men} \\    
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_wi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_wi.png} \\
+          \textbf{White Women} & \textbf{Black Women} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_wi.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_wi.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
+\end{landscape}
+
+\pagebreak
+\begin{landscape}
+\begin{table}[ht!]
+    \centering
+    \captionof{figure}{Synthetic Control Method - Kentucky (2017)}\label{fig:synth_ky}
+    \begin{tabular}{c c}
+          \textbf{White Men} & \textbf{Black Men} \\    
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wm_ky.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bm_ky.png} \\
+          \textbf{White Women} & \textbf{Black Women} \\
+          \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_wf_ky.png} & \includegraphics[width = 0.5\textwidth, keepaspectratio]{figures/fin_synth_bf_ky.png}
+    \end{tabular}
+\end{table}
+\footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
+\end{landscape}
+
+\pagebreak
+\small{\input{tabs/fin_ulincovrate}}
+\footnotesize{Unionization rate is computed at the state-industry-year level. Standard errors are clustered at the state-industry level. Real log wages is the dependent variable throughout. A one percent increase in the unionization rate leads to a $100(e^{\beta} - 1)$ change in wages. Each column and panel corresponds to a regression. All regressions include covariates and fixed effects.}
+
+\pagebreak
+\begin{landscape}
+\small{\input{tabs/fin_wagstagdid-wo-ar2w}}
+\footnotesize{I define $RTW_{st} = 1$ if state $s$ has a RTW law at time $t$. Sample includes years 1983-2019. Policy variation: Oklahoma (2001), Indiana (2012), Michigan (2013), Wisconsin (2015), and Kentucky (2017). All states, except West Virginia, Montana, Maine, New Hampshire, and Vermont are in the sample. Standard errors are clustered at the state-level. Real log wages is the dependent variable throughout. All regressions include covariates and fixed effects as outlined.}
+\end{landscape}
+
+\pagebreak
 \small{\input{tabs/donor_weights_wm}}
 \footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 
@@ -739,27 +772,7 @@ where $\Theta_3 = \frac{Prob(B = 1\mid x) Prob(u = 0\mid x, B = 1)}{Prob(B = 0\m
 \small{\input{tabs/donor_weights_bf}}
 \footnotesize{Real log wages is the dependent variable throughout. Synthetic control implemented using \texttt{synth} package with nested optimization and allopt. Each sub-figure corresponds to a regression.}
 
-\pagebreak
-\begin{table}[h!]
-    \centering
-    \captionof{figure}{Wage Distributions - Men}\label{fig:dfl_men}
-    \begin{tabular}{c}
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cu_bhw_men.png} \\
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1men/fin_cn_bhw_men.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
 
-\pagebreak
-\begin{table}[h!]
-    \centering
-    \captionof{figure}{Wage Distributions - Women}\label{fig:dfl_women}
-    \begin{tabular}{c}
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cu_bhw_wom.png} \\
-          \includegraphics[width = 0.8\textwidth, keepaspectratio]{figures/kde1wom/fin_cn_bhw_wom.png}
-    \end{tabular}
-\end{table}
-\footnotesize{Sample include years 1983-2019 excluding 1994 and 1995.}
 % \section{Figures}
 % \subsection{Figure 1 - Black-white Earnings Gap at Mean - \citet{derenoncourtmontialoux2020}}\label{fig1}
 % \begin{figure}[h!]
