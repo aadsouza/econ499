@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-fe-sltt.log
   log type:  text
- opened on:  26 Apr 2021, 23:52:27
+ opened on:  29 Apr 2021, 22:24:19
 
 . 
 . use cleaned_nber_morg, clear
@@ -112,12 +112,12 @@ end of do-file
 . rename twage nwage1
 
 . 
-. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt pu
-> blic marr hisprace hispracesex citizen eweight alloc1 covered umem
+. keep state year cmonth quarter nwage1 lwage1 lwage3 hourly exper* educ ee_cl female nind2 nocc cmsa partt 
+> public marr hisprace hispracesex citizen eweight alloc1 covered umem
 
 . 
-. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/unem
-> p.dta"
+. merge m:1 state year cmonth using "/Users/amedeusdsouza/Desktop/econ499data/morg/clean_nber_morg_output/un
+> emp.dta"
 (note: variable year was int, now long to accommodate using data's values)
 (note: variable cmonth was byte, now long to accommodate using data's values)
 (note: variable state was byte, now long to accommodate using data's values)
@@ -185,16 +185,16 @@ end of do-file
 . local newr2wstates "73 32 34 35 55 61"
 
 . 
-. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effectiv
-> e; signed Dec2012) Mar1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
+. ** local date "500 625 638 662 673 684" // Sep1,2001(Sep28,2001) Feb1,2012(Mar14,2012) Mar1,2013(28 effect
+> ive; signed Dec2012) Mar1,2015(Mar11,2015) Feb1,2016(effectiveJuly1,2016) Jan1,2017(7)
 . local newr2wdate "500 625 638 662 678 684"
 
 . 
 . gen alwaysr2w = 0
 
 .         replace alwaysr2w = 1 if /// 
->                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 72
-> , 82) //incl Idaho which changed in 1985 and Texas which had since 47 but bolstered in 93
+>                 inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57, 87, 47, 83, 
+> 72, 82) //incl Idaho which changed in 1985 and Texas which had since 47 but bolstered in 93
 (1,149,124 real changes made)
 
 . 
@@ -204,8 +204,8 @@ end of do-file
 . 
 . gen neverr2w = 1
 
-.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
-> , 87, 47, 83, 72, 82)
+.         replace neverr2w = 0 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 
+> 57, 87, 47, 83, 72, 82)
 (1,149,124 real changes made)
 
 .         replace neverr2w = 0 if inlist(state, 73, 32, 34, 35, 55, 61)
@@ -214,8 +214,8 @@ end of do-file
 . 
 . gen stater2w = 0
 
-.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 57
-> , 87, 47, 83, 72, 82)
+.         replace stater2w = 1 if inlist(state, 71, 59, 86, 46, 54, 62, 56, 58, 42, 45, 74, 44, 88, 63, 64, 
+> 57, 87, 47, 83, 72, 82)
 (1,149,124 real changes made)
 
 .         replace stater2w = 2 if inlist(state, 73, 32, 34, 35, 55, 61)
@@ -250,8 +250,8 @@ end of do-file
 .         replace treat_st = 1 if state == 61 & date >= 684
 (3,150 real changes made)
 
-. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change t
-> o treat_jst
+. **      replace treat_st = 1 if public == 1 & date >= 701 // Janus v AFSCME June 2018 would need to change
+>  to treat_jst
 .         
 . gen treat_stblackrelwhite = treat_st*blackrelwhite
 (324,138 missing values generated)
@@ -273,62 +273,63 @@ end of do-file
 
 . 
 . ** BLACK-WHITE
-. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 e
-> xper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster stat
-> e)
+. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3
+>  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster 
+> state)
 . 
 . // estadd local unemp_level "No"
 . // estadd local yr_dum "Yes"
 . // estadd local sltt "No"
 . // eststo covstagdid_mal_all
 . 
-. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 e
-> xper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluste
-> r state)
+. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3
+>  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cl
+> uster state)
 . 
 . // estadd local unemp_level "Yes"
 . // estadd local yr_dum "Yes"
 . // estadd local sltt "No"
 . // eststo covstagdid_mal_all_unemp 
 . 
-. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2
->  exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, v
-> ce(cluster state)
+. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper expe
+> r2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
+> 0, vce(cluster state)
 . 
 . // estadd local unemp_level "Yes"
 . // estadd local yr_dum "No"
 . // estadd local sltt "Yes"
 . // eststo covstagdid_mal_all_sltt 
 .         
-. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 e
-> xper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1, vce(cluster stat
-> e)
+. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3
+>  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1, vce(cluster 
+> state)
 . 
 . // estadd local unemp_level "No"
 . // estadd local yr_dum "Yes"
 . // estadd local sltt "No"
 . // eststo covstagdid_fem_all
 . 
-. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 e
-> xper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluste
-> r state)
+. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3
+>  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cl
+> uster state)
 . 
 . // estadd local unemp_level "Yes"
 . // estadd local yr_dum "Yes"
 . // estadd local sltt "No"
 . // eststo covstagdid_fem_all_unemp 
 . 
-. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2
->  exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, v
-> ce(cluster state)
+. // reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper expe
+> r2 exper3 exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
+> 1, vce(cluster state)
 . 
 . // estadd local unemp_level "Yes"
 . // estadd local yr_dum "No"
 . // estadd local sltt "Yes"
 . // eststo covstagdid_fem_all_sltt 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster state) 
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0, vce(cluster sta
+> te) 
 (sum of wgt is 9,055,624,176)
 
 Linear regression                               Number of obs     =  1,005,865
@@ -492,9 +493,9 @@ treat_stblackrelwhite |  -.0219352   .0088436    -2.48   0.017    -.0397471   -.
 . eststo wagstagdid_mal_all 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluster s
-> tate) 
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(clust
+> er state) 
 (sum of wgt is 9,055,624,176)
 
 Linear regression                               Number of obs     =  1,005,865
@@ -660,9 +661,9 @@ treat_stblackrelwhite |  -.0219241   .0088683    -2.47   0.017    -.0397858   -.
 . eststo wagstagdid_mal_all_unemp
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(
-> cluster state) 
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 e
+> xper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, 
+> vce(cluster state) 
 (sum of wgt is 9,055,624,176)
 
 Linear regression                               Number of obs     =  1,005,865
@@ -846,9 +847,9 @@ treat_stblackrelwhite |  -.0218338   .0087644    -2.49   0.016    -.0394863   -.
 . eststo wagstagdid_mal_all_sltt  
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper exp
-> er2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
-> 0, vce(cluster state) 
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper e
+> xper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female
+>  == 0, vce(cluster state) 
 (sum of wgt is 9,055,624,176)
 note: 95.state#c.lyear omitted because of collinearity
 
@@ -1063,8 +1064,9 @@ treat_stblackrelwhite |  -.0216164   .0087294    -2.48   0.017    -.0391983   -.
 . eststo wagstagdid_mal_all_fe_sltt  
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1, vce(cluster sta
+> te)
 (sum of wgt is 8,861,640,823)
 
 Linear regression                               Number of obs     =  1,014,977
@@ -1228,9 +1230,9 @@ treat_stblackrelwhite |  -.0396131    .008008    -4.95   0.000    -.0557421   -.
 . eststo wagstagdid_fem_all 
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluster s
-> tate)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(clust
+> er state)
 (sum of wgt is 8,861,640,823)
 
 Linear regression                               Number of obs     =  1,014,977
@@ -1396,9 +1398,9 @@ treat_stblackrelwhite |  -.0396147   .0080114    -4.94   0.000    -.0557505   -.
 . eststo wagstagdid_fem_all_unemp 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 e
+> xper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, 
+> vce(cluster state)
 (sum of wgt is 8,861,640,823)
 
 Linear regression                               Number of obs     =  1,014,977
@@ -1582,9 +1584,9 @@ treat_stblackrelwhite |  -.0388667   .0080721    -4.81   0.000    -.0551247   -.
 . eststo wagstagdid_fem_all_sltt
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper exp
-> er2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
-> 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper e
+> xper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female
+>  == 1, vce(cluster state)
 (sum of wgt is 8,861,640,823)
 note: 95.state#c.lyear omitted because of collinearity
 
@@ -1799,9 +1801,9 @@ treat_stblackrelwhite |  -.0387042   .0081253    -4.76   0.000    -.0550694    -
 . eststo wagstagdid_fem_all_fe_sltt
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & covered == 0, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & covered == 0, 
+> vce(cluster state)
 (sum of wgt is 7,459,437,111)
 
 Linear regression                               Number of obs     =    825,912
@@ -1965,9 +1967,9 @@ treat_stblackrelwhite |  -.0030191   .0081139    -0.37   0.712    -.0193612    .
 . eststo nwagstagdid_mal_all
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 0
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered 
+> == 0, vce(cluster state)
 (sum of wgt is 7,459,437,111)
 
 Linear regression                               Number of obs     =    825,912
@@ -2133,9 +2135,9 @@ treat_stblackrelwhite |  -.0030084   .0081423    -0.37   0.713    -.0194078    .
 . eststo nwagstagdid_mal_all_unemp 
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & cov
-> ered == 0, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 e
+> xper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 &
+>  covered == 0, vce(cluster state)
 (sum of wgt is 7,459,437,111)
 
 Linear regression                               Number of obs     =    825,912
@@ -2319,9 +2321,9 @@ treat_stblackrelwhite |  -.0033746   .0082025    -0.41   0.683    -.0198952     
 . eststo nwagstagdid_mal_all_sltt 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper exp
-> er2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
-> 0 & covered == 0, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper e
+> xper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female
+>  == 0 & covered == 0, vce(cluster state)
 (sum of wgt is 7,459,437,111)
 note: 95.state#c.lyear omitted because of collinearity
 
@@ -2536,9 +2538,9 @@ treat_stblackrelwhite |  -.0030572   .0081618    -0.37   0.710    -.0194959    .
 . eststo nwagstagdid_mal_all_fe_sltt 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & covered == 0, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & covered == 0, 
+> vce(cluster state)
 (sum of wgt is 7,592,798,535)
 
 Linear regression                               Number of obs     =    868,290
@@ -2702,9 +2704,9 @@ treat_stblackrelwhite |  -.0282325   .0082662    -3.42   0.001    -.0448816   -.
 . eststo nwagstagdid_fem_all 
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 0
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered 
+> == 0, vce(cluster state)
 (sum of wgt is 7,592,798,535)
 
 Linear regression                               Number of obs     =    868,290
@@ -2870,9 +2872,9 @@ treat_stblackrelwhite |  -.0282469   .0082792    -3.41   0.001     -.044922   -.
 . eststo nwagstagdid_fem_all_unemp 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & cov
-> ered == 0, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 e
+> xper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 &
+>  covered == 0, vce(cluster state)
 (sum of wgt is 7,592,798,535)
 
 Linear regression                               Number of obs     =    868,290
@@ -3056,9 +3058,9 @@ treat_stblackrelwhite |  -.0274408   .0083187    -3.30   0.002    -.0441954   -.
 . eststo nwagstagdid_fem_all_sltt 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper exp
-> er2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
-> 1 & covered == 0, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper e
+> xper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female
+>  == 1 & covered == 0, vce(cluster state)
 (sum of wgt is 7,592,798,535)
 note: 95.state#c.lyear omitted because of collinearity
 
@@ -3273,9 +3275,9 @@ treat_stblackrelwhite |  -.0272727   .0084262    -3.24   0.002     -.044244   -.
 . eststo nwagstagdid_fem_all_fe_sltt 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & covered == 1, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 0 & covered == 1, 
+> vce(cluster state)
 (sum of wgt is 1,585,364,402)
 
 Linear regression                               Number of obs     =    178,512
@@ -3451,9 +3453,9 @@ added macro:
 . eststo uwagstagdid_mal_all 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered == 1
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered 
+> == 1, vce(cluster state)
 (sum of wgt is 1,585,364,402)
 
 Linear regression                               Number of obs     =    178,512
@@ -3631,9 +3633,9 @@ added macro:
 . eststo uwagstagdid_mal_all_unemp 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & cov
-> ered == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 e
+> xper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 &
+>  covered == 1, vce(cluster state)
 (sum of wgt is 1,585,364,402)
 
 Linear regression                               Number of obs     =    178,512
@@ -3829,9 +3831,9 @@ added macro:
 . eststo uwagstagdid_mal_all_sltt 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper exp
-> er2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
-> 0 & covered == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper e
+> xper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female
+>  == 0 & covered == 1, vce(cluster state)
 (sum of wgt is 1,585,364,402)
 note: 95.state#c.lyear omitted because of collinearity
 
@@ -4058,9 +4060,9 @@ added macro:
 . eststo uwagstagdid_mal_all_fe_sltt 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & covered == 1, vce(
-> cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 i.quarter [aw = finalwt1] if female == 1 & covered == 1, 
+> vce(cluster state)
 (sum of wgt is 1,257,671,705)
 
 Linear regression                               Number of obs     =    145,102
@@ -4236,9 +4238,9 @@ added macro:
 . eststo uwagstagdid_fem_all
 
 .         
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exper
-> 4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered == 1
-> , vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 exp
+> er4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered 
+> == 1, vce(cluster state)
 (sum of wgt is 1,257,671,705)
 
 Linear regression                               Number of obs     =    145,102
@@ -4416,9 +4418,9 @@ added macro:
 . eststo uwagstagdid_fem_all_unemp 
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 exp
-> er3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & cov
-> ered == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.state#c.lyear i.nind educ exper exper2 e
+> xper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 &
+>  covered == 1, vce(cluster state)
 (sum of wgt is 1,257,671,705)
 
 Linear regression                               Number of obs     =    145,102
@@ -4614,9 +4616,9 @@ added macro:
 . eststo uwagstagdid_fem_all_sltt
 
 . 
-. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper exp
-> er2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 
-> 1 & covered == 1, vce(cluster state)
+. reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.state#c.lyear i.nind educ exper e
+> xper2 exper3 exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female
+>  == 1 & covered == 1, vce(cluster state)
 (sum of wgt is 1,257,671,705)
 note: 95.state#c.lyear omitted because of collinearity
 
@@ -4849,51 +4851,51 @@ added macro:
 . ** DROP ALWAYS RTW BLACK-WHITE
 . ** drop if alwaysr2w == 1
 . 
-. ** reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 e
-> xper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluste
-> r state) 
+. ** reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3
+>  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cl
+> uster state) 
 . 
 . ** eststo covstagdid_mal_cf 
 .         
-. ** reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 e
-> xper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluste
-> r state)
+. ** reg covered blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3
+>  exper4 edex i.ee_cl marr partt public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cl
+> uster state)
 . 
 . ** eststo covstagdid_fem_cf 
 . 
-. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 ex
-> per4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cluste
-> r state) 
+. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 
+> exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0, vce(cl
+> uster state) 
 . 
 . ** eststo wagstagdid_mal_cf 
 .         
-. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 ex
-> per4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cluste
-> r state)
+. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 
+> exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1, vce(cl
+> uster state)
 . 
 . ** eststo wagstagdid_fem_cf 
 . 
-. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 ex
-> per4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered =
-> = 0, vce(cluster state)
+. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 
+> exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & cover
+> ed == 0, vce(cluster state)
 . 
 . ** eststo nwagstagdid_mal_cf 
 .         
-. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 ex
-> per4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered =
-> = 0, vce(cluster state)
+. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 
+> exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & cover
+> ed == 0, vce(cluster state)
 . 
 . ** eststo nwagstagdid_fem_cf
 . 
-. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 ex
-> per4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & covered =
-> = 1, vce(cluster state)
+. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 
+> exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 0 & cover
+> ed == 1, vce(cluster state)
 . 
 . ** eststo uwagstagdid_mal_cf 
 .         
-. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 ex
-> per4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & covered =
-> = 1, vce(cluster state)
+. ** reg lwage3 blackrelwhite treat_st treat_stblackrelwhite i.state i.year i.nind educ exper exper2 exper3 
+> exper4 edex i.ee_cl marr partt  public cmsa i.nocc2 unemp i.quarter [aw = finalwt1] if female == 1 & cover
+> ed == 1, vce(cluster state)
 . 
 . ** eststo uwagstagdid_fem_cf 
 . 
@@ -4905,67 +4907,64 @@ added macro:
 
 . 
 . ** FIXME ignore rust best stuff, dropping always rtw
-. // esttab covstagdid_mal_all covstagdid_mal_all_unemp covstagdid_mal_all_sltt covstagdid_fem_all covstagdid_
-> fem_all_unemp covstagdid_fem_all_sltt using $tabs/fin_covstagdid.tex, se title(Difference in Differences of 
-> Union Coverage on Right to Work Laws Treatment in State and Time) mgroups("Men" "Women", pattern(1 0 0 1 0 0
-> ) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st 
-> treat_stblackrelwhite) nomtitles replace label starlevels(* 0.1 ** 0.05 *** 0.01) scalars("unemp_level State
->  Monthly Unemployment Rate" "yr_dum Year Fixed Effect" "sltt State Linear Time Trends")
+. // esttab covstagdid_mal_all covstagdid_mal_all_unemp covstagdid_mal_all_sltt covstagdid_fem_all covstagdi
+> d_fem_all_unemp covstagdid_fem_all_sltt using $tabs/fin_covstagdid.tex, se title(Difference in Differences
+>  of Union Coverage on Right to Work Laws Treatment in State and Time) mgroups("Men" "Women", pattern(1 0 0
+>  1 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite t
+> reat_st treat_stblackrelwhite) nomtitles replace label starlevels(* 0.1 ** 0.05 *** 0.01) scalars("unemp_l
+> evel State Monthly Unemployment Rate" "yr_dum Year Fixed Effect" "sltt State Linear Time Trends")
 . 
-. esttab wagstagdid_mal_all wagstagdid_mal_all_unemp wagstagdid_mal_all_sltt wagstagdid_mal_all_fe_sltt wagsta
-> gdid_fem_all wagstagdid_fem_all_unemp wagstagdid_fem_all_sltt wagstagdid_fem_all_fe_sltt using $tabs/feslttw
-> agstagdid1.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment in Stat
-> e and Time) mgroups("Men" "Women", pattern(1 0 0 0 1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span e
-> repeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace label sta
-> rlevels(* 0.1 ** 0.05 *** 0.01) 
-(note: file /Users/amedeusdsouza/econ499/tabs/feslttwagstagdid1.tex not found)
+. esttab wagstagdid_mal_all wagstagdid_mal_all_unemp wagstagdid_mal_all_sltt wagstagdid_mal_all_fe_sltt wags
+> tagdid_fem_all wagstagdid_fem_all_unemp wagstagdid_fem_all_sltt wagstagdid_fem_all_fe_sltt using $tabs/fes
+> lttwagstagdid1.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment i
+> n State and Time) mgroups("Men" "Women", pattern(1 0 0 0 1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}
+> ) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace
+>  label starlevels(* 0.1 ** 0.05 *** 0.01) 
 (output written to /Users/amedeusdsouza/econ499/tabs/feslttwagstagdid1.tex)
 
 . 
-. esttab nwagstagdid_mal_all nwagstagdid_mal_all_unemp nwagstagdid_mal_all_sltt nwagstagdid_mal_all_fe_sltt nw
-> agstagdid_fem_all nwagstagdid_fem_all_unemp nwagstagdid_fem_all_sltt nwagstagdid_fem_all_fe_sltt using $tabs
-> /feslttwagstagdid2.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment
->  in State and Time) mgroups("Men" "Women", pattern(1 0 0 0 1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}
-> ) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace l
-> abel starlevels(* 0.1 ** 0.05 *** 0.01)
-(note: file /Users/amedeusdsouza/econ499/tabs/feslttwagstagdid2.tex not found)
+. esttab nwagstagdid_mal_all nwagstagdid_mal_all_unemp nwagstagdid_mal_all_sltt nwagstagdid_mal_all_fe_sltt 
+> nwagstagdid_fem_all nwagstagdid_fem_all_unemp nwagstagdid_fem_all_sltt nwagstagdid_fem_all_fe_sltt using $
+> tabs/feslttwagstagdid2.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Tre
+> atment in State and Time) mgroups("Men" "Women", pattern(1 0 0 0 1 0 0 0) prefix(\multicolumn{@span}{c}{) 
+> suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles
+>  replace label starlevels(* 0.1 ** 0.05 *** 0.01)
 (output written to /Users/amedeusdsouza/econ499/tabs/feslttwagstagdid2.tex)
 
 . 
-. esttab uwagstagdid_mal_all uwagstagdid_mal_all_unemp uwagstagdid_mal_all_sltt uwagstagdid_mal_all_fe_sltt uw
-> agstagdid_fem_all uwagstagdid_fem_all_unemp uwagstagdid_fem_all_sltt uwagstagdid_fem_all_fe_sltt using $tabs
-> /feslttwagstagdid3.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Treatment
->  in State and Time) mgroups("Men" "Women", pattern(1 0 0 0 1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}
-> ) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles replace l
-> abel starlevels(* 0.1 ** 0.05 *** 0.01) scalars("unemp_level State Monthly Unemployment Rate" "yr_dum Year F
-> ixed Effect" "sltt State Linear Time Trends")
-(note: file /Users/amedeusdsouza/econ499/tabs/feslttwagstagdid3.tex not found)
+. esttab uwagstagdid_mal_all uwagstagdid_mal_all_unemp uwagstagdid_mal_all_sltt uwagstagdid_mal_all_fe_sltt 
+> uwagstagdid_fem_all uwagstagdid_fem_all_unemp uwagstagdid_fem_all_sltt uwagstagdid_fem_all_fe_sltt using $
+> tabs/feslttwagstagdid3.tex, se title(Difference in Differences of Real Log Wages on Right to Work Laws Tre
+> atment in State and Time) mgroups("Men" "Women", pattern(1 0 0 0 1 0 0 0) prefix(\multicolumn{@span}{c}{) 
+> suffix(}) span erepeat(\cmidrule(lr){@span})) keep(blackrelwhite treat_st treat_stblackrelwhite) nomtitles
+>  replace label starlevels(* 0.1 ** 0.05 *** 0.01) scalars("unemp_level State Monthly Unemployment Rate" "y
+> r_dum Year Fixed Effect" "sltt State Linear Time Trends")
 (output written to /Users/amedeusdsouza/econ499/tabs/feslttwagstagdid3.tex)
 
 . 
-. panelcombine, use($tabs/feslttwagstagdid1.tex $tabs/feslttwagstagdid2.tex $tabs/feslttwagstagdid3.tex) panel
-> titles("All (Black and White) People" "People Not Covered by Union - Spillover Effect" "People Covered by Un
-> ion - Direct Effect") columncount(3) save($tabs/fin_feslttwagstagdid.tex)
+. panelcombine, use($tabs/feslttwagstagdid1.tex $tabs/feslttwagstagdid2.tex $tabs/feslttwagstagdid3.tex) pan
+> eltitles("All (Black and White) People" "People Not Covered by Union - Spillover Effect" "People Covered b
+> y Union - Direct Effect") columncount(3) save($tabs/fin_feslttwagstagdid.tex)
 
 . 
-. *** esttab wagstagdid_mal_all wagstagdid_fem_all nwagstagdid_mal_all nwagstagdid_fem_all uwagstagdid_mal_all
->  uwagstagdid_fem_all using $tabs/wagstagdid.tex, se title(Difference in Differences of Real Log Wages on Rig
-> ht to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union" "wom
-> en not covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_st treat_
-> stblackrelwhite) replace
+. *** esttab wagstagdid_mal_all wagstagdid_fem_all nwagstagdid_mal_all nwagstagdid_fem_all uwagstagdid_mal_a
+> ll uwagstagdid_fem_all using $tabs/wagstagdid.tex, se title(Difference in Differences of Real Log Wages on
+>  Right to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union
+> " "women not covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_s
+> t treat_stblackrelwhite) replace
 . 
-. ** esttab wagstagdid_mal_cf wagstagdid_fem_cf nwagstagdid_mal_cf nwagstagdid_fem_cf uwagstagdid_mal_cf uwags
-> tagdid_fem_cf using $tabs/wagstagdid_cf.tex, se title(Difference in Differences of Real Log Wages on Right t
-> o Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union" "women n
-> ot covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_st treat_stbl
-> ackrelwhite) replace
+. ** esttab wagstagdid_mal_cf wagstagdid_fem_cf nwagstagdid_mal_cf nwagstagdid_fem_cf uwagstagdid_mal_cf uwa
+> gstagdid_fem_cf using $tabs/wagstagdid_cf.tex, se title(Difference in Differences of Real Log Wages on Rig
+> ht to Work Laws Treatment in State and Time) nonumbers mtitles("men" "women" "men not covered by union" "w
+> omen not covered by union" "men covered by union" "women covered by union") keep(blackrelwhite treat_st tr
+> eat_stblackrelwhite) replace
 . 
-. ** panelcombine, use($tabs/wagstagdid_all.tex $tabs/wagstagdid_cf.tex) paneltitles("All States" "W/O Always 
-> RTW States") columncount(3) save($tabs/wagstagdid.tex)
+. ** panelcombine, use($tabs/wagstagdid_all.tex $tabs/wagstagdid_cf.tex) paneltitles("All States" "W/O Alway
+> s RTW States") columncount(3) save($tabs/wagstagdid.tex)
 . 
 . log close 
       name:  <unnamed>
        log:  /Users/amedeusdsouza/econ499/linreg/stagdid-fe-sltt.log
   log type:  text
- closed on:  26 Apr 2021, 23:57:39
---------------------------------------------------------------------------------------------------------------
+ closed on:  29 Apr 2021, 22:27:22
+------------------------------------------------------------------------------------------------------------
