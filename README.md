@@ -73,6 +73,8 @@ Pending revisions requested by defense committee.
       - gen coverage rate time trends by race and sex >= 1983.
     - stagdid-fe-sltt.do
       - run did - effect of rtw on B/w wage inequality w/ year fe and state linear time trends.
+    - stagdid-fe-sltt-wo-ar2w.do
+      - run did - effect of rtw on B/w wage inequality w/ year fe and state linear time trends - w/o always rtw states.
     - med_centile_time.do
       - gen plot showing median person's position on white wage distribution.
   - miscellaneous stuff + graveyard (attempts and analyses that may not have made it into the paper)
