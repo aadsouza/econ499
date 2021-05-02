@@ -125,6 +125,13 @@
   - bibtex file for most/all literature cited in proposal.
 - 499data.bib
   - bibtex file for literature cited in thesis.
+- thesis-defense-slides.pdf
+  - beamer slides used for honors thesis defense.
+- ECON_499_003__Honours_Thesis.pdf
+  - final draft of thesis submitted to vse.
+- Labor_Unions_and_Racial_Inequality.pdf
+  - final pdf.
+
 ## NBER extracts of CPS MORG
 - [`econ499data` directory with cleaned data etc.](https://www.dropbox.com/sh/fveewbp3c82h6fw/AAA8vwEASsThsv_Ww3HxKzrja?dl=0) - used in `.do` files.
 - [NBER extracts of CPS MORG found here](https://data.nber.org/morg/annual/).
