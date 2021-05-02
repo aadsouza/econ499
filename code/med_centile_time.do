@@ -115,7 +115,7 @@ collapse w* b*, by(year)
 
 twoway (connected wmcentile year, msymbol(x)) ///
 	   (connected bwmcentile year, msymbol(x)), ///
-	   legend(order(1 "white men" 2 "Black men") cols(2)) ///
+	   legend(order(1 "white" 2 "Black") cols(2)) ///
 	   ytitle("centile of wage distribution of white men") ///
 	   xtitle("year") title("Position of Median Man on Wage Distribution of White Men")
 	   
