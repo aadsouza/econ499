@@ -1,5 +1,5 @@
 # ECON 499: Labor Unions and Racial Wage Inequality
-PDF: https://aadsouza.github.io/econ499/Labor_Unions_and_Racial_Wage_Inequality.pdf
+PDF: [https://aadsouza.github.io/econ499/Labor_Unions_and_Racial_Wage_Inequality.pdf](https://aadsouza.github.io/econ499/Labor_Unions_and_Racial_Wage_Inequality.pdf)
 ## Contents
 - /code
   - cleaning:
